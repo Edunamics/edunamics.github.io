@@ -50,11 +50,29 @@
   .dyn  { background:linear-gradient(160deg,#5ef08c 0%,#18a957 100%); }
   .mat  { background:linear-gradient(160deg,#c48bff 0%,#6e3bd6 100%); }
 
+  /* 左下角：白筆四分之一齒輪（圓心在角落） */
+  .corner-gear {
+    position:fixed; left:0; bottom:0; width:min(70vmin,520px); height:min(70vmin,520px);
+    transform:translate(-50%,50%); pointer-events:none; z-index:0; opacity:.55;
+  }
+  .corner-gear g { transform-origin:0 0; animation:gear-spin 40s linear infinite; }
+  @keyframes gear-spin { to { transform:rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce){ .corner-gear g { animation:none; } }
+  .card { position:relative; z-index:1; }
   .status { margin-top:30px; font-size:.85rem; color:var(--accent); }
   @media (max-width:380px){ .icon{width:60px;height:60px;} .label{font-size:.75rem;} }
 </style>
 </head>
 <body>
+  <svg class="corner-gear" viewBox="-110 -110 220 220" aria-hidden="true">
+    <g fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M86.0 0.0 L85.8 6.1 L99.3 11.8 L96.2 27.1 L81.6 27.2 L79.5 32.9 L76.9 38.4 L87.2 48.9 L78.5 61.9 L65.0 56.4 L60.8 60.8 L56.4 65.0 L61.9 78.5 L48.9 87.2 L38.4 76.9 L32.9 79.5 L27.2 81.6 L27.1 96.2 L11.8 99.3 L6.1 85.8 L0.0 86.0 L-6.1 85.8 L-11.8 99.3 L-27.1 96.2 L-27.2 81.6 L-32.9 79.5 L-38.4 76.9 L-48.9 87.2 L-61.9 78.5 L-56.4 65.0 L-60.8 60.8 L-65.0 56.4 L-78.5 61.9 L-87.2 48.9 L-76.9 38.4 L-79.5 32.9 L-81.6 27.2 L-96.2 27.1 L-99.3 11.8 L-85.8 6.1 L-86.0 0.0 L-85.8 -6.1 L-99.3 -11.8 L-96.2 -27.1 L-81.6 -27.2 L-79.5 -32.9 L-76.9 -38.4 L-87.2 -48.9 L-78.5 -61.9 L-65.0 -56.4 L-60.8 -60.8 L-56.4 -65.0 L-61.9 -78.5 L-48.9 -87.2 L-38.4 -76.9 L-32.9 -79.5 L-27.2 -81.6 L-27.1 -96.2 L-11.8 -99.3 L-6.1 -85.8 L-0.0 -86.0 L6.1 -85.8 L11.8 -99.3 L27.1 -96.2 L27.2 -81.6 L32.9 -79.5 L38.4 -76.9 L48.9 -87.2 L61.9 -78.5 L56.4 -65.0 L60.8 -60.8 L65.0 -56.4 L78.5 -61.9 L87.2 -48.9 L76.9 -38.4 L79.5 -32.9 L81.6 -27.2 L96.2 -27.1 L99.3 -11.8 L85.8 -6.1Z"/>
+      <circle r="62"/>
+      <circle r="18"/>
+      <path d="M0 -18V-62M0 18V62M-18 0H-62M18 0H62"/>
+      <circle r="5"/>
+    </g>
+  </svg>
   <div class="card">
     <h1 aria-label="Edunamics"><span class="swap" id="swap" aria-hidden="true"><span class="w" id="wEdu">Edu</span><span class="w" id="wDy">Dy</span></span><span class="tail" aria-hidden="true">namics</span></h1>
     <div class="zh">知識動力場</div>
