@@ -1,0 +1,721 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>機械製造學 第三章 粉末冶金</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;800&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: 與第一章相同的講義版面 — 左側章節索引 + 右側正文；製程以剖面示意圖與流程框呈現 */
+:root{
+  --bg:#FBF8F5; --paper:#FFFFFF; --ink:#2A1D14; --muted:#6E5D50;
+  --accent:#A84A0C; --accent-soft:#F6E6D8; --line:#E6D5C7; --grid:rgba(168,74,12,.07);
+  --steel:#9A8A7D; --fix:#1D6B70; --fix-soft:#E3F1F1; --warn:#8E2F1C;
+  --f-display:"Noto Serif TC","Songti TC",serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --steel:#6E5E52; --fix:#6CC3C7; --fix-soft:#16302F; --warn:#F08A73; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --steel:#6E5E52; --fix:#6CC3C7; --fix-soft:#16302F; --warn:#F08A73; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.8;padding-inline:16px}
+.wrap{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px;padding-block:0 64px}
+header.hero{max-width:1120px;margin:0 auto 32px;padding-block:36px 28px;border-bottom:1.5px solid var(--accent);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;
+  display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:24px;align-items:center}
+.hero-art{width:100%;max-width:260px;justify-self:end}
+.crumb{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,5vw,3.1rem);line-height:1.2;margin:.3em 0 .2em;text-wrap:balance}
+h1 small{font-size:.5em;font-weight:600;color:var(--muted);display:block;letter-spacing:.05em}
+.lede{max-width:62ch;color:var(--muted);margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px;font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);align-self:start;font-size:14px}
+nav.toc p{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--muted);margin:0 0 8px}
+nav.toc a{display:flex;gap:10px;padding:6px 0 6px 12px;color:var(--ink);text-decoration:none;border-left:2px solid var(--line)}
+nav.toc a:hover,nav.toc a:focus-visible{border-left-color:var(--accent);color:var(--accent);outline:none}
+nav.toc a span{font-family:var(--f-mono);color:var(--accent);font-size:12.5px;min-width:2.6em}
+main{min-width:0}
+section{padding-block:8px 28px;border-bottom:1px solid var(--line);margin-bottom:28px;scroll-margin-top:16px}
+h2{font-family:var(--f-display);font-size:1.6rem;margin:0 0 .6em;display:flex;align-items:baseline;gap:14px;text-wrap:balance}
+h2 .no{font-family:var(--f-mono);font-size:.95rem;color:var(--paper);background:var(--accent);padding:2px 9px;border-radius:2px;font-weight:500}
+h3{font-size:1.12rem;margin:1.6em 0 .5em;color:var(--accent)}
+h4{font-size:1rem;margin:1.2em 0 .3em}
+p{max-width:68ch;margin:.4em 0 .9em}
+.en{font-family:var(--f-mono);font-size:.8em;color:var(--muted)}
+.key{background:linear-gradient(transparent 62%,var(--accent-soft) 62%);font-weight:700}
+figure{margin:20px 0 24px;background:var(--paper);border:1px solid var(--line);padding:20px}
+figcaption{font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-top:12px;letter-spacing:.04em}
+.scroll{overflow-x:auto}
+.tbl{overflow-x:auto;margin:14px 0 22px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px;background:var(--paper)}
+th,td{border:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);color:var(--accent);font-weight:700;white-space:nowrap}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);padding:12px 16px;margin:16px 0;font-size:15px}
+.callout b{color:var(--accent)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:12px 0 20px}
+.card{border:1px solid var(--line);background:var(--paper);padding:14px 16px}
+.card h4{margin:0 0 4px;color:var(--accent)}
+.card p{margin:0;font-size:14.5px}
+/* 流程圖共用 */
+.node{background:var(--paper);border:2px solid var(--accent);border-radius:6px;padding:10px 14px;position:relative}
+.node b{display:block;font-size:15.5px}
+.node small{display:block;color:var(--muted);font-size:13px;line-height:1.5}
+.node .n{font-family:var(--f-mono);font-size:11.5px;color:var(--accent);letter-spacing:.06em}
+.node.dark{background:var(--accent);border-color:var(--accent)}
+.node.dark b,.node.dark .n{color:var(--paper)} .node.dark small{color:var(--accent-soft)}
+.down{height:30px;position:relative;margin-left:50%}
+.down::before{content:"";position:absolute;left:-1px;top:0;bottom:8px;border-left:2px solid var(--fix)}
+.down::after{content:"";position:absolute;left:-7px;bottom:0;border:7px solid transparent;border-top:9px solid var(--fix);border-bottom:0}
+.right{flex:0 0 34px;align-self:center;height:2px;background:var(--fix);position:relative}
+.right::after{content:"";position:absolute;right:-2px;top:-6px;border:7px solid transparent;border-left:10px solid var(--fix);border-right:0}
+/* 設計流程 */
+.phases{display:grid;gap:0}
+.phase{border:1.5px dashed var(--steel);border-radius:10px;padding:26px 16px 14px;position:relative;display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:0 14px;align-items:center}
+.phase>.lab{position:absolute;top:-11px;left:14px;background:var(--paper);padding:0 8px;font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.08em}
+.phase .down{grid-column:1}
+.tool{font-family:var(--f-mono);font-size:12px;color:var(--accent);border:1.5px solid var(--accent);border-radius:999px;text-align:center;padding:3px 8px;position:relative;background:var(--paper)}
+.tool::before{content:"";position:absolute;right:100%;top:50%;width:14px;border-top:1.5px dashed var(--accent)}
+.gap{grid-column:2}
+/* IPO */
+.ipo{display:flex;align-items:stretch;gap:0}
+.ipo .col{flex:1;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.ipo .col h5{margin:0 0 4px;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;color:var(--accent);text-align:center}
+.pill{border:1.5px solid var(--accent);border-radius:999px;padding:2px 12px;font-size:14px;text-align:center;background:var(--paper)}
+.pill.solid{background:var(--accent);color:var(--paper)}
+.ipo .proc{flex:1;border:2px solid var(--accent);border-radius:8px;background:var(--accent);color:var(--paper);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:14px}
+.ipo .proc h5{color:var(--accent-soft)}
+.ipo .proc .pill{background:transparent;border-color:var(--accent-soft);color:var(--paper)}
+/* 分類樹 */
+.tree{width:max-content;min-width:100%;margin:0 auto}
+.tree ul{list-style:none;margin:0;padding:22px 0 0;display:flex;justify-content:center;position:relative}
+.tree li{position:relative;padding:22px 4px 0;text-align:center}
+.tree>ul{padding-top:0}.tree>ul>li{padding-top:0}
+.tree li::before,.tree li::after{content:"";position:absolute;top:0;width:50%;height:22px;border-top:2px solid var(--steel)}
+.tree li::before{right:50%}.tree li::after{left:50%;border-left:2px solid var(--steel)}
+.tree li:only-child::before,.tree li:only-child::after{display:none}
+.tree li:first-child::before,.tree li:last-child::after{border-top:none}
+.tree li:last-child::before{border-right:2px solid var(--steel);border-top-right-radius:6px}
+.tree li:first-child::after{border-top-left-radius:6px}
+.tree>ul>li::before,.tree>ul>li::after{display:none}
+.tree ul ul::before{content:"";position:absolute;top:0;left:50%;height:22px;border-left:2px solid var(--steel)}
+.tree .node{display:inline-block;padding:5px 9px;white-space:nowrap}
+.tree .node b{font-size:14.5px}
+/* 加工示意圖卡 */
+.procs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 20px}
+.procs.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.proc-card{background:var(--paper);border:1px solid var(--line);padding:12px 12px 10px;display:flex;flex-direction:column;gap:4px}
+.proc-card svg{width:100%;height:auto;background:var(--bg);border-radius:4px}
+.proc-card b{font-size:15px}
+.proc-card .en{display:block}
+.proc-card small{color:var(--muted);font-size:13px;line-height:1.5}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted);margin:-4px 0 12px}
+.legend i{display:inline-block;width:14px;height:10px;margin-right:6px;vertical-align:middle;border-radius:2px}
+/* 碳足跡 */
+.life{display:flex;align-items:stretch}
+.life .node{flex:1;text-align:center;padding:10px 8px}
+.offset{margin-top:14px;border:2px dashed var(--fix);border-radius:8px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:center;font-size:14.5px}
+.offset b{color:var(--fix)}
+.eq{font-family:var(--f-mono);font-size:15px;background:var(--fix);color:var(--paper);padding:2px 10px;border-radius:4px}
+/* 試題 */
+.fixbox{border:1.5px dashed var(--warn);background:var(--fix-soft);padding:14px 18px;margin:8px 0 0;font-size:14.5px}
+.fixbox h3{color:var(--warn);margin:0 0 6px;font-size:1rem}
+.fixbox ul{margin:0;padding-left:1.1em}
+.fixbox s{color:var(--muted)}
+details{border:1px solid var(--line);background:var(--paper);margin:10px 0;padding:0 16px}
+summary{cursor:pointer;padding:12px 0;font-weight:500;list-style:none;display:grid;grid-template-columns:2.4em minmax(0,1fr) auto;gap:8px}
+summary::-webkit-details-marker{display:none}
+summary .qn{font-family:var(--f-mono);color:var(--accent)}
+summary .src{font-size:12px;color:var(--muted);white-space:nowrap}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details[open] summary{border-bottom:1px dashed var(--line)}
+details .ans{padding:10px 0 14px 2.8em;font-size:15px}
+details .ans ul{margin:.2em 0;padding-left:1.1em}
+.hint{font-family:var(--f-mono);font-size:11px;color:var(--accent);letter-spacing:.1em}
+svg text{font-family:var(--f-body)}
+@media (max-width:820px){
+  header.hero{grid-template-columns:minmax(0,1fr)}.hero-art{justify-self:start;max-width:180px}
+  .wrap{grid-template-columns:minmax(0,1fr);gap:0}
+  nav.toc{position:static;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px}
+  nav.toc p{width:100%}
+  nav.toc a{border:1px solid var(--line);padding:4px 10px}
+  .ipo,.life{flex-direction:column}
+  .ipo .right,.life .right{flex-basis:26px;width:2px;height:26px;align-self:center}
+  .ipo .right::after,.life .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
+  .phase{grid-template-columns:minmax(0,1fr) 92px}
+  .procs,.procs.c4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+.crumb a{color:inherit;text-decoration:none;border-bottom:1px dashed currentColor}
+.crumb a:hover{border-bottom-style:solid}
+.cards.c2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card .en{display:block;margin:-2px 0 4px}
+.flow6,.flow5{display:flex;align-items:stretch;min-width:0}
+.flow6 .node,.flow5 .node{flex:1 1 0;min-width:0;padding:8px 9px}
+.flow6 .right,.flow5 .right{flex-basis:22px}
+.flow5 .node small{font-size:12px}
+.formula{font-family:var(--f-mono);font-size:1.45rem;text-align:center;color:var(--accent);background:var(--accent-soft);padding:14px 12px;margin:12px 0 14px;border-radius:4px}
+.formula.sm{font-size:1.05rem;padding:8px;margin:8px 0}
+.example{border:1.5px solid var(--fix);background:var(--paper);padding:0 18px 12px;margin:18px 0 24px}
+.ex-h{display:inline-block;background:var(--fix);color:var(--paper);font-weight:700;font-size:14px;padding:3px 12px;margin:0 0 6px -18px}
+.example ul{margin:.2em 0 .6em;padding-left:1.2em;font-family:var(--f-mono);font-size:14px}
+figure.mini{margin:10px 0;padding:12px;background:var(--bg)}
+figure.mini svg{width:100%;max-width:420px;height:auto;display:block}
+ol.steps{counter-reset:st;list-style:none;padding:0;margin:10px 0 20px;display:grid;gap:8px;max-width:72ch}
+ol.steps li{counter-increment:st;display:grid;grid-template-columns:2.2em minmax(0,1fr);gap:10px;align-items:baseline}
+ol.steps li::before{content:counter(st,decimal-leading-zero);font-family:var(--f-mono);font-size:13px;color:var(--paper);background:var(--accent);text-align:center;border-radius:2px;padding:1px 0}
+.dc2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.dc2>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.dc2 svg{width:100%;height:auto;background:var(--bg);border-radius:4px}
+.dc2 b{font-size:15.5px;margin-top:4px}
+.dc2 small{color:var(--muted);font-size:13.5px;line-height:1.6}
+figure svg{max-width:100%}
+.scroll>svg{width:100%;height:auto;display:block}
+@media (max-width:820px){.dc2{grid-template-columns:minmax(0,1fr)}}
+
+/* fit-to-width：圖面一律縮放到版面寬度內，不出現水平捲動 */
+.scroll{overflow:visible}
+.scroll svg,figure svg{min-width:0!important;max-width:100%;height:auto}
+table{min-width:0}
+.tbl{overflow-x:visible}
+th{white-space:normal}
+@media (max-width:820px){
+  table{font-size:13.5px} th,td{padding:6px 8px}
+  .flow6,.flow5{flex-direction:column;min-width:0}
+  .flow6 .node,.flow5 .node{width:auto;flex:none}
+  .flow6 .right,.flow5 .right{flex:0 0 22px;width:2px;height:22px;align-self:center}
+  .flow6 .right::after,.flow5 .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
+}
+.tree.as-list{width:auto;min-width:0;margin:0}
+.tree.as-list ul{display:block;padding:0 0 0 16px;margin:0 0 0 12px;border-left:2px solid var(--steel)}
+.tree.as-list>ul{border-left:0;margin:0;padding:0}
+.tree.as-list li{padding:4px 0 4px 14px;text-align:left}
+.tree.as-list>ul>li{padding-left:0}
+.tree.as-list li::after,.tree.as-list ul ul::before{display:none}
+.tree.as-list li::before{display:block;content:"";position:absolute;left:-2px;top:20px;width:12px;height:0;border:0;border-top:2px solid var(--steel);border-radius:0}
+.tree.as-list>ul>li::before{display:none}
+.tree.as-list .node{white-space:normal}
+.tree .node{padding:4px 7px}
+.tree li{padding-left:3px;padding-right:3px}
+.tree.as-list ul:not(:has(ul))>li{padding:0}
+.tree.as-list ul:not(:has(ul)){display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px;padding:6px 0 6px 16px}
+.tree.as-list ul:not(:has(ul))>li::before{display:none}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div>
+    <div class="crumb"><a href="manufacturing.html">知識動力場 · 機械製造學</a> · Chapter 03</div>
+    <h1>粉末冶金<small>Powder Metallurgy</small></h1>
+    <p class="lede">先把金屬做成粉，壓進模具成形，再加熱到熔點以下讓粉粒擴散結合。粉末冶金能做出熔煉做不到的材料，例如碳化鎢刀具、含油軸承與鎢絲，也能把齒輪這類小零件一次做到接近成品尺寸。本章依序談粉末的製造、混合、成形、燒結與後加工，最後介紹以粉末為材料的積層製造。</p>
+    <div class="meta"><span>原書頁碼 p.67–89</span><span>7 節 · 10 題歷屆試題</span></div>
+  </div>
+  <svg class="hero-art" viewBox="0 0 260 230" role="img" aria-label="粉末填入模具、上下沖頭壓製的示意圖">
+    <rect x="70" y="20" width="36" height="70" fill="var(--steel)"/>
+    <rect x="62" y="84" width="52" height="10" fill="var(--steel)"/>
+    <rect x="30" y="94" width="34" height="104" fill="var(--steel)" opacity=".55" stroke="var(--ink)" stroke-width="2"/>
+    <rect x="112" y="94" width="34" height="104" fill="var(--steel)" opacity=".55" stroke="var(--ink)" stroke-width="2"/>
+    <g fill="var(--accent)">
+      <circle cx="72" cy="104" r="4.5"/><circle cx="82" cy="102" r="4"/><circle cx="92" cy="105" r="4.6"/><circle cx="103" cy="103" r="4"/>
+      <circle cx="69" cy="114" r="4"/><circle cx="78" cy="113" r="4.6"/><circle cx="88" cy="115" r="4"/><circle cx="98" cy="113" r="4.5"/><circle cx="107" cy="115" r="3.6"/>
+      <circle cx="72" cy="124" r="4.4"/><circle cx="82" cy="124" r="4"/><circle cx="92" cy="125" r="4.5"/><circle cx="103" cy="124" r="4.2"/>
+      <circle cx="69" cy="134" r="4"/><circle cx="78" cy="134" r="4.5"/><circle cx="88" cy="135" r="4"/><circle cx="98" cy="134" r="4.6"/><circle cx="107" cy="135" r="3.8"/>
+      <circle cx="72" cy="144" r="4.5"/><circle cx="82" cy="145" r="4"/><circle cx="92" cy="144" r="4.4"/><circle cx="103" cy="145" r="4"/>
+      <circle cx="69" cy="154" r="4"/><circle cx="78" cy="155" r="4.5"/><circle cx="88" cy="154" r="4"/><circle cx="98" cy="155" r="4.5"/><circle cx="107" cy="154" r="3.8"/>
+    </g>
+    <rect x="62" y="162" width="52" height="10" fill="var(--steel)"/>
+    <rect x="70" y="172" width="36" height="50" fill="var(--steel)"/>
+    <path d="M88 8 v8" stroke="var(--fix)" stroke-width="3"/><path d="M82 12 l6 10 6-10z" fill="var(--fix)"/>
+    <g transform="translate(160 40)">
+      <circle cx="20" cy="20" r="16" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+      <circle cx="50" cy="20" r="16" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+      <rect x="32" y="13" width="6" height="14" fill="var(--accent-soft)"/>
+      <path d="M33 13 q2 7 0 14 M37 13 q-2 7 0 14" fill="none" stroke="var(--accent)" stroke-width="2"/>
+      <text x="35" y="56" text-anchor="middle" font-size="12" fill="var(--muted)">燒結頸部</text>
+    </g>
+  </svg>
+</header>
+
+<div class="wrap">
+<nav class="toc" aria-label="本章目錄">
+  <p>CONTENTS</p>
+  <a href="#s1"><span>3-1</span>概述</a>
+  <a href="#s2"><span>3-2</span>金屬粉末的製造</a>
+  <a href="#s3"><span>3-3</span>混合</a>
+  <a href="#s4"><span>3-4</span>成形</a>
+  <a href="#s5"><span>3-5</span>燒結</a>
+  <a href="#s6"><span>3-6</span>二次加工</a>
+  <a href="#s7"><span>3-7</span>積層製造</a>
+  <a href="#exam"><span>試題</span>歷屆試題</a>
+</nav>
+
+<main>
+
+<!-- ============ 3-1 ============ -->
+<section id="s1">
+  <h2><span class="no">3-1</span>概述</h2>
+  <p>粉末冶金<span class="en">（powder metallurgy, PM）</span>把金屬或非金屬原料製成粉末，在模具中加壓成形，再於熔點以下加熱，使粉粒之間擴散結合成為零件。成形後、燒結前的壓胚稱為<span class="key">生胚</span><span class="en">（green compact）</span>，此時粉粒只靠機械嵌合，強度很低。</p>
+
+  <h3>一、製程</h3>
+  <figure>
+    <div class="flow6">
+      <div class="node"><span class="n">1</span><b>製粉</b><small>霧化、還原、電解、羰基、機械粉碎</small></div><div class="right"></div>
+      <div class="node"><span class="n">2</span><b>混合</b><small>合金粉、潤滑劑、黏結劑</small></div><div class="right"></div>
+      <div class="node"><span class="n">3</span><b>成形</b><small>模壓、均壓、射出、輥軋、擠製</small></div><div class="right"></div>
+      <div class="node"><span class="n">4</span><b>燒結</b><small>保護氣氛下加熱，粉粒擴散結合</small></div><div class="right"></div>
+      <div class="node"><span class="n">5</span><b>二次加工</b><small>整形、含浸、熔滲、熱處理、切削</small></div><div class="right"></div>
+      <div class="node dark"><span class="n">6</span><b>成品</b><small>齒輪、軸承、刀具、濾材</small></div>
+    </div>
+    <figcaption>圖 3-1　粉末冶金零件的製造流程</figcaption>
+  </figure>
+
+  <h3>二、優點與限制</h3>
+  <div class="cards c2">
+    <div class="card"><h4>優點</h4><p>某些產品的唯一製法：燒結碳化物、多孔含油軸承、鎢鉬等高熔點金屬、金屬與非金屬的複合材料。材料利用率可達 95% 以上，幾乎沒有切屑；尺寸精、表面好，常可省去切削；能控制孔隙率；成分準確、雜質少；易自動化，適合小件大量生產。</p></div>
+    <div class="card"><h4>限制</h4><p>粉末價格高、易氧化不好保存；模具與壓機昂貴，需大量生產才划算；粉末在模內不像液體會流動，側孔、倒勾、螺紋做不出來；受壓機噸數限制，零件不能太大；鋁、鎂、鈦、鋯等細粉有粉塵爆炸風險；除燒結鍛造、熱均壓外，成品通常有殘留孔隙，強度與韌性低於鍛件。</p></div>
+  </div>
+
+  <h3>三、金屬粉末的性質</h3>
+  <h4>1. 顆粒形狀</h4>
+  <figure>
+    <svg viewBox="0 0 640 210" role="img" aria-label="八種粉末顆粒形狀：球形、圓粒形、多角形、尖角形、樹枝狀、不規則形、多孔海綿狀、片狀">
+      <g fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round">
+        <circle cx="80" cy="56" r="30"/>
+        <path d="M218 32 q22 -8 38 8 q14 18 2 36 q-16 18 -40 8 q-18 -12 -12 -30 q4 -16 12 -22z"/>
+        <path d="M368 28 l34 6 l14 30 l-18 26 l-36 -2 l-14 -30z"/>
+        <path d="M528 22 l26 30 l28 -6 l-14 30 l14 18 l-38 -8 l-22 14 l-6 -26 l-24 -12 l26 -10z"/>
+        <path d="M80 136 v52 M80 150 l-18 -10 M80 150 l18 -10 M80 166 l-22 -8 M80 166 l22 -10 M80 180 l-16 -6 M80 180 l18 -4 M62 140 l-6 -10 M98 140 l6 -8" fill="none" stroke-width="4" stroke-linecap="round"/>
+        <path d="M206 140 q20 -14 36 -2 q20 -10 22 12 q14 14 -4 28 q-6 18 -28 10 q-22 10 -30 -10 q-16 -20 4 -38z"/>
+        <path d="M356 138 q26 -14 50 2 q16 22 2 42 q-24 16 -50 4 q-18 -22 -2 -48z"/>
+        <path d="M514 150 l52 -14 l20 10 l-48 16 z"/>
+      </g>
+      <g fill="var(--paper)" stroke="var(--accent)" stroke-width="1.5">
+        <circle cx="370" cy="152" r="5"/><circle cx="388" cy="160" r="6"/><circle cx="374" cy="172" r="4"/><circle cx="394" cy="176" r="4"/><circle cx="360" cy="166" r="3.5"/>
+      </g>
+      <g font-size="14" fill="var(--ink)" text-anchor="middle">
+        <text x="80" y="108">球形</text><text x="238" y="108">圓粒形</text><text x="386" y="108">多角形</text><text x="545" y="108">尖角形</text>
+        <text x="80" y="204">樹枝狀</text><text x="238" y="204">不規則形</text><text x="386" y="204">多孔海綿狀</text><text x="545" y="204">片狀</text>
+      </g>
+      <g font-size="11.5" fill="var(--muted)" text-anchor="middle">
+        <text x="80" y="124">氣體霧化</text><text x="238" y="124">水霧化</text><text x="386" y="124">機械粉碎</text><text x="545" y="124">機械粉碎</text>
+      </g>
+    </svg>
+    <figcaption>圖 3-2　粉末顆粒形狀（小字為典型製法）。樹枝狀多來自電解法，海綿狀來自還原法，片狀來自球磨</figcaption>
+  </figure>
+  <p><b>球形粉</b>流動性好、堆積密度高，適合射出成形與熱均壓，但顆粒間嵌合少，生胚強度低。<b>不規則、樹枝狀粉</b>流動性差，但壓製時互相咬合，生胚強度高，傳統模壓件多用這類粉。</p>
+
+  <h4>2. 其他性質</h4>
+  <div class="tbl"><table>
+    <tr><th>性質</th><th>說明</th></tr>
+    <tr><td>粒度<br><span class="en">particle size</span></td><td>常用範圍約 0.1–1000 μm。以篩網的篩號（每英吋長度上的網孔數）分級，篩號愈大顆粒愈細；細粉另用沉降法、雷射繞射、顯微鏡影像分析測定。粒度分布寬的粉末，小顆粒能填入大顆粒間隙，堆積較密。</td></tr>
+    <tr><td>流動性<br><span class="en">flowability</span></td><td>粉末填滿模穴的難易，以標準漏斗流出 50 g 粉末所需秒數表示。流動性好，填模均勻，密度一致。</td></tr>
+    <tr><td>鬆裝密度<br><span class="en">apparent density</span></td><td>粉末自然倒入容器、不加壓時的密度。</td></tr>
+    <tr><td>振實密度<br><span class="en">tap density</span></td><td>輕敲或振動後較緊密時的密度，高於鬆裝密度。</td></tr>
+    <tr><td>壓縮性<br><span class="en">compressibility</span></td><td>在一定壓力下能壓到多密。常以壓縮比（粉末鬆裝體積比壓胚體積）表示，鐵粉約 2.5：1。</td></tr>
+    <tr><td>真密度<br><span class="en">true density</span></td><td>材料本身無孔隙時的密度，用來計算壓胚與燒結體的相對密度。</td></tr>
+    <tr><td>燒結性<br><span class="en">sinterability</span></td><td>加熱時粉粒擴散結合的能力。可燒結的溫度範圍寬，製程容易控制。</td></tr>
+  </table></div>
+
+  <h3>四、設計原則</h3>
+  <div class="cards">
+    <div class="card"><h4>形狀簡單均勻</h4><p>斷面厚度均勻，避免急劇變化；長徑比不宜過大（單向壓製約 2–3 以內），否則中段密度偏低。</p></div>
+    <div class="card"><h4>能從模中頂出</h4><p>孔與溝槽須平行於壓製方向；側孔、倒勾、螺紋留待切削。邊緣做倒角或圓角，避免尖薄邊緣崩裂。</p></div>
+    <div class="card"><h4>公差盡量放寬</h4><p>在功能允許下採用較寬公差，可延長模具壽命、降低成本。</p></div>
+  </div>
+</section>
+
+<!-- ============ 3-2 ============ -->
+<section id="s2">
+  <h2><span class="no">3-2</span>金屬粉末的製造</h2>
+  <div class="tbl"><table>
+    <tr><th>方法</th><th>原理</th><th>粉末特徵與適用金屬</th></tr>
+    <tr><td>霧化法<br><span class="en">atomization</span></td><td>熔融金屬流經噴嘴，被高壓水或氣體噴散成細滴，飛行中凝固成粉。另有離心霧化：熔滴被高速旋轉盤或旋轉電極甩出。</td><td><b>產量最大的製粉法。</b>水霧化便宜、粉末不規則，用於鐵與低合金鋼、銅；氣體（氮、氬）霧化得到球形、低氧粉末，用於不鏽鋼、超合金、鈦合金與積層製造。</td></tr>
+    <tr><td>還原法<br><span class="en">reduction</span></td><td>把金屬氧化物粉碎後，在熔點以下以氫、一氧化碳或碳還原。</td><td>多孔海綿狀，壓縮性與生胚強度好。用於鐵（海綿鐵粉）、鎢、鉬、鎳、鈷、銅。</td></tr>
+    <tr><td>電解沉積<br><span class="en">electrolytic deposition</span></td><td>原理與電鍍相同，但用大電流密度，使陰極析出鬆散、易碎的沉積物，再磨碎、乾燥。</td><td>純度最高，樹枝狀。用於銅、鐵、鎳、銀、鉭。</td></tr>
+    <tr><td>羰基法<br><span class="en">carbonyl process</span></td><td>鐵或鎳與 CO 反應生成羰基化合物 Fe(CO)₅、Ni(CO)₄，再加熱分解析出金屬。</td><td>極細、高純度的球形粉，用於鐵、鎳。</td></tr>
+    <tr><td>機械粉碎<br><span class="en">comminution</span></td><td>球磨、鎚擊、軋碎，把材料打碎。</td><td>只適用於脆性材料，如銻、鉍、錳、鉻、合金鐵與氧化物。</td></tr>
+    <tr><td>切削法<br><span class="en">machining</span></td><td>以旋轉刀切出細屑，再篩分。</td><td>粗粒，用於鎂等。</td></tr>
+    <tr><td>彈射法<br><span class="en">shotting</span></td><td>金屬液穿過篩孔或噴嘴滴入水中急冷。</td><td>較粗的圓粒。</td></tr>
+    <tr><td>機械合金化<br><span class="en">mechanical alloying</span></td><td>兩種以上的粉末在高能球磨中反覆被壓扁、冷銲、破碎，最後成為成分均勻的合金粉。</td><td>可做出熔煉做不到的組合，如氧化物分散強化（ODS）超合金。</td></tr>
+  </table></div>
+
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 250" role="img" aria-label="水霧化：熔融金屬流向下落，環狀高壓水噴嘴把金屬流打碎成粉，落入霧化室底部">
+        <path d="M110 14 H190 L176 60 H124 Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M114 28 H186 L176 58 H124 Z" fill="var(--accent)"/>
+        <rect x="145" y="60" width="10" height="16" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/>
+        <rect x="148" y="76" width="4" height="34" fill="var(--accent)"/>
+        <rect x="96" y="96" width="34" height="12" fill="var(--fix)"/><rect x="170" y="96" width="34" height="12" fill="var(--fix)"/>
+        <path d="M130 104 L150 132 M170 104 L150 132" stroke="var(--fix)" stroke-width="3" stroke-dasharray="4 3"/>
+        <rect x="60" y="86" width="180" height="150" fill="none" stroke="var(--ink)" stroke-width="2"/>
+        <g fill="var(--accent)">
+          <circle cx="146" cy="142" r="2.5"/><circle cx="156" cy="146" r="2"/><circle cx="138" cy="156" r="2.4"/><circle cx="162" cy="160" r="2.6"/><circle cx="150" cy="168" r="2"/><circle cx="130" cy="176" r="2.4"/><circle cx="170" cy="180" r="2.2"/><circle cx="144" cy="186" r="2.6"/><circle cx="158" cy="192" r="2"/><circle cx="122" cy="196" r="2.2"/><circle cx="178" cy="198" r="2.4"/>
+        </g>
+        <path d="M62 214 q20 -6 40 0 t40 0 t40 0 t40 0 t16 0 V234 H62Z" fill="var(--fix)" opacity=".25"/>
+        <g font-size="12" fill="var(--ink)"><text x="196" y="40">熔融金屬</text><text x="62" y="80">高壓水</text><text x="200" y="80">高壓水</text><text x="186" y="160">粉末</text><text x="66" y="230" fill="var(--muted)">收集、脫水</text></g>
+      </svg>
+      <b>(a) 水霧化</b><small>以環狀噴嘴的高壓水衝擊金屬流，冷速快，顆粒不規則、表面有氧化，鐵粉主要用此法。</small>
+      </div>
+      <div>
+      <svg viewBox="0 0 300 250" role="img" aria-label="氣體霧化：高壓惰性氣體把金屬流打碎，液滴在高塔中飛行時收縮成球形">
+        <path d="M110 14 H190 L176 60 H124 Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M114 28 H186 L176 58 H124 Z" fill="var(--accent)"/>
+        <rect x="145" y="60" width="10" height="16" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/>
+        <rect x="148" y="76" width="4" height="22" fill="var(--accent)"/>
+        <rect x="104" y="86" width="30" height="10" fill="var(--steel)"/><rect x="166" y="86" width="30" height="10" fill="var(--steel)"/>
+        <path d="M134 92 L150 114 M166 92 L150 114" stroke="var(--steel)" stroke-width="3" stroke-dasharray="2 4"/>
+        <path d="M70 80 H230 V196 L170 236 H130 L70 196 Z" fill="none" stroke="var(--ink)" stroke-width="2"/>
+        <g fill="var(--accent)">
+          <circle cx="146" cy="126" r="3"/><circle cx="158" cy="132" r="2.6"/><circle cx="136" cy="142" r="3"/><circle cx="166" cy="148" r="2.6"/><circle cx="150" cy="156" r="3"/><circle cx="128" cy="166" r="2.8"/><circle cx="174" cy="170" r="3"/><circle cx="146" cy="178" r="2.6"/><circle cx="160" cy="190" r="3"/><circle cx="136" cy="200" r="2.8"/><circle cx="152" cy="214" r="3"/><circle cx="144" cy="226" r="2.6"/>
+        </g>
+        <g font-size="12" fill="var(--ink)"><text x="196" y="40">熔融金屬</text><text x="40" y="74">氬氣或氮氣</text><text x="196" y="132">球形粉</text><text x="100" y="248" fill="var(--muted)">霧化塔</text></g>
+      </svg>
+      <b>(b) 氣體霧化</b><small>以惰性氣體霧化，液滴冷卻較慢，表面張力把它拉成球形，含氧量低，用於高合金與積層製造粉末。</small>
+      </div>
+    </div>
+    <figcaption>圖 3-3　霧化法</figcaption>
+  </figure>
+</section>
+
+<!-- ============ 3-3 ============ -->
+<section id="s3">
+  <h2><span class="no">3-3</span>混合</h2>
+  <p>粉末成形前要充分混合<span class="en">（blending / mixing）</span>，讓不同粒度與成分均勻分布，否則燒結後性質不一。一般在空氣中混合；容易氧化或品質要求高者，在惰性氣體或真空中進行。混合時間數十分鐘到數小時，用球磨混合時不宜過久，粉末會加工硬化，粒度也會改變。</p>
+  <div class="cards">
+    <div class="card"><h4>合金成分</h4><p>如鐵粉加石墨（燒結後成為鋼中的碳）、加銅粉；碳化鎢加鈷粉作黏結相。</p></div>
+    <div class="card"><h4>潤滑劑</h4><p>硬脂酸鋅、硬脂酸鋰或蠟，約 0.5–1%，降低粉末與模壁的摩擦，壓得更均勻、頂出更容易。燒結前先在低溫區燒除。</p></div>
+    <div class="card"><h4>黏結劑</h4><p>提高生胚強度，或在射出成形、擠製中讓粉末能像塑膠一樣流動。</p></div>
+  </div>
+  <div class="callout"><b>安全注意：</b>鋁、鎂、鈦、鋯等活性金屬細粉比表面積大，在空氣中達到一定濃度時遇火源會發生粉塵爆炸。作業場所要通風、除塵、接地，避免火花。</div>
+</section>
+
+<!-- ============ 3-4 ============ -->
+<section id="s4">
+  <h2><span class="no">3-4</span>成形</h2>
+  <h3>一、模壓成形</h3>
+  <p><span class="en">die pressing / compaction</span>　定量粉末填入鋼模或碳化物模，以上下沖頭在常溫加壓，再把生胚頂出。所需壓力依材料而定：鋁約 70–275 MPa，鐵與鋼約 350–800 MPa，硬而難壓的材料更高。</p>
+  <figure>
+    <svg viewBox="0 0 640 230" role="img" aria-label="雙動模壓的三個步驟：填粉、上下沖頭同時加壓、頂出生胚">
+      <defs><pattern id="pw" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="var(--accent-soft)"/><circle cx="3.5" cy="3.5" r="2.2" fill="var(--accent)"/></pattern></defs>
+      <g>
+        <rect x="40" y="70" width="34" height="120" fill="var(--steel)"/><rect x="146" y="70" width="34" height="120" fill="var(--steel)"/>
+        <rect x="74" y="80" width="72" height="80" fill="url(#pw)"/>
+        <rect x="78" y="160" width="64" height="56" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="74" y="52" width="72" height="12" fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="110" y="24" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">(a) 填粉</text>
+        <text x="110" y="40" text-anchor="middle" font-size="11.5" fill="var(--muted)">送粉靴刮平</text>
+      </g>
+      <g transform="translate(210 0)">
+        <rect x="40" y="70" width="34" height="120" fill="var(--steel)"/><rect x="146" y="70" width="34" height="120" fill="var(--steel)"/>
+        <rect x="78" y="40" width="64" height="66" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="74" y="106" width="72" height="40" fill="var(--accent)"/>
+        <rect x="78" y="146" width="64" height="70" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M110 46 v24" stroke="var(--fix)" stroke-width="3"/><path d="M104 64 l6 10 6-10z" fill="var(--fix)"/>
+        <path d="M110 210 v-24" stroke="var(--fix)" stroke-width="3"/><path d="M104 192 l6 -10 6 10z" fill="var(--fix)"/>
+        <text x="110" y="24" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">(b) 上下沖頭加壓</text>
+        <text x="200" y="130" font-size="11.5" fill="var(--muted)">生胚</text>
+      </g>
+      <g transform="translate(420 0)">
+        <rect x="40" y="70" width="34" height="120" fill="var(--steel)"/><rect x="146" y="70" width="34" height="120" fill="var(--steel)"/>
+        <rect x="74" y="30" width="72" height="40" fill="var(--accent)"/>
+        <rect x="78" y="70" width="64" height="146" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M110 200 v-24" stroke="var(--fix)" stroke-width="3"/><path d="M104 182 l6 -10 6 10z" fill="var(--fix)"/>
+        <text x="110" y="24" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">(c) 頂出</text>
+      </g>
+      <g font-size="12" fill="var(--ink)"><text x="4" y="200">模具</text><text x="150" y="226">下沖頭</text></g>
+    </svg>
+    <figcaption>圖 3-4　雙動模壓的步驟</figcaption>
+  </figure>
+  <p>粉末與模壁之間有摩擦，壓力愈往深處愈小，<b>離沖頭愈遠密度愈低</b>。單向壓製時底部密度最低；改用上下沖頭同時加壓的<b>雙動壓製</b>，最低密度移到中段且差異縮小。零件較高、或有不同厚度台階時，要用多沖頭分別控制各段的壓縮量。</p>
+  <div class="callout"><b>為什麼壓不到 100%：</b>等徑球即使排成最密堆積也還有約 26% 的空隙，隨機堆積約 36%。模壓靠顆粒塑性變形把空隙壓小，一般鐵基件生胚相對密度約 80–90%，要接近全密度須靠熱均壓或燒結鍛造。</div>
+
+  <h3>二、均壓成形</h3>
+  <p><span class="en">isostatic pressing</span>　依據<b>巴斯卡原理</b>，封閉流體中的壓力各方向相等。把粉末裝在可撓性模具或容器中，從四面八方加壓，沒有模壁摩擦，密度均勻，可做長徑比大或形狀複雜的零件。</p>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 240" role="img" aria-label="冷均壓：粉末裝在橡膠模中浸入高壓液體">
+        <rect x="50" y="30" width="200" height="190" rx="14" fill="var(--paper)" stroke="var(--ink)" stroke-width="3"/>
+        <rect x="56" y="36" width="188" height="178" rx="10" fill="var(--fix)" opacity=".18"/>
+        <rect x="112" y="70" width="76" height="120" rx="10" fill="url(#pw)" stroke="var(--ink)" stroke-width="3"/>
+        <g stroke="var(--fix)" stroke-width="2.5">
+          <path d="M84 130 h22"/><path d="M216 130 h-22"/><path d="M150 52 v14"/><path d="M150 210 v-14"/><path d="M90 86 l18 10"/><path d="M210 86 l-18 10"/><path d="M90 176 l18 -10"/><path d="M210 176 l-18 -10"/>
+        </g>
+        <g font-size="12" fill="var(--ink)"><text x="60" y="22">高壓容器</text><text x="160" y="232" fill="var(--muted)">液體加壓（水或油）</text><text x="196" y="108">橡膠模</text></g>
+      </svg>
+      <b>冷均壓 CIP</b><small>常溫下以液體加壓（可達約 400 MPa），只成形不燒結，之後另送燒結爐。濕袋式把模具整個浸入液體，形狀彈性大；乾袋式橡膠模固定在容器內，適合自動化量產。</small>
+      </div>
+      <div>
+      <svg viewBox="0 0 300 240" role="img" aria-label="熱均壓：金屬罐中的粉末在高溫爐內受高壓氬氣作用">
+        <rect x="50" y="30" width="200" height="190" rx="14" fill="var(--paper)" stroke="var(--ink)" stroke-width="3"/>
+        <rect x="66" y="46" width="168" height="158" fill="none" stroke="var(--steel)" stroke-width="2" stroke-dasharray="6 4"/>
+        <g stroke="var(--accent)" stroke-width="3"><path d="M78 58 v134"/><path d="M222 58 v134"/></g>
+        <rect x="112" y="80" width="76" height="100" fill="url(#pw)" stroke="var(--ink)" stroke-width="3"/>
+        <g stroke="var(--fix)" stroke-width="2.5"><path d="M92 130 h16"/><path d="M208 130 h-16"/><path d="M150 60 v16"/><path d="M150 200 v-16"/></g>
+        <g font-size="12" fill="var(--ink)"><text x="60" y="22">高壓容器</text><text x="244" y="22" text-anchor="end" fill="var(--accent)">加熱器（虛框內）</text><text x="158" y="74">金屬罐</text><text x="150" y="232" text-anchor="middle" fill="var(--muted)">高溫＋高壓氬氣</text></g>
+      </svg>
+      <b>熱均壓 HIP</b><small>粉末封在薄金屬罐或玻璃容器內抽真空，於爐中同時加熱（如超合金約 1100–1200°C）與加約 100–200 MPa 的氬氣壓力，一次完成成形與燒結，可達接近 100% 密度。設備昂貴、週期長，用於超合金、鈦合金、粉末高速鋼，也用來消除鑄件內部孔隙。</small>
+      </div>
+    </div>
+    <figcaption>圖 3-5　冷均壓與熱均壓</figcaption>
+  </figure>
+
+  <h3>三、金屬射出成形 MIM</h3>
+  <p><span class="en">metal injection molding</span>　把細金屬粉（一般小於 20 μm）與約 40% 體積的熱塑性塑膠或蠟黏結劑混練成料粒，用<b>塑膠射出成形機</b>射入模具，再去除黏結劑並燒結。</p>
+  <figure>
+    <div class="flow6">
+      <div class="node"><span class="n">1</span><b>混練造粒</b><small>細粉＋黏結劑約 60：40（體積）</small></div><div class="right"></div>
+      <div class="node"><span class="n">2</span><b>射出成形</b><small>加熱成漿料射入模具</small></div><div class="right"></div>
+      <div class="node"><span class="n">3</span><b>脫脂</b><small>溶劑萃取或加熱分解去除黏結劑</small></div><div class="right"></div>
+      <div class="node"><span class="n">4</span><b>燒結</b><small>線收縮約 15–20%</small></div><div class="right"></div>
+      <div class="node"><span class="n">5</span><b>後處理</b><small>整形、熱處理、表面處理</small></div><div class="right"></div>
+      <div class="node dark"><span class="n">6</span><b>成品</b><small>密度約 95–98%</small></div>
+    </div>
+    <figcaption>圖 3-6　金屬射出成形流程</figcaption>
+  </figure>
+  <div class="cards c2">
+    <div class="card"><h4>優缺點</h4><p>能做形狀非常複雜的小型薄壁件，密度高、精度好、可大量生產；但細粉昂貴，脫脂費時，燒結收縮大，尺寸控制要靠經驗，零件以數十克以下為主。</p></div>
+    <div class="card"><h4>設計要點與應用</h4><p>壁厚均勻、不宜過厚（約 10 mm 以內），留拔模斜度，模具尺寸要預先放大補償收縮。用於手錶零件、手機與電子零件、槍械零件、手術器械、齒科矯正器。</p></div>
+  </div>
+
+  <h3>四、其他成形法</h3>
+  <div class="tbl"><table>
+    <tr><th>方法</th><th>做法</th><th>用途</th></tr>
+    <tr><td>粉末輥軋<br><span class="en">powder rolling</span></td><td>粉末由漏斗連續送入一對輥輪間壓成生帶，再送入燒結爐，可連續生產。</td><td>銅、黃銅、青銅、蒙乃爾合金、不鏽鋼板帶，多孔電極板。</td></tr>
+    <tr><td>粉末擠製<br><span class="en">extrusion</span></td><td>粉末裝在金屬罐中加熱擠製；或與塑化黏結劑混成膏狀擠出，之後去除黏結劑燒結。</td><td>超合金與 ODS 合金棒材、碳化物棒、陶瓷管。</td></tr>
+    <tr><td>離心壓製<br><span class="en">centrifugal compacting</span></td><td>裝粉的模具高速旋轉，每顆粉粒受離心力壓實。</td><td>形狀簡單的套筒；粉粒愈重效果愈好，適合鎢等重金屬。</td></tr>
+    <tr><td>注漿成形<br><span class="en">slip casting</span></td><td>粉末與液體調成漿，倒入多孔石膏模，液體被吸走，粉末沉積在模壁；倒出多餘漿料即成空心件，乾燥後燒結。</td><td>陶瓷衛浴、大型空心件；金屬中用於鎢、鉬。</td></tr>
+    <tr><td>重力燒結<br><span class="en">loose sintering</span></td><td>粉末鬆散鋪入模中，不加壓直接燒結。</td><td>高孔隙率的青銅、不鏽鋼過濾器。</td></tr>
+    <tr><td>爆炸壓製<br><span class="en">explosive compacting</span></td><td>以炸藥產生的瞬間極高壓力壓實粉末。</td><td>難壓的高強度材料，形狀須簡單。</td></tr>
+    <tr><td>金屬纖維法<br><span class="en">fiber metal</span></td><td>以帶溝槽的高速旋轉輪從熔湯表面甩出短纖維，纖維交纏成氈後加壓燒結。</td><td>高孔隙率的過濾器、消音與減振元件、阻火網。</td></tr>
+    <tr><td>陶瓷模＋熱均壓<br><span class="en">ceramic molds</span></td><td>以類似陶瓷模鑄造的方法做出模殼，填入粉末後封入鋼罐抽真空，再熱均壓。</td><td>形狀複雜的鈦合金件，如火箭引擎壓縮機轉子。</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ 3-5 ============ -->
+<section id="s5">
+  <h2><span class="no">3-5</span>燒結</h2>
+  <p>把生胚在保護氣氛中加熱到約熔點（絕對溫度）的 70–90%，粉粒的接觸點經由原子擴散長出<span class="key">頸部</span><span class="en">（neck）</span>，頸部變粗、孔隙變小變圓，零件因而收縮、緻密、強度大增，這個過程稱為<span class="key">燒結</span><span class="en">（sintering）</span>。</p>
+  <figure>
+    <svg viewBox="0 0 640 170" role="img" aria-label="燒結的三個階段：點接觸、頸部成長、孔隙收縮變圓">
+      <g fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2.2">
+        <circle cx="60" cy="70" r="30"/><circle cx="120" cy="70" r="30"/><circle cx="90" cy="122" r="30"/>
+      </g>
+      <g transform="translate(210 0)">
+        <circle cx="60" cy="70" r="30" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2.2"/><circle cx="116" cy="70" r="30" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2.2"/><circle cx="88" cy="118" r="30" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2.2"/>
+        <rect x="80" y="58" width="16" height="24" fill="var(--accent-soft)"/>
+        <path d="M80 80 L72 100 L84 92Z M96 80 L104 100 L92 92Z" fill="var(--accent-soft)"/>
+        <path d="M86 60 q2 10 0 20 M90 60 q-2 10 0 20" fill="none" stroke="var(--accent)" stroke-width="1.6"/>
+        <circle cx="88" cy="88" r="7" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.6"/>
+      </g>
+      <g transform="translate(420 0)">
+        <path d="M30 70 q0 -36 40 -36 q20 0 26 8 q6 -8 26 -8 q40 0 40 36 q0 26 -22 34 q4 30 -36 40 q-40 -10 -36 -40 q-38 -6 -38 -34z" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2.2"/>
+        <circle cx="96" cy="84" r="5" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.6"/>
+        <path d="M70 40 q4 20 10 34" fill="none" stroke="var(--accent)" stroke-width="1" stroke-dasharray="3 3"/>
+        <path d="M122 40 q-4 20 -16 34" fill="none" stroke="var(--accent)" stroke-width="1" stroke-dasharray="3 3"/>
+      </g>
+      <g font-size="13.5" font-weight="700" fill="var(--ink)" text-anchor="middle"><text x="90" y="166">① 點接觸</text><text x="300" y="166">② 頸部成長</text><text x="516" y="166">③ 孔隙變小變圓</text></g>
+      <g font-size="11.5" fill="var(--muted)"><text x="330" y="96">孔隙</text></g>
+      <path d="M170 90 h24" stroke="var(--fix)" stroke-width="2.5"/><path d="M192 84 l10 6 -10 6z" fill="var(--fix)"/>
+      <path d="M380 90 h24" stroke="var(--fix)" stroke-width="2.5"/><path d="M402 84 l10 6 -10 6z" fill="var(--fix)"/>
+    </svg>
+    <figcaption>圖 3-7　燒結過程：擴散使頸部長大、孔隙縮小</figcaption>
+  </figure>
+
+  <div class="cards c2">
+    <div class="card"><h4>固相燒結</h4><p>全程不出現液體，靠表面、晶界與體積擴散結合。單一成分金屬多屬此類，燒結溫度在熔點以下。</p></div>
+    <div class="card"><h4>液相燒結</h4><p>混合粉中熔點低的成分在燒結溫度熔化，液體潤濕並拉近固體顆粒，擴散加快，緻密化更快。典型例子是碳化鎢加鈷（鈷熔化）與青銅含油軸承（錫熔化）。</p></div>
+  </div>
+
+  <h4>燒結收縮</h4>
+  <p>設長度方向的線收縮率為 ΔL／L₀，且各方向收縮相同，則：</p>
+  <div class="formula sm">V<sub>燒結</sub> = V<sub>生胚</sub> (1 − ΔL／L₀)³　　ρ<sub>燒結</sub> = ρ<sub>生胚</sub> ／ (1 − ΔL／L₀)³</div>
+  <div class="example">
+    <div class="ex-h">例題</div>
+    <p>鐵基生胚密度 6.4 g/cm³，燒結後線收縮 2%。求燒結密度，以及相對於鐵真密度 7.87 g/cm³ 的相對密度。</p>
+    <p><b>解：</b>ρ<sub>燒結</sub> = 6.4 ／ (0.98)³ = 6.4 ／ 0.941 ≈ <b>6.80 g/cm³</b>；相對密度 = 6.80 ／ 7.87 ≈ <b>86%</b>（生胚為 81%）。只有 2% 的線收縮，密度就提高了約 6%。</p>
+  </div>
+
+  <h4>燒結條件</h4>
+  <div class="tbl"><table>
+    <tr><th>材料</th><th>燒結溫度約（°C）</th></tr>
+    <tr><td>銅、青銅</td><td class="num">750–1000</td></tr>
+    <tr><td>黃銅</td><td class="num">850–950</td></tr>
+    <tr><td>鐵、低合金鋼</td><td class="num">1000–1150</td></tr>
+    <tr><td>不鏽鋼</td><td class="num">1100–1290</td></tr>
+    <tr><td>碳化鎢（鈷結合）</td><td class="num">1430–1500</td></tr>
+  </table></div>
+  <p>時間一般 10 分鐘到數十分鐘，特殊材料可達數小時。爐內通入<b>還原或保護氣氛</b>（氫、分解氨、吸熱型氣體、氮基氣體）或抽真空，防止氧化並還原粉末表面氧化膜。少量多樣用批次爐；大量生產用連續式網帶爐：</p>
+  <figure>
+    <svg viewBox="0 0 640 150" role="img" aria-label="連續式網帶燒結爐：裝料區、脫蠟預熱區、高溫燒結區、冷卻區">
+      <rect x="20" y="40" width="600" height="70" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="20" y="40" width="80" height="70" fill="var(--bg)"/>
+      <rect x="100" y="40" width="130" height="70" fill="var(--accent-soft)"/>
+      <rect x="230" y="40" width="190" height="70" fill="var(--accent)" opacity=".75"/>
+      <rect x="420" y="40" width="200" height="70" fill="var(--fix)" opacity=".18"/>
+      <line x1="10" y1="96" x2="630" y2="96" stroke="var(--ink)" stroke-width="3"/>
+      <g fill="var(--steel)"><rect x="40" y="84" width="22" height="12"/><rect x="130" y="84" width="22" height="12"/><rect x="190" y="84" width="22" height="12"/><rect x="270" y="84" width="22" height="12"/><rect x="340" y="84" width="22" height="12"/><rect x="460" y="84" width="22" height="12"/><rect x="540" y="84" width="22" height="12"/></g>
+      <path d="M560 128 h48" stroke="var(--fix)" stroke-width="2.5"/><path d="M606 122 l10 6 -10 6z" fill="var(--fix)"/>
+      <g font-size="13" font-weight="700" fill="var(--ink)" text-anchor="middle"><text x="60" y="64">裝料</text><text x="165" y="64">脫蠟預熱</text><text x="325" y="64" fill="var(--paper)">高溫燒結</text><text x="520" y="64">冷卻</text></g>
+      <g font-size="11.5" fill="var(--muted)" text-anchor="middle"><text x="165" y="134">燒除潤滑劑</text><text x="325" y="134">保護氣氛</text><text x="520" y="34">水套冷卻，避免出爐氧化</text><text x="580" y="146">網帶前進</text></g>
+    </svg>
+    <figcaption>圖 3-8　連續式網帶燒結爐</figcaption>
+  </figure>
+
+  <h4>燒結方式</h4>
+  <div class="tbl"><table>
+    <tr><th>方式</th><th>做法</th><th>特色</th></tr>
+    <tr><td>一般燒結<br><span class="en">conventional</span></td><td>常溫壓製成形，再送爐中燒結。加壓與加熱分開。</td><td>最普遍、成本低，成品留有孔隙。</td></tr>
+    <tr><td>熱壓<br><span class="en">hot pressing</span></td><td>在模具中同時加熱加壓，一次完成成形與燒結。</td><td>密度與強度高；但模具須耐高溫，多用石墨模，壽命短、週期長。用於碳化物、陶瓷、鑽石工具。</td></tr>
+    <tr><td>放電電漿燒結<br><span class="en">spark plasma sintering</span></td><td>以脈衝直流電直接通過石墨模與粉末，粉粒接觸處放電清除表面氧化物並快速加熱，同時加壓。</td><td>升溫極快，數分鐘完成，晶粒來不及長大，適合奈米材料與難燒結材料；也可把碳化物燒結接合在鋼基材上。</td></tr>
+    <tr><td>燒結鍛造<br><span class="en">powder forging</span></td><td>先壓製燒結出預成形體，加熱後放進閉模鍛造一次。</td><td>密度接近 100%，強度與韌性接近鍛鋼，用於汽車連桿、變速箱齒輪。</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ 3-6 ============ -->
+<section id="s6">
+  <h2><span class="no">3-6</span>二次加工與完工處理</h2>
+  <div class="tbl"><table>
+    <tr><th>處理</th><th>做法與目的</th></tr>
+    <tr><td>整形與壓印<br><span class="en">sizing / coining</span></td><td>燒結件再放入精密模中加壓。整形修正燒結變形、提高尺寸精度；壓印加大壓力，提高密度並壓出表面細節。</td></tr>
+    <tr><td>切削<br><span class="en">machining</span></td><td>加工模壓做不出的側孔、倒勾、螺紋與溝槽。<b>鐵基件不可用水溶性切削液</b>，液體會滲入孔隙造成內部生鏽。</td></tr>
+    <tr><td>含浸油<br><span class="en">oil impregnation</span></td><td>含油軸承在孔隙中填入潤滑油。<b>真空法：</b>抽真空排出孔隙空氣後浸油，恢復大氣壓時油被壓入。<b>熱油法：</b>在熱油中浸泡，孔隙內空氣受熱逸出，冷卻時把油吸入。</td></tr>
+    <tr><td>熔滲<br><span class="en">infiltration</span></td><td>把銅或銅合金片放在鐵基生胚上一起燒結，銅熔化後靠毛細作用滲入孔隙，提高密度、強度與氣密性。</td></tr>
+    <tr><td>蒸氣處理<br><span class="en">steam treatment</span></td><td>鐵基件在約 550°C 通入過熱蒸氣，表面與孔壁生成緻密的 Fe₃O₄，提高硬度、耐磨、耐蝕與氣密性。</td></tr>
+    <tr><td>熱處理<br><span class="en">heat treatment</span></td><td>可淬火回火或滲碳提高硬度。孔隙降低導熱，且淬火液會滲入孔隙，需徹底清除；<b>不可用鹽浴</b>，鹽會殘留在孔隙中造成腐蝕。</td></tr>
+    <tr><td>電鍍<br><span class="en">plating</span></td><td>電鍍液會滲入孔隙腐蝕工件，須先封孔，如熔滲、含浸樹脂，或以珠擊、滾壓使表面塑性流動封閉孔隙。</td></tr>
+  </table></div>
+  <p><b>常見粉末冶金產品：</b>含油軸承、汽車齒輪與油泵轉子、連桿、金屬過濾器、碳化鎢與陶瓷刀具、馬達碳刷、永久磁鐵、電接點、鎢絲與鎢鉬電極、CPU 熱管的燒結銅毛細結構。</p>
+</section>
+
+<!-- ============ 3-7 ============ -->
+<section id="s7">
+  <h2><span class="no">3-7</span>積層製造（快速原型）</h2>
+  <p>積層製造<span class="en">（additive manufacturing, AM，俗稱 3D 列印）</span>把 CAD 模型切成薄層，再一層一層堆疊材料做出零件。與切削的「減法」相反，它是「加法」，不需模具就能做出內流道、晶格等傳統方法做不到的形狀。以粉末為原料的代表是選擇性雷射燒結與黏結劑噴印。</p>
+
+  <h3>一、選擇性雷射燒結 SLS</h3>
+  <figure>
+    <svg viewBox="0 0 640 260" role="img" aria-label="選擇性雷射燒結：雷射經掃描鏡照射粉床，輥子由送粉筒鋪粉，成形筒逐層下降">
+      <defs><pattern id="pb" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="var(--accent-soft)"/><circle cx="4" cy="4" r="1.6" fill="var(--accent)" opacity=".6"/></pattern></defs>
+      <rect x="250" y="10" width="70" height="30" rx="4" fill="var(--steel)"/><text x="285" y="30" text-anchor="middle" font-size="12" fill="var(--paper)">雷射</text>
+      <path d="M320 25 H380" stroke="var(--warn)" stroke-width="2.5"/>
+      <rect x="374" y="14" width="22" height="22" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5" transform="rotate(30 385 25)"/>
+      <path d="M385 36 L420 120" stroke="var(--warn)" stroke-width="2.5"/>
+      <rect x="60" y="120" width="520" height="8" fill="var(--steel)"/>
+      <rect x="100" y="128" width="150" height="110" fill="url(#pb)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="100" y="200" width="150" height="10" fill="var(--steel)"/><rect x="170" y="210" width="10" height="34" fill="var(--steel)"/>
+      <rect x="330" y="128" width="170" height="110" fill="url(#pb)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M380 140 h70 v40 h-20 v-24 h-30 v24 h-20z" fill="var(--accent)"/>
+      <rect x="330" y="214" width="170" height="10" fill="var(--steel)"/><rect x="410" y="224" width="10" height="20" fill="var(--steel)"/>
+      <circle cx="270" cy="112" r="9" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M284 104 h30" stroke="var(--fix)" stroke-width="2.5"/><path d="M312 98 l10 6 -10 6z" fill="var(--fix)"/>
+      <path d="M175 250 v-14" stroke="var(--fix)" stroke-width="2.5"/><path d="M169 240 l6 -10 6 10z" fill="var(--fix)"/>
+      <path d="M440 238 v14" stroke="var(--fix)" stroke-width="2.5"/><path d="M434 248 l6 10 6-10z" fill="var(--fix)"/>
+      <g font-size="12.5" fill="var(--ink)"><text x="404" y="20">掃描鏡</text><text x="232" y="96">鋪粉輥</text><text x="110" y="148">送粉筒（上升）</text><text x="510" y="200">成形筒（逐層下降）</text><text x="456" y="152" fill="var(--paper)" font-size="11">已燒結</text><text x="510" y="146">未燒結粉末支撐零件</text></g>
+    </svg>
+    <figcaption>圖 3-9　選擇性雷射燒結</figcaption>
+  </figure>
+  <p>送粉筒上升、鋪粉輥把一層薄粉推到成形筒上；雷射依該層斷面掃描，使粉末燒結或熔化結合；成形筒下降一層，再鋪粉、再掃描，直到完成。未燒結的粉末留在原處支撐零件，完成後清除即可，多可回收。材料以尼龍等高分子為主；金屬粉末完全熔化的稱為選擇性雷射熔融（SLM）或直接金屬雷射燒結（DMLS），可達接近全密度，常再經熱均壓與熱處理。</p>
+
+  <h3>二、黏結劑噴印 3DP</h3>
+  <p><span class="en">binder jetting</span>　以噴墨列印頭在粉床上選擇性噴出黏結劑，把該層斷面的粉末黏起來，再鋪下一層粉。完成的生胚強度低，金屬件要再燒結或熔滲銅、青銅提高密度。速度快、不需雷射，材料有金屬、陶瓷（氧化鋁、碳化矽、氧化鋯）與砂（直接列印砂模、砂心）。</p>
+
+  <h3>三、立體光固化 SLA</h3>
+  <figure>
+    <svg viewBox="0 0 640 210" role="img" aria-label="立體光固化：紫外線雷射掃描液態光敏樹脂表面，平台逐層下降">
+      <rect x="230" y="70" width="240" height="130" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.5"/>
+      <rect x="233" y="86" width="234" height="111" fill="var(--fix)" opacity=".18"/>
+      <line x1="233" y1="86" x2="467" y2="86" stroke="var(--fix)" stroke-width="1.5"/>
+      <rect x="300" y="150" width="100" height="10" fill="var(--steel)"/><rect x="345" y="40" width="10" height="110" fill="var(--steel)"/>
+      <path d="M320 150 v-58 h60 v58 h-14 v-40 h-32 v40z" fill="var(--accent)"/>
+      <rect x="120" y="14" width="84" height="28" rx="4" fill="var(--steel)"/><text x="162" y="33" text-anchor="middle" font-size="12" fill="var(--paper)">UV 雷射</text>
+      <path d="M204 28 L310 86" stroke="var(--warn)" stroke-width="2.5"/>
+      <path d="M380 46 v24" stroke="var(--fix)" stroke-width="2.5"/><path d="M374 64 l6 10 6-10z" fill="var(--fix)"/>
+      <g font-size="12.5" fill="var(--ink)"><text x="476" y="90">液面</text><text x="476" y="150">液態光敏樹脂</text><text x="394" y="56">平台逐層下降</text><text x="248" y="126" font-size="11.5">已固化零件</text></g>
+    </svg>
+    <figcaption>圖 3-10　立體光固化</figcaption>
+  </figure>
+  <p><span class="en">stereolithography</span>　液態光敏樹脂（丙烯酸系或環氧系）照到紫外線會聚合固化，稱為光聚合。平台位於液面下一層深度，紫外線雷射依斷面掃描使該層固化；平台下降一層，樹脂覆蓋上去，再掃描下一層。完成後清洗並以紫外線二次固化。精度與表面在各種積層法中屬最佳，但斜面有階梯紋，材料限光敏樹脂，主要用於原型與模型。</p>
+
+  <div class="tbl"><table>
+    <tr><th>比較</th><th>SLS / SLM</th><th>3DP 黏結劑噴印</th><th>SLA 光固化</th></tr>
+    <tr><td>原料</td><td>高分子或金屬粉末</td><td>金屬、陶瓷、砂粉末</td><td>液態光敏樹脂</td></tr>
+    <tr><td>結合方式</td><td>雷射燒結或熔化</td><td>噴印黏結劑</td><td>紫外線光聚合</td></tr>
+    <tr><td>支撐</td><td>未燒結粉末自行支撐（金屬 SLM 仍需支撐）</td><td>粉床支撐</td><td>需設計支撐</td></tr>
+    <tr><td>後處理</td><td>清粉；金屬件常需熱處理、熱均壓</td><td>燒結或熔滲</td><td>清洗、二次固化、去支撐</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ 試題 ============ -->
+<section id="exam">
+  <h2><span class="no">試題</span>歷屆試題</h2>
+  <p class="hint">點選題目展開作答要點</p>
+
+  <details><summary><span class="qn">01</span><span>(1) 何種形狀的粉末燒結後有較佳的機械強度？(2) 相較於鍛造與鑄造，粉末冶金產品有哪些特性、適用於哪些應用？(3) 不建議用在哪些方面？</span><span class="src">台大機械</span></summary>
+    <div class="ans"><ul>
+      <li>不規則或樹枝狀粉末壓製時互相咬合，生胚強度高，燒結後頸部接觸面積大；細粉、粒度分布寬者堆積緻密，燒結密度高，強度較好。球形粉流動性好，需靠熱均壓或射出成形才能達到高密度。</li>
+      <li>特性：近淨形、材料利用率高、可控孔隙、可做高熔點金屬與複合材料、適合小件大量生產。應用：含油軸承、齒輪、碳化物刀具、過濾器、磁性材料。</li>
+      <li>不建議：大型件、少量生產、形狀有側孔倒勾、承受高衝擊或高疲勞負荷（殘留孔隙使韌性與疲勞強度較低）的關鍵件，除非採燒結鍛造或熱均壓。</li>
+    </ul></div></details>
+
+  <details><summary><span class="qn">02</span><span>寫出粉末冶金相對於其他製造方法的優缺點，並詳述製作規則形與不規則金屬粉末的方法。</span><span class="src">台大機械</span></summary>
+    <div class="ans">優缺點見 3-1 節。規則（球形）粉末：氣體霧化、離心霧化（旋轉電極）、羰基法、彈射法。不規則粉末：水霧化、還原法（海綿狀）、電解法（樹枝狀）、機械粉碎與切削（多角、片狀）。</div></details>
+
+  <details><summary><span class="qn">03</span><span>粉末冶金常用於製造 CPU 導熱管及燈泡鎢絲，為何選用粉末冶金？其優點為何？</span><span class="src">台大機械</span></summary>
+    <div class="ans"><ul>
+      <li>熱管：管內壁的燒結銅粉層是多孔的毛細結構，孔隙大小與孔隙率可由粉末粒度與燒結條件控制，讓冷凝液靠毛細力回流。這種可控孔隙只有粉末冶金做得到。</li>
+      <li>鎢絲：鎢熔點約 3400°C，熔煉鑄造困難且晶粒粗大易脆。以鎢粉壓製、通電燒結成棒，再旋鍛、抽線成細絲，得到細長纖維狀晶粒，兼顧延性與高溫強度。</li>
+    </ul></div></details>
+
+  <details><summary><span class="qn">04</span><span>詳述積層製造的原理，並以選擇性雷射燒結詳述其製程方法。</span><span class="src">普通考試</span></summary>
+    <div class="ans">原理：CAD 模型切層，逐層堆疊材料成形。SLS：送粉筒上升、輥子鋪粉 → 雷射依斷面掃描燒結 → 成形筒下降一層 → 重複至完成 → 清除未燒結粉末。可畫圖 3-9。</div></details>
+
+  <details><summary><span class="qn">05</span><span>(1) 說明積層製造的優點與缺點。(2) 說明金屬雷射燒結的製作程序與原理。</span><span class="src">機械技師</span></summary>
+    <div class="ans"><ul>
+      <li>優點：不需模具、設計自由度高（內流道、晶格、一體化）、少量客製快、材料浪費少。缺點：速度慢、單件成本高、尺寸受成形室限制、表面粗糙需後加工、內部孔隙與殘留應力、性質有方向性。</li>
+      <li>程序同第 4 題；金屬件以雷射完全熔化粉末（SLM），在惰性氣體中進行，需支撐結構，之後去應力退火、線切割取下、熱均壓與表面加工。</li>
+    </ul></div></details>
+
+  <details><summary><span class="qn">06</span><span>生產硬質合金材質的自潤性軸承或自潤性齒輪會用何種方法？其生產步驟與經濟效益為何？</span><span class="src">鐵路員級</span></summary>
+    <div class="ans">粉末冶金。步驟：混粉（基粉＋石墨＋潤滑劑）→ 模壓成形 → 燒結（保留約 15–30% 連通孔隙）→ 整形 → 含浸油。效益：近淨形省去切削、材料利用率 95% 以上、自動化大量生產、單價低，且孔隙儲油可自潤免保養。</div></details>
+
+  <details><summary><span class="qn">07</span><span>說明粉末冶金之製程。若以粉末冶金法製作銅合金軸承襯套，須注意哪些事項？</span><span class="src">升資考試</span></summary>
+    <div class="ans"><ul>
+      <li>製程：製粉 → 混合 → 成形 → 燒結 → 二次加工。</li>
+      <li>注意：銅錫粉與石墨、潤滑劑混合均勻；控制壓製密度以保留適當孔隙率（含油量）；在還原性氣氛中燒結，控制溫度約 750–850°C 使錫液相燒結但不過度；青銅燒結後尺寸會膨脹或收縮，需整形保證內外徑公差；最後真空含浸油；切削時不用水溶性切削液。</li>
+    </ul></div></details>
+
+  <details><summary><span class="qn">08</span><span>說明 3D 列印的製程原理與方法。</span><span class="src">高考三級</span></summary>
+    <div class="ans">原理同第 4 題。方法舉例：粉床熔融（SLS、SLM、電子束熔融 EBM）、黏結劑噴印（3DP）、光聚合（SLA、DLP）、材料擠出（FDM）、指向性能量沉積（DED）、薄片疊層（LOM），各說明原料與結合方式。</div></details>
+
+  <details><summary><span class="qn">09</span><span>金屬粉末是粉末冶金、金屬射出成形及 3D 金屬列印的重要材料，試列舉三種並說明生產金屬粉末的主要方法。</span><span class="src">升資考試</span></summary>
+    <div class="ans">材料：鐵與低合金鋼粉、不鏽鋼粉、鈦合金粉、鎳基超合金粉、銅粉、鋁合金粉。方法：水霧化（鐵基，產量最大）、氣體霧化（不鏽鋼、超合金、AM 用球形粉）、電漿或旋轉電極霧化（鈦合金、高純球形粉）、還原法（鐵、鎢、鉬）、電解法（銅）、羰基法（MIM 用細鐵粉、鎳粉）。</div></details>
+
+  <details><summary><span class="qn">10</span><span>詳述金屬 3D 列印的基本原理、相較於傳統加工的優勢，以及目前在製程上遇到的挑戰。</span><span class="src">機械技師</span></summary>
+    <div class="ans"><ul>
+      <li>原理：粉床熔融以雷射或電子束逐層熔化金屬粉；指向性能量沉積把粉末或線材送入熔池堆積；黏結劑噴印後再燒結。</li>
+      <li>優勢：不需模具、複雜內部結構（隨形冷卻水路、晶格輕量化）、零件一體化、材料浪費少、交期短、適合少量客製與修補。</li>
+      <li>挑戰：孔隙與未熔合缺陷、殘留應力與變形、性質異向性、表面粗糙、支撐去除、成形速度慢、粉末與設備成本高、品質一致性與認證標準尚待建立。</li>
+    </ul></div></details>
+</section>
+
+</main>
+</div>
+
+<script>
+/* 分類樹放不下時改為縮排清單 */
+(function(){function fit(){document.querySelectorAll('.tree').forEach(function(t){t.classList.remove('as-list');var p=t.parentElement;if(t.scrollWidth>p.clientWidth+2)t.classList.add('as-list');});}
+window.addEventListener('resize',fit);if(document.readyState!=='loading')fit();else document.addEventListener('DOMContentLoaded',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);})();
+</script>
+</body>
+</html>

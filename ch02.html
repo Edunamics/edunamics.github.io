@@ -158,7 +158,7 @@ svg text{font-family:var(--f-body)}
 .crumb a:hover{border-bottom-style:solid}
 .cards.c2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
 .card .en{display:block;margin:-2px 0 4px}
-.flow6,.flow5{display:flex;align-items:stretch;min-width:680px}
+.flow6,.flow5{display:flex;align-items:stretch;min-width:0}
 .flow6 .node,.flow5 .node{flex:1 1 0;min-width:0;padding:8px 9px}
 .flow6 .right,.flow5 .right{flex-basis:22px}
 .flow5 .node small{font-size:12px}
@@ -180,6 +180,34 @@ ol.steps li::before{content:counter(st,decimal-leading-zero);font-family:var(--f
 figure svg{max-width:100%}
 .scroll>svg{width:100%;height:auto;display:block}
 @media (max-width:820px){.dc2{grid-template-columns:minmax(0,1fr)}}
+
+/* fit-to-width：圖面一律縮放到版面寬度內，不出現水平捲動 */
+.scroll{overflow:visible}
+.scroll svg,figure svg{min-width:0!important;max-width:100%;height:auto}
+table{min-width:0}
+.tbl{overflow-x:visible}
+th{white-space:normal}
+@media (max-width:820px){
+  table{font-size:13.5px} th,td{padding:6px 8px}
+  .flow6,.flow5{flex-direction:column;min-width:0}
+  .flow6 .node,.flow5 .node{width:auto;flex:none}
+  .flow6 .right,.flow5 .right{flex:0 0 22px;width:2px;height:22px;align-self:center}
+  .flow6 .right::after,.flow5 .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
+}
+.tree.as-list{width:auto;min-width:0;margin:0}
+.tree.as-list ul{display:block;padding:0 0 0 16px;margin:0 0 0 12px;border-left:2px solid var(--steel)}
+.tree.as-list>ul{border-left:0;margin:0;padding:0}
+.tree.as-list li{padding:4px 0 4px 14px;text-align:left}
+.tree.as-list>ul>li{padding-left:0}
+.tree.as-list li::after,.tree.as-list ul ul::before{display:none}
+.tree.as-list li::before{display:block;content:"";position:absolute;left:-2px;top:20px;width:12px;height:0;border:0;border-top:2px solid var(--steel);border-radius:0}
+.tree.as-list>ul>li::before{display:none}
+.tree.as-list .node{white-space:normal}
+.tree .node{padding:4px 7px}
+.tree li{padding-left:3px;padding-right:3px}
+.tree.as-list ul:not(:has(ul))>li{padding:0}
+.tree.as-list ul:not(:has(ul)){display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px;padding:6px 0 6px 16px}
+.tree.as-list ul:not(:has(ul))>li::before{display:none}
 </style>
 </head>
 <body>
@@ -188,7 +216,7 @@ figure svg{max-width:100%}
     <div class="crumb"><a href="manufacturing.html">知識動力場 · 機械製造學</a> · Chapter 02</div>
     <h1>鑄造<small>Casting</small></h1>
     <p class="lede">把金屬熔成液體，倒進形狀和零件相同的模穴，凝固後取出，就是鑄造。這是形狀自由度最高的成形方法，引擎缸體、渦輪葉片、船用螺槳都靠它。本章從凝固原理談起，接著是模型、砂模與流路系統，最後整理各種特殊鑄造法。</p>
-    <div class="meta"><span>原書頁碼 p.19–65</span><span>4 節 · 18 題歷屆試題</span></div>
+    <div class="meta"><span>原書頁碼 p.19–65</span><span>4 節 · 25 題歷屆試題</span></div>
   </div>
   <svg class="hero-art" viewBox="0 0 260 230" role="img" aria-label="澆桶將金屬液倒入砂模的示意圖">
     <defs><pattern id="sandH" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="var(--steel)"/><circle cx="6" cy="6" r=".8" fill="var(--steel)"/></pattern></defs>
@@ -353,7 +381,7 @@ figure svg{max-width:100%}
   <h4>8. 金屬的三段收縮</h4>
   <figure>
     <div class="scroll">
-    <svg viewBox="0 0 560 240" role="img" aria-label="冷卻曲線：液態收縮、凝固收縮、固態收縮三個階段" style="min-width:460px">
+    <svg viewBox="0 0 560 240" role="img" aria-label="冷卻曲線：液態收縮、凝固收縮、固態收縮三個階段">
       <line x1="60" y1="20" x2="60" y2="200" stroke="var(--ink)" stroke-width="1.5"/>
       <line x1="60" y1="200" x2="540" y2="200" stroke="var(--ink)" stroke-width="1.5"/>
       <text x="20" y="24" font-size="13" fill="var(--muted)">溫度</text>
@@ -429,7 +457,7 @@ figure svg{max-width:100%}
   <p>也稱為消失模、泡沫消失鑄造<span class="en">（lost-foam / evaporative-pattern casting）</span>或全模法<span class="en">（full-mold process）</span>。以發泡聚苯乙烯（EPS）或 PMMA 做模型，埋在砂中不取出；金屬液澆入時，模型受熱汽化，金屬取而代之填滿空間。</p>
   <figure>
     <div class="scroll">
-    <svg viewBox="0 0 560 200" role="img" aria-label="消失模鑄造：左圖泡沫模型埋在砂中，右圖金屬液取代汽化的模型" style="min-width:460px">
+    <svg viewBox="0 0 560 200" role="img" aria-label="消失模鑄造：左圖泡沫模型埋在砂中，右圖金屬液取代汽化的模型">
       <defs><pattern id="sandA" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="var(--paper)"/><circle cx="2" cy="2" r="1" fill="var(--steel)"/><circle cx="6" cy="6" r=".8" fill="var(--steel)"/></pattern>
       <pattern id="foam" width="10" height="10" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="var(--paper)"/><circle cx="5" cy="5" r="3.4" fill="none" stroke="var(--fix)" stroke-width="1"/></pattern></defs>
       <rect x="20" y="30" width="230" height="150" fill="url(#sandA)" stroke="var(--ink)" stroke-width="2"/>
@@ -499,7 +527,7 @@ figure svg{max-width:100%}
   <p>把金屬液導入模穴的通道稱為<span class="key">流路系統</span><span class="en">（gating system）</span>。設計原則：減少紊流、讓模內氣體排出、建立有利的溫度梯度（方向性凝固）、冒口能補足凝固收縮。</p>
   <figure>
     <div class="scroll">
-    <svg viewBox="0 0 660 330" role="img" aria-label="砂模流路系統剖面圖，標示澆池、澆道、澆道井、橫流道、進模口、模穴、砂心、冒口、通氣孔與分模線" style="min-width:560px">
+    <svg viewBox="0 0 660 330" role="img" aria-label="砂模流路系統剖面圖，標示澆池、澆道、澆道井、橫流道、進模口、模穴、砂心、冒口、通氣孔與分模線">
       <defs><pattern id="sandG" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="var(--paper)"/><circle cx="2" cy="2" r="1" fill="var(--steel)"/><circle cx="6" cy="6" r=".8" fill="var(--steel)"/></pattern>
       <pattern id="core" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="var(--steel)"/><circle cx="3" cy="3" r="1" fill="var(--paper)"/></pattern></defs>
       <rect x="40" y="60" width="500" height="240" fill="url(#sandG)" stroke="var(--ink)" stroke-width="2.5"/>
@@ -700,7 +728,7 @@ figure svg{max-width:100%}
   <p>旋轉鑄模產生離心力，把金屬液甩向外側並加壓充填。密度大的金屬被甩到外層，較輕的氣體、熔渣與夾雜物集中在內側。</p>
   <figure>
     <div class="scroll">
-    <svg viewBox="0 0 560 190" role="img" aria-label="水平式真離心鑄造：旋轉管模內壁形成金屬層，澆槽由一端導入金屬液" style="min-width:460px">
+    <svg viewBox="0 0 560 190" role="img" aria-label="水平式真離心鑄造：旋轉管模內壁形成金屬層，澆槽由一端導入金屬液">
       <rect x="120" y="40" width="340" height="100" rx="8" fill="var(--steel)" opacity=".55" stroke="var(--ink)" stroke-width="2"/>
       <rect x="120" y="54" width="340" height="16" fill="var(--accent)"/>
       <rect x="120" y="110" width="340" height="16" fill="var(--accent)"/>
@@ -763,7 +791,7 @@ figure svg{max-width:100%}
   <p><span class="en">continuous casting</span>　金屬液由盛鋼桶經分配器（中間包）連續注入兩端開口的水冷銅模，外殼凝固後由夾送輥連續向下抽出，中心邊走邊凝固，最後以火焰切割成定長。斷面單一、長度不受限制，生產效率最高、良率高，是現代煉鋼廠把鋼液做成扁胚、大鋼胚、小鋼胚的主要製程。</p>
   <figure>
     <div class="scroll">
-    <svg viewBox="0 0 560 270" role="img" aria-label="弧形連續鑄造機：盛鋼桶、中間包、水冷銅模、弧形段夾送輥、矯直後火焰切割" style="min-width:480px">
+    <svg viewBox="0 0 560 270" role="img" aria-label="弧形連續鑄造機：盛鋼桶、中間包、水冷銅模、弧形段夾送輥、矯直後火焰切割">
       <path d="M40 20 H110 L102 70 H48 Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
       <path d="M46 34 H104 L101 66 H49 Z" fill="var(--accent)"/>
       <rect x="72" y="70" width="6" height="22" fill="var(--accent)"/>
@@ -927,10 +955,54 @@ figure svg{max-width:100%}
       <li>Investment casting: a wax pattern is coated with refractory slurry to form a shell, the wax is melted out, and metal is poured into the one-piece shell; complex shapes, excellent finish and accuracy.</li>
       <li>Die casting: molten metal is injected under high pressure into a reusable steel die (hot- or cold-chamber); high production rate and accuracy, limited to nonferrous metals.</li>
     </ul></div></details>
+  <details><summary><span class="qn">19</span><span>擠壓鑄造（squeeze casting）：(1) 繪圖並說明其製程。(2) 說明其優點。</span><span class="src">地特四等</span></summary>
+    <div class="ans"><ul>
+      <li>製程：定量金屬液倒入預熱的下模 → 上模（沖頭）閉合，以數十至上百 MPa 的壓力壓入金屬液 → 保壓直到完全凝固 → 開模頂出。圖可畫成「澆入、加壓、頂出」三格。</li>
+      <li>優點：高壓抑制氣孔與縮孔；金屬緊貼模壁冷卻快，晶粒細；近淨形、尺寸精；組織緻密，可熱處理，機械性質接近鍛件；材料利用率高。</li>
+    </ul></div></details>
+
+  <details><summary><span class="qn">20</span><span>鑄模製造時須同時完成流路系統，試述流路系統設計的基本原則。</span><span class="src">關務四等</span></summary>
+    <div class="ans"><ul>
+      <li>平穩充填、減少紊流：澆道上寬下窄、設澆道井，進模口位置與斷面適當。</li>
+      <li>排除氣體與熔渣：設通氣孔、溢放口、流道尾攔渣。</li>
+      <li>建立方向性凝固：由遠端往冒口依序凝固，必要時配合冷激鐵。</li>
+      <li>冒口足以補充凝固收縮，且比被補充部位晚凝固。</li>
+      <li>流路要容易切除、金屬用量少，降低成本。</li>
+    </ul></div></details>
+
+  <details><summary><span class="qn">21</span><span>比較砂模鑄造與消失模鑄造在模型設計與模型材料選擇上的主要差異。</span><span class="src">升資考試</span></summary>
+    <div class="ans"><div class="tbl"><table><tr><th></th><th>砂模</th><th>消失模</th></tr><tr><td>模型材料</td><td>木材、金屬、塑膠，可重複使用</td><td>發泡聚苯乙烯或 PMMA，一次性</td></tr><tr><td>拔模、振動裕度</td><td>需要</td><td>不需要（模型不取出）</td></tr><tr><td>分模線、砂心</td><td>需設分模面、砂心座</td><td>無分模線，內腔直接做在泡沫模型上</td></tr><tr><td>流路</td><td>造模時另外做出</td><td>以泡沫做好，與模型黏成一組</td></tr><tr><td>其他</td><td>模型強度高</td><td>模型需塗耐火塗料，注意泡沫密度與汽化產氣</td></tr></table></div>兩者都要放收縮裕度與加工裕度。</div></details>
+
+  <details><summary><span class="qn">22</span><span>砂模鑄件可能發生許多缺陷，舉四種缺陷的成因及預防方法。</span><span class="src">鐵路員級</span></summary>
+    <div class="ans"><ul>
+      <li>氣孔：模砂水分過多、透氣差、金屬溶氣。→ 控制水分、增加通氣孔、熔湯除氣。</li>
+      <li>縮孔：厚斷面凝固收縮得不到補充。→ 加大或移位冒口、使用冷激鐵、斷面均勻化。</li>
+      <li>冷隔與澆不足：澆鑄溫度低、速度慢、流路太長。→ 提高過熱度、加快澆注、改善流路。</li>
+      <li>熱裂：凝固末期收縮受模或砂心拘束。→ 加圓角、使用崩散性好的砂心、避免斷面驟變。</li>
+      <li>（亦可答夾砂、沖砂：砂模強度不足或流速過大 → 提高砂模強度、降低流速。）</li>
+    </ul></div></details>
+
+  <details><summary><span class="qn">23</span><span>脫蠟鑄造：(1) 說明製作程序。(2) 說明優點與缺點。</span><span class="src">機械技師</span></summary>
+    <div class="ans">程序依圖 2-9：射蠟 → 組樹 → 沾漿淋砂 → 脫蠟 → 焙燒 → 澆鑄 → 破殼取件。優點：形狀複雜、無分模線、精度與表面佳、幾乎所有金屬、近淨形。缺點：步驟多、模型與模殼皆一次性、成本高、以中小件為主、深窄孔不易填滿。</div></details>
+
+  <details><summary><span class="qn">24</span><span>(1) 澆注時為什麼要避免紊流進入模穴？(2) 說明澆注後鑄件的三種收縮來源。(3) 指出合金鑄件晶粒結構的特徵並說明成因。</span><span class="src">高考三等</span></summary>
+    <div class="ans"><ul>
+      <li>紊流會捲入空氣與氧化膜形成夾渣與氣孔，並沖刷砂模造成夾砂。</li>
+      <li>液態收縮、凝固收縮、固態收縮（見圖 2-3）。前兩者由冒口補充，固態收縮靠收縮裕度。</li>
+      <li>由外而內為冷硬區（模壁急冷、大量異質成核的細等軸晶）、柱狀區（沿熱流反方向成長）、等軸區（中心成分過冷與晶核增殖），見圖 2-2。</li>
+    </ul></div></details>
+
+  <details><summary><span class="qn">25</span><span>繪圖並詳述利用熔融紡絲（melt spinning）製造非晶質合金的過程。</span><span class="src">關務三等</span></summary>
+    <div class="ans">合金在石英或陶瓷坩堝中以感應線圈熔化 → 以惰性氣體加壓，從底部細噴嘴噴出 → 熔湯落在高速旋轉的水冷銅輪表面，冷速約 10⁶ K/s → 甩出厚約數十 μm 的連續薄帶。冷速快到原子來不及排列成晶格，得到非晶質（金屬玻璃）。圖需畫出坩堝、感應線圈、氣壓、噴嘴、銅輪與帶材。</div></details>
 </section>
 
 </main>
 </div>
 
+<script>
+/* 分類樹放不下時改為縮排清單 */
+(function(){function fit(){document.querySelectorAll('.tree').forEach(function(t){t.classList.remove('as-list');var p=t.parentElement;if(t.scrollWidth>p.clientWidth+2)t.classList.add('as-list');});}
+window.addEventListener('resize',fit);if(document.readyState!=='loading')fit();else document.addEventListener('DOMContentLoaded',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);})();
+</script>
 </body>
 </html>
