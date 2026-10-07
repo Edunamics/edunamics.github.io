@@ -1,0 +1,500 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>機械製造學 第一章 緒論</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;800&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: 藍圖紙版面 — 左側章節索引 + 右側講義正文；流程以框線箭頭繪出，加工以示意圖呈現 */
+:root{
+  --bg:#FAFAF7; --paper:#FFFFFF; --ink:#1B2733; --muted:#5B6874;
+  --blue:#1F4E79; --blue-soft:#DCE7F2; --line:#D3DCE5; --grid:rgba(31,78,121,.07);
+  --steel:#8A99A8; --fix:#C8692A; --fix-soft:#FBF0E6; --warn:#9A4A12;
+  --f-display:"Noto Serif TC","Songti TC",serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F1923; --paper:#15222F; --ink:#E4EBF1; --muted:#9AA8B5;
+  --blue:#8DBBE6; --blue-soft:#24405C; --line:#2A3B4C; --grid:rgba(141,187,230,.07);
+  --steel:#5E7286; --fix:#EB9257; --fix-soft:#2C2117; --warn:#E9A56E; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1923; --paper:#15222F; --ink:#E4EBF1; --muted:#9AA8B5;
+  --blue:#8DBBE6; --blue-soft:#24405C; --line:#2A3B4C; --grid:rgba(141,187,230,.07);
+  --steel:#5E7286; --fix:#EB9257; --fix-soft:#2C2117; --warn:#E9A56E; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.8;padding-inline:16px}
+.wrap{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px;padding-block:0 64px}
+header.hero{max-width:1120px;margin:0 auto 32px;padding-block:36px 28px;border-bottom:1.5px solid var(--blue);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;
+  display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:24px;align-items:center}
+.hero-art{width:100%;max-width:260px;justify-self:end}
+.crumb{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;color:var(--blue);text-transform:uppercase}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,5vw,3.1rem);line-height:1.2;margin:.3em 0 .2em;text-wrap:balance}
+h1 small{font-size:.5em;font-weight:600;color:var(--muted);display:block;letter-spacing:.05em}
+.lede{max-width:62ch;color:var(--muted);margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px;font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);align-self:start;font-size:14px}
+nav.toc p{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--muted);margin:0 0 8px}
+nav.toc a{display:flex;gap:10px;padding:6px 0 6px 12px;color:var(--ink);text-decoration:none;border-left:2px solid var(--line)}
+nav.toc a:hover,nav.toc a:focus-visible{border-left-color:var(--blue);color:var(--blue);outline:none}
+nav.toc a span{font-family:var(--f-mono);color:var(--blue);font-size:12.5px;min-width:2.6em}
+main{min-width:0}
+section{padding-block:8px 28px;border-bottom:1px solid var(--line);margin-bottom:28px;scroll-margin-top:16px}
+h2{font-family:var(--f-display);font-size:1.6rem;margin:0 0 .6em;display:flex;align-items:baseline;gap:14px;text-wrap:balance}
+h2 .no{font-family:var(--f-mono);font-size:.95rem;color:var(--paper);background:var(--blue);padding:2px 9px;border-radius:2px;font-weight:500}
+h3{font-size:1.12rem;margin:1.6em 0 .5em;color:var(--blue)}
+h4{font-size:1rem;margin:1.2em 0 .3em}
+p{max-width:68ch;margin:.4em 0 .9em}
+.en{font-family:var(--f-mono);font-size:.8em;color:var(--muted)}
+.key{background:linear-gradient(transparent 62%,var(--blue-soft) 62%);font-weight:700}
+figure{margin:20px 0 24px;background:var(--paper);border:1px solid var(--line);padding:20px}
+figcaption{font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-top:12px;letter-spacing:.04em}
+.scroll{overflow-x:auto}
+.tbl{overflow-x:auto;margin:14px 0 22px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px;background:var(--paper)}
+th,td{border:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top}
+th{background:var(--blue-soft);color:var(--blue);font-weight:700;white-space:nowrap}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.callout{border-left:4px solid var(--blue);background:var(--blue-soft);padding:12px 16px;margin:16px 0;font-size:15px}
+.callout b{color:var(--blue)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:12px 0 20px}
+.card{border:1px solid var(--line);background:var(--paper);padding:14px 16px}
+.card h4{margin:0 0 4px;color:var(--blue)}
+.card p{margin:0;font-size:14.5px}
+/* 流程圖共用 */
+.node{background:var(--paper);border:2px solid var(--blue);border-radius:6px;padding:10px 14px;position:relative}
+.node b{display:block;font-size:15.5px}
+.node small{display:block;color:var(--muted);font-size:13px;line-height:1.5}
+.node .n{font-family:var(--f-mono);font-size:11.5px;color:var(--blue);letter-spacing:.06em}
+.node.dark{background:var(--blue);border-color:var(--blue)}
+.node.dark b,.node.dark .n{color:var(--paper)} .node.dark small{color:var(--blue-soft)}
+.down{height:30px;position:relative;margin-left:50%}
+.down::before{content:"";position:absolute;left:-1px;top:0;bottom:8px;border-left:2px solid var(--fix)}
+.down::after{content:"";position:absolute;left:-7px;bottom:0;border:7px solid transparent;border-top:9px solid var(--fix);border-bottom:0}
+.right{flex:0 0 34px;align-self:center;height:2px;background:var(--fix);position:relative}
+.right::after{content:"";position:absolute;right:-2px;top:-6px;border:7px solid transparent;border-left:10px solid var(--fix);border-right:0}
+/* 設計流程 */
+.phases{display:grid;gap:0}
+.phase{border:1.5px dashed var(--steel);border-radius:10px;padding:26px 16px 14px;position:relative;display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:0 14px;align-items:center}
+.phase>.lab{position:absolute;top:-11px;left:14px;background:var(--paper);padding:0 8px;font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.08em}
+.phase .down{grid-column:1}
+.tool{font-family:var(--f-mono);font-size:12px;color:var(--blue);border:1.5px solid var(--blue);border-radius:999px;text-align:center;padding:3px 8px;position:relative;background:var(--paper)}
+.tool::before{content:"";position:absolute;right:100%;top:50%;width:14px;border-top:1.5px dashed var(--blue)}
+.gap{grid-column:2}
+/* IPO */
+.ipo{display:flex;align-items:stretch;gap:0}
+.ipo .col{flex:1;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.ipo .col h5{margin:0 0 4px;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;color:var(--blue);text-align:center}
+.pill{border:1.5px solid var(--blue);border-radius:999px;padding:2px 12px;font-size:14px;text-align:center;background:var(--paper)}
+.pill.solid{background:var(--blue);color:var(--paper)}
+.ipo .proc{flex:1;border:2px solid var(--blue);border-radius:8px;background:var(--blue);color:var(--paper);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:14px}
+.ipo .proc h5{color:var(--blue-soft)}
+.ipo .proc .pill{background:transparent;border-color:var(--blue-soft);color:var(--paper)}
+/* 分類樹 */
+.tree{width:max-content;min-width:100%;margin:0 auto}
+.tree ul{list-style:none;margin:0;padding:22px 0 0;display:flex;justify-content:center;position:relative}
+.tree li{position:relative;padding:22px 4px 0;text-align:center}
+.tree>ul{padding-top:0}.tree>ul>li{padding-top:0}
+.tree li::before,.tree li::after{content:"";position:absolute;top:0;width:50%;height:22px;border-top:2px solid var(--steel)}
+.tree li::before{right:50%}.tree li::after{left:50%;border-left:2px solid var(--steel)}
+.tree li:only-child::before,.tree li:only-child::after{display:none}
+.tree li:first-child::before,.tree li:last-child::after{border-top:none}
+.tree li:last-child::before{border-right:2px solid var(--steel);border-top-right-radius:6px}
+.tree li:first-child::after{border-top-left-radius:6px}
+.tree>ul>li::before,.tree>ul>li::after{display:none}
+.tree ul ul::before{content:"";position:absolute;top:0;left:50%;height:22px;border-left:2px solid var(--steel)}
+.tree .node{display:inline-block;padding:5px 9px;white-space:nowrap}
+.tree .node b{font-size:14.5px}
+/* 加工示意圖卡 */
+.procs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 20px}
+.procs.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.proc-card{background:var(--paper);border:1px solid var(--line);padding:12px 12px 10px;display:flex;flex-direction:column;gap:4px}
+.proc-card svg{width:100%;height:auto;background:var(--bg);border-radius:4px}
+.proc-card b{font-size:15px}
+.proc-card .en{display:block}
+.proc-card small{color:var(--muted);font-size:13px;line-height:1.5}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted);margin:-4px 0 12px}
+.legend i{display:inline-block;width:14px;height:10px;margin-right:6px;vertical-align:middle;border-radius:2px}
+/* 碳足跡 */
+.life{display:flex;align-items:stretch}
+.life .node{flex:1;text-align:center;padding:10px 8px}
+.offset{margin-top:14px;border:2px dashed var(--fix);border-radius:8px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:center;font-size:14.5px}
+.offset b{color:var(--fix)}
+.eq{font-family:var(--f-mono);font-size:15px;background:var(--fix);color:var(--paper);padding:2px 10px;border-radius:4px}
+/* 試題 */
+.fixbox{border:1.5px dashed var(--warn);background:var(--fix-soft);padding:14px 18px;margin:8px 0 0;font-size:14.5px}
+.fixbox h3{color:var(--warn);margin:0 0 6px;font-size:1rem}
+.fixbox ul{margin:0;padding-left:1.1em}
+.fixbox s{color:var(--muted)}
+details{border:1px solid var(--line);background:var(--paper);margin:10px 0;padding:0 16px}
+summary{cursor:pointer;padding:12px 0;font-weight:500;list-style:none;display:grid;grid-template-columns:2.4em minmax(0,1fr) auto;gap:8px}
+summary::-webkit-details-marker{display:none}
+summary .qn{font-family:var(--f-mono);color:var(--blue)}
+summary .src{font-size:12px;color:var(--muted);white-space:nowrap}
+summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+details[open] summary{border-bottom:1px dashed var(--line)}
+details .ans{padding:10px 0 14px 2.8em;font-size:15px}
+details .ans ul{margin:.2em 0;padding-left:1.1em}
+.hint{font-family:var(--f-mono);font-size:11px;color:var(--blue);letter-spacing:.1em}
+svg text{font-family:var(--f-body)}
+@media (max-width:820px){
+  header.hero{grid-template-columns:minmax(0,1fr)}.hero-art{justify-self:start;max-width:180px}
+  .wrap{grid-template-columns:minmax(0,1fr);gap:0}
+  nav.toc{position:static;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px}
+  nav.toc p{width:100%}
+  nav.toc a{border:1px solid var(--line);padding:4px 10px}
+  .ipo,.life{flex-direction:column}
+  .ipo .right,.life .right{flex-basis:26px;width:2px;height:26px;align-self:center}
+  .ipo .right::after,.life .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
+  .phase{grid-template-columns:minmax(0,1fr) 92px}
+  .procs,.procs.c4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+
+<header class="hero">
+  <div>
+    <div class="crumb">知識動力場 · 機械製造學 · Chapter 01</div>
+    <h1>緒論<small>Introduction to Manufacturing</small></h1>
+    <p class="lede">機械製造是把材料變成合乎規範、又能以合理成本生產的產品的一整套過程。本章先建立全書的地圖：設計怎麼走到生產、製造系統怎麼分類、加工方法怎麼歸類，以及製造業面對減碳時的新課題。</p>
+    <div class="meta"><span>原書頁碼 p.1–18</span><span>5 節 · 8 題歷屆試題</span></div>
+  </div>
+  <svg class="hero-art" viewBox="0 0 260 230" role="img" aria-label="齒輪工程圖示意">
+<defs><marker id="dm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 Z" fill="var(--blue)"/></marker></defs>
+<line x1="20" y1="112" x2="216" y2="112" stroke="var(--steel)" stroke-width="1" stroke-dasharray="10 4 2 4"/>
+<line x1="118" y1="14" x2="118" y2="206" stroke="var(--steel)" stroke-width="1" stroke-dasharray="10 4 2 4"/>
+<polygon points="184.9,115.3 197.5,120.5 196.3,128.4 182.7,129.5 180.6,135.9 191.0,144.7 187.4,151.8 174.1,148.6 170.2,154.0 177.4,165.6 171.7,171.3 160.1,164.1 154.6,168.1 157.9,181.4 150.7,185.0 141.9,174.6 135.5,176.7 134.5,190.3 126.6,191.5 121.4,178.9 114.7,178.9 109.5,191.5 101.6,190.3 100.5,176.7 94.1,174.6 85.3,185.0 78.2,181.4 81.4,168.1 76.0,164.2 64.4,171.4 58.7,165.7 65.9,154.1 61.9,148.6 48.6,151.9 45.0,144.7 55.4,135.9 53.3,129.5 39.7,128.5 38.5,120.6 51.1,115.4 51.1,108.7 38.5,103.5 39.7,95.6 53.3,94.5 55.4,88.1 45.0,79.3 48.6,72.2 61.9,75.4 65.8,70.0 58.6,58.4 64.3,52.7 75.9,59.9 81.4,55.9 78.1,42.6 85.3,39.0 94.1,49.4 100.5,47.3 101.5,33.7 109.4,32.5 114.6,45.1 121.3,45.1 126.5,32.5 134.4,33.7 135.5,47.3 141.9,49.4 150.7,39.0 157.8,42.6 154.6,55.9 160.0,59.8 171.6,52.6 177.3,58.3 170.1,69.9 174.1,75.4 187.4,72.1 191.0,79.3 180.6,88.1 182.7,94.5 196.3,95.5 197.5,103.4 184.9,108.6" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="118" cy="112" r="40" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="4 4"/>
+<circle cx="118" cy="112" r="20" fill="var(--bg)" stroke="var(--blue)" stroke-width="2.5"/>
+<rect x="113" y="88" width="10" height="8" fill="var(--bg)" stroke="var(--blue)" stroke-width="2"/>
+<polygon points="234.5,44.6 240.5,49.2 238.1,54.8 230.6,53.5 227.6,56.9 229.7,64.3 224.5,67.3 219.1,61.9 214.6,62.9 212.0,70.0 206.0,69.4 204.9,61.9 200.7,60.0 194.4,64.3 189.9,60.3 193.4,53.5 191.1,49.6 183.5,49.3 182.2,43.4 189.0,40.0 189.5,35.4 183.5,30.8 185.9,25.2 193.4,26.5 196.4,23.1 194.3,15.7 199.5,12.7 204.9,18.1 209.4,17.1 212.0,10.0 218.0,10.6 219.1,18.1 223.3,20.0 229.6,15.7 234.1,19.7 230.6,26.5 232.9,30.4 240.5,30.7 241.8,36.6 235.0,40.0" fill="var(--paper)" stroke="var(--fix)" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="212" cy="40" r="7" fill="var(--bg)" stroke="var(--fix)" stroke-width="2"/>
+<line x1="38" y1="216" x2="198" y2="216" stroke="var(--blue)" stroke-width="1.5" marker-start="url(#dm)" marker-end="url(#dm)"/>
+<line x1="38" y1="196" x2="38" y2="224" stroke="var(--blue)" stroke-width="1"/><line x1="198" y1="196" x2="198" y2="224" stroke="var(--blue)" stroke-width="1"/>
+<text x="118" y="210" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--blue)">Ø160</text>
+</svg>
+</header>
+
+<div class="wrap">
+<nav class="toc" aria-label="本章目錄">
+  <p>CONTENTS</p>
+  <a href="#s1"><span>1-1</span>概述</a>
+  <a href="#s2"><span>1-2</span>製造工程分析</a>
+  <a href="#s3"><span>1-3</span>機械製造系統</a>
+  <a href="#s4"><span>1-4</span>製造方法分類</a>
+  <a href="#s5"><span>1-5</span>發展趨勢</a>
+  <a href="#exam"><span>試題</span>歷屆試題</a>
+</nav>
+
+<main>
+<section id="s1">
+  <h2><span class="no">1-1</span>概述</h2>
+  <p><span class="key">機械製造</span><span class="en">（mechanical manufacturing）</span>，或稱生產工程<span class="en">（production engineering）</span>，是以金屬或非金屬材料，藉由各類機器、設備或工具製造產品的一系列過程。</p>
+  <figure>
+    <div class="ipo" style="gap:0">
+      <div class="node" style="flex:1;text-align:center"><span class="n">設計部門</span><b>產品需求</b><small>功能、用途、品質</small></div>
+      <div class="right"></div>
+      <div class="node" style="flex:1;text-align:center"><span class="n">設計部門</span><b>工程圖</b><small>尺寸、公差、材料</small></div>
+      <div class="right"></div>
+      <div class="node" style="flex:1;text-align:center"><span class="n">製造部門</span><b>加工程序與設備</b><small>規劃工序、配置產線</small></div>
+      <div class="right"></div>
+      <div class="node dark" style="flex:1;text-align:center"><span class="n">目標</span><b>合規的產品</b><small>以最低製造成本產出</small></div>
+    </div>
+    <figcaption>從需求到產品：設計與製造部門的分工</figcaption>
+  </figure>
+  <div class="callout"><b>核心議題：成本與規範的取捨（trade-off）。</b>一味壓低成本，品質守不住；過分追求品質，成本陡升而失去經濟效益。工程師必須熟悉各種加工法的特性與限制，才能為不同需求擬定最佳化的生產工序。</div>
+  <p>這裡的「成本」除了資金與時間，也包括生產過程對環境的負面影響，例如溫室氣體排放與能源損耗。如何有效降低這些影響，是當前與未來都不能忽視的課題。</p>
+</section>
+
+<section id="s2">
+  <h2><span class="no">1-2</span>製造工程分析</h2>
+  <h3>一、設計工程 <span class="en">design engineering</span></h3>
+  <p>由市場調查蒐集資訊，評估產品需求與可行性，從概念發展開始，經設計分析、原型生產、需求驗證，直到完成設計圖。實現設計工程需要材料特性、製法工程與成本考量等知識。</p>
+  <figure>
+    <div class="phases">
+      <div class="phase"><span class="lab">設計階段</span>
+        <div class="node"><span class="n">01</span><b>產品需求的定義</b><small>市場資訊</small></div><span class="gap"></span>
+        <div class="down"></div><span class="gap"></span>
+        <div class="node"><span class="n">02</span><b>概念設計及評估</b><small>可實行性研究</small></div><span class="gap"></span>
+        <div class="down"></div><span class="gap"></span>
+        <div class="node"><span class="n">03</span><b>設計分析</b><small>規則／標準調查；實體及分析模型</small></div><span class="tool">CAD</span>
+        <div class="down"></div><span class="gap"></span>
+        <div class="node"><span class="n">04</span><b>原型生產</b><small>測試及評估</small></div><span class="gap"></span>
+      </div>
+      <div class="down" style="margin-left:calc((100% - 134px)/2)"></div>
+      <div class="phase"><span class="lab">生產準備</span>
+        <div class="node"><span class="n">05</span><b>生產圖</b><small>說明手冊、材料規格、製程及設備選用、安全調查</small></div><span class="tool">CAM · CAPP</span>
+      </div>
+      <div class="down" style="margin-left:calc((100% - 134px)/2)"></div>
+      <div class="phase"><span class="lab">生產與上市</span>
+        <div class="node"><span class="n">06</span><b>開始生產</b><small>生產</small></div><span class="tool">CIM</span>
+        <div class="down"></div><span class="gap"></span>
+        <div class="node"><span class="n">07</span><b>檢驗及品質保證</b></div><span class="gap"></span>
+        <div class="down"></div><span class="gap"></span>
+        <div class="node"><span class="n">08</span><b>包裝、上市及銷售</b><small>銷售印刷品</small></div><span class="gap"></span>
+        <div class="down"></div><span class="gap"></span>
+        <div class="node dark"><b>產品</b></div><span class="gap"></span>
+      </div>
+    </div>
+    <figcaption>圖 1-1　設計與製造產品之步驟（右側標示各階段使用的電腦輔助工具）</figcaption>
+  </figure>
+
+  <h3>二、同步工程 <span class="en">concurrent engineering</span></h3>
+  <p>在產品啟動階段就整合生命週期的各個環節，包括設計、生產、維護、運輸、使用和回收，先規劃整體大綱，避免執行到某一環節才發現設計失誤、生產端無法順利投產。目標是減少設計修改與工程變更，縮短產品上市的時間與成本。</p>
+  <figure>
+    <div class="scroll"><svg viewBox="0 0 640 280" width="100%" style="min-width:520px" role="img" aria-label="循序作業與同步工程時程比較">
+<defs><marker id="ce" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 Z" fill="var(--fix)"/></marker></defs>
+<text x="0" y="16" font-size="13" font-weight="700" fill="var(--muted)">傳統循序作業</text>
+<text x="92" y="40" text-anchor="end" font-size="13" fill="var(--ink)">設計</text><rect x="100" y="26" width="120" height="18" rx="3" fill="var(--steel)"/><text x="92" y="64" text-anchor="end" font-size="13" fill="var(--ink)">製程規劃</text><rect x="220" y="50" width="120" height="18" rx="3" fill="var(--steel)"/><text x="92" y="88" text-anchor="end" font-size="13" fill="var(--ink)">生產準備</text><rect x="340" y="74" width="120" height="18" rx="3" fill="var(--steel)"/><text x="92" y="112" text-anchor="end" font-size="13" fill="var(--ink)">生產</text><rect x="460" y="98" width="130" height="18" rx="3" fill="var(--steel)"/>
+<line x1="100" y1="128" x2="590" y2="128" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ce)"/>
+<text x="596" y="132" font-size="12" fill="var(--muted)">上市</text>
+<text x="0" y="158" font-size="13" font-weight="700" fill="var(--blue)">同步工程</text>
+<text x="92" y="182" text-anchor="end" font-size="13" fill="var(--ink)">設計</text><rect x="100" y="168" width="140" height="18" rx="3" fill="var(--blue)"/><text x="92" y="206" text-anchor="end" font-size="13" fill="var(--ink)">製程規劃</text><rect x="150" y="192" width="140" height="18" rx="3" fill="var(--blue)"/><text x="92" y="230" text-anchor="end" font-size="13" fill="var(--ink)">生產準備</text><rect x="200" y="216" width="140" height="18" rx="3" fill="var(--blue)"/><text x="92" y="254" text-anchor="end" font-size="13" fill="var(--ink)">生產</text><rect x="270" y="240" width="150" height="18" rx="3" fill="var(--blue)"/>
+<line x1="100" y1="268" x2="420" y2="268" stroke="var(--fix)" stroke-width="2" marker-end="url(#ce)"/>
+<line x1="420" y1="236" x2="590" y2="236" stroke="var(--fix)" stroke-width="2" stroke-dasharray="5 5" marker-start="url(#ce)" marker-end="url(#ce)"/>
+<text x="505" y="228" text-anchor="middle" font-size="13" font-weight="700" fill="var(--fix)">縮短上市時間</text>
+</svg></div>
+    <figcaption>示意圖：傳統循序作業與同步工程的時程比較</figcaption>
+  </figure>
+  <p>成功要素：管理階層的支持、各部門充分溝通與協調、各環節具備一定的技術實現能力。</p>
+
+  <div class="cards">
+    <div class="card"><h4>價值工程</h4><p><span class="en">value engineering</span><br>在符合規範的前提下，選用較經濟的原料、簡化生產流程，降低成本、提升競爭力。</p></div>
+    <div class="card"><h4>過度設計</h4><p><span class="en">over design</span><br>使用年限、材質、強度、精度或尺寸都超出實際需要，使成本大幅增加，經濟上應避免。</p></div>
+  </div>
+
+  <h3>三、材料之選用工程</h3>
+  <p>常見機械材料有鐵系金屬、非鐵金屬與合金、陶瓷、複合材料。選用時考慮機械性質、成本與加工性，也要考量環境友善<span class="en">（eco-friendly）</span>與能否循環利用。</p>
+  <div class="tbl"><table>
+    <thead><tr><th>材料類別</th><th>優點</th><th>缺點</th></tr></thead>
+    <tbody>
+      <tr><td>鐵系金屬</td><td>應用範圍廣、機械性質優異、容易加工、可循環利用</td><td>加工作業耗能高</td></tr>
+      <tr><td>非鐵金屬與合金</td><td>較純金屬經濟，可依用途調整成分</td><td>應用範圍較鐵系金屬受限，成本較高</td></tr>
+      <tr><td>陶瓷</td><td>隔熱性絕佳</td><td>硬且脆、韌性差，只能用特定加工法</td></tr>
+      <tr><td>複合材料</td><td>強度重量比高</td><td>成本較高</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="s3">
+  <h2><span class="no">1-3</span>機械製造系統</h2>
+  <p>機械製造系統<span class="en">（manufacturing system）</span>由輸入、加工、輸出三部分組成。</p>
+  <figure>
+    <div class="ipo">
+      <div class="col"><h5>INPUT 輸入</h5><span class="pill">業主之需要</span><span class="pill">材料</span><span class="pill">投資</span><span class="pill">能源</span><span class="pill">人力</span><span class="pill">教育</span></div>
+      <div class="right"></div>
+      <div class="proc"><h5 style="margin:0;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-align:center">PROCESS 加工</h5><span class="pill">設計</span><span class="pill">生產</span><span class="pill">管理</span></div>
+      <div class="right"></div>
+      <div class="col"><h5>OUTPUT 輸出</h5><span class="pill solid">消耗品</span><span class="pill solid">資本財</span><span class="pill solid">品質保證</span><span class="pill solid">產品效益</span></div>
+    </div>
+    <figcaption>圖 1-2　製造系統圖</figcaption>
+  </figure>
+
+  <h3>製造系統的六種類型</h3>
+  <p>依產品種類與產量，製造系統由少量多樣到大量單一，可分成六類。產品種類愈少、產量愈大，愈往右上方移動。</p>
+  <figure>
+    <svg viewBox="0 0 640 330" width="100%" role="img" aria-label="製造系統對產品種類與產量之概念圖">
+      <defs><marker id="ax" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="var(--muted)"/></marker></defs>
+      <g stroke="var(--muted)" fill="none" stroke-width="1.4"><line x1="70" y1="280" x2="612" y2="280" marker-end="url(#ax)"/><line x1="70" y1="280" x2="70" y2="20" marker-end="url(#ax)"/></g>
+      <text x="610" y="304" text-anchor="end" font-size="13" fill="var(--muted)">產品種類：多 → 少</text>
+      <text x="58" y="24" text-anchor="end" font-size="13" fill="var(--muted)">產量</text>
+      <line x1="120" y1="272" x2="590" y2="44" stroke="var(--fix)" stroke-width="2" stroke-dasharray="5 6"/>
+      <g font-size="14" font-weight="700">
+        <rect x="92" y="236" width="88" height="30" rx="4" fill="var(--paper)" stroke="var(--blue)" stroke-width="1.5"/><text x="136" y="256" text-anchor="middle" fill="var(--ink)">工作站</text>
+        <rect x="176" y="196" width="76" height="30" rx="4" fill="var(--paper)" stroke="var(--blue)" stroke-width="1.5"/><text x="214" y="216" text-anchor="middle" fill="var(--ink)">單元</text>
+        <rect x="248" y="156" width="108" height="30" rx="4" fill="var(--paper)" stroke="var(--blue)" stroke-width="1.5"/><text x="302" y="176" text-anchor="middle" fill="var(--ink)">彈性工作站</text>
+        <rect x="352" y="116" width="84" height="30" rx="4" fill="var(--paper)" stroke="var(--blue)" stroke-width="1.5"/><text x="394" y="136" text-anchor="middle" fill="var(--ink)">機械化</text>
+        <rect x="432" y="76" width="84" height="30" rx="4" fill="var(--paper)" stroke="var(--blue)" stroke-width="1.5"/><text x="474" y="96" text-anchor="middle" fill="var(--ink)">自動化</text>
+        <rect x="506" y="36" width="96" height="30" rx="4" fill="var(--blue)" stroke="var(--blue)" stroke-width="1.5"/><text x="554" y="56" text-anchor="middle" fill="var(--paper)">連續流程</text>
+      </g>
+    </svg>
+    <figcaption>圖 1-3　製造系統對產品種類與產量之概念</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <thead><tr><th>類型</th><th>特徵</th><th>實例</th></tr></thead>
+    <tbody>
+      <tr><td>工作站 <span class="en">work station</span></td><td>最原始的生產系統：個別工作台、機器或間歇性加工</td><td>車床、銑床</td></tr>
+      <tr><td>單元 <span class="en">cell</span></td><td>兩個以上工作站組成，最簡單且有組織的生產行為</td><td>軸鍵配合：先車削軸徑，再銑鍵槽</td></tr>
+      <tr><td>彈性工作站 <span class="en">flexible work station</span></td><td>電腦進入製造流程；產品變更時只需修改系統參數、少量更換設備</td><td>CNC 數控工具機</td></tr>
+      <tr><td>機械化 <span class="en">mechanization</span></td><td>單一產品大量生產，工程圖幾乎不變；人員監控設備，仍由人做主要決策</td><td>汽車零件、自動鎖螺絲</td></tr>
+      <tr><td>自動化 <span class="en">automation</span></td><td>以機械、電子或電腦控制設備，產品在流水線上自動連續生產，人力重要性降低</td><td>機械手臂連續銲接車身板金</td></tr>
+      <tr><td>連續流程 <span class="en">continuous flow processes</span></td><td>大量感測器量測製程參數並回饋控制，幾乎完全由電腦控制</td><td>鋼胚連續鑄造：依鑄道溫度調控鋼液注入流速</td></tr>
+    </tbody>
+  </table></div>
+  <figure>
+    <div class="scroll"><svg viewBox="0 0 640 190" width="100%" style="min-width:520px" role="img" aria-label="連續鑄造感測回饋迴路"><defs><marker id="cc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 Z" fill="var(--fix)"/></marker></defs><rect x="10" y="20" width="140" height="70" rx="6" fill="var(--paper)" stroke="var(--blue)" stroke-width="2"/><text x="80" y="50" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">感測器量測</text><text x="80" y="72" text-anchor="middle" font-size="12" fill="var(--muted)">鑄道溫度、液位</text><line x1="152" y1="55" x2="176" y2="55" stroke="var(--fix)" stroke-width="2.5" marker-end="url(#cc)"/><rect x="170" y="20" width="140" height="70" rx="6" fill="var(--blue)" stroke="var(--blue)" stroke-width="2"/><text x="240" y="50" text-anchor="middle" font-size="15" font-weight="700" fill="var(--paper)">電腦判斷</text><text x="240" y="72" text-anchor="middle" font-size="12" fill="var(--blue-soft)">與設定值比較</text><line x1="312" y1="55" x2="336" y2="55" stroke="var(--fix)" stroke-width="2.5" marker-end="url(#cc)"/><rect x="330" y="20" width="140" height="70" rx="6" fill="var(--paper)" stroke="var(--blue)" stroke-width="2"/><text x="400" y="50" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">控制元件</text><text x="400" y="72" text-anchor="middle" font-size="12" fill="var(--muted)">調整鋼液注入流速</text><line x1="472" y1="55" x2="496" y2="55" stroke="var(--fix)" stroke-width="2.5" marker-end="url(#cc)"/><rect x="490" y="20" width="140" height="70" rx="6" fill="var(--paper)" stroke="var(--blue)" stroke-width="2"/><text x="560" y="50" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">連鑄機</text><text x="560" y="72" text-anchor="middle" font-size="12" fill="var(--muted)">鑄胚持續產出</text><path d="M560 92 V140 H80 V96" fill="none" stroke="var(--fix)" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#cc)"/><text x="320" y="164" text-anchor="middle" font-size="13" font-weight="700" fill="var(--fix)">回饋：量測結果持續送回控制迴路</text></svg></div>
+    <figcaption>鋼廠現場對照：連鑄機的感測回饋迴路（連續流程的典型）</figcaption>
+  </figure>
+</section>
+
+<section id="s4">
+  <h2><span class="no">1-4</span>機械製造方法之分類</h2>
+  <p>本節用兩把尺來分：一是年產量，二是加工時有沒有產生切屑。先看全貌：</p>
+  <figure><div class="scroll"><div class="tree">
+    <ul><li><span class="node dark"><b>機械製造方法</b></span>
+      <ul>
+        <li><span class="node"><b>依年產量</b></span>
+          <ul><li><span class="node"><b>大量</b><small>&gt;10 萬件</small></span></li><li><span class="node"><b>中量</b><small>2,500–10 萬</small></span></li><li><span class="node"><b>小批量</b><small>&lt;2,500 件</small></span></li></ul></li>
+        <li><span class="node"><b>依有無切屑</b></span>
+          <ul>
+            <li><span class="node"><b>切削加工</b><small>有屑</small></span>
+              <ul><li><span class="node"><b>傳統式</b><small>車銑鉋磨…</small></span></li><li><span class="node"><b>非傳統式</b><small>EDM、LBM…</small></span></li></ul></li>
+            <li><span class="node"><b>非切削加工</b><small>無屑</small></span>
+              <ul><li><span class="node"><b>改變形狀</b></span></li><li><span class="node"><b>表面加工</b></span></li><li><span class="node"><b>連接</b></span></li><li><span class="node"><b>改變性質</b></span></li></ul></li>
+          </ul></li>
+      </ul></li></ul>
+  </div></div><figcaption>機械製造方法分類總覽</figcaption></figure>
+
+  <h3>一、依產量分類</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>類型</th><th>年產量</th><th>特性</th><th>產品實例</th></tr></thead>
+    <tbody>
+      <tr><td>大量生產 <span class="en">mass production</span></td><td class="num">&gt; 100,000 件</td><td>供需穩定，產能與訂單較無直接關聯；單價必須極低；多為單一產品、自動化或連續生產</td><td>軸承、扣件、銲條</td></tr>
+      <tr><td>中量生產 <span class="en">moderate production</span></td><td class="num">2,500–100,000 件</td><td>數量彈性，產能易受訂單影響；批次定期生產，甚至一年一次</td><td>大型手工具、工具機、機械手臂</td></tr>
+      <tr><td>小批量生產 <span class="en">job lot production</span></td><td class="num">&lt; 2,500 件</td><td>又稱零星生產，最具彈性；接單後才生產，設備多用途，技術要求最高</td><td>飛行器、船艦</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>二、切削加工與非切削加工</h3>
+  <h4>（一）切削加工 <span class="en">machining</span>：有屑加工</h4>
+  <p>以物理或化學方式移除胚料與成品之間多餘的材料，精度大多比無屑加工高。依刀具與工件的關係分為傳統式與非傳統式。</p>
+  <p><b>1. 傳統式切削加工</b>：刀具硬度遠高於工件，以物理切削去除材料。易控制、成本低，是目前的主要工法。</p>
+  <div class="legend"><span><i style="background:var(--blue)"></i>刀具</span><span><i style="background:var(--blue-soft);border:1px solid var(--ink)"></i>工件</span><span><i style="background:var(--steel)"></i>夾頭、床台、模具</span><span><i style="background:var(--fix)"></i>運動方向</span></div>
+  <div class="procs">
+    <div class="proc-card"><svg viewBox="0 0 160 120"  role="img" aria-label="車削示意圖"><defs><marker id="wah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--fix)"/></marker></defs><rect x="30" y="36" width="104" height="34" fill="var(--blue-soft)" stroke="var(--ink)" stroke-width="2"/><rect x="8" y="22" width="22" height="62" rx="3" fill="var(--steel)"/><polygon points="104,70 92,100 122,100" fill="var(--blue)"/><path d="M60 28 A9 26 0 1 0 60 80" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/><path d="M150 110 H104" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/></svg><b>車削</b><span class="en">turning</span><small>工件高速迴轉，車刀進給；圓柱形工件</small></div>
+    <div class="proc-card"><svg viewBox="0 0 160 120"  role="img" aria-label="銑削示意圖"><rect x="14" y="66" width="132" height="34" fill="var(--blue-soft)" stroke="var(--ink)" stroke-width="2"/><rect x="76" y="0" width="8" height="12" fill="var(--steel)"/><polygon points="101.0,38.0 106.9,40.5 106.1,45.0 99.7,45.3 98.2,48.5 102.0,53.6 99.1,57.1 93.4,54.2 90.5,56.2 91.2,62.5 87.0,64.1 83.5,58.7 80.0,59.0 77.5,64.9 73.0,64.1 72.7,57.7 69.5,56.2 64.4,60.0 60.9,57.1 63.8,51.4 61.8,48.5 55.5,49.2 53.9,45.0 59.3,41.5 59.0,38.0 53.1,35.5 53.9,31.0 60.3,30.7 61.8,27.5 58.0,22.4 60.9,18.9 66.6,21.8 69.5,19.8 68.8,13.5 73.0,11.9 76.5,17.3 80.0,17.0 82.5,11.1 87.0,11.9 87.3,18.3 90.5,19.8 95.6,16.0 99.1,18.9 96.2,24.6 98.2,27.5 104.5,26.8 106.1,31.0 100.7,34.5" fill="var(--blue)"/><circle cx="80" cy="38" r="6" fill="var(--paper)"/><path d="M114 16 A34 34 0 0 1 116 56" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/><path d="M124 112 H40" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/></svg><b>銑削</b><span class="en">milling</span><small>銑刀迴轉，工件隨床台進給；角柱形工件</small></div>
+    <div class="proc-card"><svg viewBox="0 0 160 120"  role="img" aria-label="牛頭鉋削示意圖"><rect x="36" y="72" width="108" height="30" fill="var(--blue-soft)" stroke="var(--ink)" stroke-width="2"/><rect x="6" y="8" width="104" height="18" rx="2" fill="var(--steel)"/><polygon points="92,26 104,26 104,62 98,72 92,62" fill="var(--blue)"/><path d="M18 44 H76" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-start="url(#wah)" marker-end="url(#wah)"/></svg><b>牛頭鉋床鉋削</b><span class="en">shaping</span><small>鉋刀往復，工件側向進給；小型工件</small></div>
+    <div class="proc-card"><svg viewBox="0 0 160 120"  role="img" aria-label="龍門鉋削示意圖"><rect x="12" y="50" width="136" height="28" fill="var(--blue-soft)" stroke="var(--ink)" stroke-width="2"/><rect x="6" y="78" width="148" height="10" fill="var(--steel)"/><polygon points="74,4 86,4 86,40 80,50 74,40" fill="var(--blue)"/><path d="M22 104 H138" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-start="url(#wah)" marker-end="url(#wah)"/></svg><b>龍門鉋床鉋削</b><span class="en">planing</span><small>工件隨床台往復，鉋刀進給；大型工件</small></div>
+    <div class="proc-card"><svg viewBox="0 0 160 120"  role="img" aria-label="磨削示意圖"><rect x="14" y="70" width="132" height="30" fill="var(--blue-soft)" stroke="var(--ink)" stroke-width="2"/><circle cx="80" cy="38" r="30" fill="var(--blue)"/><circle cx="100.0" cy="38.0" r="2.4" fill="var(--blue-soft)"/><circle cx="97.3" cy="48.0" r="2.4" fill="var(--blue-soft)"/><circle cx="90.0" cy="55.3" r="2.4" fill="var(--blue-soft)"/><circle cx="80.0" cy="58.0" r="2.4" fill="var(--blue-soft)"/><circle cx="70.0" cy="55.3" r="2.4" fill="var(--blue-soft)"/><circle cx="62.7" cy="48.0" r="2.4" fill="var(--blue-soft)"/><circle cx="60.0" cy="38.0" r="2.4" fill="var(--blue-soft)"/><circle cx="62.7" cy="28.0" r="2.4" fill="var(--blue-soft)"/><circle cx="70.0" cy="20.7" r="2.4" fill="var(--blue-soft)"/><circle cx="80.0" cy="18.0" r="2.4" fill="var(--blue-soft)"/><circle cx="90.0" cy="20.7" r="2.4" fill="var(--blue-soft)"/><circle cx="97.3" cy="28.0" r="2.4" fill="var(--blue-soft)"/><circle cx="80" cy="38" r="7" fill="var(--paper)"/><path d="M116 12 A40 40 0 0 1 122 58" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/><path d="M124 112 H40" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/></svg><b>磨削</b><span class="en">grinding</span><small>極多刃砂輪迴轉；硬脆材料、表面精修</small></div>
+    <div class="proc-card"><svg viewBox="0 0 160 120"  role="img" aria-label="鑽削示意圖"><rect x="26" y="62" width="108" height="48" fill="var(--blue-soft)" stroke="var(--ink)" stroke-width="2"/><rect x="70" y="62" width="20" height="26" fill="var(--paper)"/><rect x="72" y="6" width="16" height="70" fill="var(--blue)"/><line x1="72" y1="18" x2="88" y2="10" stroke="var(--blue-soft)" stroke-width="2.5"/><line x1="72" y1="30" x2="88" y2="22" stroke="var(--blue-soft)" stroke-width="2.5"/><line x1="72" y1="42" x2="88" y2="34" stroke="var(--blue-soft)" stroke-width="2.5"/><line x1="72" y1="54" x2="88" y2="46" stroke="var(--blue-soft)" stroke-width="2.5"/><line x1="72" y1="66" x2="88" y2="58" stroke="var(--blue-soft)" stroke-width="2.5"/><polygon points="72,76 88,76 80,88" fill="var(--blue)"/><path d="M56 40 A26 9 0 0 0 104 40" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/><path d="M120 6 V46" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/></svg><b>鑽削</b><span class="en">drilling</span><small>工件固定，鑽頭旋轉同時進給</small></div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>其他傳統切削</th><th>運動方式</th><th>主要用途</th></tr></thead>
+    <tbody>
+      <tr><td>搪孔 <span class="en">boring</span></td><td>以搪孔刀擴大已鑽之孔</td><td>孔徑精加工</td></tr>
+      <tr><td>鉸孔 <span class="en">reaming</span></td><td>鑽孔後以鉸刀精修</td><td>尺寸精度、真圓度</td></tr>
+      <tr><td>鋸削 <span class="en">sawing</span></td><td>多刃鋸條鋸斷</td><td>加工前備料</td></tr>
+      <tr><td>拉削 <span class="en">broaching</span></td><td>成形拉刀直線通過工件</td><td>內孔或外形，大量生產</td></tr>
+      <tr><td>滾齒切削 <span class="en">hobbing</span></td><td>滾齒刀慢速轉動滾切胚料</td><td>齒輪、螺桿</td></tr>
+    </tbody>
+  </table></div>
+  <p><b>2. 非傳統式切削加工</b>：刀具通常比工件軟，改以電熱能、電化學能、化學能或機械能移除材料。加工速度普遍較慢，ECM、PAM 等少數例外。</p>
+  <div class="tbl"><table>
+    <thead><tr><th>加工法</th><th>能量</th><th>原理</th></tr></thead>
+    <tbody>
+      <tr><td>放電加工 EDM</td><td>熱電</td><td>刀具與工件間留小間隙並注入絕緣液，放電火花的高溫使工件熔化或氣化</td></tr>
+      <tr><td>雷射加工 LBM</td><td>熱電</td><td>工件吸收雷射高能量而瞬間熔化或氣化，以鑽孔、切割為主</td></tr>
+      <tr><td>電子束加工 EBM</td><td>熱電</td><td>高速電子束撞擊工件，動能轉為熱能，以鑽孔、切割為主</td></tr>
+      <tr><td>電漿加工 PAM</td><td>熱電</td><td>電離氣噴入電弧形成高溫電漿作為切割工具</td></tr>
+      <tr><td>超音波加工 USM</td><td>機械</td><td>工具高頻振動，驅動磨粒撞擊工件，適合硬脆材料</td></tr>
+      <tr><td>磨料噴射加工 AJM</td><td>機械</td><td>壓縮空氣帶動磨粒高速噴擊工件，適合硬脆材料</td></tr>
+      <tr><td>水噴射加工 WJM</td><td>機械</td><td>高壓水柱切開工件，適合皮革、塑膠、纖維與輕金屬</td></tr>
+      <tr><td>電化加工 ECM</td><td>電化</td><td>工件接正極、工具接負極，以電解作用使工件依工具形狀成形</td></tr>
+      <tr><td>電化研磨 ECG</td><td>電化</td><td>鑲鑽石的旋轉工具同時電解與研磨，精度與光度優於 ECM</td></tr>
+      <tr><td>化學銑削 CHM</td><td>化學</td><td>非加工區塗防蝕層，以化學腐蝕劑蝕去暴露部分</td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>（二）非切削加工：無屑加工</h4>
+  <p><b>1. 改變形狀</b>：以加溫或加壓使材料產生液態流動、塑性變形或粉末堆疊而成形，包括鑄造、塑性加工、粉末冶金、塑膠模壓、電積造型。塑性加工依加工溫度在<span class="key">再結晶溫度</span>之上或下，分為熱作與冷作，常見的有八種：</p>
+  <div class="procs c4">
+    <div class="proc-card"><svg viewBox="0 0 160 120"  role="img" aria-label="鍛造示意圖"><rect x="28" y="4" width="104" height="22" rx="2" fill="var(--steel)"/><rect x="28" y="92" width="104" height="22" rx="2" fill="var(--steel)"/><path d="M48 26 H112 Q124 59 112 92 H48 Q36 59 48 26 Z" fill="var(--blue-soft)" stroke="var(--ink)" stroke-width="2"/><path d="M148 2 V38" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/><path d="M20 59 H0" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/></svg><b>鍛造</b><span class="en">forging</span><small>胚料置於鍛模內，以外力鍛打成形</small></div>
+    <div class="proc-card"><svg viewBox="0 0 160 120"  role="img" aria-label="輥軋示意圖"><polygon points="0,48 70,48 86,54 160,54 160,66 86,66 70,72 0,72" fill="var(--blue-soft)" stroke="var(--ink)" stroke-width="2"/><circle cx="78" cy="28" r="26" fill="var(--blue)"/><circle cx="78" cy="92" r="26" fill="var(--blue)"/><circle cx="78" cy="28" r="5" fill="var(--paper)"/><circle cx="78" cy="92" r="5" fill="var(--paper)"/><path d="M118 104 H156" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/></svg><b>輥軋</b><span class="en">rolling</span><small>一對旋轉輥子軋成板、管、棒或型鋼</small></div>
+    <div class="proc-card"><svg viewBox="0 0 160 120"  role="img" aria-label="擠製示意圖"><rect x="8" y="26" width="86" height="68" fill="none" stroke="var(--steel)" stroke-width="8"/><rect x="34" y="34" width="56" height="52" fill="var(--blue-soft)" stroke="var(--ink)" stroke-width="2"/><rect x="12" y="42" width="22" height="36" fill="var(--steel)"/><rect x="94" y="26" width="10" height="24" fill="var(--blue)"/><rect x="94" y="70" width="10" height="24" fill="var(--blue)"/><rect x="104" y="50" width="52" height="20" fill="var(--blue-soft)" stroke="var(--ink)" stroke-width="2"/><path d="M4 12 H40" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/><path d="M118 108 H156" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/></svg><b>擠製</b><span class="en">extrusion</span><small>擠伸桿施壓，經模嘴成斷面均一長條</small></div>
+    <div class="proc-card"><svg viewBox="0 0 160 120"  role="img" aria-label="抽製示意圖"><rect x="4" y="50" width="70" height="20" fill="var(--blue-soft)" stroke="var(--ink)" stroke-width="2"/><rect x="82" y="55" width="74" height="10" fill="var(--blue-soft)" stroke="var(--ink)" stroke-width="2"/><polygon points="62,20 96,20 96,52 84,54" fill="var(--blue)"/><polygon points="62,100 96,100 96,68 84,66" fill="var(--blue)"/><path d="M108 92 H156" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/></svg><b>抽製</b><span class="en">drawing</span><small>桿材拉經眼模漸縮直徑，製成線材</small></div>
+    <div class="proc-card"><svg viewBox="0 0 160 120"  role="img" aria-label="鏇壓示意圖"><line x1="2" y1="60" x2="158" y2="60" stroke="var(--steel)" stroke-width="1.5" stroke-dasharray="6 5"/><path d="M14 18 H58 Q92 60 58 102 H14 Z" fill="var(--steel)"/><path d="M58 12 Q100 60 58 108" fill="none" stroke="var(--ink)" stroke-width="2"/><path d="M58 12 Q100 60 58 108" fill="none" stroke="var(--blue-soft)" stroke-width="5" opacity="0.9"/><circle cx="104" cy="40" r="12" fill="var(--blue)"/><path d="M126 22 L112 52" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/><path d="M6 100 A10 22 0 1 0 6 20" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/></svg><b>鏇壓</b><span class="en">spinning</span><small>板料隨模具旋轉，鈍頭工具壓貼成形</small></div>
+    <div class="proc-card"><svg viewBox="0 0 160 120"  role="img" aria-label="引伸示意圖"><rect x="8" y="72" width="44" height="40" fill="var(--steel)"/><rect x="108" y="72" width="44" height="40" fill="var(--steel)"/><path d="M10 66 H52 V104 H108 V66 H150 V72 H112 V108 H48 V72 H10 Z" fill="var(--blue-soft)" stroke="var(--ink)" stroke-width="2"/><rect x="56" y="4" width="48" height="98" rx="4" fill="var(--blue)"/><path d="M30 6 V40" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/><path d="M130 6 V40" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/></svg><b>引伸</b><span class="en">deep drawing</span><small>引伸衝模把板料變成杯狀物</small></div>
+    <div class="proc-card"><svg viewBox="0 0 160 120"  role="img" aria-label="彎形示意圖"><polygon points="16,76 58,76 80,100 102,76 144,76 144,114 16,114" fill="var(--steel)"/><path d="M14 58 L80 92 L146 58" fill="none" stroke="var(--ink)" stroke-width="8"/><path d="M14 58 L80 92 L146 58" fill="none" stroke="var(--blue-soft)" stroke-width="4"/><polygon points="62,2 98,2 98,30 80,66 62,30" fill="var(--blue)"/><path d="M124 4 V38" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/></svg><b>彎形</b><span class="en">bending</span><small>沖頭衝擊使板料彎成預期角度</small></div>
+    <div class="proc-card"><svg viewBox="0 0 160 120"  role="img" aria-label="伸拉成形示意圖"><path d="M36 112 Q80 30 124 112 Z" fill="var(--steel)"/><path d="M16 86 Q80 22 144 86" fill="none" stroke="var(--ink)" stroke-width="8"/><path d="M16 86 Q80 22 144 86" fill="none" stroke="var(--blue-soft)" stroke-width="4"/><rect x="4" y="80" width="16" height="16" fill="var(--blue)"/><rect x="140" y="80" width="16" height="16" fill="var(--blue)"/><path d="M22 108 H2" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/><path d="M138 108 H158" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/><path d="M80 118 V96" fill="none" stroke="var(--fix)" stroke-width="3.5" marker-end="url(#wah)"/></svg><b>伸拉成形</b><span class="en">stretch forming</span><small>夾持兩端，模具由中間加載成形</small></div>
+  </div>
+  <div class="cards">
+    <div class="card"><h4>2. 表面層加工</h4><p>電鍍、拋光與擦光、滾筒磨光、搪磨（孔面品質最高）、研磨、超級精磨。改善粗糙度、精度、防蝕與外觀。</p></div>
+    <div class="card"><h4>3. 連接加工</h4><p>銲接、粘著接合、機械緊固（鉚接、螺紋扣接）。</p></div>
+    <div class="card"><h4>4. 改變機械性質</h4><p>熱處理；熱作在<b>再結晶溫度以上</b>加工以提高可塑性；冷作在<b>再結晶溫度以下</b>加工以提高強度、硬度；珠擊增加表面壓應力，提高疲勞限。</p></div>
+  </div>
+</section>
+
+<section id="s5">
+  <h2><span class="no">1-5</span>機械製造之發展趨勢</h2>
+  <h3>一、發展趨勢</h3>
+  <ol>
+    <li>產品設計除用途外，須符合環境要求與製程規範。</li>
+    <li>規劃最經濟的製造流程以降低成本。</li>
+    <li>品質要求落實於設計、生產、包裝、儲運直到交付客戶的每個階段。</li>
+    <li>生產方法不斷求新求變，因應快速變動的市場。</li>
+    <li>對內以生產科技與管理理論持續評估、改進生產方法。</li>
+    <li>對外整合機器、能源、材料、資本、人工與技術等資源，提高生產力。</li>
+    <li>朝自動化、無人化發展，並引入人工智慧做最佳化生產排程。</li>
+  </ol>
+  <h3>二、製程選擇之考慮因素</h3>
+  <div class="cards">
+    <div class="card"><h4>產品尺寸及性質</h4><p>須符合客戶端需求。</p></div>
+    <div class="card"><h4>操作及製造成本</h4><p>操作簡易但設備昂貴的製程，或反之，兩者間取捨。</p></div>
+    <div class="card"><h4>挑選適當製程</h4><p>兼顧產能與品質條件。</p></div>
+    <div class="card"><h4>淨型／近淨型</h4><p>net-shape／near-net-shape：在不影響品質下縮減工序，免除或減少後處理。</p></div>
+  </div>
+  <h3>三、精實生產與敏捷製造</h3>
+  <p><b>精實生產</b><span class="en">（lean production）</span>：優化流程、降低浪費、提高生產率，兼顧硬體操作維護與人員管理。源自豐田汽車的 JIT<span class="en">（just in time）</span>，降低物料庫存，存量降到特定水位才補貨。</p>
+  <figure>
+    <div class="scroll"><svg viewBox="0 0 640 190" width="100%" style="min-width:520px" role="img" aria-label="JIT 補貨迴路"><defs><marker id="jt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 Z" fill="var(--fix)"/></marker></defs><rect x="10" y="20" width="140" height="70" rx="6" fill="var(--paper)" stroke="var(--blue)" stroke-width="2"/><text x="80" y="50" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">生產消耗</text><text x="80" y="72" text-anchor="middle" font-size="12" fill="var(--muted)">物料逐步用掉</text><line x1="152" y1="55" x2="176" y2="55" stroke="var(--fix)" stroke-width="2.5" marker-end="url(#jt)"/><rect x="170" y="20" width="140" height="70" rx="6" fill="var(--paper)" stroke="var(--blue)" stroke-width="2"/><text x="240" y="50" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">庫存下降</text><text x="240" y="72" text-anchor="middle" font-size="12" fill="var(--muted)">持續監看存量</text><line x1="312" y1="55" x2="336" y2="55" stroke="var(--fix)" stroke-width="2.5" marker-end="url(#jt)"/><rect x="330" y="20" width="140" height="70" rx="6" fill="var(--blue)" stroke="var(--blue)" stroke-width="2"/><text x="400" y="50" text-anchor="middle" font-size="15" font-weight="700" fill="var(--paper)">達到水位</text><text x="400" y="72" text-anchor="middle" font-size="12" fill="var(--blue-soft)">觸發補貨訊號</text><line x1="472" y1="55" x2="496" y2="55" stroke="var(--fix)" stroke-width="2.5" marker-end="url(#jt)"/><rect x="490" y="20" width="140" height="70" rx="6" fill="var(--paper)" stroke="var(--blue)" stroke-width="2"/><text x="560" y="50" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">及時進貨</text><text x="560" y="72" text-anchor="middle" font-size="12" fill="var(--muted)">只補需要的量</text><path d="M560 92 V140 H80 V96" fill="none" stroke="var(--fix)" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#jt)"/><text x="320" y="164" text-anchor="middle" font-size="13" font-weight="700" fill="var(--fix)">循環：不囤積庫存，用多少補多少</text></svg></div>
+    <figcaption>JIT 補貨迴路示意：庫存降到水位才觸發進貨</figcaption>
+  </figure>
+  <p><b>敏捷製造</b><span class="en">（agile manufacturing）</span>：以精實生產為原則，用資訊技術串接生產技術、人力資源與管理方法，進行有彈性、反應靈敏的生產，因應市場快速變化。</p>
+  <h3>四、環境意識的設計與製造</h3>
+  <p>為環境而設計<span class="en">（design for the environment, DFE）</span>又稱綠色設計，可遵循以下策略：</p>
+  <ol>
+    <li>改善產品設計，減少材料用量與製程浪費。</li>
+    <li>避免使用有害材料。</li>
+    <li>研發對環境較安全的產品與製造技術。</li>
+    <li>有效處理製程廢品。</li>
+    <li>應用可重複使用之材料。</li>
+  </ol>
+  <h3>五、綠色能源</h3>
+  <p>綠色能源涵蓋太陽能、水力、風力、海洋能、地熱、氫能與生質能，都屬再生能源。發展重點有三：</p>
+  <div class="cards">
+    <div class="card"><h4>轉換系統</h4><p>太陽能、風力、水力、生質能的轉換技術與效率。</p></div>
+    <div class="card"><h4>儲能元件及系統</h4><p>燃料電池、鋰離子電池、鎳氫電池、儲氫材料。</p></div>
+    <div class="card"><h4>節能材料及元件</h4><p>光致變色、電致變色等節能材料。</p></div>
+  </div>
+  <h3>六、碳足跡與碳中和</h3>
+  <p><span class="key">碳足跡</span><span class="en">（carbon footprint）</span>：一項活動或產品整個生命週期中，直接與間接產生的溫室氣體排放量，各階段都要計入：</p>
+  <figure>
+    <div class="life">
+      <div class="node"><span class="n">01</span><b>原物料</b><small>採集、運輸</small></div><div class="right"></div>
+      <div class="node"><span class="n">02</span><b>工廠</b><small>製造、組裝</small></div><div class="right"></div>
+      <div class="node"><span class="n">03</span><b>物流</b><small>運輸、分配</small></div><div class="right"></div>
+      <div class="node"><span class="n">04</span><b>消費者</b><small>操作、使用</small></div><div class="right"></div>
+      <div class="node"><span class="n">05</span><b>廢棄</b><small>處理、回收</small></div>
+    </div>
+    <div class="offset"><span>各階段排放總和 = <b>碳足跡</b></span><span>－</span><span>減排、造林等抵銷</span><span class="eq">淨排放 = 0　碳中和</span></div>
+    <figcaption>產品生命週期的碳足跡與碳中和</figcaption>
+  </figure>
+  <p><span class="key">碳中和</span><span class="en">（carbon neutrality）</span>：一個單位（國家、企業、組織或個人）在一定期間內直接或間接產生的溫室氣體，透過減排、造林等方式抵銷，使正負總和為零。</p>
+  <p>2015 年《巴黎協定》確立將全球升溫控制在 2°C 以內、並力求 1.5°C 的目標，此後多數國家陸續宣示 2050 年達成淨零排放。企業方面，蘋果宣布 2030 年前整體營運與供應鏈達碳中和，微軟更承諾 2030 年前達到碳負排放<span class="en">（carbon negative）</span>。</p>
+  <div class="callout"><b>對鋼鐵業的意義：</b>鋼鐵是製造業碳排大宗，高爐煉鐵的還原劑是焦炭。減碳路徑包括高爐低碳化、提高廢鋼使用比例與發展氫還原等技術，這也正是本章「製程必須重新調整」的具體例子。</div>
+</section>
+
+<section id="exam">
+  <h2><span class="no">試題</span>歷屆試題</h2>
+  <p class="hint">點選題目展開作答要點</p>
+  <details><summary><span class="qn">01</span><span>(1) 非傳統加工與傳統加工的區別為何？(2) 非傳統加工的分類為何？(3) 請列出六種非傳統加工。</span><span class="src">台科大製造</span></summary>
+    <div class="ans"><ul><li>區別：傳統加工以硬度遠高於工件的刀具物理切削；非傳統加工的刀具通常比工件軟，改用電、熱、化學或機械能移除材料。</li><li>分類：機械式、電化式、化學式、熱電式。</li><li>舉例：EDM、LBM、EBM、PAM、USM、AJM、WJM、ECM、ECG、CHM。</li></ul></div></details>
+  <details><summary><span class="qn">02</span><span>(1) 切削加工浪費材料與能量、加工時間較長，為何仍有存在價值？(2) 傳統與非傳統切削的主要差異？非傳統切削用於何種場合？</span><span class="src">台大機械</span></summary>
+    <div class="ans"><ul><li>切削精度與表面品質高、易控制、成本低，且能加工鑄造、塑性加工做不到的精密尺寸與形狀，是目前主要工法。</li><li>非傳統切削用於材料過硬過脆、形狀複雜微細、傳統刀具無法到達或不經濟的場合。</li></ul></div></details>
+  <details><summary><span class="qn">03</span><span>List ten metal forming (not machining) manufacturing processes.</span><span class="src">成大機械</span></summary>
+    <div class="ans">Casting, forging, rolling, extrusion, drawing, spinning, deep drawing, stretch forming, bending, powder metallurgy（亦可答 electroforming）。</div></details>
+  <details><summary><span class="qn">04</span><span>機械製造的方法可分成哪幾類？</span><span class="src">屏科大機械</span></summary>
+    <div class="ans">依是否產生切屑分為切削加工（傳統式、非傳統式）與非切削加工；非切削加工再分為改變形狀、表面層加工、連接加工、改變機械性質四類。也可補充依產量分大量、中量、小批量生產。直接畫出 1-4 節開頭的分類樹最清楚。</div></details>
+  <details><summary><span class="qn">05</span><span>Give and explain three metal forming process.</span><span class="src">淡江機械</span></summary>
+    <div class="ans">例如 forging（以外力鍛打使胚料在模內塑性變形）、rolling（胚料通過一對反向旋轉的輥輪而減薄）、extrusion（胚料受擠伸桿施壓，經模口成為斷面均一的長條）。可附上示意圖。</div></details>
+  <details><summary><span class="qn">06</span><span>請繪出設計與製造產品之詳細流程或步驟圖。</span><span class="src">台科大機械</span></summary>
+    <div class="ans">依圖 1-1 繪出：需求定義 → 概念設計與可行性 → 設計分析（CAD）→ 原型測試 → 生產圖與製程規劃（CAM、CAPP）→ 生產（CIM）→ 檢驗與品保 → 包裝上市。</div></details>
+  <details><summary><span class="qn">07</span><span>請以表列方式說明材料移除製程（material removal process）的種類。</span><span class="src">台科大自控</span></summary>
+    <div class="ans">表列傳統式（車、銑、鉋、磨、鑽、搪、鉸、鋸、拉、滾齒）與非傳統式（機械式 USM／AJM／WJM、電化式 ECM／ECG、化學式 CHM、熱電式 EDM／LBM／EBM／PAM），並註明各自的能量形式與適用材料。</div></details>
+  <details><summary><span class="qn">08</span><span>何謂綠色能源（green energy）？有何特徵？與傳統能源有何不同？</span><span class="src">交大碩職</span></summary>
+    <div class="ans">綠色能源指太陽能、水力、風力、海洋能、地熱、氫能、生質能等可再生、低碳排的能源；傳統化石能源會耗竭且排放大量 CO₂。可再補充轉換系統、儲能、節能材料三大發展方向。</div></details>
+</section>
+
+</main>
+</div>
+
+</body></html>
