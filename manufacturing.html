@@ -10,51 +10,51 @@
 /* Layout: 工程圖紙 — 圖框＋標題欄開場，製程地圖分群，章節卡依製程家族排列，右下角圖面標題欄收尾 */
 @font-face{font-family:"HanWangHeiHeavy";src:url("fonts/HanWangHeiHeavy-subset.woff2") format("woff2");font-display:swap}
 :root{
-  --bg:#FAFAF7; --paper:#FFFFFF; --ink:#1B2733; --muted:#5B6874;
-  --blue:#1F4E79; --blue-soft:#E7EEF5; --line:#C9D6E3; --grid:rgba(31,78,121,.07);
-  --exam:#B35A0F; --ok:#2E7D4F; --ok-soft:#E5F2EA;
+  --bg:#FBF8F5; --paper:#FFFFFF; --ink:#2A1D14; --muted:#6E5D50;
+  --accent:#A84A0C; --accent-soft:#F6E6D8; --line:#E6D5C7; --grid:rgba(168,74,12,.07);
+  --exam:#1D6B70; --ok:#2E7D4F; --ok-soft:#E5F2EA;
   --f-site:"HanWangHeiHeavy","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
   --f-head:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
   --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0F1923; --paper:#15222F; --ink:#E4EBF1; --muted:#9AA8B5;
-  --blue:#8DBBE6; --blue-soft:#1C3047; --line:#2A3B4C; --grid:rgba(141,187,230,.07);
-  --exam:#E9A56E; --ok:#7CC79A; --ok-soft:#18301F; color-scheme:dark}}
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --exam:#6CC3C7; --ok:#7CC79A; --ok-soft:#18301F; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0F1923; --paper:#15222F; --ink:#E4EBF1; --muted:#9AA8B5;
-  --blue:#8DBBE6; --blue-soft:#1C3047; --line:#2A3B4C; --grid:rgba(141,187,230,.07);
-  --exam:#E9A56E; --ok:#7CC79A; --ok-soft:#18301F; color-scheme:dark}
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --exam:#6CC3C7; --ok:#7CC79A; --ok-soft:#18301F; color-scheme:dark}
 
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;
   background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
   background-size:24px 24px}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:24px 48px;display:flex;flex-direction:column;gap:40px}
 
 /* 頂列 */
 .top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-site);font-weight:900;font-size:18px;color:var(--blue)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-site);font-weight:900;font-size:18px;color:var(--accent)}
 .brand svg{width:28px;height:28px}
 .subjects{display:flex;flex-wrap:wrap;gap:6px;font-size:14px;font-family:var(--f-site)}
 .subjects a{padding:4px 12px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--muted);background:var(--paper)}
-.subjects a[aria-current]{background:var(--blue);border-color:var(--blue);color:var(--bg)}
-.subjects a:hover{border-color:var(--blue);color:var(--blue)}
+.subjects a[aria-current]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.subjects a:hover{border-color:var(--accent);color:var(--accent)}
 .subjects a[aria-current]:hover{color:var(--bg)}
 
 /* 開場：圖框 */
-.hero{position:relative;border:2px solid var(--blue);background:var(--paper);padding:36px 32px 28px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px}
+.hero{position:relative;border:2px solid var(--accent);background:var(--paper);padding:36px 32px 28px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px}
 .hero::before{content:"";position:absolute;inset:6px;border:1px solid var(--line);pointer-events:none}
-.eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.18em;color:var(--blue);text-transform:uppercase}
+.eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase}
 h1{font-family:var(--f-head);font-weight:900;font-size:clamp(36px,6vw,60px);line-height:1.1;margin:8px 0 12px;text-wrap:balance}
 .lede{max-width:34em;color:var(--muted);margin:0}
 .facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);align-self:end}
 .facts div{padding:12px 14px;border-right:1px solid var(--line)}
 .facts div:last-child{border-right:0}
-.facts b{display:block;font-family:var(--f-mono);font-size:28px;font-weight:500;color:var(--blue);font-variant-numeric:tabular-nums;line-height:1.2}
+.facts b{display:block;font-family:var(--f-mono);font-size:28px;font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.2}
 .facts span{font-size:13px;color:var(--muted)}
 
 /* 製程地圖 */
@@ -68,13 +68,13 @@ h2{font-family:var(--f-head);font-weight:900;font-size:26px;margin:0;text-wrap:b
 /* 章節 */
 .family{display:flex;flex-direction:column;gap:12px}
 .family + .family{margin-top:28px}
-.fam-label{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--blue);font-weight:700}
+.fam-label{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--accent);font-weight:700}
 .fam-label::after{content:"";flex:1;border-top:1px dashed var(--line)}
 .fam-label .mono{font-family:var(--f-mono);font-weight:400;letter-spacing:.08em}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
 .ch{display:grid;grid-template-columns:64px minmax(0,1fr);gap:0 16px;background:var(--paper);border:1px solid var(--line);padding:18px 18px 16px;text-decoration:none;color:var(--ink);transition:border-color .15s, transform .15s}
-a.ch:hover{border-color:var(--blue);transform:translateY(-2px)}
-.num{grid-row:1/4;font-family:var(--f-mono);font-size:40px;line-height:1;color:var(--blue);font-weight:500}
+a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
+.num{grid-row:1/4;font-family:var(--f-mono);font-size:40px;line-height:1;color:var(--accent);font-weight:500}
 .num small{display:block;font-size:11px;letter-spacing:.12em;color:var(--muted);margin-top:6px}
 .ch h3{font-family:var(--f-head);font-weight:900;font-size:21px;margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .ch p{margin:4px 0 10px;font-size:14px;color:var(--muted);line-height:1.6}
@@ -83,8 +83,8 @@ a.ch:hover{border-color:var(--blue);transform:translateY(-2px)}
 .pill{font-family:var(--f-body);font-size:12px;font-weight:500;padding:1px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
 .pill.on{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
 .links{display:flex;gap:8px;margin-top:10px}
-.links a{font-size:13px;padding:3px 12px;border:1px solid var(--blue);color:var(--blue);text-decoration:none;border-radius:2px}
-.links a:hover{background:var(--blue);color:var(--bg)}
+.links a{font-size:13px;padding:3px 12px;border:1px solid var(--accent);color:var(--accent);text-decoration:none;border-radius:2px}
+.links a:hover{background:var(--accent);color:var(--bg)}
 
 /* 學習建議 */
 .tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
@@ -94,12 +94,12 @@ a.ch:hover{border-color:var(--blue);transform:translateY(-2px)}
 .tip.exam b{color:var(--exam)}
 
 /* 標題欄 */
-.titleblock{margin-left:auto;width:min(100%,520px);border:2px solid var(--blue);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));font-size:12px;background:var(--paper)}
+.titleblock{margin-left:auto;width:min(100%,520px);border:2px solid var(--accent);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));font-size:12px;background:var(--paper)}
 .titleblock div{padding:6px 10px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
 .titleblock div:nth-child(4n){border-right:0}
 .titleblock .k{color:var(--muted);font-size:11px}
 .titleblock .v{font-family:var(--f-mono);color:var(--ink)}
-.titleblock .wide{grid-column:span 4;border-right:0;border-bottom:0;font-family:var(--f-head);font-weight:900;font-size:16px;color:var(--blue)}
+.titleblock .wide{grid-column:span 4;border-right:0;border-bottom:0;font-family:var(--f-head);font-weight:900;font-size:16px;color:var(--accent)}
 
 @media (max-width:760px){
   .hero{grid-template-columns:1fr;padding:28px 20px 20px}
@@ -113,7 +113,7 @@ a.ch:hover{border-color:var(--blue);transform:translateY(-2px)}
 <div class="wrap">
   <header class="top">
     <a class="brand" href="index.html" aria-label="回知識動力場首頁">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="7" fill="var(--blue)"/><path d="M16 7v18M7 16h18" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="16" r="5.5" fill="none" stroke="var(--bg)" stroke-width="2.4"/></svg>
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="7" fill="var(--accent)"/><path d="M16 7v18M7 16h18" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="16" r="5.5" fill="none" stroke="var(--bg)" stroke-width="2.4"/></svg>
       知識動力場
     </a>
     <nav class="subjects" aria-label="科目">
@@ -145,40 +145,40 @@ a.ch:hover{border-color:var(--blue);transform:translateY(-2px)}
     <div class="map">
       <svg viewBox="0 0 960 300" role="img" aria-label="製程地圖：第一章緒論總覽全局；材料端為第八章機械材料、第九章材料處理；加工端分成形加工（第二、三、五章）、去除加工（第四、七章）、接合（第六章），最後產出零件">
         <defs>
-          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--blue)"/></marker>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--accent)"/></marker>
         </defs>
         <!-- 總覽框 -->
         <rect x="10" y="10" width="940" height="280" fill="none" stroke="var(--line)" stroke-dasharray="6 5"/>
-        <text x="24" y="34" font-size="14" fill="var(--blue)" font-weight="700">CH 1　緒論：製造系統、加工分類、精實生產、碳中和</text>
+        <text x="24" y="34" font-size="14" fill="var(--accent)" font-weight="700">CH 1　緒論：製造系統、加工分類、精實生產、碳中和</text>
         <!-- 材料 -->
-        <rect x="40" y="80" width="170" height="170" fill="var(--blue-soft)" stroke="var(--blue)"/>
+        <rect x="40" y="80" width="170" height="170" fill="var(--accent-soft)" stroke="var(--accent)"/>
         <text x="125" y="108" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">材料</text>
         <text x="125" y="150" text-anchor="middle" font-size="14" fill="var(--ink)">CH 8 機械材料</text>
         <text x="125" y="174" text-anchor="middle" font-size="12" fill="var(--muted)">晶體、強化、鐵碳圖</text>
         <text x="125" y="212" text-anchor="middle" font-size="14" fill="var(--ink)">CH 9 材料處理</text>
         <text x="125" y="236" text-anchor="middle" font-size="12" fill="var(--muted)">退火、淬火、表面硬化</text>
         <!-- 箭頭到三條路 -->
-        <path d="M210 165 L270 165" stroke="var(--blue)" stroke-width="2" fill="none"/>
-        <path d="M270 165 L270 95 L318 95" stroke="var(--blue)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
-        <path d="M270 165 L318 165" stroke="var(--blue)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
-        <path d="M270 165 L270 235 L318 235" stroke="var(--blue)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+        <path d="M210 165 L270 165" stroke="var(--accent)" stroke-width="2" fill="none"/>
+        <path d="M270 165 L270 95 L318 95" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+        <path d="M270 165 L318 165" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+        <path d="M270 165 L270 235 L318 235" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
         <!-- 成形 -->
-        <rect x="322" y="68" width="430" height="54" fill="var(--paper)" stroke="var(--blue)"/>
-        <text x="338" y="100" font-size="15" font-weight="700" fill="var(--blue)">成形加工</text>
+        <rect x="322" y="68" width="430" height="54" fill="var(--paper)" stroke="var(--accent)"/>
+        <text x="338" y="100" font-size="15" font-weight="700" fill="var(--accent)">成形加工</text>
         <text x="420" y="100" font-size="14" fill="var(--ink)">CH 2 鑄造　·　CH 3 粉末冶金　·　CH 5 塑性加工</text>
         <!-- 去除 -->
-        <rect x="322" y="138" width="430" height="54" fill="var(--paper)" stroke="var(--blue)"/>
-        <text x="338" y="170" font-size="15" font-weight="700" fill="var(--blue)">去除加工</text>
+        <rect x="322" y="138" width="430" height="54" fill="var(--paper)" stroke="var(--accent)"/>
+        <text x="338" y="170" font-size="15" font-weight="700" fill="var(--accent)">去除加工</text>
         <text x="420" y="170" font-size="14" fill="var(--ink)">CH 4 切削　·　CH 7 非傳統加工</text>
         <!-- 接合 -->
-        <rect x="322" y="208" width="430" height="54" fill="var(--paper)" stroke="var(--blue)"/>
-        <text x="338" y="240" font-size="15" font-weight="700" fill="var(--blue)">接合</text>
+        <rect x="322" y="208" width="430" height="54" fill="var(--paper)" stroke="var(--accent)"/>
+        <text x="338" y="240" font-size="15" font-weight="700" fill="var(--accent)">接合</text>
         <text x="420" y="240" font-size="14" fill="var(--ink)">CH 6 接合銲接</text>
         <!-- 匯流到零件 -->
-        <path d="M752 95 L800 95 L800 165" stroke="var(--blue)" stroke-width="2" fill="none"/>
-        <path d="M752 235 L800 235 L800 165" stroke="var(--blue)" stroke-width="2" fill="none"/>
-        <path d="M752 165 L842 165" stroke="var(--blue)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
-        <rect x="846" y="128" width="90" height="74" fill="var(--blue)"/>
+        <path d="M752 95 L800 95 L800 165" stroke="var(--accent)" stroke-width="2" fill="none"/>
+        <path d="M752 235 L800 235 L800 165" stroke="var(--accent)" stroke-width="2" fill="none"/>
+        <path d="M752 165 L842 165" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+        <rect x="846" y="128" width="90" height="74" fill="var(--accent)"/>
         <text x="891" y="171" text-anchor="middle" font-size="17" font-weight="700" fill="var(--bg)">零件</text>
       </svg>
     </div>
