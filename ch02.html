@@ -1,0 +1,936 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>機械製造學 第二章 鑄造</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;800&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: 與第一章相同的講義版面 — 左側章節索引 + 右側正文；製程以剖面示意圖與流程框呈現 */
+:root{
+  --bg:#FBF8F5; --paper:#FFFFFF; --ink:#2A1D14; --muted:#6E5D50;
+  --accent:#A84A0C; --accent-soft:#F6E6D8; --line:#E6D5C7; --grid:rgba(168,74,12,.07);
+  --steel:#9A8A7D; --fix:#1D6B70; --fix-soft:#E3F1F1; --warn:#8E2F1C;
+  --f-display:"Noto Serif TC","Songti TC",serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --steel:#6E5E52; --fix:#6CC3C7; --fix-soft:#16302F; --warn:#F08A73; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --steel:#6E5E52; --fix:#6CC3C7; --fix-soft:#16302F; --warn:#F08A73; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.8;padding-inline:16px}
+.wrap{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px;padding-block:0 64px}
+header.hero{max-width:1120px;margin:0 auto 32px;padding-block:36px 28px;border-bottom:1.5px solid var(--accent);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;
+  display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:24px;align-items:center}
+.hero-art{width:100%;max-width:260px;justify-self:end}
+.crumb{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,5vw,3.1rem);line-height:1.2;margin:.3em 0 .2em;text-wrap:balance}
+h1 small{font-size:.5em;font-weight:600;color:var(--muted);display:block;letter-spacing:.05em}
+.lede{max-width:62ch;color:var(--muted);margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px;font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);align-self:start;font-size:14px}
+nav.toc p{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--muted);margin:0 0 8px}
+nav.toc a{display:flex;gap:10px;padding:6px 0 6px 12px;color:var(--ink);text-decoration:none;border-left:2px solid var(--line)}
+nav.toc a:hover,nav.toc a:focus-visible{border-left-color:var(--accent);color:var(--accent);outline:none}
+nav.toc a span{font-family:var(--f-mono);color:var(--accent);font-size:12.5px;min-width:2.6em}
+main{min-width:0}
+section{padding-block:8px 28px;border-bottom:1px solid var(--line);margin-bottom:28px;scroll-margin-top:16px}
+h2{font-family:var(--f-display);font-size:1.6rem;margin:0 0 .6em;display:flex;align-items:baseline;gap:14px;text-wrap:balance}
+h2 .no{font-family:var(--f-mono);font-size:.95rem;color:var(--paper);background:var(--accent);padding:2px 9px;border-radius:2px;font-weight:500}
+h3{font-size:1.12rem;margin:1.6em 0 .5em;color:var(--accent)}
+h4{font-size:1rem;margin:1.2em 0 .3em}
+p{max-width:68ch;margin:.4em 0 .9em}
+.en{font-family:var(--f-mono);font-size:.8em;color:var(--muted)}
+.key{background:linear-gradient(transparent 62%,var(--accent-soft) 62%);font-weight:700}
+figure{margin:20px 0 24px;background:var(--paper);border:1px solid var(--line);padding:20px}
+figcaption{font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-top:12px;letter-spacing:.04em}
+.scroll{overflow-x:auto}
+.tbl{overflow-x:auto;margin:14px 0 22px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px;background:var(--paper)}
+th,td{border:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);color:var(--accent);font-weight:700;white-space:nowrap}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);padding:12px 16px;margin:16px 0;font-size:15px}
+.callout b{color:var(--accent)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:12px 0 20px}
+.card{border:1px solid var(--line);background:var(--paper);padding:14px 16px}
+.card h4{margin:0 0 4px;color:var(--accent)}
+.card p{margin:0;font-size:14.5px}
+/* 流程圖共用 */
+.node{background:var(--paper);border:2px solid var(--accent);border-radius:6px;padding:10px 14px;position:relative}
+.node b{display:block;font-size:15.5px}
+.node small{display:block;color:var(--muted);font-size:13px;line-height:1.5}
+.node .n{font-family:var(--f-mono);font-size:11.5px;color:var(--accent);letter-spacing:.06em}
+.node.dark{background:var(--accent);border-color:var(--accent)}
+.node.dark b,.node.dark .n{color:var(--paper)} .node.dark small{color:var(--accent-soft)}
+.down{height:30px;position:relative;margin-left:50%}
+.down::before{content:"";position:absolute;left:-1px;top:0;bottom:8px;border-left:2px solid var(--fix)}
+.down::after{content:"";position:absolute;left:-7px;bottom:0;border:7px solid transparent;border-top:9px solid var(--fix);border-bottom:0}
+.right{flex:0 0 34px;align-self:center;height:2px;background:var(--fix);position:relative}
+.right::after{content:"";position:absolute;right:-2px;top:-6px;border:7px solid transparent;border-left:10px solid var(--fix);border-right:0}
+/* 設計流程 */
+.phases{display:grid;gap:0}
+.phase{border:1.5px dashed var(--steel);border-radius:10px;padding:26px 16px 14px;position:relative;display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:0 14px;align-items:center}
+.phase>.lab{position:absolute;top:-11px;left:14px;background:var(--paper);padding:0 8px;font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.08em}
+.phase .down{grid-column:1}
+.tool{font-family:var(--f-mono);font-size:12px;color:var(--accent);border:1.5px solid var(--accent);border-radius:999px;text-align:center;padding:3px 8px;position:relative;background:var(--paper)}
+.tool::before{content:"";position:absolute;right:100%;top:50%;width:14px;border-top:1.5px dashed var(--accent)}
+.gap{grid-column:2}
+/* IPO */
+.ipo{display:flex;align-items:stretch;gap:0}
+.ipo .col{flex:1;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.ipo .col h5{margin:0 0 4px;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;color:var(--accent);text-align:center}
+.pill{border:1.5px solid var(--accent);border-radius:999px;padding:2px 12px;font-size:14px;text-align:center;background:var(--paper)}
+.pill.solid{background:var(--accent);color:var(--paper)}
+.ipo .proc{flex:1;border:2px solid var(--accent);border-radius:8px;background:var(--accent);color:var(--paper);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:14px}
+.ipo .proc h5{color:var(--accent-soft)}
+.ipo .proc .pill{background:transparent;border-color:var(--accent-soft);color:var(--paper)}
+/* 分類樹 */
+.tree{width:max-content;min-width:100%;margin:0 auto}
+.tree ul{list-style:none;margin:0;padding:22px 0 0;display:flex;justify-content:center;position:relative}
+.tree li{position:relative;padding:22px 4px 0;text-align:center}
+.tree>ul{padding-top:0}.tree>ul>li{padding-top:0}
+.tree li::before,.tree li::after{content:"";position:absolute;top:0;width:50%;height:22px;border-top:2px solid var(--steel)}
+.tree li::before{right:50%}.tree li::after{left:50%;border-left:2px solid var(--steel)}
+.tree li:only-child::before,.tree li:only-child::after{display:none}
+.tree li:first-child::before,.tree li:last-child::after{border-top:none}
+.tree li:last-child::before{border-right:2px solid var(--steel);border-top-right-radius:6px}
+.tree li:first-child::after{border-top-left-radius:6px}
+.tree>ul>li::before,.tree>ul>li::after{display:none}
+.tree ul ul::before{content:"";position:absolute;top:0;left:50%;height:22px;border-left:2px solid var(--steel)}
+.tree .node{display:inline-block;padding:5px 9px;white-space:nowrap}
+.tree .node b{font-size:14.5px}
+/* 加工示意圖卡 */
+.procs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 20px}
+.procs.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.proc-card{background:var(--paper);border:1px solid var(--line);padding:12px 12px 10px;display:flex;flex-direction:column;gap:4px}
+.proc-card svg{width:100%;height:auto;background:var(--bg);border-radius:4px}
+.proc-card b{font-size:15px}
+.proc-card .en{display:block}
+.proc-card small{color:var(--muted);font-size:13px;line-height:1.5}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted);margin:-4px 0 12px}
+.legend i{display:inline-block;width:14px;height:10px;margin-right:6px;vertical-align:middle;border-radius:2px}
+/* 碳足跡 */
+.life{display:flex;align-items:stretch}
+.life .node{flex:1;text-align:center;padding:10px 8px}
+.offset{margin-top:14px;border:2px dashed var(--fix);border-radius:8px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:center;font-size:14.5px}
+.offset b{color:var(--fix)}
+.eq{font-family:var(--f-mono);font-size:15px;background:var(--fix);color:var(--paper);padding:2px 10px;border-radius:4px}
+/* 試題 */
+.fixbox{border:1.5px dashed var(--warn);background:var(--fix-soft);padding:14px 18px;margin:8px 0 0;font-size:14.5px}
+.fixbox h3{color:var(--warn);margin:0 0 6px;font-size:1rem}
+.fixbox ul{margin:0;padding-left:1.1em}
+.fixbox s{color:var(--muted)}
+details{border:1px solid var(--line);background:var(--paper);margin:10px 0;padding:0 16px}
+summary{cursor:pointer;padding:12px 0;font-weight:500;list-style:none;display:grid;grid-template-columns:2.4em minmax(0,1fr) auto;gap:8px}
+summary::-webkit-details-marker{display:none}
+summary .qn{font-family:var(--f-mono);color:var(--accent)}
+summary .src{font-size:12px;color:var(--muted);white-space:nowrap}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details[open] summary{border-bottom:1px dashed var(--line)}
+details .ans{padding:10px 0 14px 2.8em;font-size:15px}
+details .ans ul{margin:.2em 0;padding-left:1.1em}
+.hint{font-family:var(--f-mono);font-size:11px;color:var(--accent);letter-spacing:.1em}
+svg text{font-family:var(--f-body)}
+@media (max-width:820px){
+  header.hero{grid-template-columns:minmax(0,1fr)}.hero-art{justify-self:start;max-width:180px}
+  .wrap{grid-template-columns:minmax(0,1fr);gap:0}
+  nav.toc{position:static;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px}
+  nav.toc p{width:100%}
+  nav.toc a{border:1px solid var(--line);padding:4px 10px}
+  .ipo,.life{flex-direction:column}
+  .ipo .right,.life .right{flex-basis:26px;width:2px;height:26px;align-self:center}
+  .ipo .right::after,.life .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
+  .phase{grid-template-columns:minmax(0,1fr) 92px}
+  .procs,.procs.c4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+.crumb a{color:inherit;text-decoration:none;border-bottom:1px dashed currentColor}
+.crumb a:hover{border-bottom-style:solid}
+.cards.c2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card .en{display:block;margin:-2px 0 4px}
+.flow6,.flow5{display:flex;align-items:stretch;min-width:680px}
+.flow6 .node,.flow5 .node{flex:1 1 0;min-width:0;padding:8px 9px}
+.flow6 .right,.flow5 .right{flex-basis:22px}
+.flow5 .node small{font-size:12px}
+.formula{font-family:var(--f-mono);font-size:1.45rem;text-align:center;color:var(--accent);background:var(--accent-soft);padding:14px 12px;margin:12px 0 14px;border-radius:4px}
+.formula.sm{font-size:1.05rem;padding:8px;margin:8px 0}
+.example{border:1.5px solid var(--fix);background:var(--paper);padding:0 18px 12px;margin:18px 0 24px}
+.ex-h{display:inline-block;background:var(--fix);color:var(--paper);font-weight:700;font-size:14px;padding:3px 12px;margin:0 0 6px -18px}
+.example ul{margin:.2em 0 .6em;padding-left:1.2em;font-family:var(--f-mono);font-size:14px}
+figure.mini{margin:10px 0;padding:12px;background:var(--bg)}
+figure.mini svg{width:100%;max-width:420px;height:auto;display:block}
+ol.steps{counter-reset:st;list-style:none;padding:0;margin:10px 0 20px;display:grid;gap:8px;max-width:72ch}
+ol.steps li{counter-increment:st;display:grid;grid-template-columns:2.2em minmax(0,1fr);gap:10px;align-items:baseline}
+ol.steps li::before{content:counter(st,decimal-leading-zero);font-family:var(--f-mono);font-size:13px;color:var(--paper);background:var(--accent);text-align:center;border-radius:2px;padding:1px 0}
+.dc2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.dc2>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.dc2 svg{width:100%;height:auto;background:var(--bg);border-radius:4px}
+.dc2 b{font-size:15.5px;margin-top:4px}
+.dc2 small{color:var(--muted);font-size:13.5px;line-height:1.6}
+figure svg{max-width:100%}
+.scroll>svg{width:100%;height:auto;display:block}
+@media (max-width:820px){.dc2{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div>
+    <div class="crumb"><a href="manufacturing.html">知識動力場 · 機械製造學</a> · Chapter 02</div>
+    <h1>鑄造<small>Casting</small></h1>
+    <p class="lede">把金屬熔成液體，倒進形狀和零件相同的模穴，凝固後取出，就是鑄造。這是形狀自由度最高的成形方法，引擎缸體、渦輪葉片、船用螺槳都靠它。本章從凝固原理談起，接著是模型、砂模與流路系統，最後整理各種特殊鑄造法。</p>
+    <div class="meta"><span>原書頁碼 p.19–65</span><span>4 節 · 18 題歷屆試題</span></div>
+  </div>
+  <svg class="hero-art" viewBox="0 0 260 230" role="img" aria-label="澆桶將金屬液倒入砂模的示意圖">
+    <defs><pattern id="sandH" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="var(--steel)"/><circle cx="6" cy="6" r=".8" fill="var(--steel)"/></pattern></defs>
+    <g transform="rotate(-28 70 50)">
+      <path d="M30 20 H110 L102 92 H38 Z" fill="var(--paper)" stroke="var(--accent)" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M36 44 H104 L100 88 H40 Z" fill="var(--accent)"/>
+      <path d="M110 20 L124 14" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M16 54 H30 M110 54 H124" stroke="var(--steel)" stroke-width="5" stroke-linecap="round"/>
+    </g>
+    <path d="M128 64 C134 84 132 100 130 116" fill="none" stroke="var(--accent)" stroke-width="6" stroke-linecap="round"/>
+    <rect x="40" y="118" width="200" height="98" fill="url(#sandH)" stroke="var(--ink)" stroke-width="2"/>
+    <line x1="40" y1="166" x2="240" y2="166" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <path d="M116 118 H144 L138 172 H122 Z" fill="var(--accent)"/>
+    <rect x="122" y="172" width="54" height="10" fill="var(--accent)"/>
+    <rect x="176" y="146" width="48" height="50" rx="3" fill="var(--accent)"/>
+    <rect x="200" y="118" width="16" height="28" fill="var(--accent)"/>
+    <text x="48" y="140" font-size="12" fill="var(--muted)">上模</text>
+    <text x="48" y="206" font-size="12" fill="var(--muted)">下模</text>
+  </svg>
+</header>
+
+<div class="wrap">
+<nav class="toc" aria-label="本章目錄">
+  <p>CONTENTS</p>
+  <a href="#s1"><span>2-1</span>概述與凝固</a>
+  <a href="#s2"><span>2-2</span>模型與模砂</a>
+  <a href="#s3"><span>2-3</span>鑄模</a>
+  <a href="#s4"><span>2-4</span>特殊鑄造法</a>
+  <a href="#exam"><span>試題</span>歷屆試題</a>
+</nav>
+
+<main>
+
+<!-- ============ 2-1 ============ -->
+<section id="s1">
+  <h2><span class="no">2-1</span>概述</h2>
+  <p>鑄造<span class="en">（casting）</span>是先做出與零件形狀相近的<span class="key">模穴</span><span class="en">（cavity）</span>，由鑄模<span class="en">（mold）</span>的內腔界定邊界，再把熔融金屬注入，凝固後取出鑄件。</p>
+
+  <div class="cards c2">
+    <div class="card"><h4>形狀自由度高</h4><p>內外形都很複雜的零件，如引擎缸體、渦輪葉片，可一次成形，省下鍛造、切削與接合工序。</p></div>
+    <div class="card"><h4>尺寸與重量不受限</h4><p>從幾公克的飾品到數百噸的船用螺槳、水門、大型佛像都能鑄造。</p></div>
+    <div class="card"><h4>產量彈性大</h4><p>砂模適合單件小量，壓鑄適合每小時上千件的大量生產。</p></div>
+    <div class="card"><h4>性質大致等向</h4><p>沒有塑性加工造成的纖維流線，整體機械性質較無方向性；但柱狀晶區仍有異向性，強度與韌性通常不如鍛件。</p></div>
+  </div>
+
+  <h3>一、鑄造的步驟</h3>
+  <figure>
+    <div class="scroll"><div class="flow6">
+      <div class="node"><span class="n">STEP 1</span><b>擬定計畫</b><small>選鑄造法、定分模面與流路</small></div><div class="right"></div>
+      <div class="node"><span class="n">STEP 2</span><b>製作模型</b><small>含各種裕度</small></div><div class="right"></div>
+      <div class="node"><span class="n">STEP 3</span><b>製作鑄模與砂心</b><small>造模、乾燥、合模</small></div><div class="right"></div>
+      <div class="node"><span class="n">STEP 4</span><b>熔解與澆鑄</b><small>熔爐熔化金屬</small></div><div class="right"></div>
+      <div class="node"><span class="n">STEP 5</span><b>清理與後加工</b><small>去冒口、毛邊、黏砂</small></div><div class="right"></div>
+      <div class="node dark"><span class="n">STEP 6</span><b>檢驗鑄件</b><small>尺寸、缺陷、性質</small></div>
+    </div></div>
+    <figcaption>圖 2-1　鑄造作業流程</figcaption>
+  </figure>
+
+  <h3>二、影響鑄造品質的四個因素</h3>
+  <div class="tbl"><table>
+    <tr><th>因素</th><th>重點</th></tr>
+    <tr><td>金屬液的流動</td><td>流速要快到在凝固前充滿模穴，但過快會產生紊流，捲入氣體與氧化物。</td></tr>
+    <tr><td>凝固特性</td><td>合金凝固時會發生偏析，凝固區間大小也決定流動性與縮孔型態。</td></tr>
+    <tr><td>熱傳</td><td>模壁吸熱快，鑄件表面先凝固、中心後凝固，形成溫度梯度。</td></tr>
+    <tr><td>鑄模材料</td><td>導熱性決定冷卻速率；模砂粒度決定鑄件表面粗糙度。</td></tr>
+  </table></div>
+
+  <h3>三、凝固：從微觀到宏觀</h3>
+  <h4>1. 成核與成長</h4>
+  <p>液體中出現第一小團固體稱為<span class="key">成核</span><span class="en">（nucleation）</span>。新生的固液界面帶有表面自由能，界面能愈低愈容易成核。</p>
+  <div class="cards">
+    <div class="card"><h4>均質成核</h4><span class="en">homogeneous</span><p>液體自行生成晶核，需要較大的過冷度。</p></div>
+    <div class="card"><h4>異質成核</h4><span class="en">heterogeneous</span><p>在模壁、雜質或外來粒子上成核，所需過冷度小，實際鑄造多屬此類。</p></div>
+    <div class="card"><h4>接種</h4><span class="en">inoculation</span><p>刻意加入少量成核劑（如鑄鐵加矽鐵、鋁合金加 Ti-B），使晶粒細化、組織均勻。</p></div>
+  </div>
+  <p>晶核形成後，液態原子不斷附著到固體表面，晶粒逐漸<span class="key">成長</span><span class="en">（growth）</span>。合金多以樹枝狀<span class="en">（dendrite）</span>方式成長。</p>
+
+  <h4>2. 鑄件的巨觀結構</h4>
+  <figure>
+    <div class="scroll"><svg style="max-width:560px;margin:0 auto" viewBox="0 0 430 260" role="img" aria-label="鑄件橫斷面的巨觀結構：外層冷硬區、柱狀區、中心等軸區"><defs><clipPath id="cEq"><rect x="88" y="88" width="84" height="84"/></clipPath><clipPath id="cT"><polygon points="22,22 238,22 172,88 88,88"/></clipPath><clipPath id="cB"><polygon points="22,238 238,238 172,172 88,172"/></clipPath><clipPath id="cL"><polygon points="22,22 88,88 88,172 22,238"/></clipPath><clipPath id="cR"><polygon points="238,22 172,88 172,172 238,238"/></clipPath></defs><rect x="10" y="10" width="240" height="240" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2"/><g fill="none" stroke="var(--accent)" stroke-width=".7"><rect x="10" y="10" width="6" height="6"/><rect x="10" y="16" width="6" height="6"/><rect x="10" y="22" width="6" height="6"/><rect x="10" y="28" width="6" height="6"/><rect x="10" y="34" width="6" height="6"/><rect x="10" y="40" width="6" height="6"/><rect x="10" y="46" width="6" height="6"/><rect x="10" y="52" width="6" height="6"/><rect x="10" y="58" width="6" height="6"/><rect x="10" y="64" width="6" height="6"/><rect x="10" y="70" width="6" height="6"/><rect x="10" y="76" width="6" height="6"/><rect x="10" y="82" width="6" height="6"/><rect x="10" y="88" width="6" height="6"/><rect x="10" y="94" width="6" height="6"/><rect x="10" y="100" width="6" height="6"/><rect x="10" y="106" width="6" height="6"/><rect x="10" y="112" width="6" height="6"/><rect x="10" y="118" width="6" height="6"/><rect x="10" y="124" width="6" height="6"/><rect x="10" y="130" width="6" height="6"/><rect x="10" y="136" width="6" height="6"/><rect x="10" y="142" width="6" height="6"/><rect x="10" y="148" width="6" height="6"/><rect x="10" y="154" width="6" height="6"/><rect x="10" y="160" width="6" height="6"/><rect x="10" y="166" width="6" height="6"/><rect x="10" y="172" width="6" height="6"/><rect x="10" y="178" width="6" height="6"/><rect x="10" y="184" width="6" height="6"/><rect x="10" y="190" width="6" height="6"/><rect x="10" y="196" width="6" height="6"/><rect x="10" y="202" width="6" height="6"/><rect x="10" y="208" width="6" height="6"/><rect x="10" y="214" width="6" height="6"/><rect x="10" y="220" width="6" height="6"/><rect x="10" y="226" width="6" height="6"/><rect x="10" y="232" width="6" height="6"/><rect x="10" y="238" width="6" height="6"/><rect x="10" y="244" width="6" height="6"/><rect x="16" y="10" width="6" height="6"/><rect x="16" y="16" width="6" height="6"/><rect x="16" y="22" width="6" height="6"/><rect x="16" y="28" width="6" height="6"/><rect x="16" y="34" width="6" height="6"/><rect x="16" y="40" width="6" height="6"/><rect x="16" y="46" width="6" height="6"/><rect x="16" y="52" width="6" height="6"/><rect x="16" y="58" width="6" height="6"/><rect x="16" y="64" width="6" height="6"/><rect x="16" y="70" width="6" height="6"/><rect x="16" y="76" width="6" height="6"/><rect x="16" y="82" width="6" height="6"/><rect x="16" y="88" width="6" height="6"/><rect x="16" y="94" width="6" height="6"/><rect x="16" y="100" width="6" height="6"/><rect x="16" y="106" width="6" height="6"/><rect x="16" y="112" width="6" height="6"/><rect x="16" y="118" width="6" height="6"/><rect x="16" y="124" width="6" height="6"/><rect x="16" y="130" width="6" height="6"/><rect x="16" y="136" width="6" height="6"/><rect x="16" y="142" width="6" height="6"/><rect x="16" y="148" width="6" height="6"/><rect x="16" y="154" width="6" height="6"/><rect x="16" y="160" width="6" height="6"/><rect x="16" y="166" width="6" height="6"/><rect x="16" y="172" width="6" height="6"/><rect x="16" y="178" width="6" height="6"/><rect x="16" y="184" width="6" height="6"/><rect x="16" y="190" width="6" height="6"/><rect x="16" y="196" width="6" height="6"/><rect x="16" y="202" width="6" height="6"/><rect x="16" y="208" width="6" height="6"/><rect x="16" y="214" width="6" height="6"/><rect x="16" y="220" width="6" height="6"/><rect x="16" y="226" width="6" height="6"/><rect x="16" y="232" width="6" height="6"/><rect x="16" y="238" width="6" height="6"/><rect x="16" y="244" width="6" height="6"/><rect x="22" y="10" width="6" height="6"/><rect x="22" y="16" width="6" height="6"/><rect x="22" y="238" width="6" height="6"/><rect x="22" y="244" width="6" height="6"/><rect x="28" y="10" width="6" height="6"/><rect x="28" y="16" width="6" height="6"/><rect x="28" y="238" width="6" height="6"/><rect x="28" y="244" width="6" height="6"/><rect x="34" y="10" width="6" height="6"/><rect x="34" y="16" width="6" height="6"/><rect x="34" y="238" width="6" height="6"/><rect x="34" y="244" width="6" height="6"/><rect x="40" y="10" width="6" height="6"/><rect x="40" y="16" width="6" height="6"/><rect x="40" y="238" width="6" height="6"/><rect x="40" y="244" width="6" height="6"/><rect x="46" y="10" width="6" height="6"/><rect x="46" y="16" width="6" height="6"/><rect x="46" y="238" width="6" height="6"/><rect x="46" y="244" width="6" height="6"/><rect x="52" y="10" width="6" height="6"/><rect x="52" y="16" width="6" height="6"/><rect x="52" y="238" width="6" height="6"/><rect x="52" y="244" width="6" height="6"/><rect x="58" y="10" width="6" height="6"/><rect x="58" y="16" width="6" height="6"/><rect x="58" y="238" width="6" height="6"/><rect x="58" y="244" width="6" height="6"/><rect x="64" y="10" width="6" height="6"/><rect x="64" y="16" width="6" height="6"/><rect x="64" y="238" width="6" height="6"/><rect x="64" y="244" width="6" height="6"/><rect x="70" y="10" width="6" height="6"/><rect x="70" y="16" width="6" height="6"/><rect x="70" y="238" width="6" height="6"/><rect x="70" y="244" width="6" height="6"/><rect x="76" y="10" width="6" height="6"/><rect x="76" y="16" width="6" height="6"/><rect x="76" y="238" width="6" height="6"/><rect x="76" y="244" width="6" height="6"/><rect x="82" y="10" width="6" height="6"/><rect x="82" y="16" width="6" height="6"/><rect x="82" y="238" width="6" height="6"/><rect x="82" y="244" width="6" height="6"/><rect x="88" y="10" width="6" height="6"/><rect x="88" y="16" width="6" height="6"/><rect x="88" y="238" width="6" height="6"/><rect x="88" y="244" width="6" height="6"/><rect x="94" y="10" width="6" height="6"/><rect x="94" y="16" width="6" height="6"/><rect x="94" y="238" width="6" height="6"/><rect x="94" y="244" width="6" height="6"/><rect x="100" y="10" width="6" height="6"/><rect x="100" y="16" width="6" height="6"/><rect x="100" y="238" width="6" height="6"/><rect x="100" y="244" width="6" height="6"/><rect x="106" y="10" width="6" height="6"/><rect x="106" y="16" width="6" height="6"/><rect x="106" y="238" width="6" height="6"/><rect x="106" y="244" width="6" height="6"/><rect x="112" y="10" width="6" height="6"/><rect x="112" y="16" width="6" height="6"/><rect x="112" y="238" width="6" height="6"/><rect x="112" y="244" width="6" height="6"/><rect x="118" y="10" width="6" height="6"/><rect x="118" y="16" width="6" height="6"/><rect x="118" y="238" width="6" height="6"/><rect x="118" y="244" width="6" height="6"/><rect x="124" y="10" width="6" height="6"/><rect x="124" y="16" width="6" height="6"/><rect x="124" y="238" width="6" height="6"/><rect x="124" y="244" width="6" height="6"/><rect x="130" y="10" width="6" height="6"/><rect x="130" y="16" width="6" height="6"/><rect x="130" y="238" width="6" height="6"/><rect x="130" y="244" width="6" height="6"/><rect x="136" y="10" width="6" height="6"/><rect x="136" y="16" width="6" height="6"/><rect x="136" y="238" width="6" height="6"/><rect x="136" y="244" width="6" height="6"/><rect x="142" y="10" width="6" height="6"/><rect x="142" y="16" width="6" height="6"/><rect x="142" y="238" width="6" height="6"/><rect x="142" y="244" width="6" height="6"/><rect x="148" y="10" width="6" height="6"/><rect x="148" y="16" width="6" height="6"/><rect x="148" y="238" width="6" height="6"/><rect x="148" y="244" width="6" height="6"/><rect x="154" y="10" width="6" height="6"/><rect x="154" y="16" width="6" height="6"/><rect x="154" y="238" width="6" height="6"/><rect x="154" y="244" width="6" height="6"/><rect x="160" y="10" width="6" height="6"/><rect x="160" y="16" width="6" height="6"/><rect x="160" y="238" width="6" height="6"/><rect x="160" y="244" width="6" height="6"/><rect x="166" y="10" width="6" height="6"/><rect x="166" y="16" width="6" height="6"/><rect x="166" y="238" width="6" height="6"/><rect x="166" y="244" width="6" height="6"/><rect x="172" y="10" width="6" height="6"/><rect x="172" y="16" width="6" height="6"/><rect x="172" y="238" width="6" height="6"/><rect x="172" y="244" width="6" height="6"/><rect x="178" y="10" width="6" height="6"/><rect x="178" y="16" width="6" height="6"/><rect x="178" y="238" width="6" height="6"/><rect x="178" y="244" width="6" height="6"/><rect x="184" y="10" width="6" height="6"/><rect x="184" y="16" width="6" height="6"/><rect x="184" y="238" width="6" height="6"/><rect x="184" y="244" width="6" height="6"/><rect x="190" y="10" width="6" height="6"/><rect x="190" y="16" width="6" height="6"/><rect x="190" y="238" width="6" height="6"/><rect x="190" y="244" width="6" height="6"/><rect x="196" y="10" width="6" height="6"/><rect x="196" y="16" width="6" height="6"/><rect x="196" y="238" width="6" height="6"/><rect x="196" y="244" width="6" height="6"/><rect x="202" y="10" width="6" height="6"/><rect x="202" y="16" width="6" height="6"/><rect x="202" y="238" width="6" height="6"/><rect x="202" y="244" width="6" height="6"/><rect x="208" y="10" width="6" height="6"/><rect x="208" y="16" width="6" height="6"/><rect x="208" y="238" width="6" height="6"/><rect x="208" y="244" width="6" height="6"/><rect x="214" y="10" width="6" height="6"/><rect x="214" y="16" width="6" height="6"/><rect x="214" y="238" width="6" height="6"/><rect x="214" y="244" width="6" height="6"/><rect x="220" y="10" width="6" height="6"/><rect x="220" y="16" width="6" height="6"/><rect x="220" y="238" width="6" height="6"/><rect x="220" y="244" width="6" height="6"/><rect x="226" y="10" width="6" height="6"/><rect x="226" y="16" width="6" height="6"/><rect x="226" y="238" width="6" height="6"/><rect x="226" y="244" width="6" height="6"/><rect x="232" y="10" width="6" height="6"/><rect x="232" y="16" width="6" height="6"/><rect x="232" y="238" width="6" height="6"/><rect x="232" y="244" width="6" height="6"/><rect x="238" y="10" width="6" height="6"/><rect x="238" y="16" width="6" height="6"/><rect x="238" y="22" width="6" height="6"/><rect x="238" y="28" width="6" height="6"/><rect x="238" y="34" width="6" height="6"/><rect x="238" y="40" width="6" height="6"/><rect x="238" y="46" width="6" height="6"/><rect x="238" y="52" width="6" height="6"/><rect x="238" y="58" width="6" height="6"/><rect x="238" y="64" width="6" height="6"/><rect x="238" y="70" width="6" height="6"/><rect x="238" y="76" width="6" height="6"/><rect x="238" y="82" width="6" height="6"/><rect x="238" y="88" width="6" height="6"/><rect x="238" y="94" width="6" height="6"/><rect x="238" y="100" width="6" height="6"/><rect x="238" y="106" width="6" height="6"/><rect x="238" y="112" width="6" height="6"/><rect x="238" y="118" width="6" height="6"/><rect x="238" y="124" width="6" height="6"/><rect x="238" y="130" width="6" height="6"/><rect x="238" y="136" width="6" height="6"/><rect x="238" y="142" width="6" height="6"/><rect x="238" y="148" width="6" height="6"/><rect x="238" y="154" width="6" height="6"/><rect x="238" y="160" width="6" height="6"/><rect x="238" y="166" width="6" height="6"/><rect x="238" y="172" width="6" height="6"/><rect x="238" y="178" width="6" height="6"/><rect x="238" y="184" width="6" height="6"/><rect x="238" y="190" width="6" height="6"/><rect x="238" y="196" width="6" height="6"/><rect x="238" y="202" width="6" height="6"/><rect x="238" y="208" width="6" height="6"/><rect x="238" y="214" width="6" height="6"/><rect x="238" y="220" width="6" height="6"/><rect x="238" y="226" width="6" height="6"/><rect x="238" y="232" width="6" height="6"/><rect x="238" y="238" width="6" height="6"/><rect x="238" y="244" width="6" height="6"/><rect x="244" y="10" width="6" height="6"/><rect x="244" y="16" width="6" height="6"/><rect x="244" y="22" width="6" height="6"/><rect x="244" y="28" width="6" height="6"/><rect x="244" y="34" width="6" height="6"/><rect x="244" y="40" width="6" height="6"/><rect x="244" y="46" width="6" height="6"/><rect x="244" y="52" width="6" height="6"/><rect x="244" y="58" width="6" height="6"/><rect x="244" y="64" width="6" height="6"/><rect x="244" y="70" width="6" height="6"/><rect x="244" y="76" width="6" height="6"/><rect x="244" y="82" width="6" height="6"/><rect x="244" y="88" width="6" height="6"/><rect x="244" y="94" width="6" height="6"/><rect x="244" y="100" width="6" height="6"/><rect x="244" y="106" width="6" height="6"/><rect x="244" y="112" width="6" height="6"/><rect x="244" y="118" width="6" height="6"/><rect x="244" y="124" width="6" height="6"/><rect x="244" y="130" width="6" height="6"/><rect x="244" y="136" width="6" height="6"/><rect x="244" y="142" width="6" height="6"/><rect x="244" y="148" width="6" height="6"/><rect x="244" y="154" width="6" height="6"/><rect x="244" y="160" width="6" height="6"/><rect x="244" y="166" width="6" height="6"/><rect x="244" y="172" width="6" height="6"/><rect x="244" y="178" width="6" height="6"/><rect x="244" y="184" width="6" height="6"/><rect x="244" y="190" width="6" height="6"/><rect x="244" y="196" width="6" height="6"/><rect x="244" y="202" width="6" height="6"/><rect x="244" y="208" width="6" height="6"/><rect x="244" y="214" width="6" height="6"/><rect x="244" y="220" width="6" height="6"/><rect x="244" y="226" width="6" height="6"/><rect x="244" y="232" width="6" height="6"/><rect x="244" y="238" width="6" height="6"/><rect x="244" y="244" width="6" height="6"/></g><g stroke="var(--accent)" stroke-width="1.1"><g clip-path="url(#cT)"><line x1="29.3" y1="22" x2="29.3" y2="90"/><line x1="35.9" y1="22" x2="35.9" y2="90"/><line x1="44.5" y1="22" x2="44.5" y2="90"/><line x1="50.8" y1="22" x2="50.8" y2="90"/><line x1="58.9" y1="22" x2="58.9" y2="90"/><line x1="66.4" y1="22" x2="66.4" y2="90"/><line x1="72.6" y1="22" x2="72.6" y2="90"/><line x1="80.7" y1="22" x2="80.7" y2="90"/><line x1="86.8" y1="22" x2="86.8" y2="90"/><line x1="94.5" y1="22" x2="94.5" y2="90"/><line x1="100.8" y1="22" x2="100.8" y2="90"/><line x1="107.2" y1="22" x2="107.2" y2="90"/><line x1="114.9" y1="22" x2="114.9" y2="90"/><line x1="124.2" y1="22" x2="124.2" y2="90"/><line x1="130.7" y1="22" x2="130.7" y2="90"/><line x1="137.6" y1="22" x2="137.6" y2="90"/><line x1="146.1" y1="22" x2="146.1" y2="90"/><line x1="155.9" y1="22" x2="155.9" y2="90"/><line x1="164.2" y1="22" x2="164.2" y2="90"/><line x1="171.8" y1="22" x2="171.8" y2="90"/><line x1="181.7" y1="22" x2="181.7" y2="90"/><line x1="187.9" y1="22" x2="187.9" y2="90"/><line x1="197.3" y1="22" x2="197.3" y2="90"/><line x1="204.5" y1="22" x2="204.5" y2="90"/><line x1="211.0" y1="22" x2="211.0" y2="90"/><line x1="217.5" y1="22" x2="217.5" y2="90"/><line x1="224.7" y1="22" x2="224.7" y2="90"/><line x1="234.0" y1="22" x2="234.0" y2="90"/><line x1="240.7" y1="22" x2="240.7" y2="90"/></g><polygon points="22,22 238,22 172,88 88,88" fill="none"/><g clip-path="url(#cB)"><line x1="30.3" y1="238" x2="30.3" y2="170"/><line x1="38.9" y1="238" x2="38.9" y2="170"/><line x1="46.4" y1="238" x2="46.4" y2="170"/><line x1="54.6" y1="238" x2="54.6" y2="170"/><line x1="60.8" y1="238" x2="60.8" y2="170"/><line x1="67.1" y1="238" x2="67.1" y2="170"/><line x1="73.9" y1="238" x2="73.9" y2="170"/><line x1="82.6" y1="238" x2="82.6" y2="170"/><line x1="90.3" y1="238" x2="90.3" y2="170"/><line x1="97.6" y1="238" x2="97.6" y2="170"/><line x1="105.9" y1="238" x2="105.9" y2="170"/><line x1="113.7" y1="238" x2="113.7" y2="170"/><line x1="120.9" y1="238" x2="120.9" y2="170"/><line x1="130.1" y1="238" x2="130.1" y2="170"/><line x1="138.9" y1="238" x2="138.9" y2="170"/><line x1="145.9" y1="238" x2="145.9" y2="170"/><line x1="154.2" y1="238" x2="154.2" y2="170"/><line x1="162.3" y1="238" x2="162.3" y2="170"/><line x1="171.8" y1="238" x2="171.8" y2="170"/><line x1="180.7" y1="238" x2="180.7" y2="170"/><line x1="187.8" y1="238" x2="187.8" y2="170"/><line x1="197.8" y1="238" x2="197.8" y2="170"/><line x1="204.2" y1="238" x2="204.2" y2="170"/><line x1="211.9" y1="238" x2="211.9" y2="170"/><line x1="220.9" y1="238" x2="220.9" y2="170"/><line x1="227.5" y1="238" x2="227.5" y2="170"/><line x1="235.5" y1="238" x2="235.5" y2="170"/><line x1="241.7" y1="238" x2="241.7" y2="170"/></g><polygon points="22,238 238,238 172,172 88,172" fill="none"/><g clip-path="url(#cL)"><line x1="22" y1="30.7" x2="90" y2="30.7"/><line x1="22" y1="39.7" x2="90" y2="39.7"/><line x1="22" y1="48.0" x2="90" y2="48.0"/><line x1="22" y1="57.5" x2="90" y2="57.5"/><line x1="22" y1="64.8" x2="90" y2="64.8"/><line x1="22" y1="73.6" x2="90" y2="73.6"/><line x1="22" y1="81.9" x2="90" y2="81.9"/><line x1="22" y1="90.3" x2="90" y2="90.3"/><line x1="22" y1="98.1" x2="90" y2="98.1"/><line x1="22" y1="107.4" x2="90" y2="107.4"/><line x1="22" y1="117.2" x2="90" y2="117.2"/><line x1="22" y1="125.1" x2="90" y2="125.1"/><line x1="22" y1="133.8" x2="90" y2="133.8"/><line x1="22" y1="140.0" x2="90" y2="140.0"/><line x1="22" y1="148.8" x2="90" y2="148.8"/><line x1="22" y1="157.4" x2="90" y2="157.4"/><line x1="22" y1="167.4" x2="90" y2="167.4"/><line x1="22" y1="176.7" x2="90" y2="176.7"/><line x1="22" y1="183.8" x2="90" y2="183.8"/><line x1="22" y1="191.4" x2="90" y2="191.4"/><line x1="22" y1="200.0" x2="90" y2="200.0"/><line x1="22" y1="206.1" x2="90" y2="206.1"/><line x1="22" y1="214.0" x2="90" y2="214.0"/><line x1="22" y1="220.6" x2="90" y2="220.6"/><line x1="22" y1="227.1" x2="90" y2="227.1"/><line x1="22" y1="233.3" x2="90" y2="233.3"/><line x1="22" y1="242.4" x2="90" y2="242.4"/></g><polygon points="22,22 88,88 88,172 22,238" fill="none"/><g clip-path="url(#cR)"><line x1="238" y1="28.5" x2="170" y2="28.5"/><line x1="238" y1="35.5" x2="170" y2="35.5"/><line x1="238" y1="43.1" x2="170" y2="43.1"/><line x1="238" y1="52.6" x2="170" y2="52.6"/><line x1="238" y1="58.9" x2="170" y2="58.9"/><line x1="238" y1="66.7" x2="170" y2="66.7"/><line x1="238" y1="74.9" x2="170" y2="74.9"/><line x1="238" y1="84.4" x2="170" y2="84.4"/><line x1="238" y1="93.7" x2="170" y2="93.7"/><line x1="238" y1="103.1" x2="170" y2="103.1"/><line x1="238" y1="110.3" x2="170" y2="110.3"/><line x1="238" y1="117.9" x2="170" y2="117.9"/><line x1="238" y1="125.4" x2="170" y2="125.4"/><line x1="238" y1="134.9" x2="170" y2="134.9"/><line x1="238" y1="144.7" x2="170" y2="144.7"/><line x1="238" y1="151.3" x2="170" y2="151.3"/><line x1="238" y1="158.0" x2="170" y2="158.0"/><line x1="238" y1="165.0" x2="170" y2="165.0"/><line x1="238" y1="171.9" x2="170" y2="171.9"/><line x1="238" y1="179.8" x2="170" y2="179.8"/><line x1="238" y1="188.2" x2="170" y2="188.2"/><line x1="238" y1="195.2" x2="170" y2="195.2"/><line x1="238" y1="201.3" x2="170" y2="201.3"/><line x1="238" y1="208.9" x2="170" y2="208.9"/><line x1="238" y1="216.4" x2="170" y2="216.4"/><line x1="238" y1="224.7" x2="170" y2="224.7"/><line x1="238" y1="234.5" x2="170" y2="234.5"/><line x1="238" y1="243.2" x2="170" y2="243.2"/></g><polygon points="238,22 172,88 172,172 238,238" fill="none"/></g><g clip-path="url(#cEq)" fill="none" stroke="var(--accent)" stroke-width="1"><polygon points="69.8,82.2 74.0,72.2 84.4,72.9 87.3,82.6 78.8,89.4"/><polygon points="103.8,82.4 93.5,85.6 88.9,76.9 94.2,68.4 104.7,71.9"/><polygon points="123.6,76.7 120.0,83.0 113.4,85.2 106.5,80.9 107.8,73.2 112.5,69.4 120.1,70.8"/><polygon points="130.4,73.4 139.5,75.7 140.4,86.7 130.8,89.2 123.7,81.7"/><polygon points="152.2,71.7 159.0,75.3 160.4,81.8 156.8,88.5 149.1,88.6 143.4,83.4 144.7,75.7"/><polygon points="163.0,86.0 158.6,77.4 163.0,70.2 172.4,69.5 175.5,77.9 172.0,84.8"/><polygon points="98.3,98.8 89.8,103.3 83.1,97.8 81.5,90.0 90.1,85.3 97.9,89.6"/><polygon points="111.4,100.6 102.3,102.5 98.6,94.8 102.0,86.0 110.0,85.5 114.2,93.6"/><polygon points="123.5,103.5 115.3,99.4 116.8,90.7 124.6,87.0 132.7,91.7 131.4,100.5"/><polygon points="132.3,89.0 140.8,85.1 147.0,91.2 146.7,99.6 138.2,103.3 130.6,96.8"/><polygon points="149.6,91.6 155.9,83.7 166.0,87.2 165.3,97.8 155.4,100.3"/><polygon points="186.4,92.7 185.2,101.1 177.6,104.9 169.8,100.5 171.0,92.1 178.2,87.1"/><polygon points="87.2,118.0 78.2,119.4 72.7,111.6 75.0,102.9 84.1,102.3 89.9,109.1"/><polygon points="104.3,109.7 98.5,116.4 90.0,115.7 87.7,107.5 91.8,99.6 100.2,102.1"/><polygon points="113.0,101.4 120.8,106.4 120.0,115.7 112.4,119.8 105.3,114.9 104.7,106.7"/><polygon points="128.7,102.6 139.8,101.7 144.3,110.3 135.8,117.3 126.1,111.8"/><polygon points="158.2,106.6 155.5,115.7 148.0,118.5 141.6,113.0 141.9,104.7 150.4,99.9"/><polygon points="158.5,106.4 162.8,98.9 171.9,99.9 176.3,108.1 170.2,114.6 162.0,113.8"/><polygon points="83.0,130.4 82.7,122.7 89.2,117.8 96.5,121.6 98.5,130.2 90.6,134.3"/><polygon points="108.0,130.9 100.7,131.3 95.0,125.4 98.9,117.5 105.1,115.8 111.5,119.2 112.7,126.3"/><polygon points="122.0,134.8 115.2,128.0 118.5,119.3 128.6,119.6 131.3,129.9"/><polygon points="143.9,118.1 150.0,121.8 150.7,129.7 146.4,135.0 138.7,134.7 134.4,128.1 136.3,120.6"/><polygon points="168.2,127.1 161.5,131.0 154.0,126.3 154.9,118.0 161.7,114.2 169.1,118.6"/><polygon points="175.9,119.1 185.4,120.8 187.9,130.3 179.7,136.2 170.6,129.1"/><polygon points="79.4,131.0 85.6,136.8 85.1,145.6 77.5,149.0 71.4,143.3 71.7,134.7"/><polygon points="95.8,132.7 104.6,134.1 106.5,143.2 100.0,149.5 92.1,146.6 89.5,138.5"/><polygon points="124.5,143.8 117.9,148.1 109.9,144.6 110.1,136.1 117.0,130.9 125.5,135.0"/><polygon points="123.6,147.3 123.2,140.1 128.3,134.6 135.5,135.1 141.0,141.3 136.9,148.8 130.7,150.2"/><polygon points="144.9,148.4 143.2,139.1 151.1,133.8 159.9,140.0 154.8,149.5"/><polygon points="174.5,133.5 177.0,141.2 171.8,147.7 164.5,148.2 159.1,142.2 160.0,134.8 167.0,129.8"/><polygon points="84.5,164.5 77.5,158.1 80.0,149.6 87.9,147.6 94.8,152.9 92.7,161.6"/><polygon points="114.9,155.1 110.5,162.0 102.2,162.2 98.1,155.5 101.6,147.0 110.7,147.7"/><polygon points="122.4,164.3 115.9,160.0 114.9,152.6 120.6,146.6 127.8,147.5 132.0,154.7 129.6,161.6"/><polygon points="152.6,159.8 146.3,166.4 138.5,164.2 134.0,155.9 140.5,148.5 149.0,151.9"/><polygon points="166.9,152.3 164.2,162.3 153.5,162.1 149.2,153.5 157.7,146.5"/><polygon points="168.5,152.0 174.3,145.8 183.3,147.5 185.1,155.3 179.6,162.0 170.7,160.0"/><polygon points="70.0,173.8 71.9,165.3 81.1,165.3 86.7,171.1 83.5,178.9 74.8,181.6"/><polygon points="93.9,160.1 101.4,163.0 104.7,170.9 97.4,176.4 88.6,173.8 87.4,165.9"/><polygon points="109.5,163.3 117.1,161.1 124.1,162.9 124.5,170.7 120.7,176.6 112.8,176.1 108.5,170.8"/><polygon points="139.7,165.5 138.7,175.7 128.3,176.8 123.7,167.2 131.1,160.9"/><polygon points="140.1,174.0 140.5,165.3 148.7,161.4 156.8,165.9 156.4,173.9 148.3,178.4"/><polygon points="176.5,173.8 172.5,178.8 165.0,179.1 158.7,174.1 160.6,166.2 167.8,163.7 175.6,166.1"/></g><rect x="88" y="88" width="84" height="84" fill="none" stroke="var(--fix)" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="245" y1="50" x2="268" y2="30" stroke="var(--ink)" stroke-width="1"/><circle cx="245" cy="50" r="3" fill="var(--ink)"/><text x="272" y="34" font-size="14" font-weight="700" fill="var(--ink)">冷硬區</text><text x="272" y="52" font-size="12" fill="var(--muted)">細小等軸晶，等向</text><line x1="210" y1="135" x2="268" y2="110" stroke="var(--ink)" stroke-width="1"/><circle cx="210" cy="135" r="3" fill="var(--ink)"/><text x="272" y="114" font-size="14" font-weight="700" fill="var(--ink)">柱狀區</text><text x="272" y="132" font-size="12" fill="var(--muted)">垂直模壁成長，異向</text><line x1="140.0" y1="150.0" x2="268" y2="190" stroke="var(--ink)" stroke-width="1"/><circle cx="140.0" cy="150.0" r="3" fill="var(--ink)"/><text x="272" y="194" font-size="14" font-weight="700" fill="var(--ink)">等軸區</text><text x="272" y="212" font-size="12" fill="var(--muted)">中心無方向晶粒，等向</text></svg></div>
+    <figcaption>圖 2-2　方形鑄件橫斷面：冷硬區 → 柱狀區 → 等軸區</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>區域</th><th>形成原因</th><th>晶粒與性質</th></tr>
+    <tr><td>冷硬區<br><span class="en">chill zone</span></td><td>金屬接觸冷模壁，急速過冷，模壁提供大量異質成核點。</td><td>細小等軸晶，薄層，等向性。</td></tr>
+    <tr><td>柱狀區<br><span class="en">columnar zone</span></td><td>熱經模壁散出，晶粒沿熱流反方向（垂直模壁）優先成長。屬<b>成長控制</b>。</td><td>細長柱狀晶，異向性。純金屬常一路長到中心。</td></tr>
+    <tr><td>等軸區<br><span class="en">equiaxed zone</span></td><td>合金中心處成分過冷、樹枝晶碎片或接種劑提供新晶核。屬<b>成核控制</b>。</td><td>無方向性的等軸晶，等向性。</td></tr>
+  </table></div>
+  <div class="callout"><b>想要更多等軸晶：</b>降低澆鑄溫度（過熱度小）、加入接種劑、攪拌或振動熔湯。等軸細晶的強度與韌性較好，也較不易熱裂。</div>
+
+  <h4>3. 凝固缺陷</h4>
+  <div class="cards">
+    <div class="card"><h4>縮孔與縮管</h4><span class="en">shrinkage cavity / pipe</span><p>凝固收縮沒有得到補充而留下的空洞。鋼錠頂部中央的漏斗狀空洞稱為縮管，完全脫氧的淨鋼（killed steel）最明顯。</p></div>
+    <div class="card"><h4>枝晶間收縮</h4><span class="en">interdendritic shrinkage</span><p>樹枝晶之間最後凝固的液體得不到補充，形成分散的微小孔隙，又稱顯微縮孔。凝固區間大的合金較嚴重。</p></div>
+    <div class="card"><h4>氣孔</h4><span class="en">gas porosity</span><p>液態金屬溶解大量氣體，凝固時溶解度驟降而析出。典型例子是鋁液中的氫；未脫氧的未淨鋼（rimmed steel）則因 C 與 O 反應生成 CO 氣泡。</p></div>
+  </div>
+  <p>脫氧程度決定鋼錠樣貌：<b>淨鋼</b>以 Si、Al 完全脫氧，組織緻密但有明顯縮管；<b>未淨鋼</b>幾乎不脫氧，凝固時 CO 冒泡，外層形成近乎純鐵的「邊緣層」，內部有氣泡而縮管小；<b>半淨鋼</b>介於兩者之間。</p>
+
+  <h4>4. 偏析</h4>
+  <div class="tbl"><table>
+    <tr><th>種類</th><th>現象</th></tr>
+    <tr><td>顯微偏析<br><span class="en">microsegregation</span></td><td>同一樹枝晶內成分不均：先凝固的晶軸核心含高熔點成分較多，外圍溶質濃度較高（有心組織，cored dendrite）。</td></tr>
+    <tr><td>宏觀偏析<br><span class="en">macrosegregation</span></td><td>整個鑄件尺度的成分差異：低熔點成分與雜質被凝固前沿推向最後凝固的中心處。</td></tr>
+    <tr><td>重力偏析<br><span class="en">gravity segregation</span></td><td>密度不同的相或夾雜物在重力下沉浮，造成上下成分不同。</td></tr>
+  </table></div>
+
+  <h4>5. 凝固時間：Chvorinov 定則</h4>
+  <div class="formula">t<sub>s</sub> = C · ( V ／ A )<sup>n</sup></div>
+  <p>V 為鑄件體積，A 為表面積，n 通常取 2（範圍約 1.5–2）；C 為模具常數，與金屬性質（潛熱、比熱）、鑄模材料及澆鑄溫度有關。體積對表面積比（模數）愈大，凝固愈慢，所以<b>厚件比薄件慢、大球比小球慢</b>。冒口必須比它要補充的部位晚凝固，因此冒口的 V/A 要比鑄件大。</p>
+
+  <div class="example">
+    <div class="ex-h">例題</div>
+    <p>體積相同的立方體、球體，以及高度等於直徑的圓柱體，求凝固時間比（n = 2）。</p>
+    <p><b>解：</b>體積相同時 t ∝ 1／A²。取 V = 1：</p>
+    <ul>
+      <li>立方體：a = 1，A = 6，1／A² = 0.0278</li>
+      <li>球體：r = (3／4π)<sup>1/3</sup> = 0.620，A = 4πr² = 4.84，1／A² = 0.0427</li>
+      <li>圓柱體（h = 2r）：2πr³ = 1，r = 0.542，A = 6πr² = 5.54，1／A² = 0.0326</li>
+    </ul>
+    <figure class="mini">
+      <svg viewBox="0 0 420 150" role="img" aria-label="三種形狀凝固時間比較長條圖：立方體最短，圓柱體居中，球體最長">
+        <g font-size="13" fill="var(--ink)">
+          <rect x="16" y="22" width="34" height="34" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+          <text x="60" y="44">立方體</text>
+          <rect x="130" y="26" width="167" height="26" fill="var(--steel)"/><text x="305" y="44" font-family="var(--f-mono)">1.00</text>
+          <rect x="16" y="66" width="34" height="34" rx="6" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+          <text x="60" y="88">圓柱體</text>
+          <rect x="130" y="70" width="196" height="26" fill="var(--accent)" opacity=".7"/><text x="334" y="88" font-family="var(--f-mono)">1.17</text>
+          <circle cx="33" cy="127" r="17" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+          <text x="60" y="132">球體</text>
+          <rect x="130" y="114" width="257" height="26" fill="var(--accent)"/><text x="395" y="132" font-family="var(--f-mono)" text-anchor="end" fill="var(--paper)">1.54</text>
+        </g>
+      </svg>
+      <figcaption>以立方體為 1 的相對凝固時間</figcaption>
+    </figure>
+    <p>時間比 立方體：球體：圓柱體 ≈ 0.028：0.043：0.033 = 1：1.54：1.17。<b>同體積下球的表面積最小，凝固最慢</b>，所以冒口常做成球形或接近球形的圓柱。</p>
+  </div>
+
+  <h4>6. 固化速率的控制</h4>
+  <p><b>鑄模材料：</b>導熱度與熱容量愈高，冷卻愈快。金屬模冷卻最快，得到細晶粒、高強度的鑄件；砂模次之；陶瓷模與石膏模絕熱性高、冷卻最慢，晶粒較粗。<br><b>製程設計：</b>流路與冒口配置、冷激鐵的使用都能調整局部冷卻速率。</p>
+
+  <h4>7. 流動性</h4>
+  <p>熔融金屬充滿模穴的能力稱為<span class="key">流動性</span><span class="en">（fluidity）</span>，常用螺旋試模的流動長度來量測。</p>
+  <div class="tbl"><table>
+    <tr><th>類別</th><th>因素</th><th>對流動性的影響</th></tr>
+    <tr><td rowspan="4">金屬液特性</td><td>黏度</td><td>溫度下降黏度上升，流動性下降。</td></tr>
+    <tr><td>表面張力</td><td>表面張力愈大流動性愈差；表面氧化膜會使其明顯升高。</td></tr>
+    <tr><td>夾雜物</td><td>固態夾雜物增加黏滯，降低流動性。</td></tr>
+    <tr><td>凝固區間</td><td>區間愈窄流動性愈好：純金屬與共晶合金最佳，凝固區間寬的固溶體合金較差。</td></tr>
+    <tr><td rowspan="4">鑄造參數</td><td>鑄模設計</td><td>流路的配置與斷面尺寸。</td></tr>
+    <tr><td>鑄模材料與表面</td><td>模的導熱度愈高、表面愈粗糙，流動性愈差。預熱鑄模可改善，但凝固變慢、晶粒變粗。</td></tr>
+    <tr><td>過熱度</td><td>高出熔點的溫度愈多，維持液態愈久，流動性愈好。</td></tr>
+    <tr><td>澆鑄速率</td><td>澆得太慢，金屬在流路中先冷卻，流動性下降；太快則產生紊流與沖砂。</td></tr>
+  </table></div>
+
+  <p>描述流路中的金屬液，用兩條流體力學基本式：</p>
+  <div class="cards c2">
+    <div class="card"><h4>伯努利定理</h4><span class="en">Bernoulli's theorem · 能量守恆</span><div class="formula sm">h + p／ρg + v²／2g = 常數</div><p>h 為高度，p 壓力，v 流速，ρ 密度，g 重力加速度。忽略摩擦時，澆道底部流速 v = √(2gh)。</p></div>
+    <div class="card"><h4>質量連續定律</h4><span class="en">continuity · 質量守恆</span><div class="formula sm">Q = A₁v₁ = A₂v₂</div><p>Q 為體積流率（m³/s），A 為流道斷面積。流速加快的地方斷面要縮小，這正是澆道做成上寬下窄的原因。</p></div>
+  </div>
+
+  <h4>8. 金屬的三段收縮</h4>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 560 240" role="img" aria-label="冷卻曲線：液態收縮、凝固收縮、固態收縮三個階段" style="min-width:460px">
+      <line x1="60" y1="20" x2="60" y2="200" stroke="var(--ink)" stroke-width="1.5"/>
+      <line x1="60" y1="200" x2="540" y2="200" stroke="var(--ink)" stroke-width="1.5"/>
+      <text x="20" y="24" font-size="13" fill="var(--muted)">溫度</text>
+      <text x="510" y="222" font-size="13" fill="var(--muted)">時間</text>
+      <rect x="60" y="20" width="120" height="180" fill="var(--accent-soft)" opacity=".55"/>
+      <rect x="180" y="20" width="150" height="180" fill="var(--accent-soft)"/>
+      <rect x="330" y="20" width="210" height="180" fill="var(--accent-soft)" opacity=".3"/>
+      <line x1="60" y1="70" x2="540" y2="70" stroke="var(--steel)" stroke-dasharray="5 4"/>
+      <line x1="60" y1="108" x2="540" y2="108" stroke="var(--steel)" stroke-dasharray="5 4"/>
+      <text x="64" y="64" font-size="12" fill="var(--muted)">液相線</text>
+      <text x="64" y="124" font-size="12" fill="var(--muted)">固相線</text>
+      <path d="M70 32 Q130 52 180 70 L330 108 Q400 160 530 186" fill="none" stroke="var(--accent)" stroke-width="3"/>
+      <circle cx="70" cy="32" r="4" fill="var(--accent)"/>
+      <text x="120" y="160" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">液態收縮</text>
+      <text x="255" y="160" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">凝固收縮</text>
+      <text x="435" y="90" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">固態收縮</text>
+      <text x="120" y="178" text-anchor="middle" font-size="11.5" fill="var(--muted)">由冒口補充</text>
+      <text x="255" y="178" text-anchor="middle" font-size="11.5" fill="var(--muted)">由冒口補充</text>
+      <text x="435" y="108" text-anchor="middle" font-size="11.5" fill="var(--muted)">由收縮裕度補償</text>
+    </svg></div>
+    <figcaption>圖 2-3　合金的冷卻曲線與三段收縮</figcaption>
+  </figure>
+  <p>液態與凝固收縮發生時鑄件仍有液體，可由冒口餵補；固態收縮發生在完全凝固之後，只能靠模型放大尺寸（收縮裕度）來補償。</p>
+
+  <h3>四、鑄件缺陷</h3>
+  <p>國際鑄造技術協會委員會把鑄件缺陷分成 A–G 七大類：</p>
+  <div class="tbl"><table>
+    <tr><th>類別</th><th>原因</th><th>典型缺陷</th></tr>
+    <tr><td><b>A</b> 金屬凸出<br><span class="en">metallic projections</span></td><td>金屬液超出模穴範圍，如滲入分模面或砂模破損。</td><td>鰭片、毛邊、脹箱、表面粗糙</td></tr>
+    <tr><td><b>B</b> 孔穴<br><span class="en">cavities</span></td><td>收縮、氣體析出或兩者並存。</td><td>氣孔（吹孔）、針孔、縮孔</td></tr>
+    <tr><td><b>C</b> 不連續<br><span class="en">discontinuities</span></td><td>收縮受模或砂心拘束；低熔點偏析沿晶界分布；兩股金屬流相遇卻未熔合。</td><td>裂縫、熱裂、冷裂、冷隔</td></tr>
+    <tr><td><b>D</b> 表面缺陷<br><span class="en">defective surface</span></td><td>表面氧化、模砂被沖刷或捲入。</td><td>摺疊、重疊、黏砂、氧化皮</td></tr>
+    <tr><td><b>E</b> 鑄件不完整<br><span class="en">incomplete casting</span></td><td>澆鑄溫度太低、澆鑄太慢、金屬量不足或漏失。</td><td>澆不足</td></tr>
+    <tr><td><b>F</b> 尺寸或形狀不正確<br><span class="en">incorrect dimensions or shape</span></td><td>收縮裕度不當、模型錯位、鑄件變形。</td><td>錯模、翹曲</td></tr>
+    <tr><td><b>G</b> 夾雜物<br><span class="en">inclusions</span></td><td>金屬液氧化、與爐襯或模材反應、模砂或砂心剝落。</td><td>非金屬夾渣、夾砂</td></tr>
+  </table></div>
+  <div class="callout"><b>熱裂與冷隔最常考：</b>熱裂發生在凝固末期，晶界仍有液膜、強度極低時收縮受阻而裂開；冷隔是兩股溫度已偏低的金屬流相遇卻無法熔合，留下一條界線。</div>
+</section>
+
+<!-- ============ 2-2 ============ -->
+<section id="s2">
+  <h2><span class="no">2-2</span>模型與模砂</h2>
+  <h3>一、模型</h3>
+  <p>模型<span class="en">（pattern）</span>用來在砂中壓印出模穴，它的精度直接決定鑄件精度。設計時要讓模型能順利從砂模中取出。</p>
+  <h4>1. 模型材料</h4>
+  <div class="tbl"><table>
+    <tr><th>特性</th><th>木材</th><th>鋁</th><th>鋼</th><th>塑膠</th><th>鑄鐵</th></tr>
+    <tr><td>切削加工性</td><td>優</td><td>良</td><td>可</td><td>良</td><td>良</td></tr>
+    <tr><td>耐磨性</td><td>差</td><td>良</td><td>優</td><td>可</td><td>優</td></tr>
+    <tr><td>強度</td><td>可</td><td>良</td><td>優</td><td>良</td><td>良</td></tr>
+    <tr><td>重量（輕為優）</td><td>優</td><td>良</td><td>差</td><td>良</td><td>差</td></tr>
+    <tr><td>可修補性</td><td>優</td><td>差</td><td>良</td><td>可</td><td>良</td></tr>
+    <tr><td>耐蝕性</td><td>優</td><td>優</td><td>差</td><td>優</td><td>差</td></tr>
+    <tr><td>抗吸濕膨脹</td><td>差</td><td>優</td><td>優</td><td>優</td><td>優</td></tr>
+  </table></div>
+  <p>木模便宜好做，適合少量；金屬模耐用，適合機器造模的大量生產。精密鑄造則用蠟或聚苯乙烯等可熔失材料。</p>
+
+  <h4>2. 模型種類</h4>
+  <p>依澆鑄前模型是否取出，分為<b>取出式模型</b>與<b>可消散模型</b>。</p>
+  <div class="cards">
+    <div class="card"><h4>單體模型</h4><span class="en">one-piece / solid</span><p>整塊一體，最簡單，用於形狀單純、少量的鑄件。</p></div>
+    <div class="card"><h4>分裂模型</h4><span class="en">split</span><p>沿分模面分成上下兩半，分別在上下砂箱造模。</p></div>
+    <div class="card"><h4>鬆件模型</h4><span class="en">loose-piece</span><p>凸出部分做成可拆件，主體取出後再取出鬆件。</p></div>
+    <div class="card"><h4>流路模型</h4><span class="en">gated</span><p>把流路做在模型上，造模時一併成形，省去手工挖流路。</p></div>
+    <div class="card"><h4>模型板</h4><span class="en">match plate</span><p>上下兩半模型固定在同一板的兩面，適合機器造模大量生產。</p></div>
+    <div class="card"><h4>嵌板模型</h4><span class="en">follow board</span><p>以襯板支撐形狀不規則或強度不足的模型，界定分模面。</p></div>
+    <div class="card"><h4>刮板模型</h4><span class="en">sweep</span><p>以板繞軸旋轉刮出迴轉體模穴，適合大型對稱鑄件。</p></div>
+    <div class="card"><h4>骨架模型</h4><span class="en">skeleton</span><p>只做出框架，空格以砂填實，用於大型且數量少的鑄件。</p></div>
+    <div class="card"><h4>分部模型</h4><span class="en">segmental / section</span><p>只做一段，分次旋轉造模拼出完整模穴，如大型環件。</p></div>
+  </div>
+
+  <h4>3. 可消散模型（消失模鑄造）</h4>
+  <p>也稱為消失模、泡沫消失鑄造<span class="en">（lost-foam / evaporative-pattern casting）</span>或全模法<span class="en">（full-mold process）</span>。以發泡聚苯乙烯（EPS）或 PMMA 做模型，埋在砂中不取出；金屬液澆入時，模型受熱汽化，金屬取而代之填滿空間。</p>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 560 200" role="img" aria-label="消失模鑄造：左圖泡沫模型埋在砂中，右圖金屬液取代汽化的模型" style="min-width:460px">
+      <defs><pattern id="sandA" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="var(--paper)"/><circle cx="2" cy="2" r="1" fill="var(--steel)"/><circle cx="6" cy="6" r=".8" fill="var(--steel)"/></pattern>
+      <pattern id="foam" width="10" height="10" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="var(--paper)"/><circle cx="5" cy="5" r="3.4" fill="none" stroke="var(--fix)" stroke-width="1"/></pattern></defs>
+      <rect x="20" y="30" width="230" height="150" fill="url(#sandA)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="110" y="30" width="22" height="60" fill="url(#foam)" stroke="var(--fix)" stroke-width="1.5"/>
+      <rect x="70" y="90" width="130" height="60" fill="url(#foam)" stroke="var(--fix)" stroke-width="1.5"/>
+      <text x="135" y="196" text-anchor="middle" font-size="13" fill="var(--ink)">(a) 泡沫模型埋入未黏結的乾砂</text>
+      <path d="M268 105 h30" stroke="var(--fix)" stroke-width="2.5"/><path d="M296 98 l12 7 -12 7z" fill="var(--fix)"/>
+      <rect x="320" y="30" width="230" height="150" fill="url(#sandA)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="410" y="30" width="22" height="60" fill="var(--accent)"/>
+      <rect x="370" y="90" width="130" height="34" fill="var(--accent)"/>
+      <rect x="370" y="124" width="130" height="26" fill="url(#foam)" stroke="var(--fix)" stroke-width="1.5"/>
+      <path d="M380 124 q8 -6 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t8 0" fill="none" stroke="var(--paper)" stroke-width="1.5"/>
+      <text x="435" y="196" text-anchor="middle" font-size="13" fill="var(--ink)">(b) 金屬液前進，模型汽化</text>
+    </svg></div>
+    <figcaption>圖 2-4　可消散模型鑄造</figcaption>
+  </figure>
+  <div class="cards c2">
+    <div class="card"><h4>優點</h4><p>不必取模，所以沒有拔模裕度、分模線與砂心；形狀可以很複雜；用乾砂不需黏結劑，鑄件清理容易；適合自動化大量生產，汽車缸頭、進氣歧管常用。</p></div>
+    <div class="card"><h4>缺點</h4><p>每件鑄件都要一個新模型；模型強度低易變形；模型汽化產生的氣體與殘碳可能造成缺陷；少量生產時模型模具成本高。</p></div>
+  </div>
+
+  <h4>4. 模型裕度</h4>
+  <p>模型尺寸不等於零件圖尺寸，必須加入下列五種裕度：</p>
+  <div class="cards">
+    <div class="card"><h4>收縮裕度</h4><span class="en">shrinkage</span><p>補償固態收縮而放大模型。約略值：鑄鐵 1%、鋁鎂合金 1.3%、銅合金 1.5%、鑄鋼 2%。製模時直接用刻度已放大的「縮尺」。</p></div>
+    <div class="card"><h4>拔模裕度</h4><span class="en">draft</span><p>垂直面做出斜度，取模時才不會帶壞砂模。外表面約 1°，內表面要更大。</p></div>
+    <div class="card"><h4>加工裕度</h4><span class="en">machining / finish</span><p>需要後續切削的表面多留材料，一般約 3–5 mm，大件、鑄鋼要更多。</p></div>
+    <div class="card"><h4>變形裕度</h4><span class="en">distortion / camber</span><p>預先做出與變形方向相反的形狀，冷卻翹曲後恰好變直，常用於 U 形或長條鑄件。</p></div>
+    <div class="card"><h4>振動裕度</h4><span class="en">shake / rapping</span><p>取模時輕敲模型會使模穴略為擴大，所以模型要略為縮小。<b>這是唯一的負裕度。</b></p></div>
+  </div>
+
+  <h3>二、模砂</h3>
+  <p>模砂以<b>矽砂</b>（SiO₂）為骨材，提供耐火度；加入<b>黏土與水</b>（或樹脂、矽酸鈉等）作為黏結劑，提供強度；再視需要加煤粉、木屑等添加劑，改善表面品質與崩散性。</p>
+  <div class="cards c2">
+    <div class="card"><h4>模砂應有的性質</h4><p>成形性、強度、耐火性、熱穩定性、透氣性、崩散性（鑄後容易清除）、可回收性；顆粒大小與形狀決定透氣性與鑄件表面粗糙度，細砂表面好但透氣差。</p></div>
+    <div class="card"><h4>依位置區分</h4><p><b>面砂：</b>直接接觸金屬，用較細的新砂。<b>背砂：</b>填滿其餘空間，可用回收砂。<b>分離砂：</b>撒在分模面防止上下模黏合。<b>砂心砂：</b>需烘乾，表面可塗石墨漿防黏砂。</p></div>
+  </div>
+  <p><b>模砂試驗</b>包括：含泥量、粒度（篩分析）、水分、透氣度、強度（濕態與乾態的壓縮、剪力）與模硬度試驗。</p>
+</section>
+
+<!-- ============ 2-3 ============ -->
+<section id="s3">
+  <h2><span class="no">2-3</span>鑄模</h2>
+  <h3>一、鑄模的分類</h3>
+  <div class="tbl"><table>
+    <tr><th>分類依據</th><th>種類</th></tr>
+    <tr><td>使用次數</td><td><b>一次型</b>（expendable，砂模、殼模、精密鑄造模）· <b>永久型</b>（permanent，金屬模）· <b>複合模</b>（兩者組合）</td></tr>
+    <tr><td>砂模型式</td><td><b>濕砂模：</b>矽砂＋黏土＋水，不經烘乾就澆鑄，最常用、最便宜。<br><b>乾砂模：</b>整個砂模烘乾，強度高、氣體少，用於大型鑄件。<br><b>表乾模：</b>只把模穴表面約 15–25 mm 的砂烘乾。<br><b>呋喃模：</b>矽砂＋呋喃樹脂＋酸催化劑，常溫硬化，多用於砂心。<br><b>CO₂ 模：</b>矽砂＋矽酸鈉，吹入 CO₂ 硬化。</td></tr>
+    <tr><td>黏結方式</td><td><b>濕砂模</b>（黏土＋水，靠濕態結合）· <b>冷硬模</b>（cold-box，有機或無機黏結劑吹氣反應硬化）· <b>自硬模</b>（no-bake，液態樹脂與砂混合，常溫自行硬化）。後兩者都不需加熱，合稱冷固化製程。</td></tr>
+  </table></div>
+
+  <h3>二、上下砂箱的造模程序</h3>
+  <p>上下砂箱組成的砂模稱為二件式砂模，上箱稱<b>上模</b><span class="en">（cope）</span>，下箱稱<b>下模</b><span class="en">（drag）</span>。</p>
+  <ol class="steps">
+    <li>下砂箱倒置於造模平板，放入下半模型。</li>
+    <li>模型表面撒分離砂，防止砂與模型黏著。</li>
+    <li>篩入細面砂覆蓋模型約 2.5–4 cm，再填入背砂。</li>
+    <li>先用搗砂錘尖端搗實模型周圍，再用平端搗實，刮平多餘的砂。</li>
+    <li>放上底板，連同下砂箱翻轉 180°。</li>
+    <li>放上上砂箱與上半模型，撒分離砂，插入澆口棒與冒口棒，同樣填砂搗實。</li>
+    <li>拔出澆口棒、冒口棒，分開上下箱，取出模型；挖出流路、放入砂心、刺通氣孔。</li>
+    <li>合模，上箱壓上壓鐵，防止澆鑄時被金屬液浮起。</li>
+    <li>澆鑄、冷卻、拆模清砂、檢驗。</li>
+  </ol>
+
+  <h3>三、流路系統</h3>
+  <p>把金屬液導入模穴的通道稱為<span class="key">流路系統</span><span class="en">（gating system）</span>。設計原則：減少紊流、讓模內氣體排出、建立有利的溫度梯度（方向性凝固）、冒口能補足凝固收縮。</p>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 660 330" role="img" aria-label="砂模流路系統剖面圖，標示澆池、澆道、澆道井、橫流道、進模口、模穴、砂心、冒口、通氣孔與分模線" style="min-width:560px">
+      <defs><pattern id="sandG" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="var(--paper)"/><circle cx="2" cy="2" r="1" fill="var(--steel)"/><circle cx="6" cy="6" r=".8" fill="var(--steel)"/></pattern>
+      <pattern id="core" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="var(--steel)"/><circle cx="3" cy="3" r="1" fill="var(--paper)"/></pattern></defs>
+      <rect x="40" y="60" width="500" height="240" fill="url(#sandG)" stroke="var(--ink)" stroke-width="2.5"/>
+      <line x1="30" y1="180" x2="550" y2="180" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="8 5"/>
+      <g fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round">
+        <path d="M86 26 H186 L156 60 H118 Z"/>
+        <path d="M118 60 H156 L146 196 H128 Z"/>
+        <rect x="124" y="196" width="28" height="26"/>
+        <rect x="146" y="182" width="200" height="16"/>
+        <rect x="346" y="184" width="26" height="12"/>
+        <rect x="372" y="132" width="132" height="100" rx="4"/>
+        <path d="M466 60 H500 V132 H466 Z"/>
+        <rect x="394" y="60" width="5" height="72"/>
+      </g>
+      <rect x="414" y="168" width="52" height="26" fill="url(#core)" stroke="var(--ink)" stroke-width="1.5"/>
+      <g font-size="13" fill="var(--ink)">
+        <text x="48" y="80" fill="var(--muted)">上模 cope</text>
+        <text x="48" y="292" fill="var(--muted)">下模 drag</text>
+        <text x="556" y="184" fill="var(--muted)">分模線</text>
+      </g>
+      <g stroke="var(--ink)" stroke-width="1" fill="none">
+        <path d="M186 34 L230 34"/><path d="M152 120 L230 120"/><path d="M138 214 L100 250"/><path d="M250 190 L250 252"/><path d="M359 196 L340 268"/><path d="M440 232 L440 268"/><path d="M466 181 L600 230"/><path d="M500 92 L590 92"/><path d="M399 66 L412 52"/>
+      </g>
+      <g font-size="13.5" font-weight="700" fill="var(--ink)">
+        <text x="234" y="38">澆池 pouring basin</text>
+        <text x="234" y="124">澆道 sprue（上寬下窄）</text>
+        <text x="24" y="266">澆道井 sprue well</text>
+        <text x="200" y="268">橫流道 runner</text>
+        <text x="290" y="284">進模口 gate</text>
+        <text x="418" y="284">模穴 cavity</text>
+        <text x="560" y="248">砂心 core</text>
+        <text x="594" y="88">冒口</text>
+        <text x="594" y="104" font-weight="400" font-size="12">riser</text>
+        <text x="410" y="48">通氣孔 vent</text>
+      </g>
+    </svg></div>
+    <figcaption>圖 2-5　砂模的流路系統</figcaption>
+  </figure>
+
+  <div class="tbl"><table>
+    <tr><th>部位</th><th>功用</th></tr>
+    <tr><td>澆池（澆口杯）<br><span class="en">pouring basin / cup</span></td><td>承接澆桶倒下的金屬液，緩衝並讓浮渣留在上方。</td></tr>
+    <tr><td>澆道（直澆道）<br><span class="en">sprue</span></td><td>垂直通道。做成<b>上寬下窄</b>：金屬下落加速，依連續定律斷面須縮小，才能保持充滿而不吸入空氣。</td></tr>
+    <tr><td>澆道井<br><span class="en">sprue well</span></td><td>澆道底部的小池，緩衝下衝的金屬液，減少紊流與沖砂。</td></tr>
+    <tr><td>橫流道<br><span class="en">runner</span></td><td>水平分配金屬液，降低流速；延伸出去的流道尾可攔截最先流入、最冷最髒的金屬。</td></tr>
+    <tr><td>進模口<br><span class="en">gate / ingate</span></td><td>金屬液進入模穴的入口。接近模穴處斷面較小，凝固後容易敲斷去除。</td></tr>
+    <tr><td>冒口<br><span class="en">riser / feeder</span></td><td>儲存金屬液，在鑄件凝固收縮時補充，設在最厚、最後凝固的部位附近。<b>明冒口</b>通到砂模頂面，可觀察充填與排氣；<b>暗冒口</b>封閉在砂模內。冒口要比被補充的部位晚凝固（V/A 較大）。</td></tr>
+    <tr><td>溢放口<br><span class="en">flow-off</span></td><td>設在離進模口最遠處，排出氣體與最前端的冷髒金屬。</td></tr>
+    <tr><td>通氣孔<br><span class="en">vent</span></td><td>以細棒刺通砂模，讓模穴與砂中的氣體逸出。</td></tr>
+  </table></div>
+
+  <h4>附帶元件</h4>
+  <div class="cards c2">
+    <div class="card"><h4>砂心</h4><span class="en">core</span><p>放在模穴內，形成鑄件的內部空腔或孔。<b>濕砂心</b>由模型直接造出、與砂模一體；<b>乾砂心</b>以砂心盒另外製作並烘乾，靠砂心座定位，必要時用砂心撐（chaplet）支撐。</p></div>
+    <div class="card"><h4>冷激鐵</h4><span class="en">chill</span><p>導熱快的金屬塊，讓厚斷面局部加速冷卻，建立方向性凝固，避免縮孔。<b>外冷鐵</b>嵌在模壁；<b>內冷鐵</b>放在模穴內，會與鑄件熔合成一體，材質須與鑄件相容。</p></div>
+  </div>
+
+  <h3>四、鑄件設計原則</h3>
+  <div class="cards">
+    <div class="card"><h4>避免熱點</h4><p>斷面均勻、厚度漸變，避免多個斷面交會形成厚大熱點；轉角加圓角，減少縮孔與熱裂。</p></div>
+    <div class="card"><h4>分模面平直</h4><p>分模線盡量在一個平面上、位於鑄件邊緣，不要沿著曲折輪廓走。</p></div>
+    <div class="card"><h4>公差合理</h4><p>大件與組合件公差較大；在功能允許下放寬公差，可降低廢品率與成本。</p></div>
+    <div class="card"><h4>留意殘留應力</h4><p>各部位冷速不同會產生殘留應力，必要時以退火消除。</p></div>
+  </div>
+
+  <h3>五、機械造模</h3>
+  <div class="tbl"><table>
+    <tr><th>方式</th><th>原理</th><th>砂的緊實分布</th></tr>
+    <tr><td>震實造模<br><span class="en">jolt</span></td><td>砂箱連同模型反覆抬起落下，砂靠慣性壓實。</td><td>靠近模型板（下方）較緊</td></tr>
+    <tr><td>擠壓造模<br><span class="en">squeeze</span></td><td>壓頭由上方直接壓縮砂。</td><td>靠近壓頭（上方）較緊</td></tr>
+    <tr><td>震壓造模<br><span class="en">jolt-squeeze</span></td><td>先震實再擠壓，兩者互補。</td><td>上下較均勻</td></tr>
+    <tr><td>拋砂機<br><span class="en">sand slinger</span></td><td>高速旋轉的葉輪把砂一團團拋進砂箱，邊填邊緊實。</td><td>均勻，適合大型砂模</td></tr>
+  </table></div>
+
+  <h3>六、熔煉與澆鑄</h3>
+  <div class="cards">
+    <div class="card"><h4>熔鐵爐（化鐵爐）</h4><span class="en">cupola</span><p>豎爐，焦炭與鐵料、石灰石分層加入，由風口鼓風燃燒。熔化鑄鐵的傳統主力。</p></div>
+    <div class="card"><h4>感應爐</h4><span class="en">induction furnace</span><p>電磁感應加熱並自動攪拌，成分與溫度容易控制，適合合金與小量多樣。</p></div>
+    <div class="card"><h4>電弧爐</h4><span class="en">electric arc furnace</span><p>熔化速率高、可回收大量廢鋼，用於鑄鋼。</p></div>
+    <div class="card"><h4>坩堝爐</h4><span class="en">crucible furnace</span><p>以燃料或電間接加熱坩堝，用於鋁、銅等非鐵金屬。</p></div>
+  </div>
+
+  <h4>各元素對鑄鐵的影響</h4>
+  <div class="tbl"><table>
+    <tr><th>元素</th><th>作用</th></tr>
+    <tr><td>C 碳</td><td>促進石墨析出，降低熔點、提高流動性；石墨使鑄鐵減振、潤滑、易切削，凝固時石墨析出伴隨體積膨脹，可抵銷部分收縮。</td></tr>
+    <tr><td>Si 矽</td><td>強力石墨化元素，作用與碳相近，提高流動性；碳當量 CE = C + Si／3 常用來評估鑄造性。</td></tr>
+    <tr><td>Mn 錳</td><td>與硫結合成 MnS，抵銷硫的害處；穩定波來鐵，提高強度與硬度。</td></tr>
+    <tr><td>P 磷</td><td>形成低熔點磷共晶，提高流動性與耐磨性，但使鑄鐵變脆。</td></tr>
+    <tr><td>S 硫</td><td>阻礙石墨化、促使形成白口（雪明碳鐵），使鑄鐵硬脆，降低流動性。</td></tr>
+  </table></div>
+
+  <h4>澆鑄溫度（參考值）</h4>
+  <div class="tbl"><table>
+    <tr><th>金屬</th><th>熔化溫度約（°C）</th><th>澆鑄溫度約（°C）</th></tr>
+    <tr><td>鋁合金</td><td class="num">560–660</td><td class="num">680–780</td></tr>
+    <tr><td>黃銅</td><td class="num">900–940</td><td class="num">980–1100</td></tr>
+    <tr><td>青銅</td><td class="num">950–1050</td><td class="num">1100–1250</td></tr>
+    <tr><td>灰鑄鐵</td><td class="num">1150–1250</td><td class="num">1300–1450</td></tr>
+    <tr><td>鑄鋼</td><td class="num">1450–1520</td><td class="num">1550–1650</td></tr>
+  </table></div>
+  <p><b>澆鑄速度</b>宜快的情形：薄壁件、流動性差的金屬、凝固區間寬的合金、底注式。宜慢的情形：澆鑄溫度高、砂心複雜（避免沖砂）、大型厚重件、易氧化的鋁合金、頂注式。<br><b>澆注位置：</b>頂注式（由上往下，充填快但紊流大）、底注式（由下往上，平穩）、中間注入（扁寬件）、階梯注入（高大件，分層進料）。</p>
+
+  <h4>鑄件清理與檢驗</h4>
+  <p>冷卻後切除流路與冒口，再以噴砂、珠擊、滾筒或鋼刷清理表面（機械法），或以酸液、鹽浴處理（化學法）。</p>
+  <div class="tbl"><table>
+    <tr><th>類別</th><th>項目</th></tr>
+    <tr><td>尺寸與外觀</td><td>目視、尺寸量測、敲擊聽音（判斷內部裂痕）</td></tr>
+    <tr><td>非破壞檢測</td><td>液滲、磁粉（表面與近表面）；超音波、射線（內部）；渦電流；耐壓洩漏試驗</td></tr>
+    <tr><td>成分與組織</td><td>濕式化學分析、光譜分析；金相顯微組織、破斷面檢查</td></tr>
+    <tr><td>機械性質</td><td>拉伸、硬度、衝擊、疲勞、磨耗試驗</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ 2-4 ============ -->
+<section id="s4">
+  <h2><span class="no">2-4</span>特殊鑄造法</h2>
+  <figure>
+    <div class="scroll"><div class="tree">
+      <ul><li><span class="node dark"><b>特殊鑄造法</b></span>
+        <ul>
+          <li><span class="node"><b>金屬模</b></span><ul><li><span class="node"><b>永久模</b></span></li><li><span class="node"><b>瀝鑄</b></span></li><li><span class="node"><b>低壓</b></span></li><li><span class="node"><b>壓鑄</b></span></li><li><span class="node"><b>擠壓</b></span></li></ul></li>
+          <li><span class="node"><b>離心</b></span><ul><li><span class="node"><b>真離心</b></span></li><li><span class="node"><b>半離心</b></span></li><li><span class="node"><b>離心加壓</b></span></li></ul></li>
+          <li><span class="node"><b>精密</b></span><ul><li><span class="node"><b>脫蠟</b></span></li><li><span class="node"><b>陶瓷模</b></span></li><li><span class="node"><b>石膏模</b></span></li></ul></li>
+          <li><span class="node"><b>連續鑄造</b></span></li>
+          <li><span class="node"><b>其他</b></span></li>
+        </ul></li></ul>
+    </div></div>
+    <figcaption>圖 2-6　特殊鑄造法分類</figcaption>
+  </figure>
+
+  <h3>一、金屬模鑄造法</h3>
+  <p>鑄模可重複使用，冷卻快、尺寸精、適合自動化大量生產。但金屬模耐熱有限，主要用於鋁、鋅、鎂、銅等熔點較低的中小型鑄件。</p>
+
+  <h4>1. 永久模鑄造</h4>
+  <p>又稱重力金屬模鑄造。以鑄鐵、鋼、青銅或石墨做成兩半式鑄模，金屬液靠重力澆入。鑄模先預熱至約 150–200°C，以免金屬液急冷而澆不足、模具熱衝擊龜裂。模穴表面塗耐火泥漿（如矽酸鈉加黏土）或噴石墨，作用有三：<b>隔熱以控制冷速、幫助脫模、保護模面延長壽命</b>。鑄件尺寸精、表面好、晶粒細，機械性質優於砂模鑄件。</p>
+
+  <h4>2. 瀝鑄</h4>
+  <p><span class="en">slush casting</span>　低熔點金屬（鉛、鋅、錫）澆入金屬模，靠模壁處先凝固成殼，達到所需厚度後把模倒轉，倒出中間未凝固的金屬，得到不需砂心的中空鑄件。用於玩具、燈座、裝飾品等不受力的零件。</p>
+
+  <h4>3. 低壓鑄造</h4>
+  <p><span class="en">low-pressure casting</span>　坩堝密封，液面上方通入約 0.1 MPa 的空氣或惰性氣體，把金屬液經升液管由下而上壓入上方鑄模；保持壓力直到鑄件凝固，再洩壓讓管中金屬流回坩堝。</p>
+  <ul>
+    <li>充填平穩、紊流少，金屬由液面下方取出，氧化物與浮渣少。</li>
+    <li>保壓凝固、方向性凝固好，縮孔少、組織緻密。</li>
+    <li>幾乎不需冒口，材料利用率高，易自動化。</li>
+    <li>典型應用是<b>鋁合金輪圈</b>。</li>
+  </ul>
+
+  <h4>4. 壓鑄</h4>
+  <p><span class="en">die casting</span>　以高壓（數十 MPa 以上）把金屬液高速射入鋼製模具，保壓凝固後頂出。尺寸精度與表面品質最好，能鑄薄壁複雜件，生產速率極高，是應用最廣的金屬模鑄造法。缺點是模具與設備昂貴、只適合大量生產、只能鑄低熔點非鐵金屬，且高速充填易捲入空氣，鑄件內部可能有氣孔，一般不宜熱處理或焊接。</p>
+  <figure>
+    <div class="dc2">
+    <div>
+    <svg viewBox="0 0 300 220" role="img" aria-label="熱室壓鑄：柱塞與鵝頸管浸在熔融金屬中">
+      <rect x="20" y="96" width="150" height="104" rx="6" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="26" y="120" width="138" height="74" fill="var(--accent)" opacity=".85"/>
+      <rect x="60" y="40" width="34" height="122" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="64" y="126" width="26" height="34" fill="var(--accent)"/>
+      <rect x="70" y="20" width="14" height="90" fill="var(--steel)"/>
+      <rect x="64" y="100" width="26" height="20" fill="var(--steel)"/>
+      <path d="M94 150 H122 Q140 150 140 132 V70 H210" fill="none" stroke="var(--ink)" stroke-width="16" stroke-linejoin="round"/>
+      <path d="M94 150 H122 Q140 150 140 132 V70 H210" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linejoin="round"/>
+      <rect x="210" y="34" width="34" height="76" fill="var(--steel)"/>
+      <rect x="244" y="34" width="40" height="76" fill="var(--steel)"/>
+      <rect x="236" y="56" width="16" height="30" fill="var(--accent)"/>
+      <path d="M77 14 v-8" stroke="var(--fix)" stroke-width="3"/><path d="M71 8 l6 10 6-10z" fill="var(--fix)" transform="translate(0 12)"/>
+      <g font-size="12" fill="var(--ink)"><text x="98" y="30">柱塞</text><text x="150" y="56">鵝頸管</text><text x="210" y="128">固定模 / 活動模</text><text x="30" y="212">金屬液與柱塞同在爐內</text></g>
+    </svg>
+    <b>熱室壓鑄</b><small>熔爐附在機上，射料系統浸在金屬液中，循環快。高溫會侵蝕柱塞，只適合鋅、錫、鉛及部分鎂合金等低熔點金屬。</small>
+    </div>
+    <div>
+    <svg viewBox="0 0 300 220" role="img" aria-label="冷室壓鑄：以澆杓將金屬液倒入水平料筒，再由柱塞射入模具">
+      <rect x="30" y="104" width="160" height="34" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="120" y="110" width="68" height="22" fill="var(--accent)"/>
+      <rect x="40" y="110" width="40" height="22" fill="var(--steel)"/>
+      <rect x="6" y="116" width="34" height="10" fill="var(--steel)"/>
+      <path d="M130 104 V86" stroke="var(--ink)" stroke-width="2"/><path d="M144 104 V86" stroke="var(--ink)" stroke-width="2"/>
+      <g transform="rotate(30 120 50)"><path d="M100 30 H150 L144 72 H106 Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/><path d="M104 48 H146 L143 70 H107 Z" fill="var(--accent)"/></g>
+      <path d="M150 74 q-6 10 -12 24" stroke="var(--accent)" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <rect x="190" y="70" width="40" height="104" fill="var(--steel)"/>
+      <rect x="230" y="70" width="46" height="104" fill="var(--steel)"/>
+      <rect x="222" y="96" width="16" height="50" fill="var(--paper)" stroke="var(--ink)"/>
+      <path d="M46 156 h50" stroke="var(--fix)" stroke-width="3"/><path d="M94 150 l12 6 -12 6z" fill="var(--fix)"/>
+      <g font-size="12" fill="var(--ink)"><text x="20" y="176">柱塞前推</text><text x="168" y="26">澆杓定量加料</text><text x="122" y="158">料筒</text><text x="194" y="192">固定模 / 活動模</text></g>
+    </svg>
+    <b>冷室壓鑄</b><small>熔爐與壓鑄機分開，每次以澆杓定量倒入料筒，射壓更高。用於鋁、鎂、銅合金等熔點較高或會侵蝕射料系統的金屬。</small>
+    </div>
+    </div>
+    <figcaption>圖 2-7　熱室與冷室壓鑄機</figcaption>
+  </figure>
+  <p>壓鑄模依模穴配置可分為單模穴、多模穴、組合模（同一模內不同零件）與單元模（可更換的模穴單元）。</p>
+
+  <h4>5. 擠壓鑄造</h4>
+  <p><span class="en">squeeze casting · liquid-metal forging</span>　金屬液倒入下模，上模以高壓壓下並保持到凝固為止，結合了鑄造與鍛造。高壓使溶解氣體不易析出、金屬與模壁接觸緊密而急冷，鑄件幾乎無孔隙、晶粒細，機械性質接近鍛件，可做到近淨形。</p>
+
+  <h3>二、離心鑄造法</h3>
+  <p>旋轉鑄模產生離心力，把金屬液甩向外側並加壓充填。密度大的金屬被甩到外層，較輕的氣體、熔渣與夾雜物集中在內側。</p>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 560 190" role="img" aria-label="水平式真離心鑄造：旋轉管模內壁形成金屬層，澆槽由一端導入金屬液" style="min-width:460px">
+      <rect x="120" y="40" width="340" height="100" rx="8" fill="var(--steel)" opacity=".55" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="120" y="54" width="340" height="16" fill="var(--accent)"/>
+      <rect x="120" y="110" width="340" height="16" fill="var(--accent)"/>
+      <rect x="120" y="70" width="340" height="40" fill="var(--paper)"/>
+      <circle cx="170" cy="160" r="14" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+      <circle cx="410" cy="160" r="14" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M40 86 H180" stroke="var(--ink)" stroke-width="10"/><path d="M40 86 H180" stroke="var(--accent)" stroke-width="5"/>
+      <path d="M30 60 L50 86" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M488 60 A20 34 0 1 1 488 120" fill="none" stroke="var(--fix)" stroke-width="3"/><path d="M482 114 l10 10 2-14z" fill="var(--fix)"/>
+      <g font-size="12.5" fill="var(--ink)"><text x="20" y="54">澆槽</text><text x="240" y="30">旋轉管模</text><text x="200" y="98" fill="var(--muted)">中空，不需砂心</text><text x="476" y="150">旋轉</text><text x="230" y="180">支撐輥輪</text><text x="300" y="66" fill="var(--paper)" font-size="11">金屬層（外側緻密）</text></g>
+    </svg></div>
+    <figcaption>圖 2-8　水平式真離心鑄造</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>方法</th><th>做法</th><th>特色與應用</th></tr>
+    <tr><td>真離心<br><span class="en">true centrifugal</span></td><td>鑄模繞自身軸線高速旋轉，金屬液貼著模壁成形，<b>內孔靠離心力形成，不用砂心</b>。</td><td>外層緻密、內表面有夾雜需車除。水平式用於管件、缸套；垂直式內表面成拋物面（上薄下厚），用於短筒、軸襯。</td></tr>
+    <tr><td>半離心<br><span class="en">semi-centrifugal</span></td><td>鑄模繞鑄件軸線旋轉，金屬由中心澆道注入填滿模穴，中心可放砂心。</td><td>轉速較低。外緣緻密、中心較疏鬆常被加工掉，用於車輪、皮帶輪、齒輪胚。</td></tr>
+    <tr><td>離心加壓<br><span class="en">centrifuging</span></td><td>多個模穴排在轉軸周圍，金屬由中央澆道進入，離心力把金屬壓進各模穴。</td><td>鑄件形狀不受軸對稱限制，常與脫蠟鑄造搭配做小型精密件。</td></tr>
+  </table></div>
+
+  <h3>三、精密鑄造法</h3>
+  <p>以可熔失或可拆的模型配合耐火材料製成一次性鑄模，鑄件尺寸精、表面光，可直接做到近淨形。常見有脫蠟法、陶瓷模法與石膏模法。</p>
+
+  <h4>1. 脫蠟法（包模鑄造）</h4>
+  <p><span class="en">lost-wax process · investment casting</span>　以蠟做模型，外層沾上耐火漿料與砂成殼，加熱熔出蠟後得到無分模線的整體模殼。</p>
+  <figure>
+    <div class="scroll"><div class="flow5">
+      <div class="node"><span class="n">1</span><b>射蠟</b><small>蠟注入金屬模，做出蠟模型</small></div><div class="right"></div>
+      <div class="node"><span class="n">2</span><b>組樹</b><small>多個蠟模型黏在蠟澆道上</small></div><div class="right"></div>
+      <div class="node"><span class="n">3</span><b>沾漿淋砂</b><small>反覆沾耐火漿、撒砂、乾燥成殼</small></div><div class="right"></div>
+      <div class="node"><span class="n">4</span><b>脫蠟</b><small>高壓蒸氣釜急速加熱，蠟熔出</small></div><div class="right"></div>
+      <div class="node"><span class="n">5</span><b>焙燒</b><small>燒除殘蠟、強化模殼並預熱</small></div><div class="right"></div>
+      <div class="node"><span class="n">6</span><b>澆鑄</b><small>重力、離心或真空吸注</small></div><div class="right"></div>
+      <div class="node dark"><span class="n">7</span><b>破殼取件</b><small>敲碎模殼、切下鑄件</small></div>
+    </div></div>
+    <figcaption>圖 2-9　脫蠟法流程</figcaption>
+  </figure>
+  <div class="callout"><b>為什麼用高壓蒸氣急速脫蠟？</b>蠟受熱膨脹比陶瓷殼大。急速加熱讓貼著模殼的那層蠟先熔化流出，留出間隙，內部的蠟再膨脹時就不會把模殼撐裂。</div>
+  <div class="cards c2">
+    <div class="card"><h4>優點</h4><p>可鑄極複雜、有內凹的形狀；無分模線，尺寸精、表面光；幾乎任何金屬都能鑄，包括難切削的超合金；可達近淨形，省去加工。</p></div>
+    <div class="card"><h4>缺點</h4><p>步驟多、模型與模殼都只能用一次，成本高；以中小型鑄件為主；深而窄的孔不易填滿。</p></div>
+  </div>
+
+  <h4>2. 陶瓷模法</h4>
+  <p><span class="en">ceramic-mold casting</span>　與脫蠟法相似，但以可取出的模型配合兩半式砂箱造模（又稱上下箱包模法）。耐火漿料由細鋯砂（ZrSiO₄）、氧化鋁、熔融矽石加黏結劑組成，灌入後膠化，取出模型，再點火急燒與爐中焙燒（約 1000°C）。耐高溫，可鑄鋼、不鏽鋼、工具鋼、高溫合金，常用於模具、葉輪等較大型精密件。</p>
+
+  <h4>3. 石膏模法</h4>
+  <p><span class="en">plaster-mold casting</span>　以石膏（CaSO₄·2H₂O）漿灌在模型外，硬化後取出模型並烘乾。石膏耐溫約僅 1200°C，且所含硫會與鐵反應，<b>只能鑄鋁、鎂、鋅、銅等非鐵金屬</b>。石膏導熱差，冷卻慢，可鑄薄壁；透氣性差，需設計排氣。尺寸精、表面光，但模只能用一次、成本較高。</p>
+
+  <div class="tbl"><table>
+    <tr><th>比較</th><th>脫蠟法</th><th>陶瓷模法</th><th>石膏模法</th></tr>
+    <tr><td>適用金屬</td><td>幾乎全部，超合金尤佳</td><td>幾乎全部，含鋼與高溫合金</td><td>非鐵金屬（鋁、銅、鋅、鎂）</td></tr>
+    <tr><td>形狀</td><td>非常複雜，可有內凹、盲孔</td><td>相當複雜</td><td>相當複雜，可鑄極薄壁</td></tr>
+    <tr><td>尺寸</td><td>小型為主（數克至數十公斤）</td><td>可做較大件</td><td>中小型</td></tr>
+    <tr><td>冷卻與組織</td><td>模殼預熱，冷卻慢</td><td>冷卻慢</td><td>最慢，晶粒較粗</td></tr>
+    <tr><td>典型應用</td><td>渦輪葉片、高爾夫球頭、醫療植入物</td><td>模具、葉輪</td><td>鋁合金精密件、電子外殼、工藝品</td></tr>
+  </table></div>
+
+  <h3>四、連續鑄造法</h3>
+  <p><span class="en">continuous casting</span>　金屬液由盛鋼桶經分配器（中間包）連續注入兩端開口的水冷銅模，外殼凝固後由夾送輥連續向下抽出，中心邊走邊凝固，最後以火焰切割成定長。斷面單一、長度不受限制，生產效率最高、良率高，是現代煉鋼廠把鋼液做成扁胚、大鋼胚、小鋼胚的主要製程。</p>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 560 270" role="img" aria-label="弧形連續鑄造機：盛鋼桶、中間包、水冷銅模、弧形段夾送輥、矯直後火焰切割" style="min-width:480px">
+      <path d="M40 20 H110 L102 70 H48 Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M46 34 H104 L101 66 H49 Z" fill="var(--accent)"/>
+      <rect x="72" y="70" width="6" height="22" fill="var(--accent)"/>
+      <path d="M40 92 H130 V110 H40 Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="44" y="96" width="82" height="10" fill="var(--accent)"/>
+      <rect x="72" y="110" width="6" height="14" fill="var(--accent)"/>
+      <rect x="58" y="124" width="10" height="40" fill="var(--fix)"/><rect x="82" y="124" width="10" height="40" fill="var(--fix)"/>
+      <path d="M75 124 V170 A120 120 0 0 0 195 250 H520" fill="none" stroke="var(--accent)" stroke-width="16"/>
+      <path d="M75 140 V170 A120 120 0 0 0 195 250 H300" fill="none" stroke="var(--paper)" stroke-width="5" stroke-dasharray="0" opacity=".9"/>
+      <g fill="var(--steel)">
+        <circle cx="62" cy="182" r="5"/><circle cx="88" cy="182" r="5"/>
+        <circle cx="72" cy="206" r="5"/><circle cx="96" cy="200" r="5"/>
+        <circle cx="92" cy="228" r="5"/><circle cx="112" cy="216" r="5"/>
+        <circle cx="120" cy="246" r="5"/><circle cx="134" cy="228" r="5"/>
+        <circle cx="160" cy="258" r="5"/><circle cx="166" cy="236" r="5"/>
+        <circle cx="210" cy="262" r="5"/><circle cx="210" cy="238" r="5"/>
+        <circle cx="260" cy="262" r="5"/><circle cx="260" cy="238" r="5"/>
+      </g>
+      <path d="M420 214 L430 238" stroke="var(--fix)" stroke-width="3"/><path d="M432 214 L436 236" stroke="var(--fix)" stroke-width="2" opacity=".6"/>
+      <line x1="440" y1="236" x2="440" y2="262" stroke="var(--paper)" stroke-width="3"/>
+      <g font-size="12.5" fill="var(--ink)">
+        <text x="120" y="36">盛鋼桶 ladle</text><text x="140" y="104">中間包 tundish</text><text x="100" y="146">水冷銅模（一次冷卻）</text>
+        <text x="160" y="196">夾送輥＋噴水（二次冷卻）</text><text x="300" y="232">矯直</text><text x="400" y="204">火焰切割</text>
+        <text x="320" y="254" fill="var(--paper)" font-size="11">中心仍為液態</text>
+      </g>
+    </svg></div>
+    <figcaption>圖 2-10　弧形（垂直彎曲）連續鑄造機</figcaption>
+  </figure>
+  <p>依鑄機外形分為<b>水平式、垂直式、垂直彎曲式、全弧形</b>。弧形機高度低、廠房成本小，是目前煉鋼主流。</p>
+
+  <h3>五、其他鑄造法</h3>
+  <div class="tbl"><table>
+    <tr><th>方法</th><th>做法</th><th>特色</th></tr>
+    <tr><td>殼模鑄造<br><span class="en">shell molding</span></td><td>金屬模型板加熱至約 175–370°C、噴脫模劑，倒上乾矽砂與酚醛樹脂混合料；樹脂受熱黏結成約 5–10 mm 的殼，翻轉倒掉多餘砂，烘烤固化後剝下兩半殼，夾合後埋入背砂澆鑄。</td><td>尺寸精、表面光，用砂少，易自動化大量生產；金屬模型板昂貴，鑄件大小受限。</td></tr>
+    <tr><td>CO₂ 模<br><span class="en">sodium silicate process</span></td><td>矽砂加 3–6% 矽酸鈉（水玻璃）造模，再吹入 CO₂：Na₂SiO₃ ＋ CO₂ → Na₂CO₃ ＋ SiO₂（凝膠），數十秒即硬化。</td><td>不需烘乾，強度高，常用於砂心；但崩散性差，清砂較難。</td></tr>
+    <tr><td>搗實石墨模<br><span class="en">rammed graphite</span></td><td>以石墨加黏結劑代替矽砂搗實成模，烘乾後使用。</td><td>用於鈦、鋯等會與矽砂反應的活性金屬。</td></tr>
+    <tr><td>真空吸鑄<br><span class="en">counter-gravity (CL process)</span></td><td>砂與胺甲酸酯黏結劑做成殼模，以胺類氣體硬化；模的下端浸入感應爐金屬液，抽真空把金屬由下吸入模穴。熔煉可在大氣（CLA）或真空（CLV）中進行。</td><td>充填平穩、夾雜少，適合薄壁複雜件與活性金屬。</td></tr>
+    <tr><td>V 製程<br><span class="en">vacuum molding</span></td><td>以塑膠薄膜包覆模型，填入不加黏結劑的乾砂，上方再覆膜後抽真空使砂緊實；澆鑄時持續抽真空，凝固後釋放真空，砂自然崩落。</td><td>不需黏結劑，砂可完全回收，表面品質好，適合大而平的鑄件。</td></tr>
+    <tr><td>半固態成形<br><span class="en">semisolid forming</span></td><td>金屬在約含 30–40% 液相的半固態下成形。<b>觸變成形</b>（thixocasting）：先做出球狀晶組織的胚料，再加熱到半固態後壓入模具；<b>流變鑄造</b>（rheocasting）：凝固中攪拌熔湯打碎樹枝晶，直接把漿料送入模具。</td><td>黏度介於液固之間，充填平穩、收縮小、孔隙少，成形力比鍛造低，尺寸精。</td></tr>
+    <tr><td>複合模<br><span class="en">composite molds</span></td><td>組合兩種以上的造模材料，如殼模、石膏、黏結砂、金屬與石墨，各取所長。</td><td>局部用金屬或石墨冷激控制冷速，提高強度與尺寸精度。</td></tr>
+    <tr><td>快速凝固<br><span class="en">rapid solidification</span></td><td>以約 10⁶ K/s 的冷速凝固，如<b>熔融紡絲</b>：感應熔化後以氣壓把金屬液噴到高速旋轉的水冷銅輪上，甩成薄帶；噴到冷板上則稱急冷法。</td><td>原子來不及排成晶格而形成<b>非晶質合金（金屬玻璃）</b>；固溶度擴大、組織極細、顯微偏析少。用於變壓器鐵心等軟磁材料。</td></tr>
+  </table></div>
+
+  <h4>單晶渦輪葉片</h4>
+  <p>噴射引擎與燃氣渦輪葉片以鎳基超合金製成，在高溫下承受巨大離心力。一般精密鑄造得到多晶組織，高溫潛變與裂紋多沿晶界發生。去除晶界的方法分兩步：</p>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 240 230" role="img" aria-label="方向性凝固：葉片由底部冷激板向上長成平行柱狀晶">
+        <rect x="14" y="20" width="16" height="170" fill="var(--fix)" opacity=".35"/><rect x="210" y="20" width="16" height="170" fill="var(--fix)" opacity=".35"/>
+        <path d="M80 26 H160 L150 180 H90 Z" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+        <g stroke="var(--accent)" stroke-width="1.2"><line x1="98" y1="40" x2="98" y2="180"/><line x1="108" y1="30" x2="108" y2="180"/><line x1="118" y1="30" x2="118" y2="180"/><line x1="128" y1="30" x2="128" y2="180"/><line x1="138" y1="30" x2="138" y2="180"/><line x1="148" y1="40" x2="148" y2="180"/></g>
+        <rect x="70" y="180" width="100" height="14" fill="var(--steel)"/>
+        <path d="M120 214 V200" stroke="var(--fix)" stroke-width="2.5"/><path d="M114 204 l6 -10 6 10z" fill="var(--fix)"/>
+        <g font-size="12" fill="var(--ink)"><text x="34" y="18">加熱器</text><text x="86" y="226">水冷冷激板，向下抽出</text></g>
+      </svg>
+      <b>(a) 方向性凝固</b><small>模殼底部放水冷冷激板，鑄模逐漸自加熱區抽出，晶粒只能由下往上長成平行柱狀晶，晶界與離心應力方向平行，橫向晶界消失。</small>
+      </div>
+      <div>
+      <svg viewBox="0 0 240 230" role="img" aria-label="單晶鑄造：底部螺旋選晶器只讓一顆晶粒通過，長成整片單晶葉片">
+        <rect x="14" y="20" width="16" height="170" fill="var(--fix)" opacity=".35"/><rect x="210" y="20" width="16" height="170" fill="var(--fix)" opacity=".35"/>
+        <path d="M80 26 H160 L150 120 H90 Z" fill="var(--accent)" opacity=".85" stroke="var(--accent)" stroke-width="2"/>
+        <path d="M118 120 v6 q14 6 0 12 q-14 6 0 12 q14 6 0 12 v6" fill="none" stroke="var(--accent)" stroke-width="5"/>
+        <rect x="96" y="168" width="48" height="12" fill="var(--accent-soft)" stroke="var(--accent)"/>
+        <g stroke="var(--accent)" stroke-width="1"><line x1="104" y1="168" x2="104" y2="180"/><line x1="112" y1="168" x2="112" y2="180"/><line x1="120" y1="168" x2="120" y2="180"/><line x1="128" y1="168" x2="128" y2="180"/><line x1="136" y1="168" x2="136" y2="180"/></g>
+        <rect x="70" y="180" width="100" height="14" fill="var(--steel)"/>
+        <g font-size="12" fill="var(--ink)"><text x="168" y="70">單晶</text><text x="148" y="150">螺旋選晶器</text><text x="150" y="176" font-size="11">起晶區</text><text x="70" y="226">只有一顆晶粒通過</text></g>
+      </svg>
+      <b>(b) 單晶鑄造</b><small>在起晶區上方加一段螺旋狀的窄通道，柱狀晶在轉折中互相淘汰，最後只剩一顆晶粒長滿整片葉片。沒有晶界，抗潛變與抗熱疲勞能力最佳。</small>
+      </div>
+    </div>
+    <figcaption>圖 2-11　渦輪葉片的方向性凝固與單晶鑄造</figcaption>
+  </figure>
+
+  <h3>六、各鑄造法比較</h3>
+  <div class="tbl"><table>
+    <tr><th>方法</th><th>優點</th><th>限制</th></tr>
+    <tr><td>砂模</td><td>幾乎所有金屬；尺寸、形狀、重量幾乎不受限；模具成本低</td><td>表面粗、公差大，需後加工</td></tr>
+    <tr><td>殼模</td><td>尺寸精、表面好，生產率高</td><td>鑄件大小受限；模型板與設備昂貴</td></tr>
+    <tr><td>消失模</td><td>形狀可很複雜，無分模線與砂心</td><td>模型強度低；少量時成本高</td></tr>
+    <tr><td>石膏模</td><td>形狀複雜、尺寸精、表面好、孔隙少</td><td>限非鐵金屬；尺寸受限；造模時間長</td></tr>
+    <tr><td>陶瓷模</td><td>形狀複雜、公差精、表面好</td><td>尺寸受限</td></tr>
+    <tr><td>脫蠟</td><td>極複雜形狀；表面與精度最佳；幾乎所有金屬</td><td>尺寸受限；模型、模殼與人工成本高</td></tr>
+    <tr><td>永久模</td><td>表面與尺寸精；孔隙少；生產率高</td><td>模具成本高；形狀受限；不宜高熔點金屬</td></tr>
+    <tr><td>壓鑄</td><td>尺寸精度與表面最佳；生產率最高；可鑄薄壁</td><td>模具極貴；限非鐵金屬；前置時間長</td></tr>
+    <tr><td>離心</td><td>大型圓筒件品質好；生產率高</td><td>設備昂貴；形狀限迴轉體</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ 試題 ============ -->
+<section id="exam">
+  <h2><span class="no">試題</span>歷屆試題</h2>
+  <p class="hint">點選題目展開作答要點</p>
+
+  <details><summary><span class="qn">01</span><span>(1) 不同液體流動性及熱傳速率對鑄件的影響？(2) 澆注速度過快或過慢的影響？(3) 澆道直徑 10 mm、高度 250 mm，求金屬液進入模具的速度與流率。</span><span class="src">台大機械</span></summary>
+    <div class="ans"><ul>
+      <li>流動性差易澆不足、冷隔；熱傳快冷卻快，晶粒細、強度高，但過快也會澆不足。熱傳慢晶粒粗、易縮孔。</li>
+      <li>過快：紊流、捲氣、沖砂、氧化夾雜；過慢：金屬在流路中降溫，澆不足、冷隔。</li>
+      <li>v = √(2gh) = √(2 × 9.81 × 0.25) ≈ <b>2.21 m/s</b>；A = π(0.01)²／4 = 7.85 × 10⁻⁵ m²；Q = Av ≈ <b>1.74 × 10⁻⁴ m³/s（約 0.17 L/s）</b>。</li>
+    </ul></div></details>
+
+  <details><summary><span class="qn">02</span><span>金屬液澆鑄至模具時需考慮哪兩個流動定律？寫出公式。</span><span class="src">台大機械</span></summary>
+    <div class="ans">伯努利定理 h + p／ρg + v²／2g = 常數（能量守恆）；質量連續定律 Q = A₁v₁ = A₂v₂（質量守恆）。可補充：兩者合用說明澆道為何上寬下窄。</div></details>
+
+  <details><summary><span class="qn">03</span><span>直徑 40 mm、高 80 mm 的圓柱鑄件完全凝固需 3 分鐘。高度加倍時凝固時間？直徑加倍時呢？</span><span class="src">台大機械</span></summary>
+    <div class="ans"><ul>
+      <li>原件：V／A = πr²h ／(2πr² + 2πrh) = (400 × 80)／(800 + 3200) = <b>8.0 mm</b>。</li>
+      <li>高度 160 mm：V／A = (400 × 160)／(800 + 6400) = 8.89 mm，t = 3 × (8.89／8)² ≈ <b>3.7 min</b>。</li>
+      <li>直徑 80 mm：V／A = (1600 × 80)／(3200 + 6400) = 13.3 mm，t = 3 × (13.3／8)² ≈ <b>8.3 min</b>。</li>
+      <li>結論：加大直徑比加高更能延長凝固時間，因為 V／A 增加較多。</li>
+    </ul></div></details>
+
+  <details><summary><span class="qn">04</span><span>說明脫蠟鑄造與壓鑄之製程，並比較兩者鑄造鋁合金時的鑄件強度差異。</span><span class="src">台大機械</span></summary>
+    <div class="ans">脫蠟：射蠟 → 組樹 → 沾漿淋砂 → 脫蠟 → 焙燒 → 澆鑄 → 破殼。壓鑄：高壓把金屬液射入鋼模，保壓凝固後頂出。強度：壓鑄冷速極快、晶粒細，表層緻密強度高，但高速充填易捲氣，內部有氣孔且不宜熱處理；脫蠟模殼預熱、冷卻慢，晶粒較粗，但孔隙少，可做 T6 等熱處理提升強度。</div></details>
+
+  <details><summary><span class="qn">05</span><span>詳述壓鑄法的原理、方法與製程特性。</span><span class="src">高考三等</span></summary>
+    <div class="ans">原理：以高壓高速把金屬液射入鋼模並保壓凝固。方法：熱室法（射料系統浸在金屬液中，鋅、錫、鉛、部分鎂）與冷室法（澆杓加料入料筒，鋁、鎂、銅）。特性：精度與表面最佳、可鑄薄壁、生產率極高；模具設備貴、限低熔點非鐵金屬、需大量生產、內部易有氣孔。</div></details>
+
+  <details><summary><span class="qn">06</span><span>(1) 大型龍門工具機底座常用的石墨鑄鐵特性及適用的翻砂流程。(2) 筆電外殼的鎂鋁合金壓鑄與一般水五金的鋅合金壓鑄有何差異？</span><span class="src">機械技師</span></summary>
+    <div class="ans"><ul>
+      <li>灰鑄鐵（片狀石墨）：減振性好、尺寸穩定、耐磨、易切削、流動性佳、收縮小、便宜，適合大型床身。大件多用乾砂模或自硬模（呋喃樹脂砂），木模造模，配合冒口與冷激鐵；完成後做時效或退火消除應力。</li>
+      <li>鎂合金熔點較高且易氧化燃燒，需保護氣體，薄殼件多以冷室或專用熱室機、高射速成形；鋅合金熔點低（約 420°C）、流動性極佳，用熱室壓鑄，循環快、模具壽命長。</li>
+    </ul></div></details>
+
+  <details><summary><span class="qn">07</span><span>說明砂模鑄造過程，並以圖示說明砂模各部位名稱與用途。</span><span class="src">地特四等</span></summary>
+    <div class="ans">流程依 2-3 節造模程序。畫圖 2-5 的剖面，標出上模、下模、分模線、澆池、澆道、澆道井、橫流道、進模口、模穴、砂心、冒口、通氣孔，並逐一寫出功用。</div></details>
+
+  <details><summary><span class="qn">08</span><span>比較砂模鑄造與殼模鑄造的優缺點。</span><span class="src">關務四等</span></summary>
+    <div class="ans">砂模：材料與模型便宜、尺寸不受限、所有金屬皆可；但表面粗、精度差、需加工、生產率低。殼模：表面光、精度高、用砂少、易自動化；但金屬模型板與樹脂成本高、鑄件大小受限，適合中小件大量生產。</div></details>
+
+  <details><summary><span class="qn">09</span><span>詳述用於製造鋁輪圈的低壓鑄造法之原理與製程特性。</span><span class="src">普通考試</span></summary>
+    <div class="ans">密封坩堝液面加約 0.1 MPa 氣壓，金屬液經升液管由下往上平穩充填上方模具，保壓至凝固後洩壓，管內金屬回流。特性：充填平穩無紊流、取自液面下方故夾渣少、方向性凝固組織緻密、幾乎不需冒口、良率高、易自動化。</div></details>
+
+  <details><summary><span class="qn">10</span><span>詳述脫蠟鑄造法的程序與優點（須繪各步驟示意圖）。</span><span class="src">鐵路員級</span></summary>
+    <div class="ans">依圖 2-9 七步驟各畫一小圖：射蠟、組樹、沾漿淋砂、脫蠟、焙燒、澆鑄、破殼。優點：形狀複雜、無分模線、精度與表面佳、適用難加工合金、近淨形。</div></details>
+
+  <details><summary><span class="qn">11</span><span>依凝固速率由大到小排序：砂模、精密脫蠟、壓鑄（冷室）、壓鑄（熱室）、離心鑄造、擠壓鑄造，並說明原因。</span><span class="src">普通考試</span></summary>
+    <div class="ans">壓鑄（熱室、冷室）＞ 擠壓鑄造 ＞ 離心鑄造 ＞ 砂模 ＞ 脫蠟。壓鑄用水冷鋼模、薄壁、高壓使金屬緊貼模壁，散熱最快；擠壓鑄造也是金屬模加高壓，但件較厚；離心用金屬模且有壓力；砂模導熱差；脫蠟模殼預熱且為絕熱陶瓷，最慢。</div></details>
+
+  <details><summary><span class="qn">12</span><span>設計模型時，模型尺寸與最後鑄件尺寸之間必須考量哪些因素？</span><span class="src">高考三等</span></summary>
+    <div class="ans">收縮裕度、拔模裕度、加工裕度、變形裕度、振動裕度（負值）。另可提及砂心座、分模面位置與鑄件公差。</div></details>
+
+  <details><summary><span class="qn">13</span><span>比較砂模鑄造與壓鑄法的差異，包括模具材料、生產效率及鑄件特徵。</span><span class="src">地特三等</span></summary>
+    <div class="ans"><div class="tbl"><table><tr><th></th><th>砂模</th><th>壓鑄</th></tr><tr><td>模具</td><td>砂，一次型</td><td>合金工具鋼，永久型</td></tr><tr><td>金屬</td><td>幾乎所有</td><td>鋁、鋅、鎂、銅等</td></tr><tr><td>效率</td><td>低</td><td>極高</td></tr><tr><td>鑄件</td><td>大小不限、表面粗、需加工</td><td>中小型薄壁、精度與表面極佳、內部可能有氣孔</td></tr><tr><td>適合產量</td><td>單件至中量</td><td>大量</td></tr></table></div></div></details>
+
+  <details><summary><span class="qn">14</span><span>永久模的模穴表面常需噴刷塗層，說明其主要功用。</span><span class="src">關務三等</span></summary>
+    <div class="ans">隔熱以降低冷速、避免澆不足與冷隔；作為離型劑幫助脫模；保護模面免受熱衝擊與金屬液侵蝕、延長模具壽命；也能改善鑄件表面。</div></details>
+
+  <details><summary><span class="qn">15</span><span>鑄件的內部檢驗包括哪些檢測項目？</span><span class="src">港務公司</span></summary>
+    <div class="ans">超音波檢測、射線（X 光、γ 射線）檢測找內部氣孔、縮孔與夾渣；耐壓洩漏試驗；必要時破壞性的剖切金相與破斷面檢查。表面與近表面用液滲、磁粉、渦電流。</div></details>
+
+  <details><summary><span class="qn">16</span><span>(1) 簡述壓鑄法的基本原理。(2) 壓鑄法的類別與製程差異。(3) 比較各類壓鑄法的製程條件與特性。</span><span class="src">港務公司</span></summary>
+    <div class="ans">原理同第 5 題。熱室：熔爐附機、射料系統浸液、循環快、射壓較低（約 15–35 MPa），限低熔點金屬。冷室：熔爐分離、澆杓加料、射壓高（數十至上百 MPa），循環較慢，用於鋁、鎂、銅合金。</div></details>
+
+  <details><summary><span class="qn">17</span><span>列出 5 種鑄造時應考慮的模型裕度。</span><span class="src">台北捷運</span></summary>
+    <div class="ans">收縮、拔模、加工、變形、振動裕度。</div></details>
+
+  <details><summary><span class="qn">18</span><span>Explain the following casting processes: (1) sand casting (2) investment casting (3) die casting.</span><span class="src">成大機械</span></summary>
+    <div class="ans"><ul>
+      <li>Sand casting: molten metal is poured into an expendable sand mold made from a pattern; versatile and cheap, but rough surface and wide tolerances.</li>
+      <li>Investment casting: a wax pattern is coated with refractory slurry to form a shell, the wax is melted out, and metal is poured into the one-piece shell; complex shapes, excellent finish and accuracy.</li>
+      <li>Die casting: molten metal is injected under high pressure into a reusable steel die (hot- or cold-chamber); high production rate and accuracy, limited to nonferrous metals.</li>
+    </ul></div></details>
+</section>
+
+</main>
+</div>
+
+</body>
+</html>
