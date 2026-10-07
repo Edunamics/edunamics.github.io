@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>材料力學｜應力與應變</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&amp;family=Noto+Serif+TC:wght@600;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FAFAF7}
+a{color:#4B2A9A}a:hover{color:#311A6B}
+</style>
+</head>
+<body>
+<div style="font-family: 'Noto Sans TC', sans-serif; color: #2D3436; background: #FAFAF7; line-height: 1.8; font-size: 17px">
+
+<header style="background: #4B2A9A; color: #FFFFFF">
+<nav style="max-width: 1120px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<a href="index.html" style="color: #FFFFFF; text-decoration: none; font-family: 'Noto Serif TC', serif; font-weight: 900; font-size: 22px; letter-spacing: 2px">知識動力場</a>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<a href="manufacturing.html" style="color: #E1D8F3; text-decoration: none; padding: 10px 14px; font-size: 15px">機械製造</a>
+<a href="statics.html" style="color: #E1D8F3; text-decoration: none; padding: 10px 14px; font-size: 15px">靜力學</a>
+<a href="dynamics.html" style="color: #E1D8F3; text-decoration: none; padding: 10px 14px; font-size: 15px">動力學</a>
+<a href="#top" style="color: #FFFFFF; text-decoration: none; padding: 10px 14px; border-radius: 6px; background: rgba(255,255,255,0.14); font-size: 15px">材料力學</a>
+</div>
+</nav>
+<div id="top" style="max-width: 1120px; margin: 0 auto; padding: 48px 24px 56px; background-image: linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px); background-size: 32px 32px">
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #BFAEE8; letter-spacing: 2px">CH.01 應力與應變 ／ 第 1 節</div>
+<h1 style="margin: 8px 0 12px; font-family: 'Noto Serif TC', serif; font-weight: 900; font-size: 44px; line-height: 1.3">軸向負載的應力與變形</h1>
+<p style="margin: 0; max-width: 640px; color: #E1D8F3; font-size: 18px">材料力學的第一步：構件受拉受壓時，內部承受多大應力、會伸長多少。</p>
+</div>
+</header>
+
+<main style="max-width: 1120px; margin: 0 auto; padding: 40px 24px 64px; display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+
+<aside style="flex: 1 1 220px; max-width: 260px; display: flex; flex-direction: column; gap: 4px; font-size: 15px">
+<div style="font-weight: 700; color: #4B2A9A; margin-bottom: 8px">本節目錄</div>
+<a href="#s1" style="text-decoration: none; padding: 8px 12px; border-radius: 6px; background: #EEE8F8; color: #4B2A9A; font-weight: 500">1　應力與應變</a>
+<a href="#s2" style="text-decoration: none; padding: 8px 12px; border-radius: 6px; color: #4A5560">2　虎克定律</a>
+<a href="#s3" style="text-decoration: none; padding: 8px 12px; border-radius: 6px; color: #4A5560">3　例題演練</a>
+<a href="#s4" style="text-decoration: none; padding: 8px 12px; border-radius: 6px; color: #4A5560">4　易錯觀念</a>
+<div style="margin-top: 24px; padding: 16px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DCE3EA; display: flex; flex-direction: column; gap: 8px; font-size: 14px">
+<div style="font-weight: 700; color: #2D3436">色彩標示說明</div>
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 14px; height: 14px; border-radius: 3px; background: #4B2A9A"></span>定義／公式</div>
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 14px; height: 14px; border-radius: 3px; background: #2E7D32"></span>例題解答</div>
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 14px; height: 14px; border-radius: 3px; background: #E67E22"></span>考試重點</div>
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 14px; height: 14px; border-radius: 3px; background: #C62828"></span>常見錯誤</div>
+</div>
+</aside>
+
+<article style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 32px">
+
+<section id="s1" style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-family: 'Noto Serif TC', serif; font-size: 30px; color: #4B2A9A">1　應力與應變</h2>
+<p style="margin: 0">應力是單位面積上的內力，應變是單位長度的變形量。兩者都和構件尺寸無關，才能拿來比較不同大小的零件。</p>
+<div style="background: #EEE8F8; border-radius: 12px; overflow: hidden">
+<div style="background: #4B2A9A; color: #FFFFFF; padding: 8px 20px; font-size: 14px; font-weight: 700; letter-spacing: 1px">定義・公式</div>
+<div style="padding: 20px 24px; display: flex; flex-direction: column; gap: 12px">
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 28px; color: #4B2A9A; text-align: center; padding: 12px 0">σ = P ／ A　　ε = δ ／ L</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; font-size: 15px">
+<div style="background: #FFFFFF; border-radius: 8px; padding: 12px"><strong style="color: #4B2A9A">σ</strong>　正向應力，MPa（N/mm²）<br><strong style="color: #4B2A9A">P</strong>　軸向負載，N　<strong style="color: #4B2A9A">A</strong>　截面積，mm²</div>
+<div style="background: #FFFFFF; border-radius: 8px; padding: 12px"><strong style="color: #4B2A9A">ε</strong>　正向應變，無因次<br><strong style="color: #4B2A9A">δ</strong>　伸長量，mm　<strong style="color: #4B2A9A">L</strong>　原長，mm</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="s2" style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-family: 'Noto Serif TC', serif; font-size: 30px; color: #4B2A9A">2　虎克定律</h2>
+<p style="margin: 0">虎克（Robert Hooke）於 1678 年提出：在比例限度內，應力與應變成正比。比例常數 E 稱為彈性係數（楊氏係數）。</p>
+<div style="background: #EEE8F8; border-radius: 12px; overflow: hidden">
+<div style="background: #4B2A9A; color: #FFFFFF; padding: 8px 20px; font-size: 14px; font-weight: 700; letter-spacing: 1px">定義・公式</div>
+<div style="padding: 20px 24px">
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 26px; color: #4B2A9A; text-align: center; padding: 12px 0">σ = E ε　→　δ = P L ／ (A E)</div>
+</div>
+</div>
+<div style="background: #FDF1E5; border-radius: 12px; overflow: hidden">
+<div style="background: #B35A0F; color: #FFFFFF; padding: 8px 20px; font-size: 14px; font-weight: 700; letter-spacing: 1px">考試重點</div>
+<div style="padding: 20px 24px; display: flex; flex-direction: column; gap: 8px">
+<div>常用材料的彈性係數要記得量級，題目常省略不給：</div>
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 360px; border-collapse: collapse; font-size: 15px; background: #FFFFFF; border-radius: 8px">
+<tr style="text-align: left; color: #8A4510"><th style="padding: 10px 14px; border-bottom: 1px solid #F0D6BC">材料</th><th style="padding: 10px 14px; border-bottom: 1px solid #F0D6BC">E（約）</th></tr>
+<tr><td style="padding: 10px 14px; border-bottom: 1px solid #F3E6D8">鋼</td><td style="padding: 10px 14px; border-bottom: 1px solid #F3E6D8">200 – 210 GPa</td></tr>
+<tr><td style="padding: 10px 14px; border-bottom: 1px solid #F3E6D8">銅</td><td style="padding: 10px 14px; border-bottom: 1px solid #F3E6D8">110 – 120 GPa</td></tr>
+<tr><td style="padding: 10px 14px">鋁合金</td><td style="padding: 10px 14px">約 70 GPa</td></tr>
+</table>
+</div>
+<div>鋼的 E 值幾乎不隨強度等級改變：高強度鋼「更強」但「不更硬」，相同負載下變形量一樣。</div>
+</div>
+</div>
+</section>
+
+<section id="s3" style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-family: 'Noto Serif TC', serif; font-size: 30px; color: #4B2A9A">3　例題演練</h2>
+<div style="background: #FFFFFF; border: 1px solid #DCE3EA; border-radius: 12px; padding: 20px 24px">
+<div style="font-weight: 700; margin-bottom: 4px">【例題】</div>
+直徑 20 mm、長 2 m 的鋼桿承受 31.4 kN 軸向拉力，E = 200 GPa，求桿內應力與伸長量。
+</div>
+<div style="background: #EAF4EB; border-radius: 12px; overflow: hidden">
+<div style="background: #2E7D32; color: #FFFFFF; padding: 8px 20px; font-size: 14px; font-weight: 700; letter-spacing: 1px">解答</div>
+<div style="padding: 20px 24px; display: flex; flex-direction: column; gap: 8px">
+<div>截面積（用半徑 10 mm）：</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 18px">A = π × 10² ≈ 314.2 mm²</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 18px">σ = 31400 ／ 314.2 ≈ 100 MPa</div>
+<div>統一用 N、mm、MPa 代入（200 GPa = 200000 MPa）：</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 18px">δ = 31400 × 2000 ／ (314.2 × 200000) ≈ 1.0 mm</div>
+</div>
+</div>
+</section>
+
+<section id="s4" style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-family: 'Noto Serif TC', serif; font-size: 30px; color: #4B2A9A">4　易錯觀念</h2>
+<div style="background: #FBEAEA; border-radius: 12px; overflow: hidden">
+<div style="background: #C62828; color: #FFFFFF; padding: 8px 20px; font-size: 14px; font-weight: 700; letter-spacing: 1px">常見錯誤</div>
+<ul style="margin: 0; padding: 20px 24px 20px 44px; display: flex; flex-direction: column; gap: 8px">
+<li>截面積代入直徑：A = πr² 用半徑，或寫成 πd²／4。</li>
+<li>GPa 未換算：混用 m 與 mm 時最容易差 1000 倍，建議全程用 N、mm、MPa。</li>
+<li>超過比例限度仍套虎克定律：進入塑性區後 σ 與 ε 不再成正比。</li>
+<li>把強度和剛性混為一談：降伏強度決定會不會壞，E 值決定變形多少。</li>
+</ul>
+</div>
+</section>
+
+</article>
+</main>
+
+<footer style="border-top: 1px solid #DCE3EA; padding: 24px; text-align: center; font-size: 14px; color: #5F6B76">知識動力場｜機械製造・靜力學・動力學・材料力學</footer>
+
+</div>
+</body>
+</html>
