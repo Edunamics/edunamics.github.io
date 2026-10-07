@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>機械製造學 第四章 切削</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;800&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: 與第一章相同的講義版面 — 左側章節索引 + 右側正文；製程以剖面示意圖與流程框呈現 */
+:root{
+  --bg:#FBF8F5; --paper:#FFFFFF; --ink:#2A1D14; --muted:#6E5D50;
+  --accent:#A84A0C; --accent-soft:#F6E6D8; --line:#E6D5C7; --grid:rgba(168,74,12,.07);
+  --steel:#9A8A7D; --fix:#1D6B70; --fix-soft:#E3F1F1; --warn:#8E2F1C;
+  --f-display:"Noto Serif TC","Songti TC",serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --steel:#6E5E52; --fix:#6CC3C7; --fix-soft:#16302F; --warn:#F08A73; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --steel:#6E5E52; --fix:#6CC3C7; --fix-soft:#16302F; --warn:#F08A73; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.8;padding-inline:16px}
+.wrap{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px;padding-block:0 64px}
+header.hero{max-width:1120px;margin:0 auto 32px;padding-block:36px 28px;border-bottom:1.5px solid var(--accent);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;
+  display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:24px;align-items:center}
+.hero-art{width:100%;max-width:260px;justify-self:end}
+.crumb{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,5vw,3.1rem);line-height:1.2;margin:.3em 0 .2em;text-wrap:balance}
+h1 small{font-size:.5em;font-weight:600;color:var(--muted);display:block;letter-spacing:.05em}
+.lede{max-width:62ch;color:var(--muted);margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px;font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);align-self:start;font-size:14px}
+nav.toc p{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--muted);margin:0 0 8px}
+nav.toc a{display:flex;gap:10px;padding:6px 0 6px 12px;color:var(--ink);text-decoration:none;border-left:2px solid var(--line)}
+nav.toc a:hover,nav.toc a:focus-visible{border-left-color:var(--accent);color:var(--accent);outline:none}
+nav.toc a span{font-family:var(--f-mono);color:var(--accent);font-size:12.5px;min-width:2.6em}
+main{min-width:0}
+section{padding-block:8px 28px;border-bottom:1px solid var(--line);margin-bottom:28px;scroll-margin-top:16px}
+h2{font-family:var(--f-display);font-size:1.6rem;margin:0 0 .6em;display:flex;align-items:baseline;gap:14px;text-wrap:balance}
+h2 .no{font-family:var(--f-mono);font-size:.95rem;color:var(--paper);background:var(--accent);padding:2px 9px;border-radius:2px;font-weight:500}
+h3{font-size:1.12rem;margin:1.6em 0 .5em;color:var(--accent)}
+h4{font-size:1rem;margin:1.2em 0 .3em}
+p{max-width:68ch;margin:.4em 0 .9em}
+.en{font-family:var(--f-mono);font-size:.8em;color:var(--muted)}
+.key{background:linear-gradient(transparent 62%,var(--accent-soft) 62%);font-weight:700}
+figure{margin:20px 0 24px;background:var(--paper);border:1px solid var(--line);padding:20px}
+figcaption{font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-top:12px;letter-spacing:.04em}
+.scroll{overflow-x:auto}
+.tbl{overflow-x:auto;margin:14px 0 22px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px;background:var(--paper)}
+th,td{border:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);color:var(--accent);font-weight:700;white-space:nowrap}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);padding:12px 16px;margin:16px 0;font-size:15px}
+.callout b{color:var(--accent)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:12px 0 20px}
+.card{border:1px solid var(--line);background:var(--paper);padding:14px 16px}
+.card h4{margin:0 0 4px;color:var(--accent)}
+.card p{margin:0;font-size:14.5px}
+/* 流程圖共用 */
+.node{background:var(--paper);border:2px solid var(--accent);border-radius:6px;padding:10px 14px;position:relative}
+.node b{display:block;font-size:15.5px}
+.node small{display:block;color:var(--muted);font-size:13px;line-height:1.5}
+.node .n{font-family:var(--f-mono);font-size:11.5px;color:var(--accent);letter-spacing:.06em}
+.node.dark{background:var(--accent);border-color:var(--accent)}
+.node.dark b,.node.dark .n{color:var(--paper)} .node.dark small{color:var(--accent-soft)}
+.down{height:30px;position:relative;margin-left:50%}
+.down::before{content:"";position:absolute;left:-1px;top:0;bottom:8px;border-left:2px solid var(--fix)}
+.down::after{content:"";position:absolute;left:-7px;bottom:0;border:7px solid transparent;border-top:9px solid var(--fix);border-bottom:0}
+.right{flex:0 0 34px;align-self:center;height:2px;background:var(--fix);position:relative}
+.right::after{content:"";position:absolute;right:-2px;top:-6px;border:7px solid transparent;border-left:10px solid var(--fix);border-right:0}
+/* 設計流程 */
+.phases{display:grid;gap:0}
+.phase{border:1.5px dashed var(--steel);border-radius:10px;padding:26px 16px 14px;position:relative;display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:0 14px;align-items:center}
+.phase>.lab{position:absolute;top:-11px;left:14px;background:var(--paper);padding:0 8px;font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.08em}
+.phase .down{grid-column:1}
+.tool{font-family:var(--f-mono);font-size:12px;color:var(--accent);border:1.5px solid var(--accent);border-radius:999px;text-align:center;padding:3px 8px;position:relative;background:var(--paper)}
+.tool::before{content:"";position:absolute;right:100%;top:50%;width:14px;border-top:1.5px dashed var(--accent)}
+.gap{grid-column:2}
+/* IPO */
+.ipo{display:flex;align-items:stretch;gap:0}
+.ipo .col{flex:1;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.ipo .col h5{margin:0 0 4px;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;color:var(--accent);text-align:center}
+.pill{border:1.5px solid var(--accent);border-radius:999px;padding:2px 12px;font-size:14px;text-align:center;background:var(--paper)}
+.pill.solid{background:var(--accent);color:var(--paper)}
+.ipo .proc{flex:1;border:2px solid var(--accent);border-radius:8px;background:var(--accent);color:var(--paper);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:14px}
+.ipo .proc h5{color:var(--accent-soft)}
+.ipo .proc .pill{background:transparent;border-color:var(--accent-soft);color:var(--paper)}
+/* 分類樹 */
+.tree{width:max-content;min-width:100%;margin:0 auto}
+.tree ul{list-style:none;margin:0;padding:22px 0 0;display:flex;justify-content:center;position:relative}
+.tree li{position:relative;padding:22px 4px 0;text-align:center}
+.tree>ul{padding-top:0}.tree>ul>li{padding-top:0}
+.tree li::before,.tree li::after{content:"";position:absolute;top:0;width:50%;height:22px;border-top:2px solid var(--steel)}
+.tree li::before{right:50%}.tree li::after{left:50%;border-left:2px solid var(--steel)}
+.tree li:only-child::before,.tree li:only-child::after{display:none}
+.tree li:first-child::before,.tree li:last-child::after{border-top:none}
+.tree li:last-child::before{border-right:2px solid var(--steel);border-top-right-radius:6px}
+.tree li:first-child::after{border-top-left-radius:6px}
+.tree>ul>li::before,.tree>ul>li::after{display:none}
+.tree ul ul::before{content:"";position:absolute;top:0;left:50%;height:22px;border-left:2px solid var(--steel)}
+.tree .node{display:inline-block;padding:5px 9px;white-space:nowrap}
+.tree .node b{font-size:14.5px}
+/* 加工示意圖卡 */
+.procs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 20px}
+.procs.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.proc-card{background:var(--paper);border:1px solid var(--line);padding:12px 12px 10px;display:flex;flex-direction:column;gap:4px}
+.proc-card svg{width:100%;height:auto;background:var(--bg);border-radius:4px}
+.proc-card b{font-size:15px}
+.proc-card .en{display:block}
+.proc-card small{color:var(--muted);font-size:13px;line-height:1.5}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted);margin:-4px 0 12px}
+.legend i{display:inline-block;width:14px;height:10px;margin-right:6px;vertical-align:middle;border-radius:2px}
+/* 碳足跡 */
+.life{display:flex;align-items:stretch}
+.life .node{flex:1;text-align:center;padding:10px 8px}
+.offset{margin-top:14px;border:2px dashed var(--fix);border-radius:8px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:center;font-size:14.5px}
+.offset b{color:var(--fix)}
+.eq{font-family:var(--f-mono);font-size:15px;background:var(--fix);color:var(--paper);padding:2px 10px;border-radius:4px}
+/* 試題 */
+.fixbox{border:1.5px dashed var(--warn);background:var(--fix-soft);padding:14px 18px;margin:8px 0 0;font-size:14.5px}
+.fixbox h3{color:var(--warn);margin:0 0 6px;font-size:1rem}
+.fixbox ul{margin:0;padding-left:1.1em}
+.fixbox s{color:var(--muted)}
+details{border:1px solid var(--line);background:var(--paper);margin:10px 0;padding:0 16px}
+summary{cursor:pointer;padding:12px 0;font-weight:500;list-style:none;display:grid;grid-template-columns:2.4em minmax(0,1fr) auto;gap:8px}
+summary::-webkit-details-marker{display:none}
+summary .qn{font-family:var(--f-mono);color:var(--accent)}
+summary .src{font-size:12px;color:var(--muted);white-space:nowrap}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details[open] summary{border-bottom:1px dashed var(--line)}
+details .ans{padding:10px 0 14px 2.8em;font-size:15px}
+details .ans ul{margin:.2em 0;padding-left:1.1em}
+.hint{font-family:var(--f-mono);font-size:11px;color:var(--accent);letter-spacing:.1em}
+svg text{font-family:var(--f-body)}
+@media (max-width:820px){
+  header.hero{grid-template-columns:minmax(0,1fr)}.hero-art{justify-self:start;max-width:180px}
+  .wrap{grid-template-columns:minmax(0,1fr);gap:0}
+  nav.toc{position:static;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px}
+  nav.toc p{width:100%}
+  nav.toc a{border:1px solid var(--line);padding:4px 10px}
+  .ipo,.life{flex-direction:column}
+  .ipo .right,.life .right{flex-basis:26px;width:2px;height:26px;align-self:center}
+  .ipo .right::after,.life .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
+  .phase{grid-template-columns:minmax(0,1fr) 92px}
+  .procs,.procs.c4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+.crumb a{color:inherit;text-decoration:none;border-bottom:1px dashed currentColor}
+.crumb a:hover{border-bottom-style:solid}
+.cards.c2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card .en{display:block;margin:-2px 0 4px}
+.flow6,.flow5{display:flex;align-items:stretch;min-width:0}
+.flow6 .node,.flow5 .node{flex:1 1 0;min-width:0;padding:8px 9px}
+.flow6 .right,.flow5 .right{flex-basis:22px}
+.flow5 .node small{font-size:12px}
+.formula{font-family:var(--f-mono);font-size:1.45rem;text-align:center;color:var(--accent);background:var(--accent-soft);padding:14px 12px;margin:12px 0 14px;border-radius:4px}
+.formula.sm{font-size:1.05rem;padding:8px;margin:8px 0}
+.example{border:1.5px solid var(--fix);background:var(--paper);padding:0 18px 12px;margin:18px 0 24px}
+.ex-h{display:inline-block;background:var(--fix);color:var(--paper);font-weight:700;font-size:14px;padding:3px 12px;margin:0 0 6px -18px}
+.example ul{margin:.2em 0 .6em;padding-left:1.2em;font-family:var(--f-mono);font-size:14px}
+figure.mini{margin:10px 0;padding:12px;background:var(--bg)}
+figure.mini svg{width:100%;max-width:420px;height:auto;display:block}
+ol.steps{counter-reset:st;list-style:none;padding:0;margin:10px 0 20px;display:grid;gap:8px;max-width:72ch}
+ol.steps li{counter-increment:st;display:grid;grid-template-columns:2.2em minmax(0,1fr);gap:10px;align-items:baseline}
+ol.steps li::before{content:counter(st,decimal-leading-zero);font-family:var(--f-mono);font-size:13px;color:var(--paper);background:var(--accent);text-align:center;border-radius:2px;padding:1px 0}
+.dc2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.dc2>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.dc2 svg{width:100%;height:auto;background:var(--bg);border-radius:4px}
+.dc2 b{font-size:15.5px;margin-top:4px}
+.dc2 small{color:var(--muted);font-size:13.5px;line-height:1.6}
+figure svg{max-width:100%}
+.scroll>svg{width:100%;height:auto;display:block}
+@media (max-width:820px){.dc2{grid-template-columns:minmax(0,1fr)}}
+
+/* fit-to-width：圖面一律縮放到版面寬度內，不出現水平捲動 */
+.scroll{overflow:visible}
+.scroll svg,figure svg{min-width:0!important;max-width:100%;height:auto}
+table{min-width:0}
+.tbl{overflow-x:visible}
+th{white-space:normal}
+@media (max-width:820px){
+  table{font-size:13.5px} th,td{padding:6px 8px}
+  .flow6,.flow5{flex-direction:column;min-width:0}
+  .flow6 .node,.flow5 .node{width:auto;flex:none}
+  .flow6 .right,.flow5 .right{flex:0 0 22px;width:2px;height:22px;align-self:center}
+  .flow6 .right::after,.flow5 .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
+}
+.tree.as-list{width:auto;min-width:0;margin:0}
+.tree.as-list ul{display:block;padding:0 0 0 16px;margin:0 0 0 12px;border-left:2px solid var(--steel)}
+.tree.as-list>ul{border-left:0;margin:0;padding:0}
+.tree.as-list li{padding:4px 0 4px 14px;text-align:left}
+.tree.as-list>ul>li{padding-left:0}
+.tree.as-list li::after,.tree.as-list ul ul::before{display:none}
+.tree.as-list li::before{display:block;content:"";position:absolute;left:-2px;top:20px;width:12px;height:0;border:0;border-top:2px solid var(--steel);border-radius:0}
+.tree.as-list>ul>li::before{display:none}
+.tree.as-list .node{white-space:normal}
+.tree .node{padding:4px 7px}
+.tree li{padding-left:3px;padding-right:3px}
+.tree.as-list ul:not(:has(ul))>li{padding:0}
+.tree.as-list ul:not(:has(ul)){display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px;padding:6px 0 6px 16px}
+.tree.as-list ul:not(:has(ul))>li::before{display:none}
+
+/* 砂輪標示 */
+.spec{border:1px solid var(--line);background:var(--paper);padding:14px 16px;margin:12px 0 18px}
+.spec-row{display:flex;flex-wrap:wrap;gap:6px}
+.spec .chip{flex:1 1 72px;min-width:0;border:1.5px solid var(--accent);border-radius:4px;text-align:center;padding:6px 4px}
+.spec .chip b{display:block;font-family:var(--f-mono);font-size:1.3rem;color:var(--accent)}
+.spec .chip small{display:block;font-size:12px;color:var(--muted);line-height:1.4}
+.spec-cap{margin:10px 0 0;font-size:13.5px;color:var(--muted);max-width:none}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div>
+    <div class="crumb"><a href="manufacturing.html">知識動力場 · 機械製造學</a> · Chapter 04</div>
+    <h1>切削<small>Machining</small></h1>
+    <p class="lede">用比工件硬的刀具把多餘材料一層層切除，得到需要的形狀與精度。切削是精度最高、應用最廣的製程，幾乎每個機械零件都要經過它。本章先用正交切削模型分析切削力、切屑與溫度，再談刀具磨耗與刀具材料、切削液與切削性，最後介紹各種工具機與磨料加工。</p>
+    <div class="meta"><span>原書頁碼 p.91–165</span><span>5 節 · 25 題歷屆試題</span></div>
+  </div>
+  <svg class="hero-art" viewBox="0 0 260 230" role="img" aria-label="車刀切削工件產生捲曲切屑的示意圖">
+    <rect x="10" y="130" width="240" height="80" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2"/>
+    <path d="M10 104 H118 L150 130 H10 Z" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2"/>
+    <path d="M150 130 L166 40 H250 V122 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+    <path d="M118 104 L150 130 L158 86 Q150 40 120 34 Q90 32 88 56 Q88 76 108 78 Q122 78 122 64" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+    <line x1="118" y1="104" x2="150" y2="130" stroke="var(--fix)" stroke-width="2" stroke-dasharray="4 3"/>
+    <path d="M230 160 H140" stroke="var(--fix)" stroke-width="3"/><path d="M144 154 l-12 6 12 6z" fill="var(--fix)"/>
+    <g font-size="12" fill="var(--muted)"><text x="190" y="152">V</text><text x="176" y="60" fill="var(--paper)">刀具</text><text x="20" y="196">工件</text><text x="40" y="122">切削層</text></g>
+  </svg>
+</header>
+
+<div class="wrap">
+<nav class="toc" aria-label="本章目錄">
+  <p>CONTENTS</p>
+  <a href="#s1"><span>4-1</span>概述</a>
+  <a href="#s2"><span>4-2</span>切削理論</a>
+  <a href="#s3"><span>4-3</span>刀具</a>
+  <a href="#s4"><span>4-4</span>切削液與切削性</a>
+  <a href="#s5"><span>4-5</span>工具機與磨料加工</a>
+  <a href="#exam"><span>試題</span>歷屆試題</a>
+</nav>
+
+<main>
+
+<!-- ============ 4-1 ============ -->
+<section id="s1">
+  <h2><span class="no">4-1</span>概述</h2>
+  <p>改變材料形狀的方法有三類：讓材料成形（鑄造、粉末冶金）、讓材料移動到別處（塑性加工），以及<b>移除不要的材料</b>（切削、磨削）。移除加工依屑片大小再分為：</p>
+  <div class="cards">
+    <div class="card"><h4>切削</h4><span class="en">cutting</span><p>以有固定幾何刃口的刀具切出條狀切屑，厚度約 0.025–2.5 mm。</p></div>
+    <div class="card"><h4>磨削</h4><span class="en">abrasive machining</span><p>以大量不規則的磨粒切出細小屑粒，約 0.0025–0.25 mm，精度與表面較好。</p></div>
+    <div class="card"><h4>非傳統加工</h4><span class="en">nontraditional</span><p>以電、化學、熱、超音波等能量移除材料，移除量可小到微米甚至原子級（第七章）。</p></div>
+  </div>
+
+  <h3>一、主要切削操作與參數</h3>
+  <div class="tbl"><table>
+    <tr><th>加工</th><th>刀具與運動</th><th>產生的表面</th></tr>
+    <tr><td>車削 turning</td><td>工件迴轉，單鋒車刀進給</td><td>外圓、端面、錐面、螺紋</td></tr>
+    <tr><td>搪孔 boring</td><td>同車削，刀具在孔內</td><td>把已有的孔擴大到精確尺寸</td></tr>
+    <tr><td>鑽削 drilling</td><td>鑽頭迴轉並軸向進給</td><td>圓孔（精度較低）</td></tr>
+    <tr><td>銑削 milling</td><td>多刃銑刀迴轉，工件進給</td><td>平面、溝槽、曲面、齒形</td></tr>
+    <tr><td>鉋削 shaping / planing</td><td>單鋒刀與工件直線往復</td><td>平面、溝槽</td></tr>
+    <tr><td>拉削 broaching</td><td>多齒拉刀一次通過</td><td>內孔栓槽、鍵槽、外形</td></tr>
+    <tr><td>磨削 grinding</td><td>砂輪高速迴轉</td><td>高精度平面、內外圓</td></tr>
+  </table></div>
+  <div class="formula sm">切削速度 V = π D N ／ 1000　（m/min；D 為工件或刀具直徑 mm，N 為轉速 rpm）</div>
+  <p>車削的三個切削參數：切削速度 V、進給 f（mm/rev）、切削深度 d（mm）。材料移除率約為 MRR ≈ π D<sub>avg</sub> d f N。</p>
+</section>
+
+<!-- ============ 4-2 ============ -->
+<section id="s2">
+  <h2><span class="no">4-2</span>切削理論</h2>
+  <h3>一、正交切削與斜交切削</h3>
+  <p><b>正交切削</b><span class="en">（orthogonal cutting）</span>的刃口垂直於切削方向，切屑沿垂直刃口的方向流出，可簡化成二維問題分析。<b>斜交切削</b><span class="en">（oblique cutting）</span>的刃口與切削方向有一傾斜角，切屑側向流出，屬三維問題，實際加工多屬此類。切削寬度 b 大於切削厚度 t 的 5 倍以上且刃口垂直時，可視為正交切削。實驗上常以鉋削平板，或以零傾斜角車刀車削薄管端面來模擬。</p>
+  <figure>
+    <svg viewBox="0 0 640 300" role="img" aria-label="正交切削剖面：刀具斜角 α、剪切角 φ、切削厚度 t、切屑厚度 tc、剪切面、刀面與刀腹">
+      <polygon points="20,160 310.7,160 380,200 620,200 620,280 20,280" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2"/>
+      <polygon points="310.7,160 380,200 408.3,40 331.9,40" fill="var(--accent)" opacity=".85"/>
+      <path d="M331.9 40 q10 -8 20 0 t20 0 t20 0 t16 0" fill="none" stroke="var(--accent)" stroke-width="2"/>
+      <polygon points="380,200 408.3,40 620,40 620,170.5" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <line x1="310.7" y1="160" x2="380" y2="200" stroke="var(--fix)" stroke-width="3"/>
+      <line x1="380" y1="200" x2="380" y2="110" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 3"/>
+      <line x1="380" y1="200" x2="280" y2="200" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 3"/>
+      <path d="M380 150 A50 50 0 0 1 388.7 150.8" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+      <text x="393" y="146" font-size="14" font-weight="700" fill="var(--ink)">α</text>
+      <path d="M330 200 A50 50 0 0 1 336.7 175" fill="none" stroke="var(--fix)" stroke-width="1.5"/>
+      <text x="318" y="190" font-size="14" font-weight="700" fill="var(--fix)">φ</text>
+      <path d="M440 200 A60 60 0 0 0 439.6 192.7" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+      <text x="448" y="216" font-size="12" fill="var(--ink)">隙角</text>
+      <line x1="60" y1="160" x2="60" y2="200" stroke="var(--ink)" stroke-width="1.2"/><line x1="52" y1="160" x2="68" y2="160" stroke="var(--ink)"/><line x1="52" y1="200" x2="68" y2="200" stroke="var(--ink)"/>
+      <text x="72" y="186" font-size="14" font-weight="700" fill="var(--ink)">t</text>
+      <line x1="20" y1="200" x2="310" y2="200" stroke="var(--ink)" stroke-width="1" stroke-dasharray="2 4" opacity=".5"/>
+      <path d="M560 26 H470" stroke="var(--fix)" stroke-width="3"/><path d="M474 20 l-12 6 12 6z" fill="var(--fix)"/>
+      <g font-size="13" fill="var(--ink)">
+        <text x="568" y="31">V</text><text x="500" y="110" fill="var(--paper)" font-weight="700">刀具</text><text x="100" y="250" font-weight="700">工件</text><text x="350" y="100" fill="var(--paper)" font-weight="700" transform="rotate(-80 350 100)">切屑</text>
+        <text x="216" y="148">剪切面</text><path d="M260 152 L330 170" stroke="var(--ink)" stroke-width="1"/>
+        <text x="420" y="130">刀面（斜面）</text><text x="500" y="168" fill="var(--paper)">刀腹（隙面）</text><text x="276" y="72">t<tspan font-size="10" dy="3">c</tspan></text>
+      </g>
+    </svg>
+    <figcaption>圖 4-1　正交切削：切削層 t 沿剪切面剪斷，成為較厚的切屑 t<sub>c</sub> 沿刀面流出</figcaption>
+  </figure>
+  <p><b>正交切削模型的假設：</b>刀具完全銳利、隙面不接觸工件；剪切發生在一個平面上；刃口為直線且垂直切削方向；切屑無側流、厚度固定；刀寬大於工件寬；等速運動；無積屑刃口、切屑連續；剪切面與刀面上的應力均勻。</p>
+
+  <h3>二、切削比、剪切角與剪應變</h3>
+  <div class="cards c2">
+    <div class="card"><h4>切削比與剪切角</h4><div class="formula sm">r = t ／ t<sub>c</sub> ＜ 1　　tan φ = r cos α ／ (1 − r sin α)</div><p>切屑比切削層厚，所以 r 小於 1；其倒數稱切屑壓縮比。量出切屑厚度就能算出剪切角。</p></div>
+    <div class="card"><h4>剪應變</h4><div class="formula sm">γ = cot φ + tan(φ − α)</div><p>剪切角小、斜角小或為負時，剪應變大，切屑變厚，消耗能量多、溫度高。</p></div>
+  </div>
+  <p>速度關係：V ／ cos(φ − α) = V<sub>s</sub> ／ cos α = V<sub>c</sub> ／ sin φ，其中 V<sub>s</sub> 為剪切面上的滑移速度、V<sub>c</sub> 為切屑速度（V<sub>c</sub> = rV）。剪應變率 γ̇ = V<sub>s</sub> ／ Δy，因剪切區很薄，可達 10³–10⁶ s⁻¹。</p>
+
+  <h3>三、切削力</h3>
+  <p>以切削動力計量得水平的<b>切削力 F<sub>P</sub></b>與垂直的<b>推力 F<sub>Q</sub></b>，兩者合成為合力 R。把 R 分別沿剪切面、沿刀面分解，就得到剪切力與摩擦力。以 R 為直徑畫圓，所有分力的端點都落在圓上，這就是 Merchant 力圓：</p>
+  <figure>
+    <svg viewBox="0 0 640 360" role="img" aria-label="Merchant 力圓：合力 R 為直徑，分解為切削力與推力、剪切力與剪切面法向力、摩擦力與刀面法向力"><defs><marker id="mh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs><circle cx="253.9" cy="140.0" r="120.0" fill="none" stroke="var(--steel)" stroke-width="1.5" stroke-dasharray="6 4"/><line x1="150.0" y1="80.0" x2="357.8" y2="200.0" stroke="var(--ink)" stroke-width="3"/><text x="275.9" y="132.0" font-size="14" font-weight="700" fill="var(--ink)" text-anchor="middle">R</text><line x1="150.0" y1="80.0" x2="357.8" y2="80.0" stroke="var(--accent)" stroke-width="2.5"/><text x="253.9" y="70.0" font-size="14" font-weight="700" fill="var(--accent)" text-anchor="middle">F<tspan font-size="10" dy="3">P</tspan><tspan dy="-3"></tspan> 切削力</text><line x1="357.8" y1="80.0" x2="357.8" y2="200.0" stroke="var(--accent)" stroke-width="2.5"/><text x="401.8" y="140.0" font-size="14" font-weight="700" fill="var(--accent)" text-anchor="middle">F<tspan font-size="10" dy="3">Q</tspan><tspan dy="-3"></tspan> 推力</text><line x1="150.0" y1="80.0" x2="253.9" y2="20.0" stroke="var(--fix)" stroke-width="2.5"/><text x="162.0" y="46.0" font-size="14" font-weight="700" fill="var(--fix)" text-anchor="middle">F<tspan font-size="10" dy="3">S</tspan><tspan dy="-3"></tspan> 剪切力</text><line x1="253.9" y1="20.0" x2="357.8" y2="200.0" stroke="var(--fix)" stroke-width="2.5"/><text x="331.9" y="104.0" font-size="14" font-weight="700" fill="var(--fix)" text-anchor="middle">N<tspan font-size="10" dy="3">S</tspan></text><line x1="150.0" y1="80.0" x2="176.8" y2="231.9" stroke="var(--warn)" stroke-width="2.5"/><text x="119.4" y="166.0" font-size="14" font-weight="700" fill="var(--warn)" text-anchor="middle">F 摩擦力</text><line x1="176.8" y1="231.9" x2="357.8" y2="200.0" stroke="var(--warn)" stroke-width="2.5"/><text x="277.3" y="242.0" font-size="14" font-weight="700" fill="var(--warn)" text-anchor="middle">N 刀面法向力</text><circle cx="150" cy="80" r="4" fill="var(--ink)"/><text x="138" y="102" font-size="12" fill="var(--muted)" text-anchor="end">刀尖</text><path d="M196.0 80.0 A46 46 0 0 0 189.8 57.0" fill="none" stroke="var(--fix)" stroke-width="1.5"/><text x="208.0" y="69.5" font-size="13" fill="var(--fix)" text-anchor="middle">φ</text><path d="M220.0 80.0 A70 70 0 0 1 210.6 115.0" fill="none" stroke="var(--ink)" stroke-width="1.5"/><text x="231.1" y="106.7" font-size="13" fill="var(--ink)" text-anchor="middle">β−α</text><g font-size="12.5" fill="var(--muted)"><text x="400" y="300">α = 10°，β = 40°，φ = 30°</text><text x="400" y="320">φ = 45° + α/2 − β/2 = 30°</text></g></svg>
+    <figcaption>圖 4-2　Merchant 力圓（各分力依 α、β、φ 實際比例繪製）</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>分力</th><th>公式</th></tr>
+    <tr><td>剪切面上</td><td>F<sub>S</sub> = F<sub>P</sub> cos φ − F<sub>Q</sub> sin φ　N<sub>S</sub> = F<sub>P</sub> sin φ + F<sub>Q</sub> cos φ</td></tr>
+    <tr><td>刀面上</td><td>F = F<sub>P</sub> sin α + F<sub>Q</sub> cos α　N = F<sub>P</sub> cos α − F<sub>Q</sub> sin α</td></tr>
+    <tr><td>摩擦係數</td><td>μ = tan β = F ／ N = (F<sub>Q</sub> + F<sub>P</sub> tan α) ／ (F<sub>P</sub> − F<sub>Q</sub> tan α)，一般約 0.5–2.0</td></tr>
+    <tr><td>以合力表示</td><td>F<sub>P</sub> = R cos(β − α)　F<sub>Q</sub> = R sin(β − α)</td></tr>
+    <tr><td>剪切面應力</td><td>τ = F<sub>S</sub> ／ A<sub>S</sub>，A<sub>S</sub> = bt ／ sin φ；σ = N<sub>S</sub> ／ A<sub>S</sub></td></tr>
+    <tr><td>Merchant 剪切角關係</td><td>φ = 45° + α／2 − β／2：斜角大、摩擦小，剪切角大，切屑薄、切削力小</td></tr>
+  </table></div>
+  <div class="callout"><b>推力的意義：</b>F<sub>Q</sub> 垂直切削方向，不做功，但會把刀具推離工件。工具機與夾持剛性不足時，切深會變淺、尺寸不準。當 β &lt; α 時 F<sub>Q</sub> 為負，刀具反被拉向工件。</div>
+
+  <h3>四、切削能量</h3>
+  <p>切削功率 P = F<sub>P</sub> V（推力不做功）。移除單位體積材料所需的能量稱為<span class="key">比切削能</span>：</p>
+  <div class="formula sm">u = F<sub>P</sub> V ／ (V b t) = F<sub>P</sub> ／ (b t)　＝ u<sub>s</sub>（剪切）＋ u<sub>f</sub>（摩擦）</div>
+  <p>剪切能約佔 70–75%，耗在主變形區；摩擦能約佔 25–30%，耗在刀具與切屑接觸的次變形區。刀腹與已加工面的摩擦則是第三變形區。</p>
+  <div class="tbl"><table>
+    <tr><th>材料</th><th>比切削能約（W·s/mm³）</th></tr>
+    <tr><td>鋁合金</td><td class="num">0.4–1.1</td></tr>
+    <tr><td>鑄鐵</td><td class="num">1.1–5.4</td></tr>
+    <tr><td>碳鋼</td><td class="num">2.7–9.3</td></tr>
+    <tr><td>不鏽鋼</td><td class="num">3.0–5.2</td></tr>
+    <tr><td>鈦合金</td><td class="num">2.0–5.5</td></tr>
+    <tr><td>耐熱合金</td><td class="num">3.3–8.5</td></tr>
+  </table></div>
+
+  <h3>五、切屑型態</h3>
+  <figure>
+    <svg viewBox="0 0 640 190" role="img" aria-label="四種切屑：連續切屑、積屑刃口、鋸齒狀切屑、不連續切屑">
+      <g transform="translate(0 0)">
+        <rect x="10" y="110" width="140" height="50" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5"/><path d="M10 96 H80 L96 110 H10Z" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M96 110 L106 50 H150 V104Z" fill="var(--steel)"/>
+        <path d="M80 96 L96 110 L104 62 Q100 30 80 28 Q60 28 58 48" fill="none" stroke="var(--accent)" stroke-width="9"/>
+        <text x="80" y="182" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--ink)">連續切屑</text>
+      </g>
+      <g transform="translate(160 0)">
+        <rect x="10" y="110" width="140" height="50" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5"/><path d="M10 96 H80 L96 110 H10Z" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M96 110 L106 50 H150 V104Z" fill="var(--steel)"/>
+        <path d="M92 108 L98 92 L106 98 L104 110Z" fill="var(--warn)"/>
+        <path d="M80 96 L94 96 L102 62 Q98 34 80 32" fill="none" stroke="var(--accent)" stroke-width="9"/>
+        <text x="120" y="126" font-size="11" fill="var(--warn)">BUE</text>
+        <text x="80" y="182" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--ink)">積屑刃口</text>
+      </g>
+      <g transform="translate(320 0)">
+        <rect x="10" y="110" width="140" height="50" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5"/><path d="M10 96 H80 L96 110 H10Z" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M96 110 L106 50 H150 V104Z" fill="var(--steel)"/>
+        <path d="M80 96 L96 110 L104 62 L84 66 L98 54 L78 58 L92 44 L72 48 L86 34 L68 38" fill="var(--accent)" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/>
+        <text x="80" y="182" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--ink)">鋸齒狀切屑</text>
+      </g>
+      <g transform="translate(480 0)">
+        <rect x="10" y="110" width="140" height="50" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5"/><path d="M10 96 H80 L96 110 H10Z" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M96 110 L106 50 H150 V104Z" fill="var(--steel)"/>
+        <g fill="var(--accent)"><path d="M84 98 L96 108 L100 88 L88 86Z"/><path d="M84 78 L98 76 L96 62 L82 66Z"/><path d="M76 54 L90 50 L84 38 L72 42Z"/><path d="M60 34 L72 28 L64 18 L54 24Z"/></g>
+        <text x="80" y="182" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--ink)">不連續切屑</text>
+      </g>
+    </svg>
+    <figcaption>圖 4-3　四種基本切屑型態</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>型態</th><th>產生條件</th><th>特點</th></tr>
+    <tr><td>連續切屑<br><span class="en">continuous</span></td><td>延性材料（軟鋼、鋁）、高切削速度、大斜角、潤滑良好</td><td>切削力穩定、表面好；但長屑會纏繞工件與刀具，需斷屑器</td></tr>
+    <tr><td>積屑刃口<br><span class="en">built-up edge, BUE</span></td><td>中低速切削延性材料，切屑底層與刀面黏著、加工硬化後堆積在刃口</td><td>BUE 週期性長大、脫落，使尺寸與表面變差、刀具磨耗加快；但薄而穩定的 BUE 可保護刃口</td></tr>
+    <tr><td>鋸齒狀切屑<br><span class="en">serrated / segmented</span></td><td>導熱差、強度隨溫度急降的材料（鈦合金、鎳基合金、淬硬鋼）高速切削，剪切熱來不及散去而局部軟化（絕熱剪切）</td><td>半連續，高低應變區交替，切削力週期變動</td></tr>
+    <tr><td>不連續切屑<br><span class="en">discontinuous</span></td><td>脆性材料（灰鑄鐵、黃銅）、含硬質夾雜物、極低或極高速、大切深小斜角、剛性不足、無切削液</td><td>切屑容易處理；切削力變動大，剛性不足時易顫振</td></tr>
+  </table></div>
+  <div class="cards c2">
+    <div class="card"><h4>抑制積屑刃口</h4><p>提高切削速度避開 BUE 速度區；加大斜角；減小切深；使用潤滑性好的切削液或塗層刀具；選用與工件親和力低的刀具材料；提高工件硬度、降低延性（如冷拉）。</p></div>
+    <div class="card"><h4>斷屑</h4><p>以斷屑器（磨出的斷屑槽、刀片上壓製的槽型、夾持式斷屑片）使切屑曲率半徑變小，超過臨界應變而折斷；也可增加切屑厚度（加大進給）、改變切削速度或使用切削液。切屑捲曲受刀面上應力與溫度分布、加工硬化與斜角影響。</p></div>
+  </div>
+
+  <h3>六、切削溫度</h3>
+  <p>熱源有三：主剪切區的塑性變形、刀面與切屑的摩擦、刀腹與已加工面的摩擦。大部分熱量被切屑帶走，但刀面溫度可達數百到上千度。刀具與切屑介面的平均溫度近似：</p>
+  <div class="formula sm">θ<sub>T</sub> ∝ V<sup>a</sup> f<sup>b</sup>　碳化物 a ≈ 0.2、b ≈ 0.125；高速鋼 a ≈ 0.5、b ≈ 0.375</div>
+  <p>切削速度對溫度的影響大於進給。溫度過高會降低刀具硬度、加速磨耗；工件與工具機熱膨脹使尺寸難以控制；已加工面可能產生熱損傷、殘留應力與相變。剪切面溫度影響切屑流動應力，刀面溫度影響凹坑磨耗與 BUE，隙面溫度影響刀腹磨耗。</p>
+</section>
+
+<!-- ============ 4-3 ============ -->
+<section id="s3">
+  <h2><span class="no">4-3</span>刀具</h2>
+  <h3>一、刀具磨耗與失效</h3>
+  <p>刀具喪失切削能力的原因有：<b>磨耗、破損、崩刃（剝離）、塑性變形</b>。磨耗機制包括黏著、磨粒、擴散、氧化與疲勞。</p>
+  <figure>
+    <svg viewBox="0 0 640 230" role="img" aria-label="刀具磨耗位置：刀腹磨耗帶 VB、刀面上的凹坑磨耗、切深線處的溝槽磨耗">
+      <path d="M120 40 L420 40 L470 190 L170 190 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M170 190 L470 190 L470 214 L170 214 Z" fill="var(--steel)" opacity=".6" stroke="var(--ink)" stroke-width="2"/>
+      <ellipse cx="300" cy="150" rx="110" ry="18" fill="var(--paper)" stroke="var(--accent)" stroke-width="2.5" opacity=".9"/>
+      <rect x="200" y="190" width="200" height="12" fill="var(--accent)"/>
+      <path d="M400 190 l14 0 l-4 16 l-12 -4z" fill="var(--warn)"/>
+      <g font-size="13" fill="var(--ink)">
+        <text x="490" y="60">刀面（切屑流過）</text><path d="M486 56 L400 80" stroke="var(--ink)"/>
+        <text x="490" y="120" font-weight="700" fill="var(--accent)">凹坑磨耗</text><path d="M486 116 L400 146" stroke="var(--ink)"/>
+        <text x="490" y="210" font-weight="700" fill="var(--accent)">刀腹磨耗 VB</text><path d="M486 206 L380 198" stroke="var(--ink)"/>
+        <text x="20" y="222" font-weight="700" fill="var(--warn)">溝槽磨耗（切深線）</text><path d="M150 220 L404 202" stroke="var(--ink)"/>
+        <text x="150" y="30" fill="var(--muted)">切刃 →</text>
+      </g>
+    </svg>
+    <figcaption>圖 4-4　單鋒刀具的主要磨耗位置</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>磨耗</th><th>原因</th><th>重點</th></tr>
+    <tr><td>刀腹磨耗<br><span class="en">flank wear</span></td><td>刀腹與已加工面摩擦，黏著與磨粒磨耗為主</td><td>以磨耗帶寬度 VB 判定刀具壽命，例如碳化物車刀約 0.3–0.4 mm，精加工與鉸刀要求更小</td></tr>
+    <tr><td>凹坑磨耗<br><span class="en">crater wear</span></td><td>高速切削時刀面溫度與壓力高，<b>擴散磨耗</b>為主</td><td>最深處約在接觸長度中點（溫度最高處）；凹坑擴大到刃口時刃部崩壞。碳化鎢切鋼時最明顯</td></tr>
+    <tr><td>溝槽磨耗<br><span class="en">notch wear</span></td><td>切深線處接觸加工硬化表層、氧化皮或氧化</td><td>常見於耐熱合金、不鏽鋼；副切刃的溝槽影響表面粗糙度</td></tr>
+    <tr><td>崩刃（剝離）<br><span class="en">chipping</span></td><td>機械衝擊（斷續切削）、熱疲勞（溫度週期變化產生熱裂紋）</td><td>大正斜角、刃角小時易發生。對策：選韌性與抗熱震性高的刀具、刃口倒稜、降低速度</td></tr>
+  </table></div>
+
+  <h3>二、泰勒刀具壽命方程式</h3>
+  <div class="formula">V T<sup>n</sup> = C</div>
+  <p>T 為刀具壽命（min），C 為刀具壽命 1 分鐘時的切削速度，n 是對數座標上壽命曲線的斜率，與刀具材料關係最大：高速鋼約 0.08–0.2，碳化物約 0.2–0.5，塗層碳化物約 0.4–0.6，陶瓷約 0.5–0.7。n 愈大，提高速度時壽命下降得愈慢。</p>
+  <figure>
+    <svg viewBox="0 0 640 340" role="img" aria-label="泰勒刀具壽命曲線（對數座標示意）：高速鋼斜率最平緩，碳化物居中，陶瓷最陡，可用速度最高"><line x1="80.0" y1="30" x2="80.0" y2="290" stroke="var(--line)"/><text x="80.0" y="308" font-size="12" text-anchor="middle" fill="var(--muted)">1</text><line x1="158.3" y1="30" x2="158.3" y2="290" stroke="var(--line)"/><text x="158.3" y="308" font-size="12" text-anchor="middle" fill="var(--muted)">2</text><line x1="261.7" y1="30" x2="261.7" y2="290" stroke="var(--line)"/><text x="261.7" y="308" font-size="12" text-anchor="middle" fill="var(--muted)">5</text><line x1="340.0" y1="30" x2="340.0" y2="290" stroke="var(--line)"/><text x="340.0" y="308" font-size="12" text-anchor="middle" fill="var(--muted)">10</text><line x1="418.3" y1="30" x2="418.3" y2="290" stroke="var(--line)"/><text x="418.3" y="308" font-size="12" text-anchor="middle" fill="var(--muted)">20</text><line x1="521.7" y1="30" x2="521.7" y2="290" stroke="var(--line)"/><text x="521.7" y="308" font-size="12" text-anchor="middle" fill="var(--muted)">50</text><line x1="600.0" y1="30" x2="600.0" y2="290" stroke="var(--line)"/><text x="600.0" y="308" font-size="12" text-anchor="middle" fill="var(--muted)">100</text><line x1="80" y1="290.0" x2="600" y2="290.0" stroke="var(--line)"/><text x="72" y="294.0" font-size="12" text-anchor="end" fill="var(--muted)">10</text><line x1="80" y1="250.9" x2="600" y2="250.9" stroke="var(--line)"/><text x="72" y="254.9" font-size="12" text-anchor="end" fill="var(--muted)">20</text><line x1="80" y1="199.1" x2="600" y2="199.1" stroke="var(--line)"/><text x="72" y="203.1" font-size="12" text-anchor="end" fill="var(--muted)">50</text><line x1="80" y1="160.0" x2="600" y2="160.0" stroke="var(--line)"/><text x="72" y="164.0" font-size="12" text-anchor="end" fill="var(--muted)">100</text><line x1="80" y1="120.9" x2="600" y2="120.9" stroke="var(--line)"/><text x="72" y="124.9" font-size="12" text-anchor="end" fill="var(--muted)">200</text><line x1="80" y1="69.1" x2="600" y2="69.1" stroke="var(--line)"/><text x="72" y="73.1" font-size="12" text-anchor="end" fill="var(--muted)">500</text><line x1="80" y1="30.0" x2="600" y2="30.0" stroke="var(--line)"/><text x="72" y="34.0" font-size="12" text-anchor="end" fill="var(--muted)">1000</text><rect x="80" y="30" width="520" height="260" fill="none" stroke="var(--ink)" stroke-width="1.2"/><text x="340.0" y="326" font-size="13" text-anchor="middle" fill="var(--ink)">刀具壽命 T（min）</text><text x="22" y="160.0" font-size="13" text-anchor="middle" fill="var(--ink)" transform="rotate(-90 22 160.0)">切削速度 V（m/min）</text><polyline points="80.0,180.1 93.0,180.9 106.0,181.8 119.0,182.6 132.0,183.4 145.0,184.2 158.0,185.0 171.0,185.8 184.0,186.6 197.0,187.4 210.0,188.3 223.0,189.1 236.0,189.9 249.0,190.7 262.0,191.5 275.0,192.3 288.0,193.1 301.0,193.9 314.0,194.8 327.0,195.6 340.0,196.4 353.0,197.2 366.0,198.0 379.0,198.8 392.0,199.6 405.0,200.4 418.0,201.3 431.0,202.1 444.0,202.9 457.0,203.7 470.0,204.5 483.0,205.3 496.0,206.1 509.0,206.9 522.0,207.8 535.0,208.6 548.0,209.4 561.0,210.2 574.0,211.0 587.0,211.8 600.0,212.6" fill="none" stroke="var(--steel)" stroke-width="3"/><circle cx="542.3" cy="209.0" r="4" fill="var(--steel)"/><text x="109.6" y="173.0" font-size="12.5" font-weight="700" fill="var(--steel)">高速鋼 n≈0.125</text><polyline points="80.0,81.7 93.0,83.4 106.0,85.0 119.0,86.6 132.0,88.2 145.0,89.9 158.0,91.5 171.0,93.1 184.0,94.7 197.0,96.4 210.0,98.0 223.0,99.6 236.0,101.2 249.0,102.9 262.0,104.5 275.0,106.1 288.0,107.7 301.0,109.4 314.0,111.0 327.0,112.6 340.0,114.2 353.0,115.9 366.0,117.5 379.0,119.1 392.0,120.7 405.0,122.4 418.0,124.0 431.0,125.6 444.0,127.2 457.0,128.9 470.0,130.5 483.0,132.1 496.0,133.7 509.0,135.4 522.0,137.0 535.0,138.6 548.0,140.2 561.0,141.9 574.0,143.5 587.0,145.1 600.0,146.7" fill="none" stroke="var(--accent)" stroke-width="3"/><circle cx="542.3" cy="139.5" r="4" fill="var(--accent)"/><text x="109.6" y="76.4" font-size="12.5" font-weight="700" fill="var(--accent)">碳化物 n≈0.25</text><polyline points="288.0,30.4 301.0,34.3 314.0,38.2 327.0,42.1 340.0,46.0 353.0,49.9 366.0,53.8 379.0,57.7 392.0,61.6 405.0,65.5 418.0,69.4 431.0,73.3 444.0,77.2 457.0,81.1 470.0,85.0 483.0,88.9 496.0,92.8 509.0,96.7 522.0,100.6 535.0,104.5 548.0,108.4 561.0,112.3 574.0,116.2 587.0,120.1 600.0,124.0" fill="none" stroke="var(--fix)" stroke-width="3"/><circle cx="542.3" cy="106.7" r="4" fill="var(--fix)"/><text x="314.8" y="29.4" font-size="12.5" font-weight="700" fill="var(--fix)">陶瓷 n≈0.6</text><line x1="542.3" y1="30" x2="542.3" y2="290" stroke="var(--ink)" stroke-dasharray="4 4"/><text x="546.3" y="44" font-size="11.5" fill="var(--muted)">T = 60 min</text></svg>
+    <figcaption>圖 4-5　泰勒刀具壽命曲線（數值為示意）：在雙對數座標上是直線</figcaption>
+  </figure>
+  <p>考慮進給與切深的一般式 V T<sup>n</sup> d<sup>x</sup> f<sup>y</sup> = C，典型值 n ≈ 0.15、x ≈ 0.15、y ≈ 0.6，可知對刀具壽命影響最大的是<b>切削速度</b>，其次是進給，切深最小。所以要提高移除率又顧及刀具壽命，應優先加大切深，其次加大進給，最後才提高速度。</p>
+  <div class="example">
+    <div class="ex-h">例題</div>
+    <p>以碳化物刀具車削，n = 0.25、C = 400 m/min。(1) V = 200 m/min 時刀具壽命多長？(2) 速度提高 20% 到 240 m/min 呢？</p>
+    <p><b>解：</b>T = (C／V)<sup>1/n</sup>。(1) T = (400／200)⁴ = <b>16 min</b>；(2) T = (400／240)⁴ = (1.667)⁴ ≈ <b>7.7 min</b>。速度只增加 20%，壽命就少了一半以上。</p>
+  </div>
+
+  <h3>三、車刀角度與幾何</h3>
+  <figure>
+    <svg viewBox="0 0 640 270" role="img" aria-label="右手車刀俯視圖標示側切刃角、端切刃角與刀鼻；側視圖標示斜角、隙角與刀唇角">
+      <g>
+        <text x="20" y="20" font-size="13" font-weight="700" fill="var(--ink)">俯視</text>
+        <rect x="70" y="10" width="230" height="22" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5"/>
+        <text x="250" y="26" font-size="11.5" fill="var(--muted)">工件</text>
+        <path d="M150 44 L100 130.6 V250 H180 V52 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"/>
+        <circle cx="150" cy="44" r="5" fill="none" stroke="var(--accent)" stroke-width="2"/>
+        <line x1="150" y1="44" x2="150" y2="140" stroke="var(--ink)" stroke-dasharray="4 3"/>
+        <line x1="150" y1="44" x2="232" y2="44" stroke="var(--ink)" stroke-dasharray="4 3"/>
+        <path d="M150 104 A60 60 0 0 1 120 96" fill="none" stroke="var(--accent)" stroke-width="2"/>
+        <path d="M206 44 A56 56 0 0 1 204 58.5" fill="none" stroke="var(--accent)" stroke-width="2"/>
+        <g font-size="12.5" fill="var(--ink)">
+          <text x="18" y="96">側切刃角</text><path d="M72 92 L120 98" stroke="var(--ink)"/>
+          <text x="214" y="74">端切刃角</text>
+          <text x="164" y="40">刀鼻半徑</text>
+          <text x="40" y="160" fill="var(--muted)">側切刃</text><path d="M80 150 L118 104" stroke="var(--ink)"/>
+          <text x="126" y="210" fill="var(--paper)">刀柄</text>
+        </g>
+        <path d="M290 240 H210" stroke="var(--fix)" stroke-width="2.5"/><path d="M214 234 l-12 6 12 6z" fill="var(--fix)"/><text x="232" y="262" font-size="12.5" fill="var(--fix)">進給方向</text>
+      </g>
+      <g transform="translate(330 0)">
+        <text x="0" y="20" font-size="13" font-weight="700" fill="var(--ink)">側視（垂直主切刃）</text>
+        <path d="M60 80 L240 104 V230 H80 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"/>
+        <line x1="60" y1="80" x2="250" y2="80" stroke="var(--ink)" stroke-dasharray="4 3"/>
+        <line x1="60" y1="80" x2="60" y2="236" stroke="var(--ink)" stroke-dasharray="4 3"/>
+        <path d="M180 80 A120 120 0 0 1 178.9 96" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+        <path d="M60 180 A100 100 0 0 0 73.9 179" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+        <path d="M86 83.5 A26 26 0 0 0 63 105" fill="none" stroke="var(--fix)" stroke-width="2"/>
+        <g font-size="12.5" fill="var(--ink)">
+          <text x="190" y="72">斜角 α（正）</text>
+          <text x="2" y="200">隙角</text>
+          <text x="96" y="124" fill="var(--paper)">刀唇角 β</text>
+          <text x="120" y="60" fill="var(--muted)">切屑沿此面流出</text>
+        </g>
+        <text x="90" y="250" font-size="11.5" fill="var(--muted)">α ＋ β ＋ 隙角 ＝ 90°</text><text x="10" y="266" font-size="11.5" fill="var(--muted)">後斜角、端隙角在垂直端切刃的視圖量測</text>
+      </g>
+    </svg>
+    <figcaption>圖 4-6　單鋒車刀的主要角度（ASA 命名）</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>角度</th><th>作用</th></tr>
+    <tr><td>後斜角、側斜角<br><span class="en">back / side rake</span></td><td>控制切屑流向與刃口強度。<b>正斜角</b>切削力小、切屑易流出，但刃口較弱；<b>負斜角</b>切削力大、刃口強，耐衝擊與重負荷，脆性的碳化物、陶瓷刀片常用。車刀以側斜角影響較大。</td></tr>
+    <tr><td>端隙角、側隙角<br><span class="en">end / side relief</span></td><td>避免刀腹摩擦已加工面。取能避免摩擦的最小值，以保留刃口支撐；軟材料可加大。</td></tr>
+    <tr><td>側切刃角<br><span class="en">side cutting edge angle</span></td><td>切入時保護刀尖、切屑變薄變寬、刀具壽命增加、表面較好；過大時徑向力大，剛性低的工件易振動。</td></tr>
+    <tr><td>端切刃角<br><span class="en">end cutting edge angle</span></td><td>避免副切刃與已加工面摩擦；角度小，殘留面積小、表面好、刀尖強，但太小易摩擦振動。</td></tr>
+    <tr><td>刀鼻半徑<br><span class="en">nose radius</span></td><td>增大可改善表面粗糙度並強化刀尖，過大則易顫振。</td></tr>
+  </table></div>
+
+  <h3>四、刀具材料</h3>
+  <p>刀具材料需具備：<b>高溫硬度</b>（紅熱硬度）、<b>韌性</b>（承受斷續切削衝擊）、<b>耐磨耗</b>、<b>化學穩定性</b>（與工件不起反應、不擴散）。一般刀具硬度應高於工件數倍。</p>
+  <div class="tbl"><table>
+    <tr><th>材料</th><th>特性</th><th>適用</th></tr>
+    <tr><td>碳工具鋼、合金工具鋼</td><td>便宜，約 200–250°C 即軟化</td><td>低速的手工具、攻牙、鉸刀</td></tr>
+    <tr><td>高速鋼 HSS</td><td>韌性最好、可磨成複雜形狀，紅熱硬度約 600°C。M 系（鉬基，如 M2：約 0.85C-6W-5Mo-4Cr-2V）比 T 系（鎢基，如 T1：18W-4Cr-1V）耐磨、便宜、變形小，用量最大。可 PVD 塗層或蒸氣處理生成氧化膜減少 BUE</td><td>鑽頭、銑刀、絲攻、拉刀、齒輪刀具；斷續切削、低剛性、大斜角、低速</td></tr>
+    <tr><td>鑄造鈷基合金<br><span class="en">Stellite</span></td><td>Co 38–53%、Cr 30–33%、W 10–20%，鑄造成形、不能熱處理，常溫 HRC 58–64，高溫硬度優於 HSS，但不耐衝擊</td><td>連續粗切削，現已少用</td></tr>
+    <tr><td>燒結碳化物<br><span class="en">cemented carbide</span></td><td>WC 顆粒以 Co 液相燒結結合，HRA 90–93。Co 愈多韌性愈好、硬度與耐磨性愈低。直鎢鈷（WC-Co）切鋼時，高溫下碳擴散到鋼屑中而產生凹坑磨耗，所以切鋼要加 TiC、TaC、NbC 提高抗凹坑能力</td><td>最主要的切削刀具，製成捨棄式刀片</td></tr>
+    <tr><td>TiC 基瓷金<br><span class="en">cermet</span></td><td>TiC、TiCN 以 Ni-Mo 結合，抗凹坑、與鋼不易黏著，韌性低於 WC</td><td>鋼的高速精車</td></tr>
+    <tr><td>塗層刀具<br><span class="en">coated</span></td><td>在碳化物或 HSS 上鍍 2–15 μm 的 TiN、TiC、TiCN、TiAlN、Al₂O₃ 等。CVD 膜厚、耐熱，適合車削；PVD 膜薄、刃口可保持銳利，適合銑削與鑽頭。多層塗層如 TiC／Al₂O₃／TiN 兼顧附著、隔熱與耐磨</td><td>目前多數車削、銑削刀片都有塗層；鋁、鈦合金宜用無塗層或 DLC</td></tr>
+    <tr><td>氧化鋁基陶瓷</td><td>白陶瓷（純 Al₂O₃，冷壓燒結）、黑陶瓷（Al₂O₃＋約 30% TiC，熱壓）。高溫硬度高、化學穩定、不易 BUE；但脆，需高剛性、負斜角、連續切削，切削液要連續大量或乾切</td><td>鑄鐵與淬硬鋼的高速精切削；不可切鋁、鈦</td></tr>
+    <tr><td>氮化矽基陶瓷<br><span class="en">Si₃N₄, SiAlON</span></td><td>韌性與抗熱震優於氧化鋁陶瓷，可斷續切削，但與鋼親和</td><td>鑄鐵、鎳基超合金；不適合鋼</td></tr>
+    <tr><td>立方氮化硼 CBN</td><td>硬度僅次於鑽石，高溫抗氧化、對鐵穩定。多為 0.5–1 mm 的 CBN 層燒結在碳化物基材上；很脆，需高剛性</td><td>淬硬鋼、高速鋼、鑄鐵、超合金</td></tr>
+    <tr><td>鑽石 PCD／單晶鑽石</td><td>最硬、摩擦低、刃口最銳利。約 700°C 以上會石墨化與氧化，且與鐵、鎳、鈦起反應</td><td>鋁矽合金、銅、複合材料、石墨、陶瓷；單晶鑽石做鏡面超精密加工。不可切鋼</td></tr>
+  </table></div>
+  <p>由上往下，高溫硬度、耐磨耗與可用切削速度增加；韌性、抗衝擊與抗崩刃能力降低。</p>
+
+  <h4>碳化物的 ISO 分類</h4>
+  <div class="tbl"><table>
+    <tr><th>代號</th><th>顏色</th><th>成分</th><th>加工對象</th></tr>
+    <tr><td><b>P</b>（01–50）</td><td>藍</td><td>WC-TiC-TaC-Co</td><td>長切屑的鋼、鑄鋼</td></tr>
+    <tr><td><b>M</b>（10–40）</td><td>黃</td><td>WC-Co 加少量 TiC、TaC</td><td>不鏽鋼、耐熱合金、球墨鑄鐵等通用</td></tr>
+    <tr><td><b>K</b>（01–40）</td><td>紅</td><td>WC-Co</td><td>短切屑的鑄鐵、非鐵金屬、非金屬</td></tr>
+  </table></div>
+  <p>同一類中號數愈小，Co 愈少、硬度與耐磨愈高、適合高速小進給的精加工；號數愈大，韌性愈好、適合低速大進給的粗加工。新版 ISO 另有 N（非鐵）、S（耐熱合金、鈦）、H（淬硬材料）三類。</p>
+
+  <h4>捨棄式刀片</h4>
+  <p>以機械夾持在刀把上，一個刃口鈍了就轉位換下一個刃口，不需重磨、換刀快、尺寸重複性好，也沒有硬焊造成的熱應力與裂紋。刃口數：三角形 3（雙面 6）、方形與菱形 4（雙面 8）、五角形 5（10）、六角形 6（12）、圓形可連續轉位。刀尖角愈大，刃口愈強。刃口常做圓弧化、倒稜或負斜角以防崩刃。</p>
+</section>
+
+<!-- ============ 4-4 ============ -->
+<section id="s4">
+  <h2><span class="no">4-4</span>切削液與切削性</h2>
+  <h3>一、切削液</h3>
+  <div class="cards">
+    <div class="card"><h4>冷卻</h4><p>帶走刀具、切屑、工件的熱，降低刀具溫度與工件熱變形。需比熱與導熱性高。</p></div>
+    <div class="card"><h4>潤滑</h4><p>以毛細作用滲入刀具與切屑之間，形成邊界潤滑膜，減少摩擦與 BUE，改善表面。</p></div>
+    <div class="card"><h4>清洗與排屑</h4><p>沖走細屑，避免刮傷已加工面與機床導軌。</p></div>
+    <div class="card"><h4>防鏽</h4><p>保護新生成的加工面與工具機。</p></div>
+  </div>
+  <p><b>種類：</b>切削油（純油、極壓油）、水溶性乳化液、半合成液、合成液。前者潤滑好，後者冷卻好。</p>
+  <div class="tbl"><table>
+    <tr><th>選用依據</th><th>原則</th></tr>
+    <tr><td>工件材料</td><td>鋼需要切削液；灰鑄鐵中的石墨有潤滑作用，常乾切；含硫極壓添加劑會使銅合金變色，鎳基合金也應避免。</td></tr>
+    <tr><td>刀具材料</td><td>高速鋼耐熱差，以冷卻為主（3–5% 乳化液或合成液），精加工改用潤滑好的極壓液。碳化物可乾切，若用切削液則須<b>連續充分</b>供應，時有時無會造成熱衝擊裂紋。</td></tr>
+    <tr><td>加工要求</td><td>粗加工以冷卻為主；精加工以潤滑為主，改善表面完整性。</td></tr>
+  </table></div>
+  <div class="callout"><b>切削液突然停止會怎樣？</b>刀具與切屑摩擦增加 → 剪切角變小、剪應變增大、切屑變厚、可能產生 BUE → 剪切能與摩擦能都增加 → 切削區溫度上升 → 刀具磨耗加快、表面變差、工件熱膨脹而失去尺寸精度。</div>
+  <p><b>切削液的不利影響：</b>高速斷續切削（如銑削）時，刀片反覆受冷熱造成熱疲勞裂紋；液體老化滋生細菌、異味；油霧與皮膚接觸有健康疑慮；廢液處理成本與環保問題；粉末冶金件吸液生鏽。因此發展出乾切削與微量潤滑（MQL）。</p>
+
+  <h3>二、切削性</h3>
+  <p><span class="key">切削性</span><span class="en">（machinability）</span>評估材料被切削的難易，指標包括：刀具壽命、表面光度與完整性、切削力與功率、切屑處理性。實務上最重視刀具壽命與表面品質。</p>
+  <p><b>切削性等級：</b>以 AISI 1112 硫易切鋼為基準，刀具壽命 60 分鐘時切削速度 100 ft/min，定為 100。其他材料以同樣壽命下的切削速度比較，例如 AISI 3140 鋼為 55，代表 T = 60 min 時只能用 55 ft/min。</p>
+  <div class="cards">
+    <div class="card"><h4>碳量</h4><p>低碳鋼太軟太黏，易 BUE、表面差；高碳鋼太硬，刀具磨耗快；中碳鋼切削性最好。</p></div>
+    <div class="card"><h4>添加易切元素</h4><p>加入硫（形成 MnS）、鉛、鈣、碲、鉍、磷，使切屑易斷、潤滑刀面，做成易切鋼。</p></div>
+    <div class="card"><h4>熱處理調整組織</h4><p>碳鋼約 HB 170–230 時切削性最好：低碳鋼可冷拉或正常化提高硬度、降低延性；高碳鋼先球化退火變軟。</p></div>
+  </div>
+
+  <h3>三、表面粗糙度</h3>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 160" role="img" aria-label="尖刀車削的刀痕為三角形，峰谷高度 H 由進給與兩切刃角決定">
+        <path d="M10 60 L60 120 L110 60 L160 120 L210 60 L260 120 L290 84" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+        <path d="M10 60 V150 H290 V84" fill="none"/>
+        <line x1="60" y1="134" x2="160" y2="134" stroke="var(--ink)"/><text x="104" y="152" font-size="13" fill="var(--ink)">f</text>
+        <line x1="180" y1="60" x2="180" y2="120" stroke="var(--ink)"/><text x="186" y="96" font-size="13" fill="var(--ink)">H</text>
+        <line x1="10" y1="60" x2="290" y2="60" stroke="var(--ink)" stroke-dasharray="3 3" opacity=".6"/>
+      </svg>
+      <b>尖刀</b><small>H = f ／ (tan κ<sub>s</sub> + cot κ<sub>e</sub>)，κ<sub>s</sub> 為側切刃角、κ<sub>e</sub> 為端切刃角；三角形輪廓 R<sub>a</sub> ≈ H／4。</small>
+      </div>
+      <div>
+      <svg viewBox="0 0 300 160" role="img" aria-label="圓鼻刀車削的刀痕為圓弧，峰谷高度約等於 f 平方除以 8r">
+        <path d="M10 70 A70 70 0 0 0 110 70 A70 70 0 0 0 210 70 A70 70 0 0 0 290 76" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+        <line x1="10" y1="70" x2="290" y2="70" stroke="var(--ink)" stroke-dasharray="3 3" opacity=".6"/>
+        <line x1="10" y1="134" x2="110" y2="134" stroke="var(--ink)"/><text x="56" y="152" font-size="13" fill="var(--ink)">f</text>
+        <line x1="60" y1="70" x2="60" y2="88.5" stroke="var(--ink)"/><text x="66" y="84" font-size="13" fill="var(--ink)">H</text>
+      </svg>
+      <b>圓鼻刀</b><small>H ≈ f² ／ 8r，R<sub>a</sub> ≈ f² ／ 32r。r 為刀鼻半徑；進給減半，粗糙度約剩 1／4。</small>
+      </div>
+    </div>
+    <figcaption>圖 4-7　理論表面粗糙度（f 為進給，mm/rev）</figcaption>
+  </figure>
+  <p>實際的<b>自然表面粗糙度</b>還受 BUE、振動、刀具磨耗、工件材料等影響。切削速度提高、避開 BUE 後，粗糙度逐漸逼近理論值，但不會更好。改善表面的方法：提高系統剛性、避免 BUE、刀具保持銳利、刀鼻半徑適度加大、減小進給、適當使用切削液、避免顫振。</p>
+  <p><b>表面光度</b>描述表面的幾何特性；<b>表面完整性</b>描述表面層的性質，如殘留應力、相變、塑性變形、微裂紋、熱損傷，關係到疲勞壽命與耐蝕性。鈍刀的刃口半徑大於切深時，等效斜角變成很大的負值，刀具在表面上擠壓摩擦，產生熱、拉伸殘留應力與裂紋。</p>
+
+  <h3>四、振動與顫振</h3>
+  <div class="cards c2">
+    <div class="card"><h4>強迫振動</h4><span class="en">forced vibration</span><p>來自週期性的外力：銑刀齒逐一切入、有鍵槽的軸、不平衡的主軸或齒輪。頻率不可接近系統自然頻率，以免共振。對策是消除或隔離振源。</p></div>
+    <div class="card"><h4>自激振動（顫振）</h4><span class="en">self-excited vibration, chatter</span><p>切削過程本身的動態效應與工具機結構交互作用而自發產生。最常見的是<b>再生式顫振</b>：前一刀留下的波紋使下一刀的切削厚度忽大忽小，形成回饋。</p></div>
+  </div>
+  <p><b>減少顫振：</b>提高工具機、刀具、夾具剛性（縮短刀具伸出量、長工件加中心架）；增加阻尼（鑄鐵床身內阻尼比鋼高、使用減振刀桿）；改變切削速度避開不穩定區；保持切深一致、刀鼻半徑不過大、避免 BUE。顫振會損壞表面、使脆性刀具崩裂、失去尺寸精度、產生噪音並縮短工具機壽命。</p>
+
+  <h3>五、切削參數的綜合影響</h3>
+  <div class="tbl"><table>
+    <tr><th>增加</th><th>切削力</th><th>刀面溫度</th><th>刀具壽命</th><th>表面粗糙度</th></tr>
+    <tr><td>切削速度 V</td><td>略降</td><td>升高最多</td><td>大幅縮短</td><td>改善（至理論值）</td></tr>
+    <tr><td>進給 f</td><td>增加（比切削能下降）</td><td>升高</td><td>縮短</td><td>變差</td></tr>
+    <tr><td>切深 d</td><td>成比例增加</td><td>略升</td><td>影響最小</td><td>幾乎不變</td></tr>
+  </table></div>
+  <p>粗加工追求移除率：先加大切深，再加大進給，速度取適中以保刀具壽命。精加工追求表面：小進給、小切深、較高速度。</p>
+</section>
+
+<!-- ============ 4-5 ============ -->
+<section id="s5">
+  <h2><span class="no">4-5</span>工具機與磨料加工</h2>
+  <h3>一、車削與搪孔</h3>
+  <p>車削以單鋒車刀在車床上加工迴轉面，分右手車刀與左手車刀。<b>搪孔</b>把已有的孔擴大到精確尺寸，小件在車床上做，大件在搪床上做。搪刀桿細長，撓曲是精度的關鍵，刀桿宜用彈性係數高的碳化鎢，並盡量縮短懸伸；通孔可兩端支撐，盲孔只能懸臂。</p>
+  <div class="tbl"><table>
+    <tr><th>搪床</th><th>特點</th></tr>
+    <tr><td>臥式搪床</td><td>主軸水平，主軸頭可沿立柱升降，床台帶工件做軸向進給，一般所稱搪床即此。</td></tr>
+    <tr><td>立式搪床</td><td>工件夾在旋轉工作台上，刀具頭在橫樑上進給，用於大型盤類件與汽缸。</td></tr>
+    <tr><td>工模搪床</td><td>定位精度極高，置於約 20°C 恆溫室，用於模具與夾具的孔，現多由 CNC 綜合加工機取代。</td></tr>
+  </table></div>
+
+  <h3>二、鑽孔</h3>
+  <p>鑽孔是複雜的三維切削：麻花鑽的斜角由外緣往中心遞減，靜點附近其實是擠壓而非切削。容屑空間有限，切屑宜碎；延性材料的捲屑會堵住鑽槽，阻礙切削液進入，使鑽頭過熱。深孔可用<b>啄鑽</b>定期退刀排屑（加工硬化嚴重的材料不宜）。</p>
+  <div class="cards">
+    <div class="card"><h4>鑽床種類</h4><p>靈敏鑽床（手動進給）、直立鑽床（動力進給）、台式鑽床、旋臂鑽床（大型工件，鑽頭可徑向移動與旋轉定位）、轉塔鑽床、多軸鑽床（一次鑽多孔，大量生產）。</p></div>
+    <div class="card"><h4>大孔徑的速度與進給</h4><p>同轉速下直徑愈大周速愈高、溫度愈高，所以轉速要降；大鑽頭切削力與扭矩大，進給要受鑽頭強度與機台功率限制。</p></div>
+    <div class="card"><h4>精確孔的加工順序</h4><p>鑽中心孔 → 鑽孔 → 搪孔 → 鉸孔；更高要求再擦光、內圓磨削或搪磨。</p></div>
+  </div>
+
+  <h3>三、鉋削與拉削</h3>
+  <div class="tbl"><table>
+    <tr><th>比較</th><th>牛頭鉋床 shaper</th><th>龍門鉋床 planer</th></tr>
+    <tr><td>工件</td><td>小件</td><td>大件，速度可達約 120 m/min</td></tr>
+    <tr><td>切削運動</td><td>刀具往復，工件不動</td><td>工件隨床台往復，刀具不動</td></tr>
+    <tr><td>進給</td><td>回程時工件橫向進給</td><td>刀具橫向進給</td></tr>
+    <tr><td>傳動</td><td>曲柄搖桿速回機構或液壓</td><td>齒輪齒條或液壓</td></tr>
+    <tr><td>回程</td><td colspan="2">都有速回運動（切削慢、回程快），回程時以拍板箱讓刀具抬起，避免刃口摩擦</td></tr>
+  </table></div>
+  <p><b>拉削</b>以齒高逐漸增加的多齒拉刀，一個行程完成粗切、半精切、精切，用於內孔栓槽、鍵槽與外形。生產率極高、精度好，但拉刀昂貴，只適合大量生產。拉床分拉式、推式，臥式、立式，多為液壓驅動。</p>
+
+  <h3>四、銑削</h3>
+  <p>多刃銑刀迴轉、工件進給，每齒斷續切削，生產率高。基本型式有<b>周銑</b>（刀軸平行加工面，以外周刃切削）與<b>面銑</b>（刀軸垂直加工面）。周銑包括平銑、槽銑、側銑、跨銑、排銑、成形銑、角銑；面銑包括端銑、輪廓銑、凹穴銑、曲面銑（球刀）、T 槽銑。</p>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 210" role="img" aria-label="逆銑：銑刀在切削處的運動方向與工件進給相反，切屑由薄到厚">
+        <path d="M10 136 L150 136 A56 56 0 0 0 197.3 110 L290 110 V180 H10 Z" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2"/>
+        <circle cx="150" cy="80" r="56" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M150 136 A56 56 0 0 0 197.3 110" fill="none" stroke="var(--accent)" stroke-width="6"/>
+        <path d="M194 50 A50 50 0 0 0 108 44" fill="none" stroke="var(--fix)" stroke-width="3"/><path d="M112 34 l-10 14 14 2z" fill="var(--fix)"/><text x="40" y="40" fill="var(--fix)">逆時針</text>
+        <circle cx="150" cy="136" r="4" fill="var(--ink)"/><circle cx="197.3" cy="110" r="4" fill="var(--ink)"/>
+        <path d="M120 200 H60" stroke="var(--warn)" stroke-width="3"/><path d="M64 194 l-12 6 12 6z" fill="var(--warn)"/>
+        <g font-size="12" fill="var(--ink)"><text x="126" y="205" fill="var(--warn)">工件進給</text><text x="100" y="156">切入（厚度 0）</text><text x="204" y="102">切出（最厚）</text><text x="220" y="150" fill="var(--muted)">未切削</text><text x="20" y="160" fill="var(--muted)">已加工面</text></g>
+      </svg>
+      <b>逆銑（上銑、傳統銑削）</b><small>刃口從切屑厚度零處切入，先滑擦再切削，刀腹磨耗大、表面較差；切削力有把工件往上掀的傾向。不受工件表面黑皮影響、無進給螺桿背隙問題，適合鑄鍛件與舊式銑床。</small>
+      </div>
+      <div>
+      <svg viewBox="0 0 300 210" role="img" aria-label="順銑：銑刀在切削處的運動方向與工件進給相同，切屑由厚到薄">
+        <path d="M10 136 L150 136 A56 56 0 0 0 197.3 110 L290 110 V180 H10 Z" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2"/>
+        <circle cx="150" cy="80" r="56" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M150 136 A56 56 0 0 0 197.3 110" fill="none" stroke="var(--accent)" stroke-width="6"/>
+        <path d="M108 44 A50 50 0 0 1 194 50" fill="none" stroke="var(--fix)" stroke-width="3"/><path d="M190 40 l8 14 -14 0z" fill="var(--fix)"/><text x="204" y="44" fill="var(--fix)">順時針</text>
+        <circle cx="150" cy="136" r="4" fill="var(--ink)"/><circle cx="197.3" cy="110" r="4" fill="var(--ink)"/>
+        <path d="M120 200 H60" stroke="var(--warn)" stroke-width="3"/><path d="M64 194 l-12 6 12 6z" fill="var(--warn)"/>
+        <g font-size="12" fill="var(--ink)"><text x="126" y="205" fill="var(--warn)">工件進給</text><text x="100" y="156">切出（厚度 0）</text><text x="204" y="102">切入（最厚）</text><text x="220" y="150" fill="var(--muted)">未切削</text><text x="20" y="160" fill="var(--muted)">已加工面</text></g>
+      </svg>
+      <b>順銑（下銑、爬銑）</b><small>刃口從最厚處切入，衝擊大但無滑擦，刀具壽命長、表面好、功率小，切削力把工件壓向床台。需有消除背隙的進給機構與高剛性，不適合有黑皮、硬點的鑄鍛件；CNC 銑床多用順銑。</small>
+      </div>
+    </div>
+    <figcaption>圖 4-8　逆銑與順銑：工件同樣向左進給，差別在銑刀轉向</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>比較</th><th>逆銑（上銑）</th><th>順銑（下銑）</th></tr>
+    <tr><td>切屑厚度</td><td>由薄而厚</td><td>由厚而薄</td></tr>
+    <tr><td>刃口受力</td><td>漸進，不易崩刃</td><td>切入即衝擊，易崩刃</td></tr>
+    <tr><td>刀具壽命</td><td>短（滑擦磨耗）</td><td>長</td></tr>
+    <tr><td>振動與加工面</td><td>易振、有振紋</td><td>較穩、表面好</td></tr>
+    <tr><td>進給動力</td><td>費力</td><td>省力</td></tr>
+    <tr><td>背隙與陷刀</td><td>不會</td><td>會，需消隙機構</td></tr>
+    <tr><td>鑄鍛件黑皮</td><td>適合</td><td>不適合</td></tr>
+    <tr><td>薄件、夾持</td><td>不適合、夾持要牢</td><td>適合、工件被壓向床台</td></tr>
+  </table></div>
+  <p><b>面銑比周銑好的地方：</b>每齒切屑厚度變化小、切削力較穩；副切刃有修光作用，表面好；主軸剛性高，易用碳化物刀片高速銑削；同時切削的齒數多。周銑若用螺旋齒銑刀可改善平穩性，排銑則能一次加工多個面。</p>
+
+  <h3>五、磨料加工</h3>
+  <p>以大量非金屬硬質顆粒為刃口移除材料，每顆磨粒切下的量很小，可得良好的尺寸精度與表面，能加工淬硬鋼、陶瓷、玻璃等極硬或極脆材料。磨粒的形狀不規則，平均是<b>很大的負斜角</b>。</p>
+  <h4>1. 磨料</h4>
+  <p>磨料需要：硬度高於工件、足夠的韌性與耐熱性、與工件化學親和力低、以及適當的<b>易碎性</b>（磨粒鈍了會碎裂露出新刃口，即自銳性）。</p>
+  <div class="tbl"><table>
+    <tr><th>磨料</th><th>代號</th><th>適用</th></tr>
+    <tr><td>氧化鋁 Al₂O₃</td><td>A（棕色，一般）、WA（白色，易碎性高）；另有燒結的種子凝膠氧化鋁（SG），更硬更韌</td><td>鋼與高強度鋼，最常用</td></tr>
+    <tr><td>碳化矽 SiC</td><td>C（黑色）、GC（綠色，較純、易碎性高）</td><td>鑄鐵、非鐵金屬、陶瓷、碳化物；與鋼高溫親和，不宜磨鋼</td></tr>
+    <tr><td>立方氮化硼 CBN</td><td>B（超級磨料）</td><td>淬硬鋼、高速鋼、超合金；對鐵穩定</td></tr>
+    <tr><td>鑽石</td><td>D（超級磨料）</td><td>碳化物、陶瓷、玻璃、石材；不宜磨鋼</td></tr>
+  </table></div>
+
+  <h4>2. 砂輪</h4>
+  <p>砂輪由磨粒、結合劑與氣孔組成，V<sub>磨粒</sub> + V<sub>結合劑</sub> + V<sub>氣孔</sub> = 1。磨削與銑削相似，但切刃極多極小、速度高很多、刃口方向隨機且多為大負斜角，而且砂輪會自銳。</p>
+  <div class="spec">
+    <div class="spec-row">
+      <div class="chip"><b>51</b><small>製造商磨料記號</small></div>
+      <div class="chip"><b>A</b><small>磨料種類</small></div>
+      <div class="chip"><b>36</b><small>粒度</small></div>
+      <div class="chip"><b>L</b><small>結合度</small></div>
+      <div class="chip"><b>5</b><small>組織</small></div>
+      <div class="chip"><b>V</b><small>結合劑</small></div>
+      <div class="chip"><b>23</b><small>製造商記號</small></div>
+    </div>
+    <p class="spec-cap">一般磨料砂輪標示範例：51-A-36-L-5-V-23。超級磨料另有濃度與磨料層深度，如 M-D-150-Q-100-B-1/16（D 鑽石、粒度 150、結合度 Q、濃度 100、樹脂結合、層深 1/16 in）。</p>
+  </div>
+  <div class="tbl"><table>
+    <tr><th>參數</th><th>說明</th></tr>
+    <tr><td>粒度</td><td>以篩網每英吋長度的網孔數表示，號數愈大愈細：粗 8–24、中 30–60、細 70–180、極細 220–600。細粒表面好，粗粒移除率高。</td></tr>
+    <tr><td>結合度（等級）</td><td>A（軟）到 Z（硬），表示結合劑抓住磨粒的強度。<b>磨硬材料用軟砂輪</b>，鈍粒能及時脫落；磨軟材料、重切削用硬砂輪。</td></tr>
+    <tr><td>組織</td><td>1（密）到 15 以上（疏），氣孔多容屑空間大，不易堵塞。</td></tr>
+    <tr><td>結合劑</td><td><b>V</b> 陶瓷（玻璃化）：最常用，強度剛性高、耐熱耐油水，但怕衝擊。<b>B</b> 樹脂：強韌，用於粗磨、切斷，也可精磨。<b>R</b> 橡膠：最有彈性，做薄切斷片、無心磨床調整輪。<b>E</b> 蟲膠：精磨光面。<b>S</b> 矽酸鹽：發熱少，磨刀具。<b>O</b> 氯氧化物（MgCl₂＋MgO）：冷切削。<b>M</b> 金屬：粉末冶金結合鑽石或 CBN，也可電鍍、硬焊單層。</td></tr>
+  </table></div>
+
+  <h4>3. 砂輪磨損與磨削比</h4>
+  <p>砂輪磨損機制有三：<b>磨耗磨損</b>（磨粒變鈍、產生磨平面，與化學親和力有關）、<b>磨粒破裂</b>（磨粒碎裂露出新刃口，即自銳）、<b>結合破裂</b>（整顆磨粒脫落，與結合度有關）。</p>
+  <div class="formula sm">磨削比 G = 工件材料移除體積 ／ 砂輪磨耗體積　（一般約 2–200，CBN 可達數千）</div>
+  <figure>
+    <svg viewBox="0 0 640 230" role="img" aria-label="砂輪磨耗體積對材料移除體積的曲線：初期快速磨耗、穩定磨耗區、急速磨耗區">
+      <line x1="80" y1="20" x2="80" y2="190" stroke="var(--ink)" stroke-width="1.5"/><line x1="80" y1="190" x2="600" y2="190" stroke="var(--ink)" stroke-width="1.5"/>
+      <rect x="80" y="20" width="80" height="170" fill="var(--warn)" opacity=".08"/><rect x="160" y="20" width="300" height="170" fill="var(--fix)" opacity=".08"/><rect x="460" y="20" width="140" height="170" fill="var(--warn)" opacity=".08"/>
+      <path d="M80 190 Q110 130 160 122 L460 92 Q520 84 560 30" fill="none" stroke="var(--accent)" stroke-width="3"/>
+      <circle cx="460" cy="92" r="5" fill="var(--fix)"/>
+      <g font-size="12.5" fill="var(--ink)" text-anchor="middle"><text x="120" y="40">初期磨耗</text><text x="310" y="40">穩定磨耗（G 最高）</text><text x="530" y="40">急速磨耗</text></g>
+      <text x="470" y="116" font-size="12" fill="var(--fix)">此時修銳最經濟</text>
+      <text x="340" y="214" font-size="13" text-anchor="middle" fill="var(--ink)">材料移除體積</text>
+      <text x="24" y="105" font-size="13" text-anchor="middle" fill="var(--ink)" transform="rotate(-90 24 105)">砂輪磨耗體積</text>
+    </svg>
+    <figcaption>圖 4-9　砂輪磨耗曲線，斜率的倒數即磨削比 G</figcaption>
+  </figure>
+  <p>G 太小表示砂輪消耗快、尺寸難控制；G 太大則鈍粒不脫落，易燒傷工件。影響 G 的因素：砂輪種類與結合度、工件硬度（愈硬 G 愈小）、切深（愈深磨粒受力愈大、G 愈小）、砂輪與工件速度、研磨液（潤滑好可大幅提高 G）。</p>
+  <div class="cards c2">
+    <div class="card"><h4>光滑化與堵塞</h4><p><b>光滑化（glazing）</b>：結合度太硬、磨粒鈍了不脫落，砂輪表面發亮，摩擦生熱造成燒傷與研磨裂紋。<b>堵塞（loading）</b>：切屑嵌入或熔附在氣孔中，碳鋼易嵌入、鈦合金易熔附，造成擦傷與顫紋。</p></div>
+    <div class="card"><h4>修銳與修整</h4><p><b>修銳（dressing）</b>：以修整器除去鈍化或堵塞的表層，露出銳利磨粒。<b>修整（truing）</b>：把磨損變形的砂輪重新削成正確外形與同心度，成形磨削尤其重要，同時也有修銳作用。</p></div>
+  </div>
+  <div class="callout"><b>磨削燒傷的對策：</b>改用較軟或較疏的砂輪、及時修銳、減小切深、提高工件速度、充分供給研磨液；必要時改用 CBN 砂輪，導熱好、磨粒鋒利，磨削熱較少進入工件。</div>
+
+  <h4>4. 磨削類型</h4>
+  <div class="tbl"><table>
+    <tr><th>類型</th><th>做法</th></tr>
+    <tr><td>平面磨削</td><td>工件以電磁夾頭吸住（非磁性用虎鉗）。臥軸往復台最常見，可橫向進給或直進磨削；立軸迴轉台一次磨多件。</td></tr>
+    <tr><td>外圓磨削</td><td>工件夾在兩頂心間迴轉，砂輪橫向往復或直進（成形磨削）；CNC 可同步控制轉角與砂輪位置磨凸輪。</td></tr>
+    <tr><td>內圓磨削</td><td>小砂輪高速（可達 30 000 rpm 以上）磨內孔；行星式則砂輪軸自轉兼公轉，工件不動。</td></tr>
+    <tr><td>無心磨削</td><td>工件不用頂心，由磨輪、托板與<b>調整輪</b>（橡膠結合，轉速約為磨輪的 1／20 且傾斜一個小角度帶動工件前進）支持。分貫穿進給（長圓柱）、直進（成形、階梯）、端進給（錐度）。精度高、免夾持、可連續大量生產；但有鍵槽或平面的工件不能磨，也不能保證空心件內外圓同心。</td></tr>
+  </table></div>
+  <figure>
+    <svg viewBox="0 0 640 220" role="img" aria-label="無心磨削：工件放在托板上，夾在大磨輪與較小的調整輪之間">
+      <circle cx="200" cy="110" r="90" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <circle cx="408" cy="104" r="62" fill="var(--warn)" opacity=".35" stroke="var(--ink)" stroke-width="2"/>
+      <circle cx="318" cy="100" r="28" fill="var(--accent)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M296 128 L340 128 L334 210 L302 210 Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M150 40 A80 80 0 0 1 250 40" fill="none" stroke="var(--fix)" stroke-width="3"/><path d="M246 32 l10 10 -14 4z" fill="var(--fix)"/>
+      <path d="M368 52 A56 56 0 0 1 448 52" fill="none" stroke="var(--fix)" stroke-width="3"/><path d="M444 44 l10 10 -14 4z" fill="var(--fix)"/>
+      <g font-size="13" fill="var(--ink)"><text x="160" y="116" font-weight="700">磨輪</text><text x="384" y="110" font-weight="700">調整輪</text><text x="300" y="60">工件</text><text x="344" y="200">托板</text></g>
+      <text x="420" y="204" font-size="11.5" fill="var(--muted)">轉速約為磨輪 1／20、傾斜 0–8°</text>
+    </svg>
+    <figcaption>圖 4-10　無心磨削。工件中心略高於兩輪中心連線，才能把圓度磨正</figcaption>
+  </figure>
+
+  <h4>5. 表面光製</h4>
+  <div class="tbl"><table>
+    <tr><th>方法</th><th>做法</th><th>特點</th></tr>
+    <tr><td>搪磨<br><span class="en">honing</span></td><td>細粒油石裝在搪磨頭上，在孔內旋轉兼往復，加壓並大量給液</td><td>浮動式加工，不依賴機台精度；改善孔的圓度、圓柱度與粗糙度，但<b>不能修正孔的位置</b>；表面留有交叉網紋（利於儲油），用於汽缸內壁</td></tr>
+    <tr><td>研光（抹磨）<br><span class="en">lapping</span></td><td>研磨盤（鑄鐵、銅、軟金屬）與工件間加入游離磨料，加壓相對運動</td><td>得到極佳的平面度、真圓度與尺寸精度，可做量規、密封面；乾式得鏡面、濕式移除量大；作業髒、需清除殘留磨料</td></tr>
+    <tr><td>超光製<br><span class="en">superfinishing</span></td><td>油石以輕壓、每分鐘數百到數千次、振幅數 μm 的振動，配合工件慢轉</td><td>移除前道加工的變質層，表面極光滑、耐磨，時間短；但不能修正幾何誤差。用於軸承環、曲軸</td></tr>
+    <tr><td>拋光<br><span class="en">polishing</span></td><td>布輪或皮輪沾細磨料高速旋轉</td><td>細微切削加上摩擦熱使表面軟化抹平而發亮</td></tr>
+    <tr><td>擦光<br><span class="en">buffing</span></td><td>比拋光更細的磨料，以高速擦光輪（約 30–50 m/s）加工</td><td>得到鏡面光澤，設備簡單成本低，但不能控制尺寸與形狀</td></tr>
+    <tr><td>滾筒磨光<br><span class="en">barrel / vibratory finishing</span></td><td>工件、磨料、液體一起放入旋轉或振動的桶中互相碰撞</td><td>大量小件一次去毛邊、倒圓角、平滑化；振動式效率高數倍到數十倍</td></tr>
+  </table></div>
+  <p><b>研光與拋光的差別：</b>研光用硬質研磨盤與游離磨料，以微量切削修正幾何形狀與尺寸，精度高；拋光用柔軟的布輪，以細微切削與塑性抹平得到光亮外觀，不改善幾何精度。</p>
+</section>
+
+<!-- ============ 試題 ============ -->
+<section id="exam">
+  <h2><span class="no">試題</span>歷屆試題</h2>
+  <p class="hint">點選題目展開作答要點</p>
+
+  <details><summary><span class="qn">01</span><span>近代工具機主軸轉速很高以進行高速切削。(a) 高速切削有何優點？(b) 高速切削時刀具的主要磨耗機制為何？</span><span class="src">台大機械</span></summary>
+    <div class="ans"><ul><li>優點：移除率高、加工時間短；切削力下降，薄壁件變形小；大部分熱被切屑帶走，工件熱變形小；避開 BUE，表面好；可直接加工淬硬材料取代部分磨削。</li><li>磨耗機制：刀面溫度高，以<b>擴散磨耗</b>（凹坑磨耗）與氧化為主，另有熱軟化造成的塑性變形與熱疲勞崩刃。</li></ul></div></details>
+
+  <details><summary><span class="qn">02</span><span>(a) HRC 55 以上的鋼與碳化鎢為何多用磨削加工？(b) 研光與拋光在製程與加工結果上的差異？(c) 加工藍寶石、矽晶圓等硬脆材料時如何避免微裂紋？</span><span class="src">台大機械</span></summary>
+    <div class="ans"><ul><li>工件硬度接近或超過一般刀具，刀具磨耗與崩刃嚴重；磨粒硬度更高、每粒切深極小，切削力小，能得到高精度與好表面。</li><li>見 4-5 節研光與拋光的比較。</li><li>採<b>延性域加工</b>：切深或每粒切深小於材料的臨界切深，使材料以塑性流動方式移除；使用細粒鑽石砂輪、高剛性超精密機台、小進給，再以化學機械拋光（CMP）去除損傷層。</li></ul></div></details>
+
+  <details><summary><span class="qn">03</span><span>(a) 切削速度、進給、切深對加工面粗糙度有何影響？為什麼？(b) 粗加工時會採用怎樣的切削條件？</span><span class="src">台大機械</span></summary>
+    <div class="ans"><ul><li>進給影響最大：H ≈ f²／8r，進給加大粗糙度以平方增加。速度提高可避開 BUE，粗糙度變好並趨近理論值。切深對理論粗糙度幾乎無影響，但過深會引起振動。</li><li>粗加工：大切深、較大進給、中等速度，以最大移除率並兼顧刀具壽命（泰勒式中速度對壽命影響最大）。</li></ul></div></details>
+
+  <details><summary><span class="qn">04</span><span>(a) 超級磨粒砂輪的三個優點。(b) 磨削時工件易燒焦的原因與對策；切削時刀具易微崩落的原因與對策。</span><span class="src">台大機械</span></summary>
+    <div class="ans"><ul><li>超級磨粒：硬度高、磨耗少、G 值極高、尺寸穩定少修整；導熱好、磨削溫度低、燒傷少；可磨淬硬鋼、碳化物、陶瓷等難磨材料；適合高速自動化。</li><li>燒焦：砂輪太硬或光滑化、切深太大、研磨液不足 → 改軟砂輪、修銳、減切深、加大給液、提高工件速度。</li><li>微崩落：斷續切削衝擊、熱疲勞、刃口太銳或正斜角太大、剛性不足或顫振、BUE 脫落 → 選韌性好的刀具材質、刃口倒稜或圓弧化、改負斜角、提高剛性、避免斷續供液。</li></ul></div></details>
+
+  <details><summary><span class="qn">05</span><span>簡述 3D 列印的優點與目前仍存在的缺點。</span><span class="src">台大機械</span></summary>
+    <div class="ans">優點：不需模具與刀具、形狀自由度高、少量客製快、材料浪費少、零件一體化。缺點：速度慢、單件成本高、尺寸受限、表面粗糙與精度不足需後加工、孔隙與殘留應力、性質異向性、材料選擇有限（見第三章 3-7 節）。</div></details>
+
+  <details><summary><span class="qn">06</span><span>(a) 如何確保尺寸精度？(b) 如何達到表面粗糙度規格？(c) 如何在最大移除率下滿足粗糙度？(d) 鋁合金零件最適當的刀具材料與角度？</span><span class="src">台大機械</span></summary>
+    <div class="ans"><ul><li>尺寸精度：工具機定位精度與剛性、夾具定位、刀具磨耗補償、熱變形控制（切削液、暖機）、量測回饋。</li><li>粗糙度：由 H ≈ f²／8r 反推最大允許進給，搭配適當刀鼻半徑、避開 BUE 的速度、銳利刀具與切削液，並抑制顫振。</li><li>先由粗糙度要求定出最大進給 f，再在機台功率與刀具壽命限制下取最大切深，最後以泰勒式選定經濟切削速度。</li><li>鋁合金：無塗層的細晶碳化物（K 類）或 PCD 鑽石刀具；大正斜角（約 10–20°）、大隙角、刃口銳利拋光，高轉速，以防黏刀與 BUE。</li></ul></div></details>
+
+  <details><summary><span class="qn">07</span><span>(a) 為何磨削常是最後一道製程？(b) B 與 C 磨料各適合磨何種材料？(c) 為何選擇適當的砂輪結合度很重要？(d) 研光與拋光的差異？</span><span class="src">台大機械</span></summary>
+    <div class="ans"><ul><li>磨削精度與表面最好、可加工熱處理後的硬材料，移除量小，所以放在熱處理之後做最後尺寸。</li><li>B（CBN）：淬硬鋼、高速鋼、超合金等鐵基材料；C（碳化矽）：鑄鐵、非鐵金屬、陶瓷、碳化物等脆性材料。</li><li>結合度太硬會光滑化、燒傷；太軟則磨粒脫落太快、砂輪耗損大、尺寸難控。磨硬材料用軟砂輪，磨軟材料用硬砂輪。</li><li>見 4-5 節。</li></ul></div></details>
+
+  <details><summary><span class="qn">08</span><span>(a) 說明碳化鎢刀片的製作方法與流程。(b) 碳化鎢刀具表面鍍 TiN 後的優缺點。</span><span class="src">關務三等</span></summary>
+    <div class="ans"><ul><li>流程：W 粉碳化成 WC 粉（約 1–5 μm）→ 與 Co 粉、TiC／TaC 及蠟濕式球磨混合 → 造粒 → 模壓成刀片生胚 → 脫蠟 → 約 1400–1500°C 真空液相燒結（線收縮約 20%）→ 研磨刃口、倒稜 → 塗層。</li><li>TiN 優點：硬度高、摩擦低、抗黏著與凹坑磨耗，可提高速度與刀具壽命，金黃色便於辨識磨耗。缺點：低速時切屑冷焊會把塗層剝掉；刃口變鈍需圓弧化；成本較高；重磨後塗層消失；不適合切鋁、鈦。</li></ul></div></details>
+
+  <details><summary><span class="qn">09</span><span>(a) 刀具高溫硬度對金屬切削的影響；以銅合金與模具鋼為例說明適用刀具材料。(b) 以示意圖說明正交切削的假設與斜角、隙角的定義。</span><span class="src">機械技師</span></summary>
+    <div class="ans"><ul><li>切削時刀尖溫度可達數百度以上，高溫硬度決定可用切削速度與刀具壽命。銅合金軟、黏、導熱好：用高速鋼或無塗層碳化物、PCD，大正斜角。淬硬模具鋼：用 CBN、陶瓷或 TiAlN 塗層碳化物，負斜角、高剛性。</li><li>畫圖 4-1：斜角 α 是刀面與切削速度法線的夾角；隙角是刀腹與已加工面的夾角。假設見 4-2 節。</li></ul></div></details>
+
+  <details><summary><span class="qn">10</span><span>金屬切削產生不連續切屑：(a) 形成條件 (b) 對工件和刀具的不良影響。</span><span class="src">地特三等</span></summary>
+    <div class="ans"><ul><li>條件：脆性材料或含硬質夾雜物（灰鑄鐵）、極低或極高速、大切深與小斜角、剛性不足、缺乏切削液。</li><li>影響：切削力週期變動，易顫振；表面粗糙、尺寸不穩；刀具受反覆衝擊而崩刃、疲勞。</li></ul></div></details>
+
+  <details><summary><span class="qn">11</span><span>說明正斜角與負斜角的不同。</span><span class="src">關務四等</span></summary>
+    <div class="ans">正斜角刃口銳利、剪切角大、切削力與溫度低、切屑易流出，但刃口支撐少、易崩刃，適合軟延性材料與低剛性系統。負斜角刃口強、受壓應力，耐衝擊與重切削，切削力與溫度較高，適合碳化物、陶瓷、CBN 刀片切削硬材料與斷續切削；刀片可兩面使用，刃口數加倍。</div></details>
+
+  <details><summary><span class="qn">12</span><span>以螺旋齒面銑刀在立式銑床銑鑄件底面，比較上銑法與下銑法的切屑幾何、切削力變化與加工特性。</span><span class="src">普通考試</span></summary>
+    <div class="ans">依圖 4-8 與表格：上銑切屑由薄到厚、刃口先滑擦再切入、力有上掀分量、表面較差但不怕鑄件黑皮；下銑切屑由厚到薄、切入衝擊大、力把工件壓向床台、刀具壽命長表面好，但需消除背隙，且鑄件黑皮會加速磨耗。銑鑄件含黑皮時，第一刀宜用上銑或加大切深使刃口切在黑皮下。面銑時刀具中心兩側同時存在上銑與下銑區，可偏置刀具調整比例。</div></details>
+
+  <details><summary><span class="qn">13</span><span>(a) 切屑型態可分為幾種？(b) 切削溫度上升的熱源？(c) 刀具破壞的型態？</span><span class="src">鐵路員級</span></summary>
+    <div class="ans">(a) 連續、積屑刃口、鋸齒狀、不連續四種。(b) 主剪切區塑性變形、刀面與切屑摩擦、刀腹與已加工面摩擦。(c) 刀腹磨耗、凹坑磨耗、溝槽磨耗、崩刃、整體破裂、塑性變形。</div></details>
+
+  <details><summary><span class="qn">14</span><span>為什麼陶瓷是有效的切削刀具材料？陶瓷是否也適合作為塑性加工的模具材料？</span><span class="src">普通考試</span></summary>
+    <div class="ans">陶瓷高溫硬度與耐磨性極高、化學穩定、不易與工件黏著，可高速切削鑄鐵與淬硬鋼。但它韌性低、抗拉與抗衝擊差；塑性加工模具承受大拉應力、彎曲與衝擊負荷，所以陶瓷一般不適合當整體模具，只適用於受壓為主的小型模（如抽線模的模芯、擠伸模嵌件）。</div></details>
+
+  <details><summary><span class="qn">15</span><span>磨削比取決於砂輪類型、工件硬度、砂輪切深、砂輪與工件速度、研磨液，說明理由。</span><span class="src">普通考試</span></summary>
+    <div class="ans">砂輪類型：磨粒硬度與化學惰性、結合度決定磨耗速率。工件愈硬，磨粒磨耗愈快，G 愈小。切深愈大，每粒受力與溫度愈高，磨粒破裂與脫落增加，G 下降。砂輪速度提高使每粒切深變小，G 通常上升；工件速度提高則每粒切深增大，G 下降。研磨液潤滑冷卻好，降低磨耗與熔附，G 可大幅提高。</div></details>
+
+  <details><summary><span class="qn">16</span><span>已知比切削能 U、主軸轉速 N、機械效率 η，估計 (1) 車削（D、d、f）與 (2) 銑削（齒數 n、每齒進給 f、切深 d、寬 w）所需功率，並說明需修正之處。</span><span class="src">高考三等</span></summary>
+    <div class="ans"><ul><li>車削：MRR = π D<sub>avg</sub> d f N（mm³/min，D<sub>avg</sub> = D − d），功率 P = U × MRR ／ 60 ／ η（W）。</li><li>銑削：進給速度 v = f n N，MRR = w d f n N，P = U × MRR ／ 60 ／ η。</li><li>修正：比切削能隨切屑厚度變小而增大（尺寸效應）；刀具磨耗後約增加 25% 以上；η 隨負荷變化；另需計入空轉功率。</li></ul></div></details>
+
+  <details><summary><span class="qn">17</span><span>寫出切削刀具材料所需要的主要性質。</span><span class="src">關務三等</span></summary>
+    <div class="ans">高溫硬度、韌性與抗衝擊、耐磨耗、化學穩定（不與工件反應、不擴散）、抗熱震、高溫強度、可製造性與合理成本。</div></details>
+
+  <details><summary><span class="qn">18</span><span>(a) 何謂切削顫振，如何防治？(b) 寫出泰勒式、說明各項意義並舉例預測刀具壽命變化。(c) 刀口積屑的原因與解決方案。</span><span class="src">機械技師</span></summary>
+    <div class="ans"><ul><li>顫振是切削過程與工具機結構交互作用產生的自激振動，以再生式最常見；防治見 4-4 節。</li><li>V T<sup>n</sup> = C。例：n = 0.25、C = 400 m/min，V = 200 時 T = 16 min；V 增至 240 時 T ≈ 7.7 min（見本章例題）。</li><li>BUE：中低速切削延性材料時切屑底層黏著並加工硬化堆積於刃口；對策為提高速度、加大斜角、減小切深、使用潤滑性切削液或塗層刀具。</li></ul></div></details>
+
+  <details><summary><span class="qn">19</span><span>臥式銑床平銑：6 刃、直徑 60 mm 銑刀，工件長 500 mm、寬 150 mm 鈦合金，每刃進給 0.1 mm、切深 3.5 mm、轉速 150 rpm。求材料移除率、切削時間、主軸扭矩與功率（比切削能 3.5 W·s/mm³）。</span><span class="src">地特四等</span></summary>
+    <div class="ans"><ul>
+      <li>進給速度 v = f n N = 0.1 × 6 × 150 = 90 mm/min</li>
+      <li>MRR = w d v = 150 × 3.5 × 90 = <b>47 250 mm³/min ≈ 787.5 mm³/s</b></li>
+      <li>切入長度 l<sub>c</sub> = √(D d) = √(60 × 3.5) ≈ 14.5 mm；切削時間 t = (500 + 14.5) ／ 90 ≈ <b>5.7 min</b></li>
+      <li>功率 P = 3.5 × 787.5 ≈ <b>2.76 kW</b></li>
+      <li>扭矩 T = P ／ ω = 2756 ／ (2π × 150 ／ 60) ≈ <b>175 N·m</b></li>
+    </ul></div></details>
+
+  <details><summary><span class="qn">20</span><span>(a) 列出五種常見刀具材料並依硬度由大而小排列。(b) 何謂 CBN？與鑽石相比何者較適合切削鋼鐵？</span><span class="src">地特四等</span></summary>
+    <div class="ans"><ul><li>鑽石 ＞ CBN ＞ 陶瓷 ＞ 燒結碳化物 ＞ 高速鋼（＞ 碳工具鋼）。</li><li>CBN 是以高溫高壓合成的立方晶氮化硼，硬度僅次於鑽石。切鋼鐵應選 CBN：鑽石在約 700°C 以上會石墨化，且碳會擴散進鐵中快速磨耗，CBN 對鐵則化學穩定、抗氧化。</li></ul></div></details>
+
+  <details><summary><span class="qn">21</span><span>切削刀具過度磨耗時，會影響哪些加工參數與工件品質？</span><span class="src">關務三等</span></summary>
+    <div class="ans">切削力、推力與功率增加；切削溫度升高；刃口後退使尺寸偏差；表面粗糙度變差、出現撕裂與毛邊；表面殘留拉應力、加工硬化與熱損傷；振動與顫振增加；最終可能崩刃造成工件報廢。</div></details>
+
+  <details><summary><span class="qn">22</span><span>(a) 切削液的作用？(b) 切削液在加工中是否有不利影響？</span><span class="src">高考二級</span></summary>
+    <div class="ans">(a) 冷卻、潤滑、排屑清洗、防鏽。(b) 有：斷續切削時刀具受冷熱交替產生熱裂紋；細菌滋生、腐臭、皮膚與呼吸道健康問題；廢液處理與環保成本；多孔件吸液生鏽；某些添加劑使銅合金變色或鎳合金脆化。</div></details>
+
+  <details><summary><span class="qn">23</span><span>(a) 孔徑增加時為何要降低鑽孔轉速與進給？(b) 鑽孔深度增加時力或扭矩是否變化？(c) 深孔加工為何困難？對策？</span><span class="src">高考二級</span></summary>
+    <div class="ans"><ul><li>同轉速下大孔徑周速高、溫度高，須降轉速以保持適當切削速度；大鑽頭扭矩與推力大，進給受鑽頭強度與機台功率限制（每轉進給可略增，但須控制總負荷）。</li><li>會增加：切屑在槽內排出困難、與孔壁摩擦，切削液不易到達刃口，扭矩與推力隨深度上升。</li><li>困難在排屑、冷卻、鑽頭撓曲與偏斜。對策：啄鑽、內冷鑽頭與高壓切削液、槍鑽或 BTA 深孔鑽、導引孔、降低進給。</li></ul></div></details>
+
+  <details><summary><span class="qn">24</span><span>以三視圖繪出右手外徑車刀的重要幾何特徵並說明作用。</span><span class="src">高考二級</span></summary>
+    <div class="ans">依圖 4-6 擴充為俯視、前視、側視：標出後斜角、側斜角、端隙角、側隙角、端切刃角、側切刃角、刀鼻半徑，作用見 4-3 節角度表。</div></details>
+
+  <details><summary><span class="qn">25</span><span>磨削時常用的磨粒有哪四種？</span><span class="src">台北捷運</span></summary>
+    <div class="ans">氧化鋁（A、WA）、碳化矽（C、GC）、立方氮化硼（CBN）、鑽石。</div></details>
+</section>
+
+</main>
+</div>
+
+<script>
+/* 分類樹放不下時改為縮排清單 */
+(function(){function fit(){document.querySelectorAll('.tree').forEach(function(t){t.classList.remove('as-list');var p=t.parentElement;if(t.scrollWidth>p.clientWidth+2)t.classList.add('as-list');});}
+window.addEventListener('resize',fit);if(document.readyState!=='loading')fit();else document.addEventListener('DOMContentLoaded',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);})();
+</script>
+</body>
+</html>
