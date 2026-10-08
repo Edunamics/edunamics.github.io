@@ -230,7 +230,7 @@ th{white-space:normal}
     <path d="M134 112 l-4 10 6-4 -3 12 8-10 -6 2 4-10z" fill="var(--warn)"/>
     <g stroke="var(--accent)" stroke-width="2" stroke-linecap="round"><path d="M110 112 l-14 -10M150 120 l16 -6M104 128 l-16 2M156 134 l18 4"/></g>
     <path d="M20 200 H240" stroke="var(--line)"/>
-    <text x="24" y="196" font-size="12" fill="var(--muted)">母材</text><text x="200" y="196" font-size="12" fill="var(--muted)">母材</text><text x="170" y="40" font-size="12" fill="var(--muted)">銲條</text>
+    <text x="24" y="196" font-size="12" fill="var(--muted)">母材</text><text x="200" y="196" font-size="12" fill="var(--muted)">母材</text><text x="170" y="40" font-size="12" fill="var(--muted)" transform="translate(9.5 4.6)">銲條</text>
   </svg>
 </header>
 
@@ -269,9 +269,9 @@ th{white-space:normal}
       <g stroke="var(--paper)" stroke-width="1.4"><path d="M262 48 L300 80M276 44 L306 86M378 48 L340 80M364 44 L334 86M320 50 L320 112"/></g>
       <g font-size="13" fill="var(--ink)" font-weight="700"><text x="300" y="26" fill="var(--paper)">銲冠</text></g>
       <g font-size="12.5" fill="var(--ink)">
-        <text x="470" y="80">熔融區：柱狀晶，朝熔合線向內長</text><path d="M466 76 L370 70" stroke="var(--ink)"/>
-        <text x="470" y="110">粗晶區：溫度高，晶粒長大、易脆</text><path d="M466 106 L410 92" stroke="var(--ink)"/>
-        <text x="470" y="140">細晶區：再結晶細化</text><path d="M466 136 L440 116" stroke="var(--ink)"/>
+        <text x="482" y="70">熔融區：柱狀晶</text><text x="482" y="85" font-size="11" fill="var(--muted)">朝熔合線向內長</text><path d="M476 70 L370 70" stroke="var(--ink)"/>
+        <text x="482" y="108">粗晶區：溫度高</text><text x="482" y="123" font-size="11" fill="var(--muted)">晶粒長大、易脆</text><path d="M476 104 L410 92" stroke="var(--ink)"/>
+        <text x="482" y="150">細晶區：再結晶細化</text><path d="M476 146 L440 116" stroke="var(--ink)"/>
         <text x="40" y="160" fill="var(--muted)">母材（未受影響）</text>
         <text x="40" y="200" fill="var(--muted)">熱影響區 HAZ ＝ 未熔化、但組織與性質因受熱而改變的區域</text>
       </g>
@@ -358,12 +358,12 @@ th{white-space:normal}
       <rect x="40" y="110" width="260" height="18" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5"/>
       <ellipse cx="170" cy="110" rx="26" ry="10" fill="var(--accent)"/>
       <rect x="164" y="20" width="12" height="40" fill="var(--fix)" opacity=".35"/><rect x="164" y="160" width="12" height="40" fill="var(--fix)" opacity=".35"/>
-      <g font-size="12.5" fill="var(--ink)"><text x="210" y="40">銅電極（內通冷卻水）</text><text x="216" y="88">鋼板</text><text x="210" y="150">銲核</text><path d="M206 146 L194 114" stroke="var(--ink)"/></g>
+      <g font-size="12.5" fill="var(--ink)"><text x="210" y="40">銅電極（內通冷卻水）</text><text x="216" y="88">鋼板</text><text x="210" y="150" transform="translate(2.1 0)">銲核</text><path d="M206 146 L194 114" stroke="var(--ink)"/></g>
       <g transform="translate(360 0)">
         <line x1="20" y1="20" x2="20" y2="210" stroke="var(--ink)"/><line x1="20" y1="210" x2="250" y2="210" stroke="var(--ink)"/>
         <path d="M30 20 C40 60 60 80 80 92 C150 100 200 108 230 110 C200 112 150 120 80 128 C60 140 40 160 30 200" fill="none" stroke="var(--accent)" stroke-width="3"/>
         <line x1="200" y1="20" x2="200" y2="210" stroke="var(--warn)" stroke-dasharray="5 4"/>
-        <text x="204" y="34" font-size="12" fill="var(--warn)">熔點</text>
+        <text x="204" y="34" font-size="12" fill="var(--warn)" transform="translate(2.1 0)">熔點</text>
         <text x="130" y="226" font-size="12.5" text-anchor="middle" fill="var(--ink)">溫度 →</text>
         <text x="236" y="114" font-size="12" fill="var(--ink)">接觸面</text>
       </g>
@@ -389,28 +389,28 @@ th{white-space:normal}
   <h3>一、氧乙炔氣銲</h3>
   <p>乙炔與氧在銲炬中混合燃燒，最高溫度約 3200–3500°C。完全燃燒：2C₂H₂ + 5O₂ → 4CO₂ + 2H₂O。設備便宜、可攜帶、加熱可調，適合維修與薄板；但熱量分散、熱效率低、熱影響區大、易變形，有爆炸危險。</p>
   <figure>
-    <svg viewBox="0 0 640 210" role="img" aria-label="三種氧乙炔火焰：碳化焰有長的白色羽焰，中性焰焰心清晰，氧化焰焰心短而尖">
+    <svg viewBox="0 0 640 222" role="img" aria-label="三種氧乙炔火焰：碳化焰有長的白色羽焰，中性焰焰心清晰，氧化焰焰心短而尖">
       <g transform="translate(0 0)">
         <rect x="20" y="40" width="40" height="16" fill="var(--steel)"/>
         <path d="M60 48 q50 -14 110 -4 q60 8 120 4 q-60 10 -120 6 q-60 6 -110 -6z" fill="var(--fix)" opacity=".2"/>
         <path d="M60 48 q40 -8 90 -2 q-50 8 -90 2z" fill="var(--paper)" stroke="var(--fix)"/>
         <path d="M60 48 q12 -5 26 0 q-14 5 -26 0z" fill="var(--fix)"/>
         <text x="300" y="44" font-size="13" font-weight="700" fill="var(--ink)">碳化焰（還原焰）</text>
-        <text x="300" y="62" font-size="12" fill="var(--muted)">乙炔過多，焰心外有白色羽焰；溫度最低。銲鎳、蒙乃爾、高碳鋼、硬面堆銲</text>
+        <text x="300" y="62" font-size="12" fill="var(--muted)">乙炔過多，焰心外有白色羽焰；溫度最低。</text><text x="300" y="78" font-size="12" fill="var(--muted)">銲鎳、蒙乃爾、高碳鋼、硬面堆銲</text>
       </g>
       <g transform="translate(0 66)">
         <rect x="20" y="40" width="40" height="16" fill="var(--steel)"/>
         <path d="M60 48 q50 -12 100 -4 q50 6 100 4 q-50 10 -100 6 q-50 6 -100 -6z" fill="var(--fix)" opacity=".2"/>
         <path d="M60 48 q12 -6 28 0 q-16 6 -28 0z" fill="var(--fix)"/>
         <text x="300" y="44" font-size="13" font-weight="700" fill="var(--ink)">中性焰（標準焰）</text>
-        <text x="300" y="62" font-size="12" fill="var(--muted)">氧：乙炔約 1：1，焰心圓鈍清晰；最常用，銲碳鋼、切割預熱</text>
+        <text x="300" y="62" font-size="12" fill="var(--muted)">氧：乙炔約 1：1，焰心圓鈍清晰；最常用。</text><text x="300" y="78" font-size="12" fill="var(--muted)">銲碳鋼、切割預熱</text>
       </g>
       <g transform="translate(0 132)">
         <rect x="20" y="40" width="40" height="16" fill="var(--steel)"/>
         <path d="M60 48 q40 -10 80 -3 q40 5 80 3 q-40 8 -80 5 q-40 5 -80 -5z" fill="var(--fix)" opacity=".2"/>
         <path d="M60 48 q8 -5 18 0 q-10 5 -18 0z" fill="var(--fix)"/>
         <text x="300" y="44" font-size="13" font-weight="700" fill="var(--ink)">氧化焰</text>
-        <text x="300" y="62" font-size="12" fill="var(--muted)">氧過多，焰心短尖、有嘶聲；溫度最高。銲黃銅、青銅（抑制鋅蒸發）</text>
+        <text x="300" y="62" font-size="12" fill="var(--muted)">氧過多，焰心短尖、有嘶聲；溫度最高。</text><text x="300" y="78" font-size="12" fill="var(--muted)">銲黃銅、青銅（抑制鋅蒸發）</text>
       </g>
     </svg>
     <figcaption>圖 6-5　三種氧乙炔火焰（先點乙炔，再逐漸開氧氣調整焰心形狀）</figcaption>
@@ -573,7 +573,7 @@ th{white-space:normal}
         <g stroke="var(--fix)" stroke-width="2" opacity=".6"><path d="M128 112 L112 160M172 112 L188 160"/></g>
         <rect x="20" y="170" width="260" height="20" fill="var(--steel)" stroke="var(--ink)"/>
         <ellipse cx="150" cy="171" rx="24" ry="6" fill="var(--accent)"/>
-        <g font-size="12" fill="var(--ink)"><text x="186" y="26">送線輪</text><text x="196" y="66">導電嘴</text><text x="196" y="150">熔滴過渡</text><text x="30" y="150" fill="var(--fix)">保護氣</text></g>
+        <g font-size="12" fill="var(--ink)"><text x="186" y="26" transform="translate(8.7 -2.3)">送線輪</text><text x="196" y="66">導電嘴</text><text x="196" y="150">熔滴過渡</text><text x="30" y="150" fill="var(--fix)">保護氣</text></g>
       </svg>
       <b>GMAW（MIG／MAG）</b><small>銲線同時是電極與填料，連續送線不必換條，速度快，最適合半自動與機器人銲接。</small>
       </div>
