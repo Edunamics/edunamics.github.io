@@ -72,6 +72,12 @@
   @media (prefers-reduced-motion: reduce){ .ic-gear,.ic-force,.ic-curve,.ic-break{animation:none;opacity:1} }
   .status { margin-top:30px; font-size:.85rem; color:var(--accent); }
   @media (max-width:380px){ .icon{width:60px;height:60px;} .label{font-size:.75rem;} }
+  /* 右下角：本站 QR Code（黑白） */
+  .qr { position:fixed; right:16px; bottom:16px; z-index:2; background:#fff; padding:8px 8px 6px; border-radius:6px;
+        box-shadow:0 4px 12px rgba(0,0,0,.35); display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .qr svg { display:block; width:96px; height:96px; shape-rendering:crispEdges; }
+  .qr span { font-family:Arial,Helvetica,sans-serif; font-size:9px; letter-spacing:.02em; color:#000; }
+  @media (max-width:640px){ .qr{display:none} }
 </style>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
@@ -286,6 +292,10 @@
     </div>
 
     <p class="status">✔ 網站架設測試成功 — 建置中，敬請期待</p>
+  </div>
+  <div class="qr" role="img" aria-label="本站 QR Code：https://edunamics.github.io/">
+    <svg viewBox="-1 -1 31 31" aria-hidden="true"><path stroke="#000" d="M0 0.5h7m1 0h3m4 0h2m1 0h3m1 0h7m-29 1h1m5 0h1m3 0h3m1 0h5m1 0h1m1 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m3 0h1m4 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m2 0h2m5 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m1 0h2m3 0h2m3 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h2m1 0h1m1 0h2m1 0h5m1 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h2m1 0h1m1 0h3m1 0h2m1 0h1m-20 1h1m1 0h1m1 0h4m1 0h4m2 0h3m2 0h3m1 0h2m1 0h1m-29 1h2m1 0h3m2 0h1m1 0h1m1 0h3m5 0h1m1 0h1m3 0h1m1 0h1m-29 1h1m1 0h10m1 0h1m2 0h2m1 0h1m2 0h1m1 0h2m1 0h1m-28 1h3m5 0h2m1 0h2m3 0h1m2 0h4m1 0h1m1 0h2m-27 1h1m1 0h1m1 0h10m1 0h2m1 0h2m1 0h2m-21 1h1m3 0h1m2 0h1m3 0h4m1 0h3m1 0h1m1 0h1m1 0h1m-28 1h1m2 0h1m1 0h2m1 0h4m2 0h1m2 0h2m1 0h3m5 0h1m-29 1h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h1m4 0h1m-27 1h3m1 0h1m1 0h2m3 0h2m3 0h4m-19 1h3m1 0h1m2 0h2m3 0h2m4 0h3m2 0h3m-29 1h1m1 0h1m1 0h3m1 0h3m4 0h2m1 0h1m1 0h2m2 0h2m1 0h2m-27 1h1m6 0h1m2 0h3m2 0h4m4 0h1m1 0h2m-29 1h1m1 0h1m1 0h5m1 0h1m4 0h2m2 0h6m1 0h2m-20 1h2m2 0h1m3 0h1m2 0h2m3 0h1m3 0h1m-29 1h7m1 0h3m3 0h1m1 0h2m2 0h1m1 0h1m1 0h4m-28 1h1m5 0h1m1 0h5m1 0h2m1 0h1m2 0h1m3 0h1m1 0h1m1 0h1m-29 1h1m1 0h3m1 0h1m4 0h2m1 0h2m4 0h6m2 0h1m-29 1h1m1 0h3m1 0h1m1 0h9m2 0h4m1 0h1m1 0h1m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h3m3 0h1m1 0h2m3 0h2m2 0h1m-29 1h1m5 0h1m1 0h2m1 0h5m1 0h5m1 0h1m3 0h1m-28 1h7m2 0h1m3 0h2m2 0h1m1 0h2m1 0h1m1 0h1m2 0h1"/></svg>
+    <span>edunamics.github.io</span>
   </div>
 <script>
 if(matchMedia('(prefers-reduced-motion: reduce)').matches) document.querySelectorAll('.icon svg').forEach(function(v){v.pauseAnimations&&v.pauseAnimations();});
