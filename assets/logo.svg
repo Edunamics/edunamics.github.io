@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <title>Edunamics</title>
+  <path stroke="#ffffff" stroke-width="4" d="M22 18V102M38 18V102M22 18H38M22 102H38M22 18L38 30L22 42L38 54L22 66L38 78L22 90L38 102M38 18H98M38 34H98M98 18V34M38 34L50 18L62 34L74 18L86 34L98 18M38 52H86M38 68H86M86 52V68M38 68L50 52L62 68L74 52L86 68M38 86H98M38 102H98M98 86V102M38 102L50 86L62 102L74 86L86 102L98 86"/>
+  <path stroke="#4fb3ff" stroke-width="4.5" d="M108 2V13M103.5 8.5L108 14L112.5 8.5"/>
+  <circle cx="98" cy="18" r="3.5" fill="#4fb3ff"/>
+</svg>

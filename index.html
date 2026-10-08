@@ -26,6 +26,7 @@
   /* Edu ⇄ Dy 切換窗：裁切範圍外的字 */
   .swap { display:inline-block; position:relative; overflow:hidden; height:1.3em; padding-top:.45em; margin-top:-.45em; vertical-align:top; box-sizing:content-box; }
   .swap .w { position:absolute; right:.05em; top:.45em; line-height:1.3em; will-change:transform; }
+  .logo { display:block; margin:0 auto 10px; width:84px; height:84px; }
   .zh { font-size:1.3rem; margin-top:6px; opacity:.9; }
 
   /* iOS 風格 App 圖示 */
@@ -72,6 +73,9 @@
   .status { margin-top:30px; font-size:.85rem; color:var(--accent); }
   @media (max-width:380px){ .icon{width:60px;height:60px;} .label{font-size:.75rem;} }
 </style>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 </head>
 <body>
   <svg class="sk-defs" aria-hidden="true">
@@ -221,6 +225,7 @@
     </g>
   </svg>
   <div class="card">
+    <img class="logo" src="assets/logo.svg" width="84" height="84" alt="">
     <h1 aria-label="Edunamics"><span class="swap" id="swap" aria-hidden="true"><span class="w" id="wEdu">Edu</span><span class="w" id="wDy">Dy</span></span><span class="tail" aria-hidden="true">namics</span></h1>
     <div class="zh">知識動力場</div>
 
