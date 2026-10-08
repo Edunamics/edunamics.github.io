@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>機械製造學 第七章 非傳統加工</title>
+<link rel="stylesheet" href="assets/chapter.css">
+<style>
+/* Layout: 與第一章相同的講義版面 — 左側節次分頁 + 右側正文；製程以剖面示意圖與流程框呈現 */
+:root{
+  --bg:#FBF8F5; --paper:#FFFFFF; --ink:#2A1D14; --muted:#6E5D50;
+  --accent:#A84A0C; --accent-soft:#F6E6D8; --line:#E6D5C7; --grid:rgba(168,74,12,.07);
+  --steel:#9A8A7D; --fix:#1D6B70; --fix-soft:#E3F1F1; --warn:#8E2F1C;
+  --f-display:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-body:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --steel:#6E5E52; --fix:#6CC3C7; --fix-soft:#16302F; --warn:#F08A73; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --steel:#6E5E52; --fix:#6CC3C7; --fix-soft:#16302F; --warn:#F08A73; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.8;padding-inline:16px}
+.wrap{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px;padding-block:0 64px}
+header.hero{max-width:1120px;margin:0 auto 32px;padding-block:36px 28px;border-bottom:1.5px solid var(--accent);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;
+  display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:24px;align-items:center}
+.hero-art{width:100%;max-width:260px;justify-self:end}
+.crumb{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,5vw,3.1rem);line-height:1.2;margin:.3em 0 .2em;text-wrap:balance}
+h1 small{font-size:.5em;font-weight:600;color:var(--muted);display:block;letter-spacing:.05em}
+.lede{max-width:62ch;color:var(--muted);margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px;font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+main{min-width:0}
+section{padding-block:8px 28px;border-bottom:1px solid var(--line);margin-bottom:28px;scroll-margin-top:16px}
+h2{font-family:var(--f-display);font-size:1.6rem;margin:0 0 .6em;display:flex;align-items:baseline;gap:14px;text-wrap:balance}
+h2 .no{font-family:var(--f-mono);font-size:.95rem;color:var(--paper);background:var(--accent);padding:2px 9px;border-radius:2px;font-weight:500}
+h3{font-size:1.12rem;margin:1.6em 0 .5em;color:var(--accent)}
+h4{font-size:1rem;margin:1.2em 0 .3em}
+p{max-width:68ch;margin:.4em 0 .9em}
+.en{font-family:var(--f-mono);font-size:.8em;color:var(--muted)}
+.key{background:linear-gradient(transparent 62%,var(--accent-soft) 62%);font-weight:700}
+figure{margin:20px 0 24px;background:var(--paper);border:1px solid var(--line);padding:20px}
+figcaption{font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-top:12px;letter-spacing:.04em}
+.scroll{overflow-x:auto}
+.tbl{overflow-x:auto;margin:14px 0 22px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px;background:var(--paper)}
+th,td{border:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);color:var(--accent);font-weight:700;white-space:nowrap}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);padding:12px 16px;margin:16px 0;font-size:15px}
+.callout b{color:var(--accent)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:12px 0 20px}
+.card{border:1px solid var(--line);background:var(--paper);padding:14px 16px}
+.card h4{margin:0 0 4px;color:var(--accent)}
+.card p{margin:0;font-size:14.5px}
+/* 流程圖共用 */
+.node{background:var(--paper);border:2px solid var(--accent);border-radius:6px;padding:10px 14px;position:relative}
+.node b{display:block;font-size:15.5px}
+.node small{display:block;color:var(--muted);font-size:13px;line-height:1.5}
+.node .n{font-family:var(--f-mono);font-size:11.5px;color:var(--accent);letter-spacing:.06em}
+.node.dark{background:var(--accent);border-color:var(--accent)}
+.node.dark b,.node.dark .n{color:var(--paper)} .node.dark small{color:var(--accent-soft)}
+.down{height:30px;position:relative;margin-left:50%}
+.down::before{content:"";position:absolute;left:-1px;top:0;bottom:8px;border-left:2px solid var(--fix)}
+.down::after{content:"";position:absolute;left:-7px;bottom:0;border:7px solid transparent;border-top:9px solid var(--fix);border-bottom:0}
+.right{flex:0 0 34px;align-self:center;height:2px;background:var(--fix);position:relative}
+.right::after{content:"";position:absolute;right:-2px;top:-6px;border:7px solid transparent;border-left:10px solid var(--fix);border-right:0}
+/* 設計流程 */
+.phases{display:grid;gap:0}
+.phase{border:1.5px dashed var(--steel);border-radius:10px;padding:26px 16px 14px;position:relative;display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:0 14px;align-items:center}
+.phase>.lab{position:absolute;top:-11px;left:14px;background:var(--paper);padding:0 8px;font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.08em}
+.phase .down{grid-column:1}
+.tool{font-family:var(--f-mono);font-size:12px;color:var(--accent);border:1.5px solid var(--accent);border-radius:999px;text-align:center;padding:3px 8px;position:relative;background:var(--paper)}
+.tool::before{content:"";position:absolute;right:100%;top:50%;width:14px;border-top:1.5px dashed var(--accent)}
+.gap{grid-column:2}
+/* IPO */
+.ipo{display:flex;align-items:stretch;gap:0}
+.ipo .col{flex:1;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.ipo .col h5{margin:0 0 4px;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;color:var(--accent);text-align:center}
+.pill{border:1.5px solid var(--accent);border-radius:999px;padding:2px 12px;font-size:14px;text-align:center;background:var(--paper)}
+.pill.solid{background:var(--accent);color:var(--paper)}
+.ipo .proc{flex:1;border:2px solid var(--accent);border-radius:8px;background:var(--accent);color:var(--paper);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:14px}
+.ipo .proc h5{color:var(--accent-soft)}
+.ipo .proc .pill{background:transparent;border-color:var(--accent-soft);color:var(--paper)}
+/* 分類樹 */
+.tree{width:max-content;min-width:100%;margin:0 auto}
+.tree ul{list-style:none;margin:0;padding:22px 0 0;display:flex;justify-content:center;position:relative}
+.tree li{position:relative;padding:22px 4px 0;text-align:center}
+.tree>ul{padding-top:0}.tree>ul>li{padding-top:0}
+.tree li::before,.tree li::after{content:"";position:absolute;top:0;width:50%;height:22px;border-top:2px solid var(--steel)}
+.tree li::before{right:50%}.tree li::after{left:50%;border-left:2px solid var(--steel)}
+.tree li:only-child::before,.tree li:only-child::after{display:none}
+.tree li:first-child::before,.tree li:last-child::after{border-top:none}
+.tree li:last-child::before{border-right:2px solid var(--steel);border-top-right-radius:6px}
+.tree li:first-child::after{border-top-left-radius:6px}
+.tree>ul>li::before,.tree>ul>li::after{display:none}
+.tree ul ul::before{content:"";position:absolute;top:0;left:50%;height:22px;border-left:2px solid var(--steel)}
+.tree .node{display:inline-block;padding:5px 9px;white-space:nowrap}
+.tree .node b{font-size:14.5px}
+/* 加工示意圖卡 */
+.procs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 20px}
+.procs.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.proc-card{background:var(--paper);border:1px solid var(--line);padding:12px 12px 10px;display:flex;flex-direction:column;gap:4px}
+.proc-card svg{width:100%;height:auto;background:var(--bg);border-radius:4px}
+.proc-card b{font-size:15px}
+.proc-card .en{display:block}
+.proc-card small{color:var(--muted);font-size:13px;line-height:1.5}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted);margin:-4px 0 12px}
+.legend i{display:inline-block;width:14px;height:10px;margin-right:6px;vertical-align:middle;border-radius:2px}
+/* 碳足跡 */
+.life{display:flex;align-items:stretch}
+.life .node{flex:1;text-align:center;padding:10px 8px}
+.offset{margin-top:14px;border:2px dashed var(--fix);border-radius:8px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:center;font-size:14.5px}
+.offset b{color:var(--fix)}
+.eq{font-family:var(--f-mono);font-size:15px;background:var(--fix);color:var(--paper);padding:2px 10px;border-radius:4px}
+/* 試題 */
+.fixbox{border:1.5px dashed var(--warn);background:var(--fix-soft);padding:14px 18px;margin:8px 0 0;font-size:14.5px}
+.fixbox h3{color:var(--warn);margin:0 0 6px;font-size:1rem}
+.fixbox ul{margin:0;padding-left:1.1em}
+.fixbox s{color:var(--muted)}
+details{border:1px solid var(--line);background:var(--paper);margin:10px 0;padding:0 16px}
+summary{cursor:pointer;padding:12px 0;font-weight:500;list-style:none;display:grid;grid-template-columns:2.4em minmax(0,1fr) auto;gap:8px}
+summary::-webkit-details-marker{display:none}
+summary .qn{font-family:var(--f-mono);color:var(--accent)}
+summary .src{font-size:12px;color:var(--muted);white-space:nowrap}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details[open] summary{border-bottom:1px dashed var(--line)}
+details .ans{padding:10px 0 14px 2.8em;font-size:15px}
+details .ans ul{margin:.2em 0;padding-left:1.1em}
+.hint{font-family:var(--f-mono);font-size:11px;color:var(--accent);letter-spacing:.1em}
+svg text{font-family:var(--f-body)}
+@media (max-width:820px){
+  header.hero{grid-template-columns:minmax(0,1fr)}.hero-art{justify-self:start;max-width:180px}
+  .wrap{grid-template-columns:minmax(0,1fr);gap:0}
+        .ipo,.life{flex-direction:column}
+  .ipo .right,.life .right{flex-basis:26px;width:2px;height:26px;align-self:center}
+  .ipo .right::after,.life .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
+  .phase{grid-template-columns:minmax(0,1fr) 92px}
+  .procs,.procs.c4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+.crumb a{color:inherit;text-decoration:none;border-bottom:1px dashed currentColor}
+.crumb a:hover{border-bottom-style:solid}
+.cards.c2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card .en{display:block;margin:-2px 0 4px}
+.flow6,.flow5{display:flex;align-items:stretch;min-width:0}
+.flow6 .node,.flow5 .node{flex:1 1 0;min-width:0;padding:8px 9px}
+.flow6 .right,.flow5 .right{flex-basis:22px}
+.flow5 .node small{font-size:12px}
+.formula{font-family:var(--f-mono);font-size:1.45rem;text-align:center;color:var(--accent);background:var(--accent-soft);padding:14px 12px;margin:12px 0 14px;border-radius:4px}
+.formula.sm{font-size:1.05rem;padding:8px;margin:8px 0}
+.example{border:1.5px solid var(--fix);background:var(--paper);padding:0 18px 12px;margin:18px 0 24px}
+.ex-h{display:inline-block;background:var(--fix);color:var(--paper);font-weight:700;font-size:14px;padding:3px 12px;margin:0 0 6px -18px}
+.example ul{margin:.2em 0 .6em;padding-left:1.2em;font-family:var(--f-mono);font-size:14px}
+figure.mini{margin:10px 0;padding:12px;background:var(--bg)}
+figure.mini svg{width:100%;max-width:420px;height:auto;display:block}
+ol.steps{counter-reset:st;list-style:none;padding:0;margin:10px 0 20px;display:grid;gap:8px;max-width:72ch}
+ol.steps li{counter-increment:st;display:grid;grid-template-columns:2.2em minmax(0,1fr);gap:10px;align-items:baseline}
+ol.steps li::before{content:counter(st,decimal-leading-zero);font-family:var(--f-mono);font-size:13px;color:var(--paper);background:var(--accent);text-align:center;border-radius:2px;padding:1px 0}
+.dc2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.dc2>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.dc2 svg{width:100%;height:auto;background:var(--bg);border-radius:4px}
+.dc2 b{font-size:15.5px;margin-top:4px}
+.dc2 small{color:var(--muted);font-size:13.5px;line-height:1.6}
+figure svg{max-width:100%}
+.scroll>svg{width:100%;height:auto;display:block}
+@media (max-width:820px){.dc2{grid-template-columns:minmax(0,1fr)}}
+
+/* fit-to-width：圖面一律縮放到版面寬度內，不出現水平捲動 */
+.scroll{overflow:visible}
+.scroll svg,figure svg{min-width:0!important;max-width:100%;height:auto}
+table{min-width:0}
+.tbl{overflow-x:visible}
+th{white-space:normal}
+@media (max-width:820px){
+  table{font-size:13.5px} th,td{padding:6px 8px}
+  .flow6,.flow5{flex-direction:column;min-width:0}
+  .flow6 .node,.flow5 .node{width:auto;flex:none}
+  .flow6 .right,.flow5 .right{flex:0 0 22px;width:2px;height:22px;align-self:center}
+  .flow6 .right::after,.flow5 .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
+}
+.tree.as-list{width:auto;min-width:0;margin:0}
+.tree.as-list ul{display:block;padding:0 0 0 16px;margin:0 0 0 12px;border-left:2px solid var(--steel)}
+.tree.as-list>ul{border-left:0;margin:0;padding:0}
+.tree.as-list li{padding:4px 0 4px 14px;text-align:left}
+.tree.as-list>ul>li{padding-left:0}
+.tree.as-list li::after,.tree.as-list ul ul::before{display:none}
+.tree.as-list li::before{display:block;content:"";position:absolute;left:-2px;top:20px;width:12px;height:0;border:0;border-top:2px solid var(--steel);border-radius:0}
+.tree.as-list>ul>li::before{display:none}
+.tree.as-list .node{white-space:normal}
+.tree .node{padding:4px 7px}
+.tree li{padding-left:3px;padding-right:3px}
+.tree.as-list ul:not(:has(ul))>li{padding:0}
+.tree.as-list ul:not(:has(ul)){display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px;padding:6px 0 6px 16px}
+.tree.as-list ul:not(:has(ul))>li::before{display:none}
+
+/* 砂輪標示 */
+.spec{border:1px solid var(--line);background:var(--paper);padding:14px 16px;margin:12px 0 18px}
+.spec-row{display:flex;flex-wrap:wrap;gap:6px}
+.spec .chip{flex:1 1 72px;min-width:0;border:1.5px solid var(--accent);border-radius:4px;text-align:center;padding:6px 4px}
+.spec .chip b{display:block;font-family:var(--f-mono);font-size:1.3rem;color:var(--accent)}
+.spec .chip small{display:block;font-size:12px;color:var(--muted);line-height:1.4}
+.spec-cap{margin:10px 0 0;font-size:13.5px;color:var(--muted);max-width:none}
+</style>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+</head>
+<body>
+<header class="hero">
+  <div>
+    <div class="crumb"><a href="manufacturing.html">知識動力場 · 機械製造學</a> · Chapter 07</div>
+    <h1>非傳統加工<small>Nontraditional Machining</small></h1>
+    <p class="lede">傳統切削靠比工件硬的刀具把材料剪下來；遇到淬硬模具鋼、碳化物、陶瓷、極薄或極細的工件，刀具就無能為力。非傳統加工改用磨粒衝擊、水柱、電解、放電、電子束、雷射與電漿移除材料，不受工件硬度限制，也沒有機械切削力。本章依使用的能量分為機械式、電化式、化學式與熱電式四類介紹。</p>
+    <div class="meta"><span>6 節 · 10 題歷屆試題</span></div>
+  </div>
+  <svg class="hero-art" viewBox="0 0 260 230" role="img" aria-label="放電加工：成形電極與工件之間的間隙中產生放電火花">
+    <rect x="96" y="10" width="68" height="120" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+    <path d="M96 130 h20 v14 h28 v-14 h20" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+    <rect x="20" y="152" width="220" height="64" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2"/>
+    <path d="M96 152 h20 v-6 h28 v6 h20" fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <g stroke="var(--warn)" stroke-width="2.5" stroke-linecap="round"><path d="M104 136 l-3 6 4 0 -3 6"/><path d="M130 146 l-3 4 4 0 -3 4"/><path d="M156 136 l-3 6 4 0 -3 6"/></g>
+    <rect x="10" y="120" width="240" height="100" fill="var(--fix)" opacity=".12"/>
+    <text x="172" y="40" font-size="12" fill="var(--muted)">電極（−）</text><text x="26" y="206" font-size="12" fill="var(--muted)">工件（＋）</text><text x="170" y="140" font-size="12" fill="var(--fix)">介電液</text>
+  </svg>
+</header>
+
+<div class="wrap">
+<nav class="tabs" role="tablist" aria-label="本章各節" aria-orientation="vertical">
+  <p class="tabs-label">SECTIONS</p>
+  <a class="tab" id="tab-s1" href="#s1" role="tab" aria-controls="s1" aria-selected="true"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.5 5 5.5.8-4 3.9.9 5.5L12 14.6 7.1 17.2 8 11.7 4 7.8l5.5-.8z"/><path d="M4 21h16"/></svg></span><span class="tx"><span class="no">7-1</span><span class="nm">概述</span></span></a>
+  <a class="tab" id="tab-s2" href="#s2" role="tab" aria-controls="s2" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3h4v8h-4z"/><path d="M12 11v4"/><path d="M8 18l2-2M16 18l-2-2M12 19v-2"/><path d="M3 21h18"/></svg></span><span class="tx"><span class="no">7-2</span><span class="nm">機械式非傳統加工</span></span></a>
+  <a class="tab" id="tab-s3" href="#s3" role="tab" aria-controls="s3" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v10M19 4v10"/><path d="M3 4h4M17 4h4"/><path d="M5 14c0 4 14 4 14 0"/><path d="M9 9h2M10 8v2M14 9h2"/></svg></span><span class="tx"><span class="no">7-3</span><span class="nm">電化式非傳統加工</span></span></a>
+  <a class="tab" id="tab-s4" href="#s4" role="tab" aria-controls="s4" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v5l-5 10a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-10V3"/><path d="M7 15h10"/></svg></span><span class="tx"><span class="no">7-4</span><span class="nm">化學式非傳統加工</span></span></a>
+  <a class="tab" id="tab-s5" href="#s5" role="tab" aria-controls="s5" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v7"/><path d="M13 9l-3 4h4l-3 4"/><path d="M4 20h16"/><path d="M6 17h12"/></svg></span><span class="tx"><span class="no">7-5</span><span class="nm">熱電式非傳統加工</span></span></a>
+  <a class="tab" id="tab-s6" href="#s6" role="tab" aria-controls="s6" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h6"/><path d="M9 9l3 3-3 3"/><path d="M14 12h7"/><circle cx="17" cy="12" r="3"/><path d="M17 5v2M17 17v2M21.5 7.5l-1.4 1.4M12.5 16.5l1.4-1.4"/></svg></span><span class="tx"><span class="no">7-6</span><span class="nm">其他特殊加工</span></span></a>
+  <a class="tab" id="tab-exam" href="#exam" role="tab" aria-controls="exam" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 2.8h6"/><path d="M8.5 11l2 2 4-4M8.5 17h7"/></svg></span><span class="tx"><span class="no">試題</span><span class="nm">歷屆試題</span></span></a>
+</nav>
+
+<main>
+
+<!-- ============ 7-1 ============ -->
+<section id="s1">
+  <h2><span class="no">7-1</span>概述</h2>
+  <p>非傳統加工<span class="en">（nontraditional machining）</span>以刀具之外的能量形式移除材料。它與傳統加工的區分在於<b>移除材料的機制與能量來源</b>，而不是發明的先後。</p>
+  <div class="tbl"><table>
+    <tr><th>能量</th><th>移除機制</th><th>方法</th></tr>
+    <tr><td><b>機械能</b></td><td>磨粒或高速流體的衝擊、沖蝕</td><td>超音波加工 USM、磨料噴射加工 AJM、水刀 WJM、加砂水刀 AWJ、磨料流動加工 AFM</td></tr>
+    <tr><td><b>電化學能</b></td><td>陽極溶解（電鍍的逆反應）</td><td>電化學加工 ECM、電化學研磨 ECG、電化學去毛邊</td></tr>
+    <tr><td><b>化學能</b></td><td>化學溶液腐蝕</td><td>化學銑切 CHM、光化學下料、化學雕刻</td></tr>
+    <tr><td><b>熱能</b></td><td>局部熔化與汽化</td><td>放電加工 EDM、線切割 WEDM、電子束加工 EBM、雷射加工 LBM、電漿電弧加工 PAM</td></tr>
+  </table></div>
+  <div class="cards c2">
+    <div class="card"><h4>適用時機</h4><p>材料太硬、太脆或太軟、太薄而無法承受切削力；形狀複雜、孔極小或深、刀具到不了的部位；需要無毛邊、無殘留應力的表面；傳統加工不經濟時。</p></div>
+    <div class="card"><h4>限制</h4><p>材料移除率低、單位體積耗能大、設備昂貴；部分方法只能加工導電材料；熱能法會留下再鑄層與熱影響區。</p></div>
+  </div>
+</section>
+
+<!-- ============ 7-2 ============ -->
+<section id="s2">
+  <h2><span class="no">7-2</span>機械式非傳統加工</h2>
+  <h3>一、超音波加工 USM</h3>
+  <figure>
+    <svg viewBox="0 0 640 250" role="img" aria-label="超音波加工：換能器產生高頻振動，經聚能器放大後帶動工具，工具與工件間的磨料漿中磨粒撞擊工件">
+      <rect x="250" y="10" width="140" height="44" rx="4" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M270 54 H370 L346 120 H294 Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="294" y="120" width="52" height="56" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="120" y="186" width="400" height="50" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M294 186 v12 h52 v-12" fill="var(--paper)" stroke="var(--ink)" stroke-dasharray="3 3"/>
+      <g fill="var(--accent)"><circle cx="300" cy="182" r="2.2"/><circle cx="310" cy="180" r="2"/><circle cx="322" cy="183" r="2.2"/><circle cx="334" cy="180" r="2"/><circle cx="342" cy="183" r="2.2"/><circle cx="288" cy="178" r="2"/><circle cx="354" cy="178" r="2"/><circle cx="276" cy="176" r="2"/><circle cx="366" cy="176" r="2"/></g>
+      <path d="M180 150 Q240 150 286 172" fill="none" stroke="var(--fix)" stroke-width="2.5"/><path d="M280 166 l10 8 -12 2z" fill="var(--fix)"/>
+      <path d="M420 100 v40 M412 108 l8-10 8 10 M412 132 l8 10 8-10" stroke="var(--fix)" stroke-width="2.5" fill="none"/>
+      <g font-size="12.5" fill="var(--ink)"><text x="400" y="36">換能器（壓電或磁致伸縮）</text><text x="380" y="80">聚能器（放大振幅）</text><text x="200" y="140">磨料漿</text><text x="436" y="124" fill="var(--fix)">約 20 kHz</text><text x="436" y="140" fill="var(--fix)">振幅約 0.01–0.1 mm</text><text x="356" y="160">工具</text><text x="130" y="228" fill="var(--muted)">工件（硬脆材料）</text></g>
+    </svg>
+    <figcaption>圖 7-1　超音波加工</figcaption>
+  </figure>
+  <p>工具以約 20 kHz、振幅約 0.01–0.1 mm 的頻率在磨料漿中上下振動，把碳化硼、碳化矽或氧化鋁磨粒以極高加速度撞擊工件，使表面產生微小的脆性破裂而剝落。工具不接觸工件，形狀複製到工件上。</p>
+  <div class="cards c2">
+    <div class="card"><h4>為何特別適合硬脆材料</h4><p>移除靠磨粒衝擊造成微裂紋與碎裂，材料愈硬愈脆，愈容易以脆性破壞剝落；延性材料則只會被衝出凹痕而吸收能量，效率很低。加工力小、溫度低，沒有熱影響區與化學變化，也不需導電，所以適合玻璃、陶瓷、石英、碳化物、寶石。</p></div>
+    <div class="card"><h4>特點與限制</h4><p>可用成形工具一次加工非圓孔、多孔與彎孔；工具（軟鋼、不鏽鋼）尺寸要比孔略小以補償過切。材料移除率低、加工深度有限、工具會磨耗、每種形狀需專用工具；加工軟材料不經濟。</p></div>
+  </div>
+  <p><b>設備：</b>電源把 60 Hz 交流轉成約 20 kHz 的高頻電；換能器以壓電或磁致伸縮效應轉成機械振動；聚能器（指數形或階梯形，用鈦、蒙乃爾合金）放大振幅並傳到工具；磨料漿濃度約 30–50%，需循環補充新鮮磨粒並帶走碎屑。旋轉超音波加工把超音波振動加在旋轉的鑽石刀具上，用於陶瓷鑽孔與銑削。</p>
+
+  <h3>二、磨料噴射加工 AJM</h3>
+  <p>以乾燥高壓氣體把細磨粒（約 10–50 μm 的氧化鋁或碳化矽）從碳化鎢或藍寶石噴嘴高速噴出（約 150–300 m/s），衝擊工件產生微小破裂。設備便宜、加工力小，適合硬脆薄件的切割、鑽孔、刻字，以及去毛邊、霧化、清潔。缺點是移除率低、孔有錐度、轉角變圓、磨粒會彈射散失並嵌入工件。</p>
+
+  <h3>三、水刀 WJM 與加砂水刀 AWJ</h3>
+  <figure>
+    <svg viewBox="0 0 640 240" role="img" aria-label="加砂水刀：超高壓水經藍寶石噴嘴形成細水柱，在混合管中吸入磨砂，噴出後切穿工件，下方承接槽收集水流">
+      <rect x="270" y="10" width="100" height="40" rx="4" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M290 50 H350 V100 L330 110 H310 L290 100 Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="310" y="110" width="20" height="44" fill="var(--steel)" stroke="var(--ink)" stroke-width="1.5"/>
+      <path d="M180 76 H290" stroke="var(--accent)" stroke-width="5"/>
+      <path d="M318 154 L322 216 M320 154 L320 216" stroke="var(--fix)" stroke-width="4"/>
+      <rect x="120" y="160" width="400" height="30" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="316" y="160" width="8" height="30" fill="var(--paper)"/>
+      <rect x="240" y="200" width="160" height="34" fill="var(--fix)" opacity=".2" stroke="var(--ink)"/>
+      <g font-size="12.5" fill="var(--ink)"><text x="380" y="36">超高壓水（約 200–400 MPa）</text><text x="360" y="84">藍寶石噴嘴＋混合室</text><text x="120" y="70" fill="var(--accent)">磨砂吸入</text><text x="340" y="136">混合管</text><text x="130" y="182" fill="var(--muted)">工件</text><text x="410" y="222">承接槽</text></g>
+    </svg>
+    <figcaption>圖 7-2　加砂水刀（純水刀則無磨砂吸入）</figcaption>
+  </figure>
+  <p>以增壓器把水加壓到約 200–400 MPa，經藍寶石噴嘴（孔徑約 0.1–0.4 mm）形成接近音速數倍的細水柱沖蝕材料。<b>純水刀</b>切軟材料：木材、紙、皮革、橡膠、塑膠、食品、尿布。<b>加砂水刀</b>在混合室吸入石榴石磨砂，可切金屬、石材、玻璃、複合材料。優點是冷加工無熱影響區、無粉塵、切縫窄、可任意方向切割、易自動化；缺點是設備昂貴、噪音大、厚件切口會有斜度與拖曳紋，需處理廢水與磨砂。</p>
+
+  <h3>四、磨料流動加工 AFM</h3>
+  <p>把含碳化矽或鑽石粉的黏稠半固態磨料（聚合物載體）以液壓在兩個缸之間來回擠壓，<b>流過工件的內通道與孔口</b>，磨粒像柔性銼刀一樣研磨流道壁。用於去除交叉孔毛邊、拋光內流道、倒圓角、去除放電加工的再鑄層，例如燃油噴嘴、渦輪葉片冷卻孔、擠製模、醫療器材。磨料黏度低時中心流速快，主要修入口邊緣；黏度高時接近整體擠出，均勻研磨整個流道壁。流道愈窄限流愈大，磨除量愈多。一次即可同時完成去毛邊、拋光與倒角，但盲孔無法加工、夾具成本高、加工後需清洗。</p>
+</section>
+
+<!-- ============ 7-3 ============ -->
+<section id="s3">
+  <h2><span class="no">7-3</span>電化式非傳統加工</h2>
+  <h3>一、電化學加工 ECM</h3>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 220" role="img" aria-label="電化學加工：工件接正極、成形工具接負極，電解液高速流過兩者間的小間隙，工件被溶解成與工具相反的形狀">
+        <rect x="110" y="10" width="80" height="110" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="104" y="40" width="6" height="80" fill="var(--warn)" opacity=".8"/><rect x="190" y="40" width="6" height="80" fill="var(--warn)" opacity=".8"/>
+        <path d="M110 120 Q150 150 190 120 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="140" y="10" width="20" height="110" fill="var(--fix)" opacity=".35"/>
+        <path d="M20 150 H96 Q150 186 204 150 H280 V210 H20 Z" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M120 140 q-20 6 -40 4 M180 140 q20 6 40 4" fill="none" stroke="var(--fix)" stroke-width="2"/>
+        <g font-size="13" font-weight="700"><text x="196" y="30" fill="var(--ink)">−</text><text x="262" y="200" fill="var(--ink)">＋</text></g>
+        <g font-size="12" fill="var(--ink)"><text x="200" y="60">工具（陰極）</text><text x="200" y="76">側面絕緣</text><text x="30" y="200" fill="var(--muted)">工件（陽極）</text><text x="8" y="136" fill="var(--fix)">電解液</text></g>
+      </svg>
+      <b>ECM</b><small>低電壓（約 5–25 V）、大電流的直流，工件為陽極被電解溶解；電解液（NaCl 或 NaNO₃ 水溶液）高速流過約 0.1–0.5 mm 的間隙，帶走溶解產物與熱。工具是陰極，<b>只有氫氣析出，不會磨耗</b>。</small>
+      </div>
+      <div>
+      <svg viewBox="0 0 300 220" role="img" aria-label="放電加工：電極與工件浸在介電液中，伺服保持微小間隙，脈衝放電熔蝕工件表面">
+        <rect x="110" y="10" width="80" height="110" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M110 120 h20 v14 h40 v-14 h20" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="20" y="150" width="260" height="60" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M110 150 h20 v-10 h40 v10 h20" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/>
+        <g stroke="var(--warn)" stroke-width="2.5" stroke-linecap="round"><path d="M118 124 l-3 6 4 0 -3 8"/><path d="M150 136 l-3 2 4 0 -3 2"/><path d="M182 124 l-3 6 4 0 -3 8"/></g>
+        <rect x="10" y="100" width="280" height="116" fill="var(--fix)" opacity=".1"/>
+        <g font-size="13" font-weight="700"><text x="196" y="30" fill="var(--ink)">−</text><text x="262" y="200" fill="var(--ink)">＋</text></g>
+        <g font-size="12" fill="var(--ink)"><text x="200" y="60">電極（銅、石墨）</text><text x="200" y="76">伺服進給保持間隙</text><text x="30" y="200" fill="var(--muted)">工件</text><text x="14" y="116" fill="var(--fix)">介電液</text><text x="14" y="132" fill="var(--fix)" font-size="10.5">煤油／去離子水</text></g>
+      </svg>
+      <b>EDM</b><small>電極與工件浸在絕緣的介電液中，間隙約 0.01–0.05 mm。脈衝電壓擊穿介電液產生火花，局部溫度約 8 000–12 000°C，熔化並汽化微小凹坑，介電液冷卻並沖走碎屑。<b>電極也會被熔蝕</b>。</small>
+      </div>
+    </div>
+    <figcaption>圖 7-3　電化學加工與放電加工</figcaption>
+  </figure>
+  <p>ECM 移除量依法拉第定律與電流成正比，是非傳統加工中<b>材料移除率最高</b>的方法之一。只要導電，再硬的材料都能加工；無切削力、無毛邊、無殘留應力與熱影響區，表面光滑。間隙小則電流密度大、移除快、精度好，但須防止短路；電解液流速要足夠帶走產物。</p>
+  <div class="cards c2">
+    <div class="card"><h4>應用</h4><p>渦輪葉片與葉盤成形、鍛模模穴、深小孔（成形管電解 STEM）、槍管膛線、電解切斷、去毛邊。</p></div>
+    <div class="card"><h4>限制</h4><p>只能加工導電材料；工具設計須反覆試誤（間隙不均）；尖角做不出來、精度不如 EDM；電解液具腐蝕性，廢液與污泥處理成本高；設備需耐腐蝕、剛性高。</p></div>
+  </div>
+
+  <h3>二、電化學研磨 ECG 與相關方法</h3>
+  <p><b>ECG：</b>以金屬結合的導電砂輪為陰極，工件為陽極，電解液從砂輪與工件間流過。約 90% 材料以電解移除，其餘由砂輪磨粒刮除絕緣的氧化膜。磨削力小、無熱損傷與毛邊、砂輪壽命長，用於磨碳化物刀具、蜂巢結構、注射針頭等硬而薄的件。</p>
+  <p><b>電化學去毛邊：</b>把電極放在毛邊附近，毛邊尖端電流密度最高而優先溶解，數秒到數十秒即可去除交叉孔、內槽等難以觸及的毛邊，不產生新毛邊、不損傷工件、易自動化，但需專用電極與夾具、只能用於導電件。</p>
+  <p><b>電化學搪磨：</b>搪磨油石配合電解，比傳統搪磨快且油石壽命長，用於精修內孔。</p>
+  <p><b>電解線上修銳 ELID：</b>以電解持續溶除金屬結合鑽石砂輪的結合劑，使細磨粒在研磨中保持突出鋒利，用於矽晶圓、陶瓷、模具的鏡面研磨。</p>
+</section>
+
+<!-- ============ 7-4 ============ -->
+<section id="s4">
+  <h2><span class="no">7-4</span>化學式非傳統加工</h2>
+  <p>以酸或鹼溶液溶解不需要的部分，以耐蝕遮罩保護要保留的部分，是最古老的非傳統加工。</p>
+  <figure>
+    <div class="flow5">
+      <div class="node"><span class="n">1</span><b>清潔</b><small>脫脂、去氧化膜</small></div><div class="right"></div>
+      <div class="node"><span class="n">2</span><b>上遮罩</b><small>浸漬、噴塗；或塗光阻</small></div><div class="right"></div>
+      <div class="node"><span class="n">3</span><b>劃線剝除</b><small>依樣板割開遮罩；或曝光顯影</small></div><div class="right"></div>
+      <div class="node"><span class="n">4</span><b>蝕刻</b><small>浸入蝕刻液，控制時間溫度攪拌</small></div><div class="right"></div>
+      <div class="node dark"><span class="n">5</span><b>去遮罩</b><small>清洗、檢驗</small></div>
+    </div>
+    <figcaption>圖 7-4　化學銑切流程</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>方法</th><th>說明</th><th>應用</th></tr>
+    <tr><td>化學銑切 CHM</td><td>在大面積板材或成形件上蝕出淺凹槽、減薄局部厚度。可多次剝除遮罩做出階梯深度。</td><td>飛機機翼與機身蒙皮減重</td></tr>
+    <tr><td>光化學下料（化學下料）</td><td>以光阻配合曝光顯影做出精細遮罩，把薄板整個蝕穿成零件，無毛邊、無應力。</td><td>印刷電路板、引線架、精密墊片、濾網、編碼盤</td></tr>
+    <tr><td>化學雕刻</td><td>以網版印刷或照相遮罩蝕出淺圖文。</td><td>名牌、面板、裝飾件</td></tr>
+  </table></div>
+  <p><b>蝕刻液：</b>鋁用氫氧化鈉；鋼與銅用氯化鐵、硝酸與鹽酸混合液；不鏽鋼用氯化鐵。<b>過切（底切）：</b>蝕刻是等向性的，向下蝕刻的同時也向遮罩下方側蝕，蝕刻深度 ÷ 側蝕量 稱為蝕刻因子，深度大時精度差。優點是可同時加工整片大面積、多件、任意形狀，無毛邊與熱影響、不受材料硬度限制；缺點是移除率低、精度隨深度變差、無法消除原有表面缺陷、鑄件與銲道蝕刻不均、廢液具腐蝕性。</p>
+</section>
+
+<!-- ============ 7-5 ============ -->
+<section id="s5">
+  <h2><span class="no">7-5</span>熱電式非傳統加工</h2>
+  <h3>一、放電加工 EDM</h3>
+  <p>原理見圖 7-3。設備由脈衝電源、伺服進給（保持放電間隙）、介電液系統（絕緣、冷卻、排屑、過濾）與電極組成。電極常用石墨、銅、銅鎢，要求導電好、熔點高、易加工、消耗少。</p>
+  <div class="tbl"><table>
+    <tr><th>參數</th><th>影響</th></tr>
+    <tr><td>脈衝能量（電流 × 電壓 × 脈衝時間）</td><td>每次放電能量愈大，凹坑愈大：移除率高、表面粗、過切大、再鑄層厚</td></tr>
+    <tr><td>放電頻率</td><td>總能量固定時，頻率愈高每次放電能量愈小：表面愈細、過切愈小、熱影響愈淺；但移除率較低（要高移除率需同時提高電流）</td></tr>
+    <tr><td>放電間隙</td><td>小間隙精度高、表面好，但排屑困難、易短路積碳</td></tr>
+    <tr><td>電極材料與極性</td><td>決定電極消耗比；以電晶體脈衝電源可大幅降低電極消耗</td></tr>
+  </table></div>
+  <figure>
+    <svg viewBox="0 0 640 170" role="img" aria-label="放電加工表面的分層：最上層白色再鑄層，下方熱影響層，最下方母材">
+      <path d="M20 40 q20 -14 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t20 0 V60 H20 Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="20" y="60" width="560" height="34" fill="var(--accent)" opacity=".55"/>
+      <rect x="20" y="94" width="560" height="60" fill="var(--accent-soft)"/>
+      <rect x="20" y="40" width="560" height="114" fill="none" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M140 46 l4 12 M300 48 l-2 10 M440 46 l3 12" stroke="var(--warn)" stroke-width="1.5"/>
+      <g font-size="12.5" fill="var(--ink)"><text x="588" y="50">再鑄層</text><text x="588" y="66" font-size="11" fill="var(--muted)">（白層）</text><text x="590" y="82">熱影響層</text><text x="590" y="132">母材</text></g>
+      <text x="40" y="28" font-size="12" fill="var(--muted)">火花凹坑</text>
+    </svg>
+    <figcaption>圖 7-5　放電加工後的表面層：再鑄層硬脆且可能有微裂紋，重要件需研磨或拋光去除</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>比較</th><th>ECM</th><th>EDM</th></tr>
+    <tr><td>原理</td><td>陽極電解溶解</td><td>火花熔化汽化</td></tr>
+    <tr><td>工作液</td><td>導電電解液</td><td>絕緣介電液（油或去離子水）</td></tr>
+    <tr><td>工具消耗</td><td>無</td><td>有</td></tr>
+    <tr><td>移除率</td><td>高</td><td>較低</td></tr>
+    <tr><td>精度</td><td>約 ±0.03–0.3 mm，尖角難做</td><td>約 ±0.005–0.05 mm，可做尖角細節</td></tr>
+    <tr><td>表面</td><td>光滑，無熱影響、無應力</td><td>霧面火花紋，有再鑄層與微裂紋</td></tr>
+    <tr><td>工作液處理</td><td>具腐蝕性，污泥處理難</td><td>較簡單</td></tr>
+  </table></div>
+
+  <h3>二、線切割放電加工 WEDM</h3>
+  <figure>
+    <svg viewBox="0 0 640 220" role="img" aria-label="線切割：直徑零點幾毫米的銅線電極由上下導輪引導穿過工件，CNC 控制工件或線的運動切出輪廓">
+      <circle cx="320" cy="20" r="12" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/><circle cx="320" cy="200" r="12" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+      <line x1="320" y1="8" x2="320" y2="212" stroke="var(--accent)" stroke-width="3"/>
+      <path d="M150 70 H490 V150 H150 Z" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M200 110 H310 Q324 110 324 96 V70" fill="none" stroke="var(--ink)" stroke-width="2" stroke-dasharray="4 3"/>
+      <path d="M200 110 H316" stroke="var(--paper)" stroke-width="4"/>
+      <g stroke="var(--warn)" stroke-width="2"><path d="M314 100 l6 -4 M314 116 l6 4"/></g>
+      <g font-size="12.5" fill="var(--ink)"><text x="340" y="24">上導輪（送線）</text><text x="340" y="206">下導輪（收線）</text><text x="500" y="100">工件</text><text x="160" y="104" fill="var(--muted)">切縫</text><text x="330" y="60">黃銅線 φ0.1–0.3 mm</text></g>
+      <rect x="140" y="60" width="360" height="100" fill="var(--fix)" opacity=".08"/>
+      <text x="500" y="176" font-size="12" fill="var(--fix)">噴去離子水</text>
+    </svg>
+    <figcaption>圖 7-6　線切割放電加工</figcaption>
+  </figure>
+  <p>以連續送出的細金屬線（黃銅、鍍鋅銅線，直徑約 0.05–0.3 mm）當電極，像線鋸一樣在 CNC 控制下切出任意平面輪廓；上下導輪錯位可切斜度與上下異形。線一直更新，電極消耗不影響精度。介電液用去離子水，黏度低、冷卻好、不會起火，可無人連續加工。用於沖剪模、擠製模、精密零件與淬硬工件下料，切縫窄、尖角精準。只能切穿透形狀（需先鑽穿線孔）。</p>
+
+  <h3>三、電子束加工 EBM 與雷射加工 LBM</h3>
+  <p><b>EBM：</b>在真空中以高壓加速、電磁透鏡聚焦的電子束撞擊工件，動能轉成熱，局部汽化。能量密度高、可以電磁偏轉快速定位，用於在極硬材料上高速鑽大量微孔（如渦輪葉片冷卻孔、過濾網），孔有輕微錐度。需真空、會產生 X 射線、只適合薄件，設備昂貴。</p>
+  <figure>
+    <svg viewBox="0 0 640 190" role="img" aria-label="雷射共振腔：激發源使雷射介質產生居量反轉，光在全反射鏡與部分反射鏡之間來回放大，從部分反射鏡射出後由透鏡聚焦到工件">
+      <rect x="40" y="60" width="16" height="70" fill="var(--steel)" stroke="var(--ink)"/>
+      <rect x="300" y="60" width="10" height="70" fill="var(--steel)" opacity=".6" stroke="var(--ink)"/>
+      <rect x="90" y="76" width="180" height="38" rx="6" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+      <path d="M90 66 q20 -14 40 0 t40 0 t40 0 t40 0 t20 0 M90 124 q20 14 40 0 t40 0 t40 0 t40 0 t20 0" fill="none" stroke="var(--warn)" stroke-width="2"/>
+      <path d="M56 95 H90 M270 95 H300" stroke="var(--warn)" stroke-width="1.5" stroke-dasharray="6 4"/>
+      <path d="M310 95 H460" stroke="var(--warn)" stroke-width="5"/>
+      <path d="M460 70 Q478 95 460 120 Q442 95 460 70 Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/>
+      <path d="M466 82 L540 120 M466 108 L540 120" stroke="var(--warn)" stroke-width="2"/>
+      <rect x="520" y="120" width="100" height="30" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2"/>
+      <g font-size="12" fill="var(--ink)"><text x="20" y="150">全反射鏡</text><text x="270" y="150">部分反射鏡</text><text x="98" y="100">雷射介質（CO₂、Nd:YAG、光纖）</text><text x="110" y="52" fill="var(--warn)">激發源（閃光燈、放電、二極體）</text><text x="440" y="60">聚焦透鏡</text><text x="540" y="170">工件</text></g>
+    </svg>
+    <figcaption>圖 7-7　雷射的產生</figcaption>
+  </figure>
+  <p><b>雷射原理：</b>激發源使介質中高能階的粒子數多於低能階（<b>居量反轉</b>），一個光子會誘發處於高能階的粒子放出相同頻率、相位與方向的光子（<b>受激輻射</b>）；光在共振腔兩面鏡子間來回放大，增益大於損失時就持續振盪，從部分反射鏡射出。雷射光具有單色性、同調性、方向性（發散小）與高強度，經透鏡可聚焦成極小的光點。</p>
+  <p><b>LBM：</b>聚焦雷射把材料熔化或汽化，同軸吹氣排渣。切割金屬常吹<b>氧氣</b>：與金屬氧化放熱提供額外能量、氧化膜提高雷射吸收率、吹走熔渣，切割速度大增；不鏽鋼與鋁要求切口不氧化時改吹氮氣；木材、壓克力等非金屬不吹氧，以免燃燒。能量密度很高時會形成<b>鑰孔</b>，能量經孔內多次反射直接送到深處，可切深件與深熔銲。</p>
+  <div class="tbl"><table>
+    <tr><th>比較</th><th>LBM</th><th>EBM</th></tr>
+    <tr><td>環境</td><td>大氣中即可</td><td>需真空</td></tr>
+    <tr><td>工件</td><td>金屬與非金屬皆可，高反射材料較難</td><td>多為金屬</td></tr>
+    <tr><td>光束控制</td><td>鏡片、光纖、機械手臂</td><td>電磁透鏡與偏轉線圈，可極快掃描</td></tr>
+    <tr><td>防護</td><td>雷射護目鏡、防護罩</td><td>X 射線遮蔽</td></tr>
+    <tr><td>用途</td><td>切割、鑽孔、銲接、表面硬化、打標，最廣泛</td><td>微孔鑽削、深窄銲道</td></tr>
+  </table></div>
+  <p><b>影響雷射切割的因素：</b>功率與波長、光點大小、焦點位置（略低於表面可切較深）、切割速度（快則熱影響小、太快切不穿）、輔助氣體種類與壓力、噴嘴距離、材料的吸收率與導熱率。</p>
+
+  <h3>四、電漿電弧加工 PAM</h3>
+  <p>鎢極與工件間的電弧被收縮噴嘴壓縮，把氣體加熱成約 10 000°C 以上的高速電漿流，熔化材料並把熔融金屬吹離切口（接法見第六章圖 6-10）。切割速度比氧乙炔快，可切不鏽鋼、鋁等氧乙炔無法切的金屬，也可水下切割；切口較雷射寬、有斜度與熱影響區。其他應用：電漿熔射塗層、電漿輔助車削（先加熱軟化難切材料再切削）。</p>
+</section>
+
+<!-- ============ 7-6 ============ -->
+<section id="s6">
+  <h2><span class="no">7-6</span>其他特殊加工</h2>
+  <h3>一、電鑄</h3>
+  <p><span class="en">electroforming</span>　原理與電鍍相同：金屬陽極溶解，在陰極的母模上沉積。差別在於電鑄層很厚，最後把母模移除（或溶解），<b>沉積層本身就是產品</b>。母模可用金屬、蠟、塑膠（非導體需先鍍導電層）。能精確複製細微紋路，用於光碟壓模、全像防偽壓模、精密模具、波導管、薄壁複雜件、飾品，產品重量從數克到數百公斤。</p>
+
+  <h3>二、快速原型</h3>
+  <p>把 CAD 模型切成薄層，逐層堆疊材料做出立體件，不需刀具與進刀路徑，任何複雜形狀都可以做（方法見第三章 3-7 節）。優點是縮短開發時程、可做複雜與一體化結構、材料浪費少；限制是材料選擇較少、強度與精度有限、表面有階梯紋需後處理、大件需分段製作、設備與材料成本高。發展方向包括新材料、金屬直接成形、<b>快速模具</b>（以快速原型件直接或間接做出射出成形模、矽膠模），把開發階段的效益延伸到生產。</p>
+</section>
+
+<!-- ============ 試題 ============ -->
+<section id="exam">
+  <h2><span class="no">試題</span>歷屆試題</h2>
+  <p class="hint">點選題目展開作答要點</p>
+
+  <details><summary><span class="qn">01</span><span>寫出非傳統加工中使用機械能切除材料的原理，及三種相關加工方法與其過程。</span><span class="src">關務三等</span></summary>
+    <div class="ans">原理：以高速磨粒或流體衝擊工件，使表面產生微裂紋或塑性變形而剝落（沖蝕）。方法：USM（工具超音波振動驅動磨料漿撞擊工件）、AJM（高壓氣體噴出細磨粒）、WJM／AWJ（超高壓水柱或加砂水柱沖蝕切割）、AFM（黏稠磨料流過內通道研磨）。</div></details>
+
+  <details><summary><span class="qn">02</span><span>敘述精密電化學加工與放電加工的原理及優缺點。</span><span class="src">關務三等</span></summary>
+    <div class="ans">見圖 7-3 與 ECM、EDM 比較表。ECM：陽極溶解，無工具消耗、無應力與熱影響、移除率高，但精度較低、電解液處理麻煩；精密電化學加工以脈衝電流與極小間隙提高精度。EDM：火花熔蝕，精度高、可做尖角細節與淬硬材料，但電極消耗、移除率低、有再鑄層。</div></details>
+
+  <details><summary><span class="qn">03</span><span>列舉五種非傳統加工方法的特性及適合使用時機。</span><span class="src">地特四等</span></summary>
+    <div class="ans">USM：硬脆非導體的成形孔。WJM／AWJ：軟材或熱敏感材料、複合材料的無熱切割。ECM：難切削導電合金的複雜型面（渦輪葉片）。EDM／WEDM：淬硬模具的模穴與精密輪廓。LBM：薄板高速切割、微孔、打標。CHM：大面積薄件減重。EBM：大量微孔。</div></details>
+
+  <details><summary><span class="qn">04</span><span>說明超音波加工為什麼很適合硬脆材料。</span><span class="src">高考二級</span></summary>
+    <div class="ans">見 7-2 節：移除機制是磨粒高頻衝擊造成的脆性微破裂，材料愈硬脆愈容易碎裂剝落；延性材料會塑性變形吸收能量而難以移除。加上加工力小、無熱、不需導電，不會讓脆性工件崩裂或產生熱裂。</div></details>
+
+  <details><summary><span class="qn">05</span><span>Explain and compare laser machining and electrical-discharge machining. Which one would cause thermal damage on the workpiece?</span><span class="src">成大機械</span></summary>
+    <div class="ans">LBM melts and vaporizes material with a focused coherent light beam; it works in air on metals and nonmetals, with no tool contact. EDM erodes conductive material with repetitive sparks between an electrode and the workpiece in a dielectric fluid; the electrode wears and cutting is slower but very accurate. <b>Both are thermal processes and both leave a recast layer and a heat-affected zone</b>; EDM's recast layer may contain microcracks, while LBM's HAZ depends on power and speed.</div></details>
+
+  <details><summary><span class="qn">06</span><span>Explain and compare electrical-discharge machining and laser machining processes.</span><span class="src">成大機械</span></summary>
+    <div class="ans">Same as Q5. Add: EDM needs a shaped electrode or wire and conductive work, gives tight tolerances (±0.005 mm) and sharp internal corners; LBM needs no tooling, is faster for thin sheet, handles nonconductors, but has kerf taper and difficulty with highly reflective metals.</div></details>
+
+  <details><summary><span class="qn">07</span><span>繪圖說明電化學切削的加工原理及適合的加工領域。</span><span class="src">鐵路員級</span></summary>
+    <div class="ans">見圖 7-3（左）與 ECM 說明。適合：難切削的導電合金（鎳基超合金、鈦合金、淬硬鋼）的複雜曲面，如渦輪葉片、鍛模模穴、深小孔、槍管膛線、去毛邊。</div></details>
+
+  <details><summary><span class="qn">08</span><span>說明放電加工時電源頻率對移除速率、表面粗糙度與過切的影響。</span><span class="src">地特三等</span></summary>
+    <div class="ans">在相同平均功率下提高頻率，每個脈衝的能量變小，火花凹坑變淺變小：<b>表面粗糙度改善、過切減小</b>、再鑄層變薄；但單次移除量小，<b>移除率下降</b>（除非同時提高電流）。低頻高能脈衝用於粗加工，高頻低能用於精修。</div></details>
+
+  <details><summary><span class="qn">09</span><span>說明電化學去毛邊較傳統機械研磨的優點及其機構與原理。</span><span class="src">機械技師</span></summary>
+    <div class="ans">原理：工件為陽極，成形電極（陰極、非加工面絕緣）放在毛邊附近，電解液流過間隙，毛邊尖端電流密度最高而優先溶解。優點：可去除交叉孔、內槽等刀具到不了的毛邊；不產生新毛邊、無機械應力與熱影響；數秒完成、一致性高、易自動化；不受硬度影響。</div></details>
+
+  <details><summary><span class="qn">10</span><span>說明磨料流動加工的製程原理與方法。</span><span class="src">普通考試</span></summary>
+    <div class="ans">見 7-2 節：工件夾在上下兩個磨料缸之間，以液壓把含磨粒的黏彈性介質往復擠過工件內通道，磨粒研磨通道壁與邊緣。調整介質黏度、磨粒大小、壓力與循環次數，控制去毛邊、倒角與拋光的程度。</div></details>
+</section>
+
+</main>
+</div>
+
+<script src="assets/chapter.js"></script>
+</body>
+</html>

@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>機械製造學 第六章 接合銲接</title>
+<link rel="stylesheet" href="assets/chapter.css">
+<style>
+/* Layout: 與第一章相同的講義版面 — 左側節次分頁 + 右側正文；製程以剖面示意圖與流程框呈現 */
+:root{
+  --bg:#FBF8F5; --paper:#FFFFFF; --ink:#2A1D14; --muted:#6E5D50;
+  --accent:#A84A0C; --accent-soft:#F6E6D8; --line:#E6D5C7; --grid:rgba(168,74,12,.07);
+  --steel:#9A8A7D; --fix:#1D6B70; --fix-soft:#E3F1F1; --warn:#8E2F1C;
+  --f-display:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-body:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --steel:#6E5E52; --fix:#6CC3C7; --fix-soft:#16302F; --warn:#F08A73; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --steel:#6E5E52; --fix:#6CC3C7; --fix-soft:#16302F; --warn:#F08A73; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.8;padding-inline:16px}
+.wrap{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px;padding-block:0 64px}
+header.hero{max-width:1120px;margin:0 auto 32px;padding-block:36px 28px;border-bottom:1.5px solid var(--accent);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;
+  display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:24px;align-items:center}
+.hero-art{width:100%;max-width:260px;justify-self:end}
+.crumb{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,5vw,3.1rem);line-height:1.2;margin:.3em 0 .2em;text-wrap:balance}
+h1 small{font-size:.5em;font-weight:600;color:var(--muted);display:block;letter-spacing:.05em}
+.lede{max-width:62ch;color:var(--muted);margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px;font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+main{min-width:0}
+section{padding-block:8px 28px;border-bottom:1px solid var(--line);margin-bottom:28px;scroll-margin-top:16px}
+h2{font-family:var(--f-display);font-size:1.6rem;margin:0 0 .6em;display:flex;align-items:baseline;gap:14px;text-wrap:balance}
+h2 .no{font-family:var(--f-mono);font-size:.95rem;color:var(--paper);background:var(--accent);padding:2px 9px;border-radius:2px;font-weight:500}
+h3{font-size:1.12rem;margin:1.6em 0 .5em;color:var(--accent)}
+h4{font-size:1rem;margin:1.2em 0 .3em}
+p{max-width:68ch;margin:.4em 0 .9em}
+.en{font-family:var(--f-mono);font-size:.8em;color:var(--muted)}
+.key{background:linear-gradient(transparent 62%,var(--accent-soft) 62%);font-weight:700}
+figure{margin:20px 0 24px;background:var(--paper);border:1px solid var(--line);padding:20px}
+figcaption{font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-top:12px;letter-spacing:.04em}
+.scroll{overflow-x:auto}
+.tbl{overflow-x:auto;margin:14px 0 22px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px;background:var(--paper)}
+th,td{border:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);color:var(--accent);font-weight:700;white-space:nowrap}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);padding:12px 16px;margin:16px 0;font-size:15px}
+.callout b{color:var(--accent)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:12px 0 20px}
+.card{border:1px solid var(--line);background:var(--paper);padding:14px 16px}
+.card h4{margin:0 0 4px;color:var(--accent)}
+.card p{margin:0;font-size:14.5px}
+/* 流程圖共用 */
+.node{background:var(--paper);border:2px solid var(--accent);border-radius:6px;padding:10px 14px;position:relative}
+.node b{display:block;font-size:15.5px}
+.node small{display:block;color:var(--muted);font-size:13px;line-height:1.5}
+.node .n{font-family:var(--f-mono);font-size:11.5px;color:var(--accent);letter-spacing:.06em}
+.node.dark{background:var(--accent);border-color:var(--accent)}
+.node.dark b,.node.dark .n{color:var(--paper)} .node.dark small{color:var(--accent-soft)}
+.down{height:30px;position:relative;margin-left:50%}
+.down::before{content:"";position:absolute;left:-1px;top:0;bottom:8px;border-left:2px solid var(--fix)}
+.down::after{content:"";position:absolute;left:-7px;bottom:0;border:7px solid transparent;border-top:9px solid var(--fix);border-bottom:0}
+.right{flex:0 0 34px;align-self:center;height:2px;background:var(--fix);position:relative}
+.right::after{content:"";position:absolute;right:-2px;top:-6px;border:7px solid transparent;border-left:10px solid var(--fix);border-right:0}
+/* 設計流程 */
+.phases{display:grid;gap:0}
+.phase{border:1.5px dashed var(--steel);border-radius:10px;padding:26px 16px 14px;position:relative;display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:0 14px;align-items:center}
+.phase>.lab{position:absolute;top:-11px;left:14px;background:var(--paper);padding:0 8px;font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.08em}
+.phase .down{grid-column:1}
+.tool{font-family:var(--f-mono);font-size:12px;color:var(--accent);border:1.5px solid var(--accent);border-radius:999px;text-align:center;padding:3px 8px;position:relative;background:var(--paper)}
+.tool::before{content:"";position:absolute;right:100%;top:50%;width:14px;border-top:1.5px dashed var(--accent)}
+.gap{grid-column:2}
+/* IPO */
+.ipo{display:flex;align-items:stretch;gap:0}
+.ipo .col{flex:1;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.ipo .col h5{margin:0 0 4px;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;color:var(--accent);text-align:center}
+.pill{border:1.5px solid var(--accent);border-radius:999px;padding:2px 12px;font-size:14px;text-align:center;background:var(--paper)}
+.pill.solid{background:var(--accent);color:var(--paper)}
+.ipo .proc{flex:1;border:2px solid var(--accent);border-radius:8px;background:var(--accent);color:var(--paper);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:14px}
+.ipo .proc h5{color:var(--accent-soft)}
+.ipo .proc .pill{background:transparent;border-color:var(--accent-soft);color:var(--paper)}
+/* 分類樹 */
+.tree{width:max-content;min-width:100%;margin:0 auto}
+.tree ul{list-style:none;margin:0;padding:22px 0 0;display:flex;justify-content:center;position:relative}
+.tree li{position:relative;padding:22px 4px 0;text-align:center}
+.tree>ul{padding-top:0}.tree>ul>li{padding-top:0}
+.tree li::before,.tree li::after{content:"";position:absolute;top:0;width:50%;height:22px;border-top:2px solid var(--steel)}
+.tree li::before{right:50%}.tree li::after{left:50%;border-left:2px solid var(--steel)}
+.tree li:only-child::before,.tree li:only-child::after{display:none}
+.tree li:first-child::before,.tree li:last-child::after{border-top:none}
+.tree li:last-child::before{border-right:2px solid var(--steel);border-top-right-radius:6px}
+.tree li:first-child::after{border-top-left-radius:6px}
+.tree>ul>li::before,.tree>ul>li::after{display:none}
+.tree ul ul::before{content:"";position:absolute;top:0;left:50%;height:22px;border-left:2px solid var(--steel)}
+.tree .node{display:inline-block;padding:5px 9px;white-space:nowrap}
+.tree .node b{font-size:14.5px}
+/* 加工示意圖卡 */
+.procs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 20px}
+.procs.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.proc-card{background:var(--paper);border:1px solid var(--line);padding:12px 12px 10px;display:flex;flex-direction:column;gap:4px}
+.proc-card svg{width:100%;height:auto;background:var(--bg);border-radius:4px}
+.proc-card b{font-size:15px}
+.proc-card .en{display:block}
+.proc-card small{color:var(--muted);font-size:13px;line-height:1.5}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted);margin:-4px 0 12px}
+.legend i{display:inline-block;width:14px;height:10px;margin-right:6px;vertical-align:middle;border-radius:2px}
+/* 碳足跡 */
+.life{display:flex;align-items:stretch}
+.life .node{flex:1;text-align:center;padding:10px 8px}
+.offset{margin-top:14px;border:2px dashed var(--fix);border-radius:8px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:center;font-size:14.5px}
+.offset b{color:var(--fix)}
+.eq{font-family:var(--f-mono);font-size:15px;background:var(--fix);color:var(--paper);padding:2px 10px;border-radius:4px}
+/* 試題 */
+.fixbox{border:1.5px dashed var(--warn);background:var(--fix-soft);padding:14px 18px;margin:8px 0 0;font-size:14.5px}
+.fixbox h3{color:var(--warn);margin:0 0 6px;font-size:1rem}
+.fixbox ul{margin:0;padding-left:1.1em}
+.fixbox s{color:var(--muted)}
+details{border:1px solid var(--line);background:var(--paper);margin:10px 0;padding:0 16px}
+summary{cursor:pointer;padding:12px 0;font-weight:500;list-style:none;display:grid;grid-template-columns:2.4em minmax(0,1fr) auto;gap:8px}
+summary::-webkit-details-marker{display:none}
+summary .qn{font-family:var(--f-mono);color:var(--accent)}
+summary .src{font-size:12px;color:var(--muted);white-space:nowrap}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details[open] summary{border-bottom:1px dashed var(--line)}
+details .ans{padding:10px 0 14px 2.8em;font-size:15px}
+details .ans ul{margin:.2em 0;padding-left:1.1em}
+.hint{font-family:var(--f-mono);font-size:11px;color:var(--accent);letter-spacing:.1em}
+svg text{font-family:var(--f-body)}
+@media (max-width:820px){
+  header.hero{grid-template-columns:minmax(0,1fr)}.hero-art{justify-self:start;max-width:180px}
+  .wrap{grid-template-columns:minmax(0,1fr);gap:0}
+        .ipo,.life{flex-direction:column}
+  .ipo .right,.life .right{flex-basis:26px;width:2px;height:26px;align-self:center}
+  .ipo .right::after,.life .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
+  .phase{grid-template-columns:minmax(0,1fr) 92px}
+  .procs,.procs.c4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+.crumb a{color:inherit;text-decoration:none;border-bottom:1px dashed currentColor}
+.crumb a:hover{border-bottom-style:solid}
+.cards.c2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card .en{display:block;margin:-2px 0 4px}
+.flow6,.flow5{display:flex;align-items:stretch;min-width:0}
+.flow6 .node,.flow5 .node{flex:1 1 0;min-width:0;padding:8px 9px}
+.flow6 .right,.flow5 .right{flex-basis:22px}
+.flow5 .node small{font-size:12px}
+.formula{font-family:var(--f-mono);font-size:1.45rem;text-align:center;color:var(--accent);background:var(--accent-soft);padding:14px 12px;margin:12px 0 14px;border-radius:4px}
+.formula.sm{font-size:1.05rem;padding:8px;margin:8px 0}
+.example{border:1.5px solid var(--fix);background:var(--paper);padding:0 18px 12px;margin:18px 0 24px}
+.ex-h{display:inline-block;background:var(--fix);color:var(--paper);font-weight:700;font-size:14px;padding:3px 12px;margin:0 0 6px -18px}
+.example ul{margin:.2em 0 .6em;padding-left:1.2em;font-family:var(--f-mono);font-size:14px}
+figure.mini{margin:10px 0;padding:12px;background:var(--bg)}
+figure.mini svg{width:100%;max-width:420px;height:auto;display:block}
+ol.steps{counter-reset:st;list-style:none;padding:0;margin:10px 0 20px;display:grid;gap:8px;max-width:72ch}
+ol.steps li{counter-increment:st;display:grid;grid-template-columns:2.2em minmax(0,1fr);gap:10px;align-items:baseline}
+ol.steps li::before{content:counter(st,decimal-leading-zero);font-family:var(--f-mono);font-size:13px;color:var(--paper);background:var(--accent);text-align:center;border-radius:2px;padding:1px 0}
+.dc2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.dc2>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.dc2 svg{width:100%;height:auto;background:var(--bg);border-radius:4px}
+.dc2 b{font-size:15.5px;margin-top:4px}
+.dc2 small{color:var(--muted);font-size:13.5px;line-height:1.6}
+figure svg{max-width:100%}
+.scroll>svg{width:100%;height:auto;display:block}
+@media (max-width:820px){.dc2{grid-template-columns:minmax(0,1fr)}}
+
+/* fit-to-width：圖面一律縮放到版面寬度內，不出現水平捲動 */
+.scroll{overflow:visible}
+.scroll svg,figure svg{min-width:0!important;max-width:100%;height:auto}
+table{min-width:0}
+.tbl{overflow-x:visible}
+th{white-space:normal}
+@media (max-width:820px){
+  table{font-size:13.5px} th,td{padding:6px 8px}
+  .flow6,.flow5{flex-direction:column;min-width:0}
+  .flow6 .node,.flow5 .node{width:auto;flex:none}
+  .flow6 .right,.flow5 .right{flex:0 0 22px;width:2px;height:22px;align-self:center}
+  .flow6 .right::after,.flow5 .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
+}
+.tree.as-list{width:auto;min-width:0;margin:0}
+.tree.as-list ul{display:block;padding:0 0 0 16px;margin:0 0 0 12px;border-left:2px solid var(--steel)}
+.tree.as-list>ul{border-left:0;margin:0;padding:0}
+.tree.as-list li{padding:4px 0 4px 14px;text-align:left}
+.tree.as-list>ul>li{padding-left:0}
+.tree.as-list li::after,.tree.as-list ul ul::before{display:none}
+.tree.as-list li::before{display:block;content:"";position:absolute;left:-2px;top:20px;width:12px;height:0;border:0;border-top:2px solid var(--steel);border-radius:0}
+.tree.as-list>ul>li::before{display:none}
+.tree.as-list .node{white-space:normal}
+.tree .node{padding:4px 7px}
+.tree li{padding-left:3px;padding-right:3px}
+.tree.as-list ul:not(:has(ul))>li{padding:0}
+.tree.as-list ul:not(:has(ul)){display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px;padding:6px 0 6px 16px}
+.tree.as-list ul:not(:has(ul))>li::before{display:none}
+
+/* 砂輪標示 */
+.spec{border:1px solid var(--line);background:var(--paper);padding:14px 16px;margin:12px 0 18px}
+.spec-row{display:flex;flex-wrap:wrap;gap:6px}
+.spec .chip{flex:1 1 72px;min-width:0;border:1.5px solid var(--accent);border-radius:4px;text-align:center;padding:6px 4px}
+.spec .chip b{display:block;font-family:var(--f-mono);font-size:1.3rem;color:var(--accent)}
+.spec .chip small{display:block;font-size:12px;color:var(--muted);line-height:1.4}
+.spec-cap{margin:10px 0 0;font-size:13.5px;color:var(--muted);max-width:none}
+</style>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+</head>
+<body>
+<header class="hero">
+  <div>
+    <div class="crumb"><a href="manufacturing.html">知識動力場 · 機械製造學</a> · Chapter 06</div>
+    <h1>接合銲接<small>Joining &amp; Welding</small></h1>
+    <p class="lede">機器由許多零件組成，零件之間靠銲接、硬軟銲、黏著或機械緊固接合。銲接讓兩件金屬在接合處形成冶金結合，船體、橋梁、壓力容器、車身與鋼軌都靠它。本章依接合原理分類，從軟銲與硬銲、固態銲接、氣銲與高能束銲接，談到最常用的電弧銲接。</p>
+    <div class="meta"><span>6 節 · 25 題歷屆試題</span></div>
+  </div>
+  <svg class="hero-art" viewBox="0 0 260 230" role="img" aria-label="電弧銲接：銲條與兩塊母材之間產生電弧，形成銲道">
+    <path d="M20 170 H118 L128 140 H20 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+    <path d="M240 170 H142 L132 140 H240 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+    <path d="M118 170 Q130 186 142 170 L132 140 H128 Z" fill="var(--accent)"/>
+    <path d="M40 170 Q130 160 200 170" fill="none"/>
+    <rect x="148" y="20" width="14" height="96" rx="3" transform="rotate(20 155 68)" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2"/>
+    <rect x="154" y="22" width="6" height="94" transform="rotate(20 155 68)" fill="var(--steel)"/>
+    <path d="M134 112 l-4 10 6-4 -3 12 8-10 -6 2 4-10z" fill="var(--warn)"/>
+    <g stroke="var(--accent)" stroke-width="2" stroke-linecap="round"><path d="M110 112 l-14 -10M150 120 l16 -6M104 128 l-16 2M156 134 l18 4"/></g>
+    <path d="M20 200 H240" stroke="var(--line)"/>
+    <text x="24" y="196" font-size="12" fill="var(--muted)">母材</text><text x="200" y="196" font-size="12" fill="var(--muted)">母材</text><text x="170" y="40" font-size="12" fill="var(--muted)">銲條</text>
+  </svg>
+</header>
+
+<div class="wrap">
+<nav class="tabs" role="tablist" aria-label="本章各節" aria-orientation="vertical">
+  <p class="tabs-label">SECTIONS</p>
+  <a class="tab" id="tab-s1" href="#s1" role="tab" aria-controls="s1" aria-selected="true"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 15h7l2-3 2 3h7"/><path d="M3 15v4h18v-4"/><path d="M12 3v5M9 6l3 3 3-3"/></svg></span><span class="tx"><span class="no">6-1</span><span class="nm">概述</span></span></a>
+  <a class="tab" id="tab-s2" href="#s2" role="tab" aria-controls="s2" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M12 7v3M5 10h14M5 10v3M12 10v3M19 10v3"/><circle cx="5" cy="16" r="2.5"/><circle cx="12" cy="16" r="2.5"/><circle cx="19" cy="16" r="2.5"/></svg></span><span class="tx"><span class="no">6-2</span><span class="nm">銲接分類</span></span></a>
+  <a class="tab" id="tab-s3" href="#s3" role="tab" aria-controls="s3" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4l6 6"/><path d="M8 9l3 3-6 6-3-3z"/><path d="M13 15h8v4h-8z"/><path d="M16 12c0-2 1-3 2-4"/></svg></span><span class="tx"><span class="no">6-3</span><span class="nm">軟銲與硬銲</span></span></a>
+  <a class="tab" id="tab-s4" href="#s4" role="tab" aria-controls="s4" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8v6H8zM8 15h8v6H8z"/><path d="M12 9v6"/><path d="M4 12h16"/><path d="M10 12a2 2 0 0 0 4 0"/></svg></span><span class="tx"><span class="no">6-4</span><span class="nm">固態銲接法</span></span></a>
+  <a class="tab" id="tab-s5" href="#s5" role="tab" aria-controls="s5" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10l6-6 2 2-6 6z"/><path d="M12 6l4 4"/><path d="M15 12c1 2 4 3 5 6-3 0-5-1-6-3"/><path d="M3 21h18"/></svg></span><span class="tx"><span class="no">6-5</span><span class="nm">熔融銲接法</span></span></a>
+  <a class="tab" id="tab-s6" href="#s6" role="tab" aria-controls="s6" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v9"/><path d="M9 3h6"/><path d="M12 11l-2 4 3-1-1 4"/><path d="M3 20h18"/><path d="M8 20c1-2 3-3 4-3s3 1 4 3"/></svg></span><span class="tx"><span class="no">6-6</span><span class="nm">電弧銲接法</span></span></a>
+  <a class="tab" id="tab-exam" href="#exam" role="tab" aria-controls="exam" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 2.8h6"/><path d="M8.5 11l2 2 4-4M8.5 17h7"/></svg></span><span class="tx"><span class="no">試題</span><span class="nm">歷屆試題</span></span></a>
+</nav>
+
+<main>
+
+<!-- ============ 6-1 ============ -->
+<section id="s1">
+  <h2><span class="no">6-1</span>概述</h2>
+  <p>接合<span class="en">（joining）</span>包括<b>銲接</b>、<b>黏著接合</b>與<b>機械緊固</b>（螺栓、鉚釘、嵌合）。需要接合的原因：機器由許多零件組成；各部位可分別選用合適材料、分別加工；便於維修更換、分散製造與運輸。</p>
+  <p><span class="key">銲接</span><span class="en">（welding）</span>是讓兩件材料在接合處達到原子間的結合：可以把母材熔化熔合（可加填料），也可以只熔化填料、或在固態下加壓使其結合。</p>
+  <div class="cards c2">
+    <div class="card"><h4>優點</h4><p>接頭強度可與母材相當、氣密；比鉚接省材料、重量輕；設計自由度大；設備比鑄造鍛造簡單；方法多、易自動化；可修補，也可接合不同材料。</p></div>
+    <div class="card"><h4>限制</h4><p>局部加熱造成<b>殘留應力與變形</b>；熱影響區性質改變；可能有氣孔、夾渣、裂紋等缺陷，重要接頭需非破壞檢驗；強光、高溫、煙塵，作業環境差；接頭不可拆。</p></div>
+  </div>
+
+  <h3>熱影響區</h3>
+  <figure>
+    <svg viewBox="0 0 640 220" role="img" aria-label="銲道橫斷面：中央熔融區為柱狀晶，外側熱影響區分為粗晶區與細晶區，最外是未受影響的母材">
+      <rect x="20" y="40" width="600" height="140" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M170 40 Q320 260 470 40 Z" fill="var(--accent-soft)" opacity=".6"/>
+      <path d="M210 40 Q320 210 430 40 Z" fill="var(--accent-soft)"/>
+      <path d="M250 40 Q320 160 390 40 Z" fill="var(--accent)" opacity=".85"/>
+      <path d="M250 30 Q320 6 390 30 L390 40 L250 40 Z" fill="var(--accent)"/>
+      <g stroke="var(--paper)" stroke-width="1.4"><path d="M262 48 L300 80M276 44 L306 86M378 48 L340 80M364 44 L334 86M320 50 L320 112"/></g>
+      <g font-size="13" fill="var(--ink)" font-weight="700"><text x="300" y="26" fill="var(--paper)">銲冠</text></g>
+      <g font-size="12.5" fill="var(--ink)">
+        <text x="470" y="80">熔融區：柱狀晶，朝熔合線向內長</text><path d="M466 76 L370 70" stroke="var(--ink)"/>
+        <text x="470" y="110">粗晶區：溫度高，晶粒長大、易脆</text><path d="M466 106 L410 92" stroke="var(--ink)"/>
+        <text x="470" y="140">細晶區：再結晶細化</text><path d="M466 136 L440 116" stroke="var(--ink)"/>
+        <text x="40" y="160" fill="var(--muted)">母材（未受影響）</text>
+        <text x="40" y="200" fill="var(--muted)">熱影響區 HAZ ＝ 未熔化、但組織與性質因受熱而改變的區域</text>
+      </g>
+    </svg>
+    <figcaption>圖 6-1　銲道與熱影響區</figcaption>
+  </figure>
+  <p>熱影響區可能因晶粒粗大而<b>韌性下降</b>；鋼的淬硬性高時會產生麻田散鐵而硬脆、易冷裂；已熱處理或冷作強化的母材在 HAZ 會軟化。再加上局部加熱冷卻的殘留應力與變形，是銲接設計的重點。</p>
+</section>
+
+<!-- ============ 6-2 ============ -->
+<section id="s2">
+  <h2><span class="no">6-2</span>銲接分類</h2>
+  <figure>
+    <div class="tree">
+      <ul><li><span class="node dark"><b>接合法</b></span>
+        <ul>
+          <li><span class="node"><b>熔融銲（融接）</b></span><ul><li><span class="node"><b>電弧銲</b></span></li><li><span class="node"><b>氣銲</b></span></li><li><span class="node"><b>高能束</b></span></li><li><span class="node"><b>鋁熱銲</b></span></li><li><span class="node"><b>電熱熔渣</b></span></li></ul></li>
+          <li><span class="node"><b>固態銲（壓接）</b></span><ul><li><span class="node"><b>電阻銲</b></span></li><li><span class="node"><b>摩擦銲</b></span></li><li><span class="node"><b>超音波</b></span></li><li><span class="node"><b>冷銲</b></span></li><li><span class="node"><b>擴散銲</b></span></li><li><span class="node"><b>爆炸銲</b></span></li></ul></li>
+          <li><span class="node"><b>鑞接</b></span><ul><li><span class="node"><b>硬銲</b></span></li><li><span class="node"><b>軟銲</b></span></li></ul></li>
+        </ul></li></ul>
+    </div>
+    <figcaption>圖 6-2　依接合原理分類（電阻銲接合處會局部熔化，但因靠加壓完成，常歸在壓接）</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>分類依據</th><th>類別</th></tr>
+    <tr><td>接合原理</td><td><b>熔融銲</b>：母材接合處熔化，可加填料，如電弧銲、氣銲、電子束、雷射。<b>壓接</b>：加熱到半熔或不加熱，靠壓力結合，如電阻銲、鍛銲、摩擦銲。<b>鑞接</b>：只有填料熔化，靠毛細作用流入間隙，母材不熔化。</td></tr>
+    <tr><td>接合部物態</td><td>液態（電弧銲、氣銲）· 固態（鍛銲、冷銲、擴散銲、超音波、摩擦）· 固液態（硬銲、軟銲）</td></tr>
+    <tr><td>熱源</td><td>電弧熱、電阻熱、可燃氣體火焰、摩擦或振動機械能、化學反應熱（鋁熱）、電子束、雷射</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ 6-3 ============ -->
+<section id="s3">
+  <h2><span class="no">6-3</span>軟銲與硬銲</h2>
+  <p>把熔點比母材低的填料加熱熔化，靠<b>毛細作用</b>流入接合面間的小間隙（約 0.025–0.25 mm），凝固後把母材黏結，母材本身不熔化。填料熔點約 <b>450°C（840°F）以上稱硬銲，以下稱軟銲</b>。</p>
+  <figure>
+    <svg viewBox="0 0 640 170" role="img" aria-label="搭接、對接、斜接三種硬銲接頭；搭接面積最大、強度最高">
+      <g fill="var(--steel)" stroke="var(--ink)" stroke-width="2">
+        <rect x="20" y="70" width="120" height="16"/><rect x="100" y="86" width="120" height="16"/>
+        <rect x="250" y="80" width="100" height="16"/><rect x="354" y="80" width="100" height="16"/>
+        <path d="M480 80 H570 L590 96 H480 Z"/><path d="M574 80 H620 V96 H594 Z"/>
+      </g>
+      <g fill="var(--accent)"><rect x="100" y="84" width="40" height="4"/><rect x="350" y="80" width="4" height="16"/><path d="M570 80 L574 80 L594 96 L590 96 Z"/></g>
+      <g font-size="13" font-weight="700" text-anchor="middle" fill="var(--ink)"><text x="120" y="140">搭接</text><text x="352" y="140">對接</text><text x="550" y="140">斜接</text></g>
+      <text x="120" y="158" font-size="11.5" text-anchor="middle" fill="var(--muted)">搭接長度約為板厚 3 倍以上</text>
+    </svg>
+    <figcaption>圖 6-3　硬銲接頭型式（填料層以深色表示）</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>比較</th><th>軟銲 soldering</th><th>硬銲 brazing</th></tr>
+    <tr><td>填料</td><td>錫鉛合金，現多用無鉛的錫銀銅；以錫、鉛百分比稱呼，如 60-40 銲錫</td><td>銅與銅鋅合金（最常用）、銀銲料、鋁矽（銲鋁）、鎳基（不鏽鋼、超合金）、銅磷</td></tr>
+    <tr><td>銲劑</td><td>氯化鋅（Zn + 2HCl → ZnCl₂ + H₂，去氧化力強但有腐蝕性，用於鈑金）；電子零件用松香</td><td>硼砂及其混合鹽</td></tr>
+    <tr><td>加熱</td><td>烙鐵、熱風、迴焊爐、波焊</td><td>火炬、爐中、感應、電阻、浸漬、紅外線</td></tr>
+    <tr><td>強度與用途</td><td>強度低；電子電路、水管、鈑金密封</td><td>強度較高；刀具碳化物刀片、管路、熱交換器、自行車車架、冷凍設備（銀銲料抗疲勞）</td></tr>
+  </table></div>
+  <div class="cards c2">
+    <div class="card"><h4>鑞接優於熔接的情況</h4><p>母材不熔化，變形與熱影響小；可接合異種金屬、金屬與陶瓷；可接合薄件、精密件與熱敏感件；爐中硬銲可一次接合很多接頭；可拆修（軟銲）。</p></div>
+    <div class="card"><h4>鑞接的限制</h4><p>接頭強度與耐熱溫度受填料限制；需要精確的間隙與清潔表面；銲劑殘留會腐蝕需清除；異種金屬接頭可能電化學腐蝕；不適合承受高溫或大衝擊的結構。</p></div>
+  </div>
+</section>
+
+<!-- ============ 6-4 ============ -->
+<section id="s4">
+  <h2><span class="no">6-4</span>固態銲接法</h2>
+  <div class="tbl"><table>
+    <tr><th>方法</th><th>原理</th><th>特點與用途</th></tr>
+    <tr><td>冷銲 CW</td><td>不加熱，以極大壓力使清潔表面塑性變形、原子接近而結合</td><td>延性高的鋁、銅、鎳；電線接頭；表面須非常清潔</td></tr>
+    <tr><td>超音波銲 USW</td><td>以約 10–75 kHz、平行於接合面的高頻振動，在壓力下擦除氧化膜並產生局部塑性流動</td><td>不熔化、時間短（約 1 秒內）、可接合異種金屬與薄箔；用於電池極耳、電線、IC 打線、塑膠</td></tr>
+    <tr><td>摩擦銲 FRW</td><td>一件旋轉一件固定，加壓摩擦生熱到塑性狀態，停轉後加大頂鍛壓力結合；也可用飛輪慣性驅動</td><td>接合面須有圓形截面；不熔化、晶粒細、可接合異種金屬；如高速鋼鑽身與碳鋼柄、汽車傳動軸、閥桿</td></tr>
+    <tr><td>摩擦攪拌銲 FSW</td><td>帶探針的旋轉工具插入接縫並沿縫移動，攪拌兩側塑性化的材料使其混合結合</td><td>不熔化、無氣孔與凝固裂紋、變形小；適合鋁合金長直縫，用於船舶、列車車廂、航太油箱</td></tr>
+    <tr><td>爆炸銲 EXW</td><td>炸藥使覆板以高速斜撞基板，界面形成波狀冶金結合</td><td>大面積異種金屬複合板（如不鏽鋼或鈦覆在碳鋼上）</td></tr>
+    <tr><td>擴散銲 DFW</td><td>真空或惰性氣體中，平整清潔的面加壓並加熱到約 0.5–0.7 T<sub>m</sub>，原子擴散結合</td><td>接頭幾乎看不出界面；航太、核能、電子；常與超塑性成形併用做鈦合金中空件</td></tr>
+  </table></div>
+
+  <h3>電阻銲</h3>
+  <p>以低電壓（數伏）、大電流（數千到數萬安培）通過兩工件，接觸面電阻最大處發熱熔化，同時以電極加壓結合。</p>
+  <div class="formula sm">H = I² R t　（I 電流，R 電阻，t 通電時間）</div>
+  <p>熱量與電流平方成正比，所以電流影響最大。兩工件之間的<b>接觸電阻</b>遠大於工件本身與電極的電阻（電極用導電好的銅合金並水冷），所以熱集中在接觸面，形成<b>銲核</b>。</p>
+  <figure>
+    <svg viewBox="0 0 640 230" role="img" aria-label="點銲：上下水冷銅電極夾住兩片鋼板，通電後在兩板交界處形成透鏡狀銲核；右側為沿電極軸線的溫度分布，以接觸面最高">
+      <path d="M140 10 H200 V70 L186 92 H154 L140 70 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M140 210 H200 V150 L186 128 H154 L140 150 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="40" y="92" width="260" height="18" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5"/>
+      <rect x="40" y="110" width="260" height="18" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5"/>
+      <ellipse cx="170" cy="110" rx="26" ry="10" fill="var(--accent)"/>
+      <rect x="164" y="20" width="12" height="40" fill="var(--fix)" opacity=".35"/><rect x="164" y="160" width="12" height="40" fill="var(--fix)" opacity=".35"/>
+      <g font-size="12.5" fill="var(--ink)"><text x="210" y="40">銅電極（內通冷卻水）</text><text x="216" y="88">鋼板</text><text x="210" y="150">銲核</text><path d="M206 146 L194 114" stroke="var(--ink)"/></g>
+      <g transform="translate(360 0)">
+        <line x1="20" y1="20" x2="20" y2="210" stroke="var(--ink)"/><line x1="20" y1="210" x2="250" y2="210" stroke="var(--ink)"/>
+        <path d="M30 20 C40 60 60 80 80 92 C150 100 200 108 230 110 C200 112 150 120 80 128 C60 140 40 160 30 200" fill="none" stroke="var(--accent)" stroke-width="3"/>
+        <line x1="200" y1="20" x2="200" y2="210" stroke="var(--warn)" stroke-dasharray="5 4"/>
+        <text x="204" y="34" font-size="12" fill="var(--warn)">熔點</text>
+        <text x="130" y="226" font-size="12.5" text-anchor="middle" fill="var(--ink)">溫度 →</text>
+        <text x="236" y="114" font-size="12" fill="var(--ink)">接觸面</text>
+      </g>
+    </svg>
+    <figcaption>圖 6-4　點銲與沿電極軸線的溫度分布</figcaption>
+  </figure>
+  <p>點銲程序：<b>加壓 → 通電 → 熔化形成銲核 → 斷電後保持壓力冷卻 → 放開</b>。銲核大小受電流、通電時間、電極壓力、電極端面直徑、板厚與表面狀態影響：電流或時間不足銲核太小；過大則噴濺、壓痕深。點銲接頭熱影響區很小且侷限在銲點周圍，週期只要零點幾秒、不需填料、容易用機械手臂控制，所以是車身組裝的主力。</p>
+  <div class="tbl"><table>
+    <tr><th>電阻銲</th><th>做法</th><th>用途</th></tr>
+    <tr><td>點銲 RSW</td><td>兩電極夾住搭接板，一次一點</td><td>車身、鈑金箱體；表面有壓痕、電極會磨損</td></tr>
+    <tr><td>浮凸銲 RPW</td><td>先在板上沖出凸點，通電時電流集中在凸點，一次可銲多點</td><td>螺帽、螺栓焊接到板上；表面平整、電極壽命長</td></tr>
+    <tr><td>縫銲 RSEW</td><td>以兩個滾輪電極連續或間歇通電，銲點重疊成氣密銲縫</td><td>油箱、罐體、散熱器</td></tr>
+    <tr><td>端壓銲（對頭銲）UW</td><td>兩桿端面先接觸加壓，通電生熱軟化後擠壓結合，接頭會鼓出</td><td>小截面線材、桿件</td></tr>
+    <tr><td>閃光銲 FW</td><td>兩端先輕觸，電流在局部接觸點產生閃光電弧把端面加熱熔化，再急速頂鍛擠出熔融金屬與氧化物</td><td>端面不必精加工、可銲大截面；鋼軌、鏈條、輪圈、管件</td></tr>
+    <tr><td>衝擊銲 PEW</td><td>以彈簧或電磁力讓兩件快速撞合，撞合前瞬間放電加熱</td><td>時間極短、熱影響小；電子零件、異種金屬小截面</td></tr>
+    <tr><td>高頻電阻銲 HFRW</td><td>高頻電流因集膚效應與鄰近效應集中在板邊，滾輪擠壓成縫</td><td>銲管縱縫與螺旋縫，速度可達每分鐘數十到數百公尺</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ 6-5 ============ -->
+<section id="s5">
+  <h2><span class="no">6-5</span>熔融銲接法</h2>
+  <h3>一、氧乙炔氣銲</h3>
+  <p>乙炔與氧在銲炬中混合燃燒，最高溫度約 3200–3500°C。完全燃燒：2C₂H₂ + 5O₂ → 4CO₂ + 2H₂O。設備便宜、可攜帶、加熱可調，適合維修與薄板；但熱量分散、熱效率低、熱影響區大、易變形，有爆炸危險。</p>
+  <figure>
+    <svg viewBox="0 0 640 210" role="img" aria-label="三種氧乙炔火焰：碳化焰有長的白色羽焰，中性焰焰心清晰，氧化焰焰心短而尖">
+      <g transform="translate(0 0)">
+        <rect x="20" y="40" width="40" height="16" fill="var(--steel)"/>
+        <path d="M60 48 q50 -14 110 -4 q60 8 120 4 q-60 10 -120 6 q-60 6 -110 -6z" fill="var(--fix)" opacity=".2"/>
+        <path d="M60 48 q40 -8 90 -2 q-50 8 -90 2z" fill="var(--paper)" stroke="var(--fix)"/>
+        <path d="M60 48 q12 -5 26 0 q-14 5 -26 0z" fill="var(--fix)"/>
+        <text x="300" y="44" font-size="13" font-weight="700" fill="var(--ink)">碳化焰（還原焰）</text>
+        <text x="300" y="62" font-size="12" fill="var(--muted)">乙炔過多，焰心外有白色羽焰；溫度最低。銲鎳、蒙乃爾、高碳鋼、硬面堆銲</text>
+      </g>
+      <g transform="translate(0 66)">
+        <rect x="20" y="40" width="40" height="16" fill="var(--steel)"/>
+        <path d="M60 48 q50 -12 100 -4 q50 6 100 4 q-50 10 -100 6 q-50 6 -100 -6z" fill="var(--fix)" opacity=".2"/>
+        <path d="M60 48 q12 -6 28 0 q-16 6 -28 0z" fill="var(--fix)"/>
+        <text x="300" y="44" font-size="13" font-weight="700" fill="var(--ink)">中性焰（標準焰）</text>
+        <text x="300" y="62" font-size="12" fill="var(--muted)">氧：乙炔約 1：1，焰心圓鈍清晰；最常用，銲碳鋼、切割預熱</text>
+      </g>
+      <g transform="translate(0 132)">
+        <rect x="20" y="40" width="40" height="16" fill="var(--steel)"/>
+        <path d="M60 48 q40 -10 80 -3 q40 5 80 3 q-40 8 -80 5 q-40 5 -80 -5z" fill="var(--fix)" opacity=".2"/>
+        <path d="M60 48 q8 -5 18 0 q-10 5 -18 0z" fill="var(--fix)"/>
+        <text x="300" y="44" font-size="13" font-weight="700" fill="var(--ink)">氧化焰</text>
+        <text x="300" y="62" font-size="12" fill="var(--muted)">氧過多，焰心短尖、有嘶聲；溫度最高。銲黃銅、青銅（抑制鋅蒸發）</text>
+      </g>
+    </svg>
+    <figcaption>圖 6-5　三種氧乙炔火焰（先點乙炔，再逐漸開氧氣調整焰心形狀）</figcaption>
+  </figure>
+  <p><b>氣瓶：</b>氧氣瓶為無縫鋼瓶，滿瓶約 150 kgf/cm²。乙炔在超過約 2 大氣壓時不穩定會分解爆炸，所以溶在填有多孔物質的<b>丙酮（C₃H₆O）</b>中，瓶上有易熔安全塞（約 100°C 熔化洩壓）。</p>
+  <p><b>氧乙炔切割：</b>先以預熱火焰把鋼加熱到燃點（約 870°C，暗紅色），再噴出高壓純氧，鐵激烈氧化放熱，熔融的氧化鐵被氧氣流吹走形成切口。適用於碳鋼與低合金鋼；不鏽鋼、鑄鐵、鋁的氧化物熔點高於母材，需改用<b>鐵粉切割、銲藥噴射切割</b>或電漿切割。切割氧壓力與火嘴大小隨板厚增加。</p>
+
+  <h3>二、電子束銲 EBW</h3>
+  <p>在真空中由熱陰極發射電子，經高壓加速、電磁透鏡聚焦成極細的電子束打在工件上，動能變成熱。能量密度高達 10⁴–10⁷ W/cm²，熔化並汽化金屬形成<b>鑰孔</b>，鑰孔隨電子束前進，前緣熔化的金屬流到後方凝固，得到<b>深寬比 10–20 以上</b>的窄深銲道。</p>
+  <div class="cards c2">
+    <div class="card"><h4>優點</h4><p>熱影響區很窄、變形與殘留應力小，可在精加工後銲接；真空中不氧化，適合鈦、鋯與鎢鉬等高熔點金屬；可一道銲穿 0.05–100 mm 以上；可銲異種金屬；不需填料。</p></div>
+    <div class="card"><h4>限制</h4><p>設備昂貴、需真空室限制工件大小、抽真空費時；接頭需精確對位與小間隙；會產生 X 射線；工件需去磁以免電子束偏折；鋅、鎘等易蒸發金屬與含氣多的鋁鑄件不適合。</p></div>
+  </div>
+
+  <h3>三、雷射銲 LBW</h3>
+  <p>以聚焦的雷射光（CO₂、Nd:YAG、光纖雷射）熔化接合處，也能形成鑰孔深熔。可在大氣中進行、光束可用反射鏡或光纖遠距傳送、易配合機械手臂自動化；熱影響區小、變形小，用於車身拼焊板、電池、醫療器材、電子零件。限制：對位精度要求高、反射率高的鋁銅較難、厚度受雷射功率限制、設備昂貴。<b>雷射光對眼睛與皮膚有害</b>，操作需穿戴對應波長的護目鏡並設防護罩。</p>
+  <div class="tbl"><table>
+    <tr><th>熱源</th><th>能量密度約（W/cm²）</th><th>熱影響區</th></tr>
+    <tr><td>氣銲火焰</td><td class="num">10²–10³</td><td>最寬</td></tr>
+    <tr><td>電弧</td><td class="num">10³–10⁴</td><td>寬</td></tr>
+    <tr><td>電漿弧</td><td class="num">10⁴–10⁶</td><td>中</td></tr>
+    <tr><td>雷射</td><td class="num">10⁵–10⁷</td><td>窄</td></tr>
+    <tr><td>電子束</td><td class="num">10⁵–10⁷</td><td>最窄</td></tr>
+  </table></div>
+  <p>能量密度愈高，熱愈集中、愈快熔化，傳到周圍的熱愈少，所以熱影響區愈窄、變形愈小。</p>
+
+  <h3>四、鋁熱銲 TW</h3>
+  <p>鋁粉與氧化鐵粉（約 1：3 重量比）混合，以鎂帶或過氧化鋇（BaO₂）發火劑引燃，發生強烈放熱反應：8Al + 3Fe₃O₄ → 9Fe + 4Al₂O₃。生成的鋼液（約 2500°C 以上）從坩堝底部流入接頭周圍的砂模，氧化鋁浮渣浮在上面。不需電源、可在現場施作，用於<b>鋼軌現場銲接</b>、大型軸與鑄件修補。</p>
+  <figure>
+    <div class="flow6">
+      <div class="node"><span class="n">1</span><b>對縫</b><small>兩鋼軌端面留約 25 mm 間隙並對正</small></div><div class="right"></div>
+      <div class="node"><span class="n">2</span><b>裝模</b><small>在接頭外圍裝砂模並密封</small></div><div class="right"></div>
+      <div class="node"><span class="n">3</span><b>預熱</b><small>以火焰預熱軌端，去除水分</small></div><div class="right"></div>
+      <div class="node"><span class="n">4</span><b>點火澆注</b><small>坩堝內反應完成後鋼液流入模穴</small></div><div class="right"></div>
+      <div class="node"><span class="n">5</span><b>拆模修整</b><small>剷除冒口與多餘金屬</small></div><div class="right"></div>
+      <div class="node dark"><span class="n">6</span><b>研磨檢驗</b><small>磨到原軌形，超音波檢驗</small></div>
+    </div>
+    <figcaption>圖 6-6　鋁熱銲接鋼軌</figcaption>
+  </figure>
+
+  <h3>五、電熱熔渣銲 ESW</h3>
+  <p>銲縫兩側以水冷銅擋板圍成槽，銲線插入熔渣池中，電流通過導電熔渣產生的<b>電阻熱</b>熔化銲線與母材（起弧後電弧即熄滅）；銅擋板隨熔池由下往上移動。一道可銲數十到數百 mm 厚的鋼板，熔填率高，<b>只能立銲</b>，用於厚壁壓力容器、船體、橋梁。熱輸入大、晶粒粗，常需銲後正常化。若改以保護氣代替熔渣稱為電氣銲 EGW。</p>
+</section>
+
+<!-- ============ 6-6 ============ -->
+<section id="s6">
+  <h2><span class="no">6-6</span>電弧銲接法</h2>
+  <p>電弧是低電壓（約 10–50 V）、大電流（約 10–1000 A）通過游離氣體時的放電，電弧柱溫度可達 5000°C 以上。電弧分為陰極壓降區、電弧柱（佔弧長大部分，電壓與弧長成正比）與陽極壓降區。電流產生的磁場把電弧束緊（<b>束縮效應</b>），形成高速電漿流。</p>
+  <p>電極分兩類：<b>消耗性電極</b>本身熔化成為填料，如 SMAW、GMAW、SAW；<b>非消耗性電極</b>（鎢、碳）只負責起弧，填料另外加，如 GTAW、PAW、CAW。</p>
+
+  <h3>一、極性</h3>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 170" role="img" aria-label="直流正極性：電極接負極、工件接正極，電子衝向工件">
+        <rect x="134" y="10" width="16" height="80" fill="var(--steel)" stroke="var(--ink)" stroke-width="1.5"/>
+        <rect x="40" y="120" width="210" height="24" fill="var(--steel)" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M142 90 L118 120 H166 Z" fill="var(--accent-soft)" stroke="var(--accent)"/>
+        <path d="M128 118 Q142 140 156 118 Z" fill="var(--accent)"/>
+        <g fill="var(--fix)"><circle cx="138" cy="100" r="2.5"/><circle cx="146" cy="106" r="2.5"/><circle cx="136" cy="112" r="2.5"/></g>
+        <g font-size="14" font-weight="700"><text x="158" y="36" fill="var(--ink)">−</text><text x="258" y="138" fill="var(--ink)">＋</text></g>
+        <text x="40" y="166" font-size="12" fill="var(--muted)">工件約得 2／3 熱量，熔深較深</text>
+      </svg>
+      <b>直流正極性 DCSP（DCEN）</b><small>電極接負、工件接正，電子撞擊工件。GTAW 用 DCSP：鎢極較不熱，可承受較大電流，熔深深而窄，適合鋼、不鏽鋼、銅。</small>
+      </div>
+      <div>
+      <svg viewBox="0 0 300 170" role="img" aria-label="直流反極性：電極接正極、工件接負極，電子衝向電極">
+        <rect x="134" y="10" width="16" height="80" fill="var(--steel)" stroke="var(--ink)" stroke-width="1.5"/>
+        <rect x="40" y="120" width="210" height="24" fill="var(--steel)" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M142 90 L112 120 H172 Z" fill="var(--accent-soft)" stroke="var(--accent)"/>
+        <path d="M118 120 Q142 128 166 120 Z" fill="var(--accent)"/>
+        <g fill="var(--fix)"><circle cx="138" cy="112" r="2.5"/><circle cx="146" cy="106" r="2.5"/><circle cx="140" cy="98" r="2.5"/></g>
+        <g font-size="14" font-weight="700"><text x="158" y="36" fill="var(--ink)">＋</text><text x="258" y="138" fill="var(--ink)">−</text></g>
+        <text x="40" y="166" font-size="12" fill="var(--muted)">電極得到較多熱量，正離子撞擊工件</text>
+      </svg>
+      <b>直流反極性 DCRP（DCEP）</b><small>電極接正、工件接負。正離子撞擊工件表面有<b>清除氧化膜</b>作用；GTAW 用 DCRP 時鎢極過熱，只能用小電流、熔深淺。SMAW 與 GMAW 則多用 DCRP，電弧穩定、熔滴過渡好。</small>
+      </div>
+    </div>
+    <figcaption>圖 6-7　直流極性。交流（AC）兩者交替，兼有清潔作用與適中熔深，GTAW 銲鋁鎂多用 AC</figcaption>
+  </figure>
+
+  <h3>二、電銲機</h3>
+  <div class="tbl"><table>
+    <tr><th>項目</th><th>說明</th></tr>
+    <tr><td>交流與直流</td><td>交流機便宜、輕、耐用、<b>不會偏弧</b>，但電弧較不穩、需用被覆銲條、觸電危險較大。直流機電弧穩定、適合全位置與薄板，但較貴、會偏弧。</td></tr>
+    <tr><td>外特性</td><td><b>定電流式（CC）</b>：弧長變化時電流變化小，適合手工銲（SMAW、GTAW）。<b>定電壓式（CV）</b>：配合等速送線，弧長自動穩定，適合 GMAW 等半自動、自動銲。</td></tr>
+    <tr><td>無負載電壓</td><td>未起弧時兩極間電壓，愈高愈容易起弧但較危險；定電流式約 70–80 V，定電壓式約 30–50 V。</td></tr>
+    <tr><td>使用率</td><td>在額定電流下，每 10 分鐘內可連續輸出的時間百分比，避免線圈過熱。手銲機約 20–60%，自動銲機需 100%。</td></tr>
+  </table></div>
+
+  <h3>三、被覆銲條與銲接參數</h3>
+  <p>被覆銲條由心線（導電並作填料）與銲藥被覆組成。<b>銲藥的功用：</b>穩定電弧；分解產生保護氣體；形成熔渣覆蓋銲道，隔絕空氣並減緩冷卻；脫氧去雜質；加入合金元素；減少噴濺、使銲道成形；便於各位置銲接。</p>
+  <p><b>CNS 銲條標示（例 E4316）：</b>E 表示被覆電銲條；43 表示熔填金屬最低抗拉強度 43 kgf/mm²（約 420 MPa）；末兩位表示被覆種類、適用電流與銲接位置，例如 16 為低氫系、適用交流或直流反極性、全位置。銲接位置有平銲 F、橫銲 H、立銲 V、仰銲 OH。</p>
+  <div class="tbl"><table>
+    <tr><th>參數</th><th>原則</th></tr>
+    <tr><td>銲條直徑</td><td>厚板用粗銲條大電流；立銲、仰銲與打底層用細銲條</td></tr>
+    <tr><td>電流</td><td>電流大熔填率高，但過大噴濺多、咬邊、過熱；立仰銲取下限</td></tr>
+    <tr><td>弧長</td><td>約等於心線直徑。太短易短路黏條，太長電弧不集中、保護不足、氣孔多</td></tr>
+    <tr><td>銲接速度</td><td>電弧略領先熔池。太快咬邊、熔合不良、銲道窄；太慢銲道過高、熱輸入大</td></tr>
+  </table></div>
+  <div class="formula sm">熱輸入 H = η V I ／ v　（η 熱效率，V 電壓，I 電流，v 銲接速度）</div>
+
+  <h3>四、偏弧</h3>
+  <figure>
+    <svg viewBox="0 0 640 200" role="img" aria-label="偏弧：直流電流產生的磁場在工件邊緣與接地點附近分布不對稱，電弧被推向磁力線較稀的一側">
+      <rect x="40" y="130" width="560" height="26" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <g fill="none" stroke="var(--fix)" stroke-width="1.5" opacity=".8">
+        <ellipse cx="120" cy="130" rx="40" ry="24"/><ellipse cx="120" cy="130" rx="70" ry="44"/>
+        <ellipse cx="320" cy="130" rx="40" ry="24"/><ellipse cx="320" cy="130" rx="70" ry="44"/>
+        <ellipse cx="530" cy="130" rx="40" ry="24"/><ellipse cx="530" cy="130" rx="70" ry="44"/>
+      </g>
+      <rect x="112" y="20" width="14" height="80" fill="var(--accent-soft)" stroke="var(--ink)" transform="rotate(-10 119 60)"/>
+      <path d="M126 100 Q140 116 152 128" stroke="var(--warn)" stroke-width="5" fill="none"/>
+      <rect x="313" y="20" width="14" height="80" fill="var(--accent-soft)" stroke="var(--ink)"/>
+      <path d="M320 100 L320 128" stroke="var(--warn)" stroke-width="5"/>
+      <rect x="520" y="20" width="14" height="80" fill="var(--accent-soft)" stroke="var(--ink)" transform="rotate(10 527 60)"/>
+      <path d="M518 100 Q506 116 494 128" stroke="var(--warn)" stroke-width="5" fill="none"/>
+      <g font-size="13" font-weight="700" text-anchor="middle" fill="var(--ink)"><text x="120" y="186">工件端部：電弧被推向內側</text><text x="320" y="186">中段：磁場對稱，無偏弧</text><text x="530" y="186">另一端部</text></g>
+    </svg>
+    <figcaption>圖 6-8　偏弧（磁吹）</figcaption>
+  </figure>
+  <p><b>原因：</b>直流電流在工件與電纜周圍產生磁場，在工件邊緣、接頭轉角、接地點附近，磁力線分布不對稱，電弧被推向磁力線較稀的一側，熔池不穩、熔合不良。交流的磁場方向不斷反轉，幾乎不會偏弧。</p>
+  <p><b>對策：</b>改用交流電源；縮短弧長；銲條朝偏弧方向傾斜抵消；改變接地位置或兩端都接地；在接縫兩端加導板（引弧板、收弧板）；分段後退銲法；接地電纜繞在工件上以抵消磁場；烘乾受潮銲條。</p>
+
+  <h3>五、各種電弧銲</h3>
+  <div class="tbl"><table>
+    <tr><th>方法</th><th>原理</th><th>特點</th></tr>
+    <tr><td>被覆金屬電弧銲 SMAW</td><td>被覆銲條與工件間起弧，銲條熔化作填料，銲藥產生保護氣與熔渣</td><td>設備簡單、可攜、全位置，用途最廣；但需換銲條、清渣，效率較低</td></tr>
+    <tr><td>潛弧銲 SAW</td><td>顆粒狀銲藥先鋪在接縫上，裸銲線插入銲藥中起弧，電弧完全被埋住；自動送線前進，未熔銲藥回收</td><td>可用大電流、熔填率高、熔深大、無弧光噴濺、品質穩定，適合厚板長直縫（造船甲板、風電塔架、鋼管）；但只能平銲或平角銲、看不到熔池、設備大、熱輸入大使晶粒粗、銲藥需防潮</td></tr>
+    <tr><td>惰氣鎢極電弧銲 GTAW（TIG）</td><td>非消耗鎢極起弧，另加銲條（也可不加），氬或氦保護</td><td>品質最好、無渣無噴濺、可銲薄板與鋁鎂鈦不鏽鋼；但速度慢、熔填率低、技術要求高</td></tr>
+    <tr><td>惰氣金屬極電弧銲 GMAW（MIG／MAG）</td><td>連續送出的裸銲線作電極兼填料，保護氣包圍電弧。惰性氣體稱 MIG（銲鋁、銅），含 CO₂ 或 O₂ 的混合氣稱 MAG，純 CO₂ 稱 CO₂ 銲（銲碳鋼）</td><td>連續送線、速度快、熔填率高、無渣、易自動化與機器人化；戶外有風時保護氣易吹散</td></tr>
+    <tr><td>包藥銲線電弧銲 FCAW</td><td>管狀銲線內包銲藥，可自保護或另加 CO₂</td><td>熔填率高、抗風較好，用於造船與鋼結構現場</td></tr>
+    <tr><td>電漿電弧銲 PAW</td><td>鎢極電弧被收縮噴嘴壓縮，形成高溫高速電漿流</td><td>能量更集中、熔深深而窄、熱影響區小、電弧穩定且弧長變化影響小；可做鑰孔銲；也用於切割</td></tr>
+    <tr><td>碳極電弧銲 CAW</td><td>以碳棒為電極起弧，需 DCSP</td><td>已少用；碳弧氣刨可用來清根</td></tr>
+    <tr><td>原子氫銲 AHW</td><td>氫氣經兩鎢極間電弧分解成原子，到工件表面再結合放熱</td><td>溫度高、保護好，但有氫脆風險，已被 TIG 取代</td></tr>
+  </table></div>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 200" role="img" aria-label="GTAW：鎢電極不熔化，填料銲條從側面送入熔池，氬氣從噴嘴流出保護">
+        <path d="M110 10 H190 V80 L172 110 H128 L110 80 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="144" y="40" width="12" height="94" fill="var(--paper)" stroke="var(--ink)"/>
+        <path d="M144 134 L150 146 L156 134Z" fill="var(--ink)"/>
+        <path d="M150 146 L136 170 H164 Z" fill="var(--accent-soft)" stroke="var(--accent)"/>
+        <g stroke="var(--fix)" stroke-width="2" opacity=".6"><path d="M128 112 L112 160M172 112 L188 160"/></g>
+        <rect x="20" y="170" width="260" height="20" fill="var(--steel)" stroke="var(--ink)"/>
+        <ellipse cx="150" cy="171" rx="22" ry="6" fill="var(--accent)"/>
+        <path d="M240 120 L176 166" stroke="var(--accent)" stroke-width="5"/>
+        <g font-size="12" fill="var(--ink)"><text x="196" y="40">噴嘴</text><text x="196" y="66">鎢極（不熔化）</text><text x="236" y="112">填料銲條</text><text x="30" y="150" fill="var(--fix)">氬氣保護</text></g>
+      </svg>
+      <b>GTAW（TIG）</b><small>電極不熔化，熱量與填料可分開控制，所以品質最好、適合薄板與打底銲。</small>
+      </div>
+      <div>
+      <svg viewBox="0 0 300 200" role="img" aria-label="GMAW：銲線由送線輪連續送出，穿過導電嘴成為電極並熔化成熔滴，保護氣從噴嘴流出">
+        <path d="M110 10 H190 V80 L172 110 H128 L110 80 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="146" y="0" width="8" height="140" fill="var(--accent)"/>
+        <circle cx="130" cy="22" r="10" fill="var(--paper)" stroke="var(--ink)"/><circle cx="170" cy="22" r="10" fill="var(--paper)" stroke="var(--ink)"/>
+        <circle cx="150" cy="150" r="5" fill="var(--accent)"/><circle cx="150" cy="162" r="4" fill="var(--accent)"/>
+        <path d="M150 140 L132 172 H168 Z" fill="var(--accent-soft)" opacity=".7"/>
+        <g stroke="var(--fix)" stroke-width="2" opacity=".6"><path d="M128 112 L112 160M172 112 L188 160"/></g>
+        <rect x="20" y="170" width="260" height="20" fill="var(--steel)" stroke="var(--ink)"/>
+        <ellipse cx="150" cy="171" rx="24" ry="6" fill="var(--accent)"/>
+        <g font-size="12" fill="var(--ink)"><text x="186" y="26">送線輪</text><text x="196" y="66">導電嘴</text><text x="196" y="150">熔滴過渡</text><text x="30" y="150" fill="var(--fix)">保護氣</text></g>
+      </svg>
+      <b>GMAW（MIG／MAG）</b><small>銲線同時是電極與填料，連續送線不必換條，速度快，最適合半自動與機器人銲接。</small>
+      </div>
+    </div>
+    <figcaption>圖 6-9　GTAW 與 GMAW</figcaption>
+  </figure>
+  <p><b>GTAW 鎢極：</b>純鎢（AC 銲鋁）、含釷鎢（電子發射好、起弧容易，但有輻射疑慮）、含鈰或鑭鎢（替代釷鎢）、含鋯鎢（AC）。<b>保護氣：</b>氬氣比空氣重、游離電壓低易起弧、電弧穩定、價格較低，最常用；氦氣游離電壓高、熱輸入大、熔深深，適合厚鋁與銅，但較貴、用量大；氬氫混合提高不鏽鋼銲速，但不可用於碳鋼（氫脆）。</p>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 190" role="img" aria-label="傳導式電漿弧：電弧在鎢極與工件之間，穿過收縮噴嘴">
+        <path d="M100 10 H200 V90 L170 120 H130 L100 90 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="144" y="20" width="12" height="70" fill="var(--paper)" stroke="var(--ink)"/>
+        <path d="M150 96 L142 120 L146 168 H154 L158 120 Z" fill="var(--warn)" opacity=".85"/>
+        <rect x="20" y="168" width="260" height="18" fill="var(--steel)" stroke="var(--ink)"/>
+        <g font-size="13" font-weight="700"><text x="160" y="40" fill="var(--ink)">−</text><text x="284" y="166" fill="var(--ink)">＋</text></g>
+        <text x="190" y="140" font-size="12" fill="var(--ink)">電弧通到工件</text>
+      </svg>
+      <b>傳導式（transferred）</b><small>工件是電路的一部分，電弧在鎢極與工件之間，熱效率高、熔深深，用於銲接與切割金屬。</small>
+      </div>
+      <div>
+      <svg viewBox="0 0 300 190" role="img" aria-label="非傳導式電漿弧：電弧在鎢極與噴嘴之間，只有電漿焰噴出">
+        <path d="M100 10 H200 V90 L170 120 H130 L100 90 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="144" y="20" width="12" height="70" fill="var(--paper)" stroke="var(--ink)"/>
+        <path d="M150 96 L134 116 M150 96 L166 116" stroke="var(--warn)" stroke-width="4"/>
+        <path d="M142 120 Q150 150 146 168 H154 Q150 150 158 120 Z" fill="var(--accent-soft)" stroke="var(--accent)"/>
+        <rect x="20" y="168" width="260" height="18" fill="var(--paper)" stroke="var(--ink)"/>
+        <g font-size="13" font-weight="700"><text x="160" y="40" fill="var(--ink)">−</text><text x="206" y="110" fill="var(--ink)">＋（噴嘴）</text></g>
+        <text x="186" y="150" font-size="12" fill="var(--ink)">只有電漿焰噴出</text>
+      </svg>
+      <b>非傳導式（non-transferred）</b><small>電弧在鎢極與噴嘴之間，工件不必導電，可加熱非金屬、熔射；熱效率較低。</small>
+      </div>
+    </div>
+    <figcaption>圖 6-10　電漿電弧的兩種接法</figcaption>
+  </figure>
+
+  <h3>六、銲接缺陷與變形</h3>
+  <div class="tbl"><table>
+    <tr><th>缺陷</th><th>原因與對策</th></tr>
+    <tr><td>氣孔</td><td>銲條受潮、保護不良、母材油汙鏽皮 → 烘乾銲條、清潔、改善保護</td></tr>
+    <tr><td>夾渣</td><td>多層銲時未清渣、電流太小 → 每層徹底清渣</td></tr>
+    <tr><td>熔合不良、未銲透</td><td>電流太小、速度太快、坡口太窄 → 調整參數與開槽</td></tr>
+    <tr><td>咬邊</td><td>電流太大、弧長太長、角度不當 → 降電流、縮短弧長</td></tr>
+    <tr><td>熱裂（凝固裂紋）</td><td>硫磷高、拘束大、銲道深寬比不當 → 選低雜質填料、控制形狀</td></tr>
+    <tr><td>冷裂（氫致裂紋）</td><td>氫 + 硬化組織 + 拘束應力 → 低氫銲條、預熱、層間溫度控制、銲後緩冷或後熱</td></tr>
+  </table></div>
+  <p><b>減少變形：</b>減少銲道數量與尺寸；對稱銲、分段後退銲、跳銲；預先反向變形；以夾具拘束；預熱減少溫差；銲後去應力退火或錘擊；選用熱輸入小的方法（雷射、電子束）。</p>
+  <p><b>預熱的作用：</b>降低冷卻速度，避免 HAZ 生成硬脆的麻田散鐵；幫助氫逸出，防止冷裂；減少溫差與殘留應力、變形；對導熱好的厚鋁銅可幫助熔合。</p>
+</section>
+
+<!-- ============ 試題 ============ -->
+<section id="exam">
+  <h2><span class="no">試題</span>歷屆試題</h2>
+  <p class="hint">點選題目展開作答要點</p>
+
+  <details><summary><span class="qn">01</span><span>(1) 局部預熱工件對銲接的影響？(2) 電子束或雷射銲相較電弧銲的優缺點？</span><span class="src">台大機械</span></summary>
+    <div class="ans"><ul><li>見 6-6 節：降低冷卻速率、避免硬脆組織與冷裂、幫助氫逸出、減少殘留應力與變形。</li><li>高能束：能量密度高、熔深大、熱影響區窄、變形小、速度快、易自動化、可銲異種與難銲材料；但設備昂貴、對位與間隙要求嚴、電子束需真空、雷射對高反射材料較難、厚度受功率限制。電弧銲設備便宜、適應性高，但熱影響區大、變形大。</li></ul></div></details>
+
+  <details><summary><span class="qn">02</span><span>電弧銲接時計算銲接速度需考慮哪些因素？</span><span class="src">台大機械</span></summary>
+    <div class="ans">熱輸入 H = ηVI／v 的需求（材料、板厚、所需熔深與冷卻速率）；電壓與電流；熱效率；銲道截面積與熔填率（v ≈ 熔填率 ／ 銲道截面積 × 密度）；銲接位置；接頭型式與開槽；母材導熱性與預熱溫度。</div></details>
+
+  <details><summary><span class="qn">03</span><span>(1) 熔銲、硬銲、軟銲的差別？(2) GTAW 與電子束銲進行相同銲接時，熱影響區大小與銲接強度的差別？</span><span class="src">台大機械</span></summary>
+    <div class="ans"><ul><li>熔銲母材熔化；硬銲與軟銲母材不熔化，只有填料熔化並以毛細作用流入，兩者以約 450°C 區分。</li><li>電子束能量密度高約百倍、熱集中且速度快，傳入母材的總熱量少，<b>熱影響區遠小於 GTAW</b>；接頭軟化或脆化區窄、殘留應力小，且真空中無氧化氮化，<b>接頭強度與母材更接近</b>。</li></ul></div></details>
+
+  <details><summary><span class="qn">04</span><span>詳述電弧銲接的原理與偏弧的成因。</span><span class="src">高考三等</span></summary>
+    <div class="ans">低電壓大電流通過電極與工件間的游離氣體放電，產生數千度以上的電弧熱熔化母材與填料（6-6 節）。偏弧：直流電流產生的磁場在工件端部、轉角與接地點附近不對稱，電弧被推向磁力線稀疏側；交流電源可避免（圖 6-8）。</div></details>
+
+  <details><summary><span class="qn">05</span><span>氧乙炔氣銲、電弧銲、摩擦銲：(1) 原理、優缺點與限制 (2) 何者不需銲條？何者只限金屬？</span><span class="src">關務三等</span></summary>
+    <div class="ans"><ul><li>氣銲：乙炔氧火焰熔化，設備便宜可攜，但熱量分散、熱影響區大、慢。電弧銲：電弧熱熔化，效率高、用途最廣，但有弧光煙塵、需電源。摩擦銲：旋轉摩擦生熱後頂鍛，固態接合品質好、可接異種金屬，但限圓形截面、設備專用。</li><li><b>摩擦銲不需銲條</b>（氣銲與 GTAW 也可不加填料）；氣銲與電弧銲只能銲金屬，摩擦銲也可銲熱塑性塑膠，三者中只限金屬的是電弧銲（需導電）。</li></ul></div></details>
+
+  <details><summary><span class="qn">06</span><span>汽車鈑金點銲：(1) 原理與方法 (2) 為何適合機械手臂 (3) 是否有熱影響區？與電弧銲有何不同？</span><span class="src">關務三等</span></summary>
+    <div class="ans"><ul><li>見圖 6-4：電極夾緊搭接板，I²Rt 在接觸面生熱形成銲核，斷電保壓冷卻。</li><li>每點時間短（零點幾秒）、不需填料與保護氣、參數（電流、時間、壓力）易數位控制、只需把銲鉗移到定位，重複性高。</li><li>有，但只在銲核周圍很小範圍：熱量集中且時間短，銅電極水冷迅速帶走熱。電弧銲沿整條銲道連續加熱、熱輸入大，熱影響區寬得多。</li></ul></div></details>
+
+  <details><summary><span class="qn">07</span><span>說明電阻銲接的原理與應用範圍。</span><span class="src">地特四等</span></summary>
+    <div class="ans">H = I²Rt，大電流通過接觸面生熱並加壓結合。應用：點銲（車身、家電）、浮凸銲（螺帽）、縫銲（油箱、罐）、閃光銲（鋼軌、鏈條）、高頻電阻銲（銲管）。適合薄板與大量生產。</div></details>
+
+  <details><summary><span class="qn">08</span><span>繪圖說明閃光對銲法改善鋼軌銲接強度的銲接程序。</span><span class="src">地特三等</span></summary>
+    <div class="ans">夾持兩軌 → 通電後使軌端輕觸並緩慢靠近，局部接觸點過熱熔化噴出火花（閃光），把端面均勻加熱並燒除氧化物 → 達到溫度後急速頂鍛，擠出熔融金屬與雜質形成固態接合 → 斷電保壓 → 剪除擠出的毛刺、研磨、正常化熱處理。接頭無鑄造組織、強度高。</div></details>
+
+  <details><summary><span class="qn">09</span><span>電阻銲接中 (1) 影響銲核直徑的因素 (2) 兩工件之間電阻值最大的原因。</span><span class="src">地特三等</span></summary>
+    <div class="ans"><ul><li>電流（影響最大）、通電時間、電極壓力、電極端面直徑與形狀、板厚、材料電阻率與導熱、表面狀態。</li><li>兩板表面微觀凹凸只有少數點真正接觸，電流通過的有效面積小，加上表面氧化膜與汙物，接觸電阻遠大於金屬本體電阻；電極為高導電銅合金且與工件接觸壓力大、又水冷，其接觸電阻小。</li></ul></div></details>
+
+  <details><summary><span class="qn">10</span><span>詳述電漿銲接原理，比較傳導式與非傳導式接線的異同與製程特性。</span><span class="src">普通考試</span></summary>
+    <div class="ans">見 6-6 節與圖 6-10。傳導式電弧通到工件，熱效率高、熔深深，用於金屬銲接與切割；非傳導式電弧在鎢極與噴嘴之間，工件不需導電，可處理非金屬，但熱效率低。兩者都利用收縮噴嘴壓縮電弧得到高能量密度。</div></details>
+
+  <details><summary><span class="qn">11</span><span>(1) 消耗式與非消耗式電極電弧銲的差異與實例 (2) 銲渣的功能，多道堆銲應注意事項。</span><span class="src">鐵路員級</span></summary>
+    <div class="ans"><ul><li>消耗式：電極熔化成填料，熔填率高，如 SMAW、GMAW、SAW；非消耗式：鎢或碳極只起弧，填料另加，熱量與填料可分開控制、品質好，如 GTAW、PAW。</li><li>銲渣隔絕空氣、減緩冷卻、精煉銲道、使表面成形。多道銲：每道徹底清渣以防夾渣；控制層間溫度；注意熔合；後道對前道有回火效果；交錯起收弧位置。</li></ul></div></details>
+
+  <details><summary><span class="qn">12</span><span>說明熔解銲接、固態銲接與硬銲的意義與差異。</span><span class="src">普通考試</span></summary>
+    <div class="ans">熔解銲接：母材接合處熔化熔合，可加填料，有凝固組織與熱影響區。固態銲接：母材不熔化，靠壓力、摩擦、擴散或振動使原子接近而結合，熱影響小、可接異種金屬。硬銲：母材不熔化，只熔化熔點 450°C 以上的填料並以毛細作用流入間隙。</div></details>
+
+  <details><summary><span class="qn">13</span><span>試述硬銲與軟銲製程及通常的應用對象。</span><span class="src">機械技師</span></summary>
+    <div class="ans">見 6-3 節表格：軟銲用於電子電路、水管與鈑金密封；硬銲用於碳化物刀片、管路接頭、熱交換器、冷凍設備、車架。</div></details>
+
+  <details><summary><span class="qn">14</span><span>說明 SMAW 電銲條被覆銲藥的功效。</span><span class="src">關務三等</span></summary>
+    <div class="ans">穩定電弧、產生保護氣體、形成熔渣保護並減緩冷卻、脫氧與去雜質、加入合金元素、減少噴濺、改善銲道形狀、便於全位置銲接、提高熔深。</div></details>
+
+  <details><summary><span class="qn">15</span><span>說明鋁熱銲的原理，以圖闡述製程並說明鋼軌接合應用。</span><span class="src">高考三等</span></summary>
+    <div class="ans">8Al + 3Fe₃O₄ → 9Fe + 4Al₂O₃ 放出大量熱，產生高溫鋼液澆入接頭砂模。流程見圖 6-6。優點是不需電源、設備輕便、可在軌道現場施作；缺點是接頭為鑄造組織、品質受操作影響，需超音波檢驗。</div></details>
+
+  <details><summary><span class="qn">16</span><span>分別說明對接電阻銲與閃光電阻銲的操作程序。</span><span class="src">地特四等</span></summary>
+    <div class="ans">對接（端壓）銲：兩件夾在夾頭中，端面先緊密接觸並加壓 → 通電，接觸面電阻熱使端部軟化 → 持續頂鍛形成鼓起的接頭 → 斷電。閃光銲：先通電再使兩端輕觸，局部接觸點熔化噴出閃光，邊閃光邊緩慢靠近，把端面加熱均勻 → 急速頂鍛擠出熔融金屬與氧化物 → 斷電、去毛刺。閃光銲端面不需精加工、可銲大截面。</div></details>
+
+  <details><summary><span class="qn">17</span><span>試述金屬電極電弧銲接的原理。</span><span class="src">關務四等</span></summary>
+    <div class="ans">以金屬銲條（被覆銲條或銲線）為電極，與工件間產生電弧，電弧熱同時熔化銲條與母材，銲條熔滴經電弧過渡到熔池作為填料；以銲藥產生的氣體與熔渣（SMAW）或外加保護氣（GMAW）隔絕空氣，冷卻後形成銲道。</div></details>
+
+  <details><summary><span class="qn">18</span><span>(1) 以圖說明潛弧銲製程、特點與限制 (2) 潛弧銲應用於船舶甲板接合的適用範圍。</span><span class="src">普通考試</span></summary>
+    <div class="ans"><ul><li>見 6-6 節表格：銲藥覆蓋接縫，裸銲線在銲藥下起弧，自動送線行走，未熔銲藥回收。特點：大電流、高熔填率、深熔、無弧光、品質穩定；限制：只能平銲與平角銲、看不到熔池、熱輸入大、設備大。</li><li>船舶甲板與外板的平面拼接長直縫、厚板對接（單面銲雙面成形配合背襯）、T 型材角銲，在船廠平台上平銲施作；曲面與狹窄位置仍需 FCAW 或 SMAW。</li></ul></div></details>
+
+  <details><summary><span class="qn">19</span><span>比較摩擦銲接與摩擦攪拌銲接的主要差異。</span><span class="src">升資考試</span></summary>
+    <div class="ans">摩擦銲：兩工件之一旋轉互相摩擦生熱再頂鍛，限圓形截面的端面對接（軸、管）。摩擦攪拌銲：工件不動，另一支帶探針的旋轉工具插入接縫並沿縫移動，以攪拌使材料結合，可做板材長直縫對接與搭接，主要用於鋁、鎂、銅合金。兩者都是固態接合、不熔化。</div></details>
+
+  <details><summary><span class="qn">20</span><span>(1) 三種氧乙炔火焰的調整方法 (2) 以氧乙炔火焰切割鋼板的操作程序。</span><span class="src">鐵路員級</span></summary>
+    <div class="ans"><ul><li>先開乙炔點火，得到黑煙的乙炔焰 → 逐漸開氧，出現有白色羽焰的碳化焰 → 羽焰剛好消失、焰心圓鈍清晰時為中性焰 → 再加氧則焰心變短變尖、有嘶聲，為氧化焰。</li><li>選用切割火嘴、調整中性預熱焰 → 把起切點加熱到暗紅（約 870°C）→ 開切割氧 → 依板厚等速移動火嘴，保持焰心離板面約 3–5 mm → 切完先關切割氧，再關乙炔、氧。</li></ul></div></details>
+
+  <details><summary><span class="qn">21</span><span>(1) 說明電阻點銲加工程序 (2) 寫出電阻銲熱量與電流的關係。</span><span class="src">機械技師</span></summary>
+    <div class="ans">加壓 → 通電 → 熔化形成銲核 → 斷電保壓冷卻 → 放開。H = I²Rt，熱量與電流平方成正比。</div></details>
+
+  <details><summary><span class="qn">22</span><span>電阻點銲與電弧熔接點銲：(1) 工作原理 (2) 熱源 (3) 以兩鋼板為例繪圖標示銲塊位置。</span><span class="src">高考二等</span></summary>
+    <div class="ans"><ul><li>電阻點銲：電極夾緊兩板通電，熱源是接觸面的電阻熱（I²Rt），<b>銲核在兩板交界面中央</b>，外表看不到熔融金屬。</li><li>電弧點銲（如 MIG 塞孔或氬弧點銲）：從上板一側起弧，熱源是電弧熱，熔化上板並熔透到下板，<b>銲塊從上板表面向下貫穿到下板</b>，表面有凸起銲點。</li></ul></div></details>
+
+  <details><summary><span class="qn">23</span><span>(1) 熔接可能產生哪些重要缺陷？(2) 有哪些減少變形的技術？</span><span class="src">高考三等</span></summary>
+    <div class="ans">見 6-6 節「銲接缺陷與變形」：氣孔、夾渣、熔合不良、未銲透、咬邊、熱裂、冷裂、殘留應力與變形；對策包括對稱銲、分段後退、反變形、夾具、預熱、低熱輸入方法、銲後去應力。</div></details>
+
+  <details><summary><span class="qn">24</span><span>(1) 比較硬銲與軟銲的異同 (2) 各自的缺點或局限 (3) 在什麼情況下優於熔接？</span><span class="src">普通考試</span></summary>
+    <div class="ans">見 6-3 節。共同點：母材不熔化、靠毛細作用、需銲劑與小間隙；差異在溫度、填料與強度。局限：強度與使用溫度受填料限制、需精密間隙與清潔、銲劑殘留腐蝕。優於熔接：異種材料、薄件精密件、熱敏感件、需要低變形或一次接合多點、需可拆修時。</div></details>
+
+  <details><summary><span class="qn">25</span><span>(1) 繪圖說明電弧結構與銲點組織 (2) 列舉五種影響熔深的因素。</span><span class="src">高考三等</span></summary>
+    <div class="ans"><ul><li>電弧：陰極壓降區、電弧柱、陽極壓降區；組織見圖 6-1：熔融區柱狀晶、粗晶 HAZ、細晶 HAZ、母材。</li><li>熔深因素：電流（最主要）、極性、銲接速度、電弧電壓與弧長、電極直徑與角度、保護氣種類（氦、CO₂ 較深）、母材導熱與預熱、接頭開槽。</li></ul></div></details>
+</section>
+
+</main>
+</div>
+
+<script src="assets/chapter.js"></script>
+</body>
+</html>

@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>機械製造學 第五章 塑性加工</title>
+<link rel="stylesheet" href="assets/chapter.css">
+<style>
+/* Layout: 與第一章相同的講義版面 — 左側節次分頁 + 右側正文；製程以剖面示意圖與流程框呈現 */
+:root{
+  --bg:#FBF8F5; --paper:#FFFFFF; --ink:#2A1D14; --muted:#6E5D50;
+  --accent:#A84A0C; --accent-soft:#F6E6D8; --line:#E6D5C7; --grid:rgba(168,74,12,.07);
+  --steel:#9A8A7D; --fix:#1D6B70; --fix-soft:#E3F1F1; --warn:#8E2F1C;
+  --f-display:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-body:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --steel:#6E5E52; --fix:#6CC3C7; --fix-soft:#16302F; --warn:#F08A73; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --steel:#6E5E52; --fix:#6CC3C7; --fix-soft:#16302F; --warn:#F08A73; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.8;padding-inline:16px}
+.wrap{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px;padding-block:0 64px}
+header.hero{max-width:1120px;margin:0 auto 32px;padding-block:36px 28px;border-bottom:1.5px solid var(--accent);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;
+  display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:24px;align-items:center}
+.hero-art{width:100%;max-width:260px;justify-self:end}
+.crumb{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,5vw,3.1rem);line-height:1.2;margin:.3em 0 .2em;text-wrap:balance}
+h1 small{font-size:.5em;font-weight:600;color:var(--muted);display:block;letter-spacing:.05em}
+.lede{max-width:62ch;color:var(--muted);margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px;font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+main{min-width:0}
+section{padding-block:8px 28px;border-bottom:1px solid var(--line);margin-bottom:28px;scroll-margin-top:16px}
+h2{font-family:var(--f-display);font-size:1.6rem;margin:0 0 .6em;display:flex;align-items:baseline;gap:14px;text-wrap:balance}
+h2 .no{font-family:var(--f-mono);font-size:.95rem;color:var(--paper);background:var(--accent);padding:2px 9px;border-radius:2px;font-weight:500}
+h3{font-size:1.12rem;margin:1.6em 0 .5em;color:var(--accent)}
+h4{font-size:1rem;margin:1.2em 0 .3em}
+p{max-width:68ch;margin:.4em 0 .9em}
+.en{font-family:var(--f-mono);font-size:.8em;color:var(--muted)}
+.key{background:linear-gradient(transparent 62%,var(--accent-soft) 62%);font-weight:700}
+figure{margin:20px 0 24px;background:var(--paper);border:1px solid var(--line);padding:20px}
+figcaption{font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-top:12px;letter-spacing:.04em}
+.scroll{overflow-x:auto}
+.tbl{overflow-x:auto;margin:14px 0 22px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px;background:var(--paper)}
+th,td{border:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);color:var(--accent);font-weight:700;white-space:nowrap}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);padding:12px 16px;margin:16px 0;font-size:15px}
+.callout b{color:var(--accent)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:12px 0 20px}
+.card{border:1px solid var(--line);background:var(--paper);padding:14px 16px}
+.card h4{margin:0 0 4px;color:var(--accent)}
+.card p{margin:0;font-size:14.5px}
+/* 流程圖共用 */
+.node{background:var(--paper);border:2px solid var(--accent);border-radius:6px;padding:10px 14px;position:relative}
+.node b{display:block;font-size:15.5px}
+.node small{display:block;color:var(--muted);font-size:13px;line-height:1.5}
+.node .n{font-family:var(--f-mono);font-size:11.5px;color:var(--accent);letter-spacing:.06em}
+.node.dark{background:var(--accent);border-color:var(--accent)}
+.node.dark b,.node.dark .n{color:var(--paper)} .node.dark small{color:var(--accent-soft)}
+.down{height:30px;position:relative;margin-left:50%}
+.down::before{content:"";position:absolute;left:-1px;top:0;bottom:8px;border-left:2px solid var(--fix)}
+.down::after{content:"";position:absolute;left:-7px;bottom:0;border:7px solid transparent;border-top:9px solid var(--fix);border-bottom:0}
+.right{flex:0 0 34px;align-self:center;height:2px;background:var(--fix);position:relative}
+.right::after{content:"";position:absolute;right:-2px;top:-6px;border:7px solid transparent;border-left:10px solid var(--fix);border-right:0}
+/* 設計流程 */
+.phases{display:grid;gap:0}
+.phase{border:1.5px dashed var(--steel);border-radius:10px;padding:26px 16px 14px;position:relative;display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:0 14px;align-items:center}
+.phase>.lab{position:absolute;top:-11px;left:14px;background:var(--paper);padding:0 8px;font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.08em}
+.phase .down{grid-column:1}
+.tool{font-family:var(--f-mono);font-size:12px;color:var(--accent);border:1.5px solid var(--accent);border-radius:999px;text-align:center;padding:3px 8px;position:relative;background:var(--paper)}
+.tool::before{content:"";position:absolute;right:100%;top:50%;width:14px;border-top:1.5px dashed var(--accent)}
+.gap{grid-column:2}
+/* IPO */
+.ipo{display:flex;align-items:stretch;gap:0}
+.ipo .col{flex:1;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.ipo .col h5{margin:0 0 4px;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;color:var(--accent);text-align:center}
+.pill{border:1.5px solid var(--accent);border-radius:999px;padding:2px 12px;font-size:14px;text-align:center;background:var(--paper)}
+.pill.solid{background:var(--accent);color:var(--paper)}
+.ipo .proc{flex:1;border:2px solid var(--accent);border-radius:8px;background:var(--accent);color:var(--paper);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:14px}
+.ipo .proc h5{color:var(--accent-soft)}
+.ipo .proc .pill{background:transparent;border-color:var(--accent-soft);color:var(--paper)}
+/* 分類樹 */
+.tree{width:max-content;min-width:100%;margin:0 auto}
+.tree ul{list-style:none;margin:0;padding:22px 0 0;display:flex;justify-content:center;position:relative}
+.tree li{position:relative;padding:22px 4px 0;text-align:center}
+.tree>ul{padding-top:0}.tree>ul>li{padding-top:0}
+.tree li::before,.tree li::after{content:"";position:absolute;top:0;width:50%;height:22px;border-top:2px solid var(--steel)}
+.tree li::before{right:50%}.tree li::after{left:50%;border-left:2px solid var(--steel)}
+.tree li:only-child::before,.tree li:only-child::after{display:none}
+.tree li:first-child::before,.tree li:last-child::after{border-top:none}
+.tree li:last-child::before{border-right:2px solid var(--steel);border-top-right-radius:6px}
+.tree li:first-child::after{border-top-left-radius:6px}
+.tree>ul>li::before,.tree>ul>li::after{display:none}
+.tree ul ul::before{content:"";position:absolute;top:0;left:50%;height:22px;border-left:2px solid var(--steel)}
+.tree .node{display:inline-block;padding:5px 9px;white-space:nowrap}
+.tree .node b{font-size:14.5px}
+/* 加工示意圖卡 */
+.procs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 20px}
+.procs.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.proc-card{background:var(--paper);border:1px solid var(--line);padding:12px 12px 10px;display:flex;flex-direction:column;gap:4px}
+.proc-card svg{width:100%;height:auto;background:var(--bg);border-radius:4px}
+.proc-card b{font-size:15px}
+.proc-card .en{display:block}
+.proc-card small{color:var(--muted);font-size:13px;line-height:1.5}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted);margin:-4px 0 12px}
+.legend i{display:inline-block;width:14px;height:10px;margin-right:6px;vertical-align:middle;border-radius:2px}
+/* 碳足跡 */
+.life{display:flex;align-items:stretch}
+.life .node{flex:1;text-align:center;padding:10px 8px}
+.offset{margin-top:14px;border:2px dashed var(--fix);border-radius:8px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:center;font-size:14.5px}
+.offset b{color:var(--fix)}
+.eq{font-family:var(--f-mono);font-size:15px;background:var(--fix);color:var(--paper);padding:2px 10px;border-radius:4px}
+/* 試題 */
+.fixbox{border:1.5px dashed var(--warn);background:var(--fix-soft);padding:14px 18px;margin:8px 0 0;font-size:14.5px}
+.fixbox h3{color:var(--warn);margin:0 0 6px;font-size:1rem}
+.fixbox ul{margin:0;padding-left:1.1em}
+.fixbox s{color:var(--muted)}
+details{border:1px solid var(--line);background:var(--paper);margin:10px 0;padding:0 16px}
+summary{cursor:pointer;padding:12px 0;font-weight:500;list-style:none;display:grid;grid-template-columns:2.4em minmax(0,1fr) auto;gap:8px}
+summary::-webkit-details-marker{display:none}
+summary .qn{font-family:var(--f-mono);color:var(--accent)}
+summary .src{font-size:12px;color:var(--muted);white-space:nowrap}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details[open] summary{border-bottom:1px dashed var(--line)}
+details .ans{padding:10px 0 14px 2.8em;font-size:15px}
+details .ans ul{margin:.2em 0;padding-left:1.1em}
+.hint{font-family:var(--f-mono);font-size:11px;color:var(--accent);letter-spacing:.1em}
+svg text{font-family:var(--f-body)}
+@media (max-width:820px){
+  header.hero{grid-template-columns:minmax(0,1fr)}.hero-art{justify-self:start;max-width:180px}
+  .wrap{grid-template-columns:minmax(0,1fr);gap:0}
+        .ipo,.life{flex-direction:column}
+  .ipo .right,.life .right{flex-basis:26px;width:2px;height:26px;align-self:center}
+  .ipo .right::after,.life .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
+  .phase{grid-template-columns:minmax(0,1fr) 92px}
+  .procs,.procs.c4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+.crumb a{color:inherit;text-decoration:none;border-bottom:1px dashed currentColor}
+.crumb a:hover{border-bottom-style:solid}
+.cards.c2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card .en{display:block;margin:-2px 0 4px}
+.flow6,.flow5{display:flex;align-items:stretch;min-width:0}
+.flow6 .node,.flow5 .node{flex:1 1 0;min-width:0;padding:8px 9px}
+.flow6 .right,.flow5 .right{flex-basis:22px}
+.flow5 .node small{font-size:12px}
+.formula{font-family:var(--f-mono);font-size:1.45rem;text-align:center;color:var(--accent);background:var(--accent-soft);padding:14px 12px;margin:12px 0 14px;border-radius:4px}
+.formula.sm{font-size:1.05rem;padding:8px;margin:8px 0}
+.example{border:1.5px solid var(--fix);background:var(--paper);padding:0 18px 12px;margin:18px 0 24px}
+.ex-h{display:inline-block;background:var(--fix);color:var(--paper);font-weight:700;font-size:14px;padding:3px 12px;margin:0 0 6px -18px}
+.example ul{margin:.2em 0 .6em;padding-left:1.2em;font-family:var(--f-mono);font-size:14px}
+figure.mini{margin:10px 0;padding:12px;background:var(--bg)}
+figure.mini svg{width:100%;max-width:420px;height:auto;display:block}
+ol.steps{counter-reset:st;list-style:none;padding:0;margin:10px 0 20px;display:grid;gap:8px;max-width:72ch}
+ol.steps li{counter-increment:st;display:grid;grid-template-columns:2.2em minmax(0,1fr);gap:10px;align-items:baseline}
+ol.steps li::before{content:counter(st,decimal-leading-zero);font-family:var(--f-mono);font-size:13px;color:var(--paper);background:var(--accent);text-align:center;border-radius:2px;padding:1px 0}
+.dc2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.dc2>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.dc2 svg{width:100%;height:auto;background:var(--bg);border-radius:4px}
+.dc2 b{font-size:15.5px;margin-top:4px}
+.dc2 small{color:var(--muted);font-size:13.5px;line-height:1.6}
+figure svg{max-width:100%}
+.scroll>svg{width:100%;height:auto;display:block}
+@media (max-width:820px){.dc2{grid-template-columns:minmax(0,1fr)}}
+
+/* fit-to-width：圖面一律縮放到版面寬度內，不出現水平捲動 */
+.scroll{overflow:visible}
+.scroll svg,figure svg{min-width:0!important;max-width:100%;height:auto}
+table{min-width:0}
+.tbl{overflow-x:visible}
+th{white-space:normal}
+@media (max-width:820px){
+  table{font-size:13.5px} th,td{padding:6px 8px}
+  .flow6,.flow5{flex-direction:column;min-width:0}
+  .flow6 .node,.flow5 .node{width:auto;flex:none}
+  .flow6 .right,.flow5 .right{flex:0 0 22px;width:2px;height:22px;align-self:center}
+  .flow6 .right::after,.flow5 .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
+}
+.tree.as-list{width:auto;min-width:0;margin:0}
+.tree.as-list ul{display:block;padding:0 0 0 16px;margin:0 0 0 12px;border-left:2px solid var(--steel)}
+.tree.as-list>ul{border-left:0;margin:0;padding:0}
+.tree.as-list li{padding:4px 0 4px 14px;text-align:left}
+.tree.as-list>ul>li{padding-left:0}
+.tree.as-list li::after,.tree.as-list ul ul::before{display:none}
+.tree.as-list li::before{display:block;content:"";position:absolute;left:-2px;top:20px;width:12px;height:0;border:0;border-top:2px solid var(--steel);border-radius:0}
+.tree.as-list>ul>li::before{display:none}
+.tree.as-list .node{white-space:normal}
+.tree .node{padding:4px 7px}
+.tree li{padding-left:3px;padding-right:3px}
+.tree.as-list ul:not(:has(ul))>li{padding:0}
+.tree.as-list ul:not(:has(ul)){display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px;padding:6px 0 6px 16px}
+.tree.as-list ul:not(:has(ul))>li::before{display:none}
+
+/* 砂輪標示 */
+.spec{border:1px solid var(--line);background:var(--paper);padding:14px 16px;margin:12px 0 18px}
+.spec-row{display:flex;flex-wrap:wrap;gap:6px}
+.spec .chip{flex:1 1 72px;min-width:0;border:1.5px solid var(--accent);border-radius:4px;text-align:center;padding:6px 4px}
+.spec .chip b{display:block;font-family:var(--f-mono);font-size:1.3rem;color:var(--accent)}
+.spec .chip small{display:block;font-size:12px;color:var(--muted);line-height:1.4}
+.spec-cap{margin:10px 0 0;font-size:13.5px;color:var(--muted);max-width:none}
+</style>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+</head>
+<body>
+<header class="hero">
+  <div>
+    <div class="crumb"><a href="manufacturing.html">知識動力場 · 機械製造學</a> · Chapter 05</div>
+    <h1>塑性加工<small>Metal Forming</small></h1>
+    <p class="lede">讓金屬受力超過降伏點、永久變形成需要的形狀，不切除材料，也不熔化。輥軋把鋼胚變成鋼板與型鋼，鍛造做出曲柄軸與連桿，擠製做出鋁門窗框，沖壓做出車身與飲料罐。本章先談加工硬化、再結晶與冷作熱作，再依序介紹輥軋、鍛造、擠製、抽拉、鈑金沖壓、彎曲與其他成形法。</p>
+    <div class="meta"><span>8 節 · 25 題歷屆試題</span></div>
+  </div>
+  <svg class="hero-art" viewBox="0 0 260 230" role="img" aria-label="一對反向旋轉的輥輪把厚胚料軋薄">
+    <circle cx="130" cy="58" r="52" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+    <circle cx="130" cy="172" r="52" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+    <circle cx="130" cy="58" r="8" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+    <circle cx="130" cy="172" r="8" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+    <path d="M4 92 H96 Q118 96 130 110 H256 V120 H130 Q118 134 96 138 H4 Z" fill="var(--accent)"/>
+    <path d="M96 30 A40 40 0 0 0 98 86" fill="none" stroke="var(--fix)" stroke-width="3"/><path d="M92 82 l8 10 4-12z" fill="var(--fix)"/>
+    <path d="M98 144 A40 40 0 0 0 96 200" fill="none" stroke="var(--fix)" stroke-width="3"/><path d="M90 148 l8-10 6 10z" fill="var(--fix)"/>
+    <path d="M200 140 h40" stroke="var(--fix)" stroke-width="3"/><path d="M236 134 l12 6-12 6z" fill="var(--fix)"/>
+  </svg>
+</header>
+
+<div class="wrap">
+<nav class="tabs" role="tablist" aria-label="本章各節" aria-orientation="vertical">
+  <p class="tabs-label">SECTIONS</p>
+  <a class="tab" id="tab-s1" href="#s1" role="tab" aria-controls="s1" aria-selected="true"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16"/><path d="M6 18V9l3-3h6l3 3v9"/><path d="M9 18v-5h6v5"/><path d="M12 2v3"/></svg></span><span class="tx"><span class="no">5-1</span><span class="nm">概述</span></span></a>
+  <a class="tab" id="tab-s2" href="#s2" role="tab" aria-controls="s2" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="6" r="4"/><circle cx="12" cy="18" r="4"/><path d="M2 11h8l2 1 2-1h8M2 13h8l2-1 2 1h8"/></svg></span><span class="tx"><span class="no">5-2</span><span class="nm">輥軋</span></span></a>
+  <a class="tab" id="tab-s3" href="#s3" role="tab" aria-controls="s3" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v5H5z"/><path d="M12 8v3"/><path d="M4 21h16"/><path d="M7 21c0-4 2-6 5-6s5 2 5 6"/><path d="M3 13l2 1M21 13l-2 1"/></svg></span><span class="tx"><span class="no">5-3</span><span class="nm">鍛造</span></span></a>
+  <a class="tab" id="tab-s4" href="#s4" role="tab" aria-controls="s4" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="14" height="10" rx="1"/><path d="M16 10h3v4h-3"/><path d="M19 11h3v2h-3"/><path d="M5 12h6"/><path d="M9 10l2 2-2 2"/></svg></span><span class="tx"><span class="no">5-4</span><span class="nm">擠製</span></span></a>
+  <a class="tab" id="tab-s5" href="#s5" role="tab" aria-controls="s5" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9h7l4 2h9M2 15h7l4-2h9"/><path d="M9 5v14M13 7v10"/><path d="M19 12h3"/></svg></span><span class="tx"><span class="no">5-5</span><span class="nm">抽拉</span></span></a>
+  <a class="tab" id="tab-s6" href="#s6" role="tab" aria-controls="s6" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="2" width="8" height="8" rx="1"/><path d="M2 12h7M15 12h7"/><path d="M4 14h4v8H4zM16 14h4v8h-4z"/><path d="M10 14h4"/></svg></span><span class="tx"><span class="no">5-6</span><span class="nm">鈑金成形</span></span></a>
+  <a class="tab" id="tab-s7" href="#s7" role="tab" aria-controls="s7" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7l9 10 9-10"/><path d="M12 2v6"/><path d="M9 5l3 3 3-3"/></svg></span><span class="tx"><span class="no">5-7</span><span class="nm">彎曲加工</span></span></a>
+  <a class="tab" id="tab-s8" href="#s8" role="tab" aria-controls="s8" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v6a5 5 0 0 1-10 0z"/><path d="M3 4h4M17 4h4"/><path d="M12 15v4"/><path d="M9 21h6"/></svg></span><span class="tx"><span class="no">5-8</span><span class="nm">其他加工</span></span></a>
+  <a class="tab" id="tab-exam" href="#exam" role="tab" aria-controls="exam" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 2.8h6"/><path d="M8.5 11l2 2 4-4M8.5 17h7"/></svg></span><span class="tx"><span class="no">試題</span><span class="nm">歷屆試題</span></span></a>
+</nav>
+
+<main>
+
+<!-- ============ 5-1 ============ -->
+<section id="s1">
+  <h2><span class="no">5-1</span>概述</h2>
+  <p>材料受力變形，外力移除後能恢復的是<b>彈性變形</b>，不能恢復的是<b>塑性變形</b>（永久變形）。<span class="key">塑性加工</span><span class="en">（metal forming）</span>就是利用塑性變形做出所需的形狀與尺寸，同時改善組織與機械性質。</p>
+
+  <h3>一、加工硬化</h3>
+  <p>冷加工時，金屬內的差排密度大增、互相纏結，差排愈來愈難移動，強度與硬度上升、延性下降，這就是<span class="key">加工硬化</span><span class="en">（work / strain hardening）</span>。反覆冷加工到一定程度，材料會變脆而無法再加工。</p>
+  <div class="formula sm">冷加工量 CW = (A₀ − A<sub>f</sub>) ／ A₀ × 100%</div>
+  <p>隨加工度增加，晶粒內先出現平行滑移線，接著滑移線彎曲並跨越晶界，晶粒沿受力方向拉長，最後被拉成纖維狀組織；晶格結構不變，只是嚴重畸變。</p>
+
+  <h3>二、退火：回復、再結晶、晶粒成長</h3>
+  <figure>
+    <svg viewBox="0 0 640 260" role="img" aria-label="冷加工材料加熱退火時，殘留應力在回復階段大幅下降，強度在再結晶階段急降、延性急升，晶粒成長階段晶粒變大">
+      <rect x="70" y="20" width="150" height="190" fill="var(--accent-soft)" opacity=".45"/><rect x="220" y="20" width="160" height="190" fill="var(--accent-soft)"/><rect x="380" y="20" width="230" height="190" fill="var(--accent-soft)" opacity=".25"/>
+      <line x1="70" y1="20" x2="70" y2="210" stroke="var(--ink)" stroke-width="1.5"/><line x1="70" y1="210" x2="610" y2="210" stroke="var(--ink)" stroke-width="1.5"/>
+      <path d="M72 50 C150 52 200 56 240 70 C280 90 300 150 360 160 L608 168" fill="none" stroke="var(--accent)" stroke-width="3"/>
+      <path d="M72 190 C150 188 200 186 240 180 C280 168 300 80 360 72 L608 60" fill="none" stroke="var(--fix)" stroke-width="3"/>
+      <path d="M72 70 C110 74 150 150 220 175 L608 190" fill="none" stroke="var(--steel)" stroke-width="3" stroke-dasharray="7 4"/>
+      <path d="M380 140 C440 132 520 116 608 96" fill="none" stroke="var(--ink)" stroke-width="2" stroke-dasharray="2 4"/>
+      <g font-size="13" font-weight="700" text-anchor="middle" fill="var(--ink)"><text x="145" y="36">回復</text><text x="300" y="36">再結晶</text><text x="495" y="36">晶粒成長</text></g>
+      <g font-size="12.5"><text x="450" y="160" fill="var(--accent)">強度、硬度</text><text x="560" y="82" fill="var(--fix)">延性</text><text x="96" y="104" fill="var(--steel)">殘留應力</text><text x="500" y="122" fill="var(--ink)">晶粒尺寸</text></g>
+      <text x="340" y="236" font-size="13" text-anchor="middle" fill="var(--ink)">退火溫度 →</text>
+    </svg>
+    <figcaption>圖 5-1　冷加工材料退火時性質與組織的變化</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>階段</th><th>變化</th></tr>
+    <tr><td>回復<br><span class="en">recovery</span></td><td>差排重新排列，<b>殘留應力大幅下降</b>，強度、硬度與組織幾乎不變。</td></tr>
+    <tr><td>再結晶<br><span class="en">recrystallization</span></td><td>在差排堆積、晶界等高能量處生成無應變的新晶核並長大，<b>強度硬度急降、延性回升</b>，組織回到未加工狀態。</td></tr>
+    <tr><td>晶粒成長<br><span class="en">grain growth</span></td><td>持續加熱，細晶粒合併長大，強度略降。溫度過高或時間過長會晶粒粗大。</td></tr>
+  </table></div>
+  <p><b>再結晶溫度</b>約為熔點（絕對溫度）的 0.3–0.5 倍，冷加工量愈大、再結晶溫度愈低。參考值：鎢約 1200°C、鉬 900°C、鎳 600°C、鋼約 450–700°C、銅 200°C、鋁 150°C；鋅、錫、鉛在室溫附近或以下，所以鉛在室溫加工就算熱作，不會加工硬化。為了繼續冷加工而做的中間退火稱為<b>製程退火</b>。</p>
+
+  <h3>三、成形性與分類</h3>
+  <div class="cards">
+    <div class="card"><h4>化學成分與組織</h4><p>純金屬與單相固溶體成形性好；合金元素（W、V、Ti、Mo 等提高高溫強度者）與碳化物愈多愈差。</p></div>
+    <div class="card"><h4>溫度</h4><p>溫度高，變形阻力小。但溫度過高晶粒粗大稱<b>過熱</b>；接近熔點使晶界氧化熔化稱<b>過燒</b>，材料報廢。鋼約加熱到固相線以下 300°C 左右。</p></div>
+    <div class="card"><h4>應變率與應力狀態</h4><p>變形太快來不及回復與再結晶，成形性下降；拉應力使裂縫擴展，三向壓應力（如靜液壓）提高成形性。</p></div>
+  </div>
+  <div class="tbl"><table>
+    <tr><th>分類依據</th><th>類別</th></tr>
+    <tr><td>材料形態</td><td><b>容積（整體）成形</b>：表面積對體積比小，截面大幅改變，如輥軋、鍛造、擠製、抽拉。<b>鈑金成形</b>：表面積對體積比大，板厚改變很少，如剪切、彎曲、引伸、伸張。</td></tr>
+    <tr><td>製程順序</td><td><b>初次加工</b>：鑄錠 → 中胚、扁胚、小胚等標準半成品。<b>二次加工</b>：半成品 → 螺栓、齒輪、窗框等零件。</td></tr>
+    <tr><td>加工溫度</td><td><b>冷作</b>：再結晶溫度以下（多在室溫，約 0.3 T<sub>m</sub> 以下）。<b>溫作</b>：約 0.3–0.5 T<sub>m</sub>。<b>熱作</b>：再結晶溫度以上（約 0.5–0.75 T<sub>m</sub>）。</td></tr>
+    <tr><td>受力方式</td><td>壓縮（鍛造、輥軋、擠製、壓印）、拉伸（抽拉、伸張）、彎曲、剪切、高能率成形</td></tr>
+  </table></div>
+
+  <h3>四、冷作與熱作</h3>
+  <div class="tbl"><table>
+    <tr><th>項目</th><th>冷作</th><th>熱作</th></tr>
+    <tr><td>溫度</td><td>再結晶溫度以下</td><td>再結晶溫度以上</td></tr>
+    <tr><td>組織</td><td>晶粒拉長、纖維狀，有殘留應力</td><td>動態再結晶使晶粒細化，鑄造的氣孔、縮孔被壓合</td></tr>
+    <tr><td>機械性質</td><td>強度硬度提高、延性下降</td><td>韌性好，無加工硬化</td></tr>
+    <tr><td>所需動力</td><td>大</td><td>小，可做大變形量</td></tr>
+    <tr><td>表面與精度</td><td>表面光潔、尺寸精確</td><td>表面氧化有鱗皮、熱脹冷縮使精度差</td></tr>
+    <tr><td>其他</td><td>不需加熱設備；需製程退火</td><td>需加熱爐，能耗與環境負荷大</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ 5-2 ============ -->
+<section id="s2">
+  <h2><span class="no">5-2</span>輥軋</h2>
+  <p><span class="key">輥軋</span><span class="en">（rolling）</span>讓胚料通過一對反向旋轉的輥輪，靠摩擦力被咬入並壓薄或改變斷面，可連續大量生產。鑄錠先熱軋成中胚（bloom）、扁胚（slab）、小胚（billet），再軋成鋼板、型鋼、棒線材；鑄造的粗大晶粒與孔隙在熱軋中被打碎壓合。</p>
+
+  <h3>一、平板輥軋的幾何</h3>
+  <figure>
+    <svg viewBox="0 0 640 300" role="img" aria-label="平板輥軋側視：入口厚度 h0、出口厚度 hf、接觸長度 L、咬入角 α、中性點，以及入口速度小於輥面速度小於出口速度">
+      <circle cx="320" cy="-118" r="230" fill="var(--steel)" opacity=".8" stroke="var(--ink)" stroke-width="2"/>
+      <circle cx="320" cy="418" r="230" fill="var(--steel)" opacity=".8" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M20 96 H226 Q280 104 320 112 H620 V188 H320 Q280 196 226 204 H20 Z" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2"/>
+      <line x1="320" y1="40" x2="320" y2="260" stroke="var(--ink)" stroke-dasharray="5 4"/>
+      <line x1="226" y1="96" x2="226" y2="270" stroke="var(--ink)" stroke-dasharray="2 3"/>
+      <line x1="226" y1="214" x2="320" y2="214" stroke="var(--paper)" stroke-width="2"/><text x="268" y="232" font-size="13" text-anchor="middle" fill="var(--paper)">L</text>
+      <circle cx="282" cy="107" r="5" fill="var(--warn)"/><circle cx="282" cy="193" r="5" fill="var(--warn)"/>
+      <text x="250" y="150" font-size="12.5" fill="var(--warn)" font-weight="700">中性點</text>
+      <line x1="60" y1="96" x2="60" y2="204" stroke="var(--ink)"/><text x="66" y="156" font-size="13" fill="var(--ink)">h₀</text>
+      <line x1="560" y1="112" x2="560" y2="188" stroke="var(--ink)"/><text x="566" y="156" font-size="13" fill="var(--ink)">h<tspan font-size="10" dy="3">f</tspan></text>
+      <path d="M110 150 h50" stroke="var(--fix)" stroke-width="3"/><path d="M156 144 l10 6-10 6z" fill="var(--fix)"/><text x="110" y="140" font-size="12.5" fill="var(--fix)">V₀（慢）</text>
+      <path d="M420 150 h80" stroke="var(--fix)" stroke-width="3"/><path d="M496 144 l10 6-10 6z" fill="var(--fix)"/><text x="420" y="140" font-size="12.5" fill="var(--fix)">V<tspan font-size="10" dy="3">f</tspan><tspan dy="-3">（快）</tspan></text>
+      <g font-size="12.5" fill="var(--ink)"><text x="420" y="40">輥輪表面速度 V<tspan font-size="10" dy="3">r</tspan></text><text x="40" y="232" fill="var(--paper)">入口區：胚料慢於輥面</text><text x="440" y="232" fill="var(--paper)">出口區：胚料快於輥面</text></g>
+    </svg>
+    <figcaption>圖 5-2　平板輥軋：V₀ ＜ V<sub>r</sub> ＜ V<sub>f</sub>，中性點處胚料與輥面同速</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>名詞</th><th>定義</th></tr>
+    <tr><td>減縮量（draft）</td><td>Δh = h₀ − h<sub>f</sub>；最大可咬入的減縮量 Δh<sub>max</sub> = μ²R（μ 摩擦係數，R 輥輪半徑）</td></tr>
+    <tr><td>減縮率</td><td>(h₀ − h<sub>f</sub>) ／ h₀</td></tr>
+    <tr><td>接觸長度</td><td>L ≈ √(R Δh)</td></tr>
+    <tr><td>中性點（無滑動點）</td><td>胚料與輥面速度相同、摩擦力換向的位置</td></tr>
+    <tr><td>前進滑動</td><td>S<sub>f</sub> = (V<sub>f</sub> − V<sub>r</sub>) ／ V<sub>r</sub>；太大會刮傷表面</td></tr>
+    <tr><td>軋延力</td><td>P = L W Y<sub>avg</sub>（W 寬度，Y<sub>avg</sub> 平均流動應力）</td></tr>
+    <tr><td>所需功率</td><td>兩支輥輪，力臂取 0.5L（熱軋）：功率 ≈ 2πNPL ／ 60 000（kW，P 單位 N、L 單位 m、N 為 rpm）；冷軋力臂取 0.4L，分母改 75 000</td></tr>
+  </table></div>
+  <div class="example">
+    <div class="ex-h">例題</div>
+    <p>寬 300 mm 的鋼板由 25 mm 熱軋到 20 mm，輥輪半徑 300 mm、轉速 100 rpm，平均流動應力 150 MPa。求軋延力與所需功率。</p>
+    <p><b>解：</b>L = √(300 × 5) ≈ 38.7 mm；P = 0.0387 × 0.3 × 150×10⁶ ≈ <b>1.74 MN</b>；功率 = 2π × 100 × 1.74×10⁶ × 0.0387 ／ 60 000 ≈ <b>705 kW</b>。</p>
+  </div>
+  <p><b>降低軋延力的方法：</b>潤滑降低摩擦、改用小直徑輥輪（接觸長度短）、減少每道次減縮量、提高溫度、加前張力與後張力。張力也能減少輥輪變形與磨耗。</p>
+  <p><b>殘留應力：</b>小輥輪或小減縮量時變形集中在表層，表面為殘留壓應力、中心為拉應力；大輥輪或大減縮量則相反，表面為拉應力。</p>
+
+  <h3>二、軋機</h3>
+  <figure>
+    <svg viewBox="0 0 640 170" role="img" aria-label="二重式、三重式、四重式、叢集式與行星式軋機的輥輪排列">
+      <g fill="var(--steel)" stroke="var(--ink)" stroke-width="1.5">
+        <circle cx="60" cy="55" r="28"/><circle cx="60" cy="115" r="28"/>
+        <circle cx="180" cy="35" r="20"/><circle cx="180" cy="80" r="20"/><circle cx="180" cy="125" r="20"/>
+        <circle cx="300" cy="30" r="22"/><circle cx="300" cy="69" r="12" fill="var(--accent-soft)"/><circle cx="300" cy="99" r="12" fill="var(--accent-soft)"/><circle cx="300" cy="138" r="22"/>
+        <circle cx="420" cy="74" r="8" fill="var(--accent-soft)"/><circle cx="420" cy="94" r="8" fill="var(--accent-soft)"/><circle cx="408" cy="58" r="10"/><circle cx="432" cy="58" r="10"/><circle cx="408" cy="110" r="10"/><circle cx="432" cy="110" r="10"/><circle cx="396" cy="38" r="12"/><circle cx="420" cy="34" r="12"/><circle cx="444" cy="38" r="12"/><circle cx="396" cy="130" r="12"/><circle cx="420" cy="134" r="12"/><circle cx="444" cy="130" r="12"/>
+        <circle cx="560" cy="40" r="28"/><circle cx="560" cy="128" r="28"/>
+      </g>
+      <g fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1"><circle cx="560" cy="73" r="6"/><circle cx="545" cy="70" r="6"/><circle cx="575" cy="70" r="6"/><circle cx="560" cy="95" r="6"/><circle cx="545" cy="98" r="6"/><circle cx="575" cy="98" r="6"/></g>
+      <g fill="var(--accent)"><rect x="20" y="82" width="80" height="6"/><rect x="140" y="55" width="80" height="5"/><rect x="140" y="100" width="80" height="5"/><rect x="260" y="81" width="80" height="6"/><rect x="380" y="81" width="80" height="6"/><rect x="520" y="81" width="80" height="6"/></g>
+      <g font-size="13" font-weight="700" text-anchor="middle" fill="var(--ink)"><text x="60" y="164">二重式</text><text x="180" y="164">三重式</text><text x="300" y="164">四重式</text><text x="420" y="164">叢集式</text><text x="560" y="164">行星式</text></g>
+    </svg>
+    <figcaption>圖 5-3　軋機輥輪排列（淺色為直接接觸胚料的工作輥）</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>軋機</th><th>特點與用途</th></tr>
+    <tr><td>二重式</td><td>最早期的型式，可做可逆式往復軋延；開胚粗軋、調質軋延。</td></tr>
+    <tr><td>三重式</td><td>上下輥同向、中輥反向，胚料上下往返軋延不需反轉馬達；型鋼粗軋。</td></tr>
+    <tr><td>四重式</td><td>小直徑工作輥降低軋延力，大直徑背托輥防止撓曲；應用最廣，熱、冷軋板帶。</td></tr>
+    <tr><td>叢集式（如 Sendzimir）</td><td>極小工作輥由多層背托輥支撐，可承受極大軋延力、厚度控制精準；不鏽鋼、矽鋼、薄箔冷軋。</td></tr>
+    <tr><td>行星式</td><td>大支撐輥周圍排列多支小工作輥，一道次可減縮約 90%；需外力推入胚料，表面較差，用於熱粗軋。</td></tr>
+    <tr><td>串列式（連續式）</td><td>多台軋機串聯，各機架速度須精準匹配（秒流量相等），用於板、棒、線材大量生產。</td></tr>
+  </table></div>
+  <p><b>板厚自動控制：</b>出口以 X 射線或 γ 射線厚度計量測，回饋調整輥縫（油壓缸、壓下螺桿）或機架間張力。<b>棒線材的孔型系列：</b>方 → 菱 → 方，或方 → 橢圓 → 圓。<b>輥輪材料：</b>鑄鐵、鑄鋼、鍛鋼；冷軋輥與熱軋輥不可互用。<b>潤滑：</b>鋼熱軋多不潤滑，以高壓水除鱗；冷軋用低黏度礦物油、乳化液。</p>
+
+  <h3>三、輥軋缺陷</h3>
+  <figure>
+    <svg viewBox="0 0 640 150" role="img" aria-label="平板輥軋缺陷：波浪邊、中央拉鏈裂、邊緣裂、鱷魚口剝層">
+      <g fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5">
+        <path d="M20 40 H140 V100 H20 Z"/><path d="M20 40 q10 -8 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 M20 100 q10 8 20 0 t20 0 t20 0 t20 0 t20 0 t20 0" fill="none" stroke="var(--accent)" stroke-width="2"/>
+        <path d="M180 40 H300 V100 H180 Z"/>
+        <path d="M340 40 H460 V100 H340 Z"/>
+        <path d="M500 66 H620 V74 H500 Z"/>
+      </g>
+      <path d="M190 70 l10 -4 10 8 10 -8 10 8 10 -8 10 8 10 -8 10 8 10 -8 10 4" fill="none" stroke="var(--warn)" stroke-width="2"/>
+      <g stroke="var(--warn)" stroke-width="2"><path d="M350 40 l4 10M370 40 l4 12M390 40 l4 9M410 40 l4 11M430 40 l4 10M350 100 l4 -10M370 100 l4 -12M390 100 l4 -9M410 100 l4 -11M430 100 l4 -10"/></g>
+      <path d="M500 66 L560 66 L620 40 M500 74 L560 74 L620 100" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+      <path d="M560 66 L620 40 L620 66 Z M560 74 L620 100 L620 74 Z" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5"/>
+      <g font-size="13" font-weight="700" text-anchor="middle" fill="var(--ink)"><text x="80" y="130">波浪邊</text><text x="240" y="130">中央拉鏈裂</text><text x="400" y="130">邊緣裂</text><text x="560" y="130">鱷魚口</text></g>
+    </svg>
+    <figcaption>圖 5-4　平板輥軋的結構缺陷</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>缺陷</th><th>原因</th><th>對策</th></tr>
+    <tr><td>波浪邊</td><td>輥輪受力撓曲，板中間厚、邊緣薄，邊緣延伸較多</td><td>加背托輥；輥輪磨成中間略粗的凸度（crown）補償</td></tr>
+    <tr><td>中央拉鏈裂、邊緣裂</td><td>溫度過低延性不足、邊緣受拉</td><td>提高軋延溫度、減少每道減縮量、修邊</td></tr>
+    <tr><td>鱷魚口（剝層）</td><td>鑄錠內部縮孔或夾雜、截面變形不均</td><td>改善鑄錠品質、調整輥形與減縮量</td></tr>
+    <tr><td>板凸（中凸）</td><td>輥輪撓曲與熱膨脹（熱冠）</td><td>冷卻輥輪、輥形補償</td></tr>
+    <tr><td>表面缺陷</td><td>軋入鏽皮、輥面刮傷、鑄錠氣孔、潤滑不均造成波紋</td><td>除鱗除鏽、研磨輥面、改善潤滑與張力</td></tr>
+  </table></div>
+
+  <h3>四、其他輥軋製程</h3>
+  <div class="tbl"><table>
+    <tr><th>製程</th><th>說明</th></tr>
+    <tr><td>整平（矯直）</td><td>板材交替通過上下錯開的多支小輥，反覆小彎曲而變平。</td></tr>
+    <tr><td>調質軋延（skin pass）</td><td>退火後的低碳鋼板以約 0.5–1.5% 的極小減縮量冷軋，消除降伏點伸長，避免後續沖壓出現呂德斯帶（拉伸應變紋），並改善表面與平坦度。</td></tr>
+    <tr><td>疊軋（pack rolling）</td><td>兩層以上薄板疊在一起軋，提高效率，例如鋁箔：與輥接觸的一面光亮、互相接觸的一面霧面。</td></tr>
+    <tr><td>螺紋輥軋（搓牙）</td><td>圓桿在兩塊有牙形的平模或圓模之間滾壓出外螺紋。纖維流線連續、加工硬化，強度與疲勞壽命高於切削螺紋，產量大；只能做外螺紋，材料須有足夠延性。</td></tr>
+    <tr><td>齒輪輥軋</td><td>以齒形軋輪滾壓出齒形，強度高、材料利用率高。</td></tr>
+    <tr><td>環軋</td><td>厚壁環胚在驅動輥與惰輥之間軋薄、直徑擴大，用於軸承環、大型環圈。</td></tr>
+    <tr><td>無縫鋼管穿孔（Mannesmann）</td><td>加熱的實心圓胚在兩支斜置的錐形輥間旋轉前進，徑向壓縮使中心產生拉應力而開孔，再以穿孔頂頭擴孔整形，之後軋管、定徑。</td></tr>
+    <tr><td>輥鍛、楔橫軋</td><td>以帶型槽或楔形的輥輪軋出非均勻斷面，如階級軸、連桿胚。</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ 5-3 ============ -->
+<section id="s3">
+  <h2><span class="no">5-3</span>鍛造</h2>
+  <p><span class="key">鍛造</span><span class="en">（forging）</span>以衝擊或壓力使胚料局部或整體塑性流動成形。鍛件內部孔隙被壓合，金屬<b>纖維流線</b>沿零件外形連續分布，韌性與疲勞強度高，用於曲柄軸、連桿、齒輪胚、起落架等受力件。缺點是模具與設備昂貴、複雜形狀難成形、需要經驗。</p>
+
+  <h3>一、分類</h3>
+  <div class="tbl"><table>
+    <tr><th>依據</th><th>類別</th></tr>
+    <tr><td>溫度</td><td>冷鍛（室溫，小件、精度高，如螺栓）· 溫鍛（約 0.3–0.5 T<sub>m</sub>，兼顧成形力與精度）· 熱鍛（再結晶溫度以上，大變形）</td></tr>
+    <tr><td>模具</td><td><b>開模鍛造</b>（自由鍛）：平砧或簡單模，材料流動不受完全拘束。<b>壓模鍛造</b>（有飛邊）：模穴即零件外形，多餘材料擠入飛邊槽。<b>閉模鍛造</b>（無飛邊、精密鍛造）：材料完全封閉在模內，胚料體積必須精確。</td></tr>
+    <tr><td>受力</td><td>衝擊鍛造（錘鍛，瞬間完成）· 壓力鍛造（壓鍛，緩慢加壓，壓力可深入中心）</td></tr>
+  </table></div>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 200" role="img" aria-label="開模鍛粗：圓柱胚料在兩平砧間壓扁，因與砧面摩擦而中間鼓脹">
+        <rect x="40" y="10" width="220" height="30" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/><rect x="40" y="160" width="220" height="30" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M100 40 Q70 100 100 160 H200 Q230 100 200 40 Z" fill="var(--accent)"/>
+        <path d="M120 40 V160 M180 40 V160" stroke="var(--paper)" stroke-dasharray="4 4" opacity=".8"/>
+        <path d="M150 0 v8" stroke="var(--fix)" stroke-width="3"/>
+        <g font-size="12" fill="var(--ink)"><text x="6" y="104">鼓脹</text><path d="M34 100 L74 100" stroke="var(--ink)"/><text x="196" y="30" fill="var(--paper)">上砧</text></g>
+      </svg>
+      <b>開模鍛粗</b><small>理想均勻變形時高度減少、斷面增大、保持圓柱；實際上接觸面摩擦拘束材料，中間向外鼓出（barreling）。胚料高徑比 H₀／D₀ 宜在 2 以下（最多約 2.5），否則會挫曲。</small>
+      </div>
+      <div>
+      <svg viewBox="0 0 300 200" role="img" aria-label="壓模鍛造：上下模閉合，胚料充滿模穴，多餘材料擠入飛邊槽">
+        <path d="M20 10 H280 V80 H210 V96 H190 Q150 60 110 96 H90 V80 H20 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M20 190 H280 V120 H210 V104 H190 Q150 140 110 104 H90 V120 H20 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M90 96 H110 Q150 60 190 96 H210 V104 H190 Q150 140 110 104 H90 Z" fill="var(--accent)"/>
+        <path d="M60 97 H90 V103 H60 Z M210 97 H240 V103 H210 Z" fill="var(--accent)"/>
+        <g font-size="12" fill="var(--ink)"><text x="26" y="94">飛邊</text><text x="226" y="94">飛邊</text><text x="128" y="30" fill="var(--paper)">上模</text><text x="128" y="180" fill="var(--paper)">下模</text><text x="232" y="122">飛邊槽</text></g>
+      </svg>
+      <b>壓模鍛造（有飛邊）</b><small>飛邊很薄、冷得快、流動阻力大，迫使模穴內材料充滿角落；也是上下模的緩衝。最後以切邊模切除。</small>
+      </div>
+    </div>
+    <figcaption>圖 5-5　開模鍛粗與壓模鍛造</figcaption>
+  </figure>
+
+  <h3>二、開模鍛造的基本操作</h3>
+  <div class="cards">
+    <div class="card"><h4>鍛粗 upsetting</h4><p>高度減少、斷面增大。鍛粗比 K = H₀／H<sub>f</sub>。用於製作盤類、沖孔前預鍛。</p></div>
+    <div class="card"><h4>鍛伸（拔長）</h4><p>垂直軸線施壓，使斷面減小、長度增加，把鑄造組織鍛成鍛造組織，做軸類。</p></div>
+    <div class="card"><h4>沖孔、擴孔</h4><p>以沖頭沖出通孔或盲孔；環胚以芯棒擴孔使壁厚減薄、直徑增大。</p></div>
+    <div class="card"><h4>彎曲、扭轉、切斷</h4><p>製作吊鉤、曲柄軸胚；以剁刀切除料頭。</p></div>
+    <div class="card"><h4>分段鍛造 cogging</h4><p>以窄砧逐段壓下拉長，每次接觸面積小、所需力小。</p></div>
+  </div>
+  <p><b>摩擦係數的量測：環壓縮試驗。</b>外徑：內徑：高度 = 6：3：2 的圓環以平模壓縮，量測高度減縮率與內徑變化，查校正曲線得摩擦係數。摩擦小時內徑變大，摩擦大時內徑變小。</p>
+
+  <h3>三、閉模鍛造的流程</h3>
+  <figure>
+    <div class="flow6">
+      <div class="node"><span class="n">1</span><b>下料</b><small>剪切定量胚料、清除鏽皮</small></div><div class="right"></div>
+      <div class="node"><span class="n">2</span><b>加熱</b><small>熱鍛時送入加熱爐</small></div><div class="right"></div>
+      <div class="node"><span class="n">3</span><b>中間成形</b><small>延伸、整端、彎曲、鍛平，分配體積</small></div><div class="right"></div>
+      <div class="node"><span class="n">4</span><b>預鍛</b><small>接近最終形狀</small></div><div class="right"></div>
+      <div class="node"><span class="n">5</span><b>終鍛</b><small>充滿模穴，產生飛邊</small></div><div class="right"></div>
+      <div class="node dark"><span class="n">6</span><b>切邊與整形</b><small>熱處理、檢驗</small></div>
+    </div>
+    <figcaption>圖 5-6　閉模鍛造流程</figcaption>
+  </figure>
+  <p>材料先鍛粗（流動方向垂直於模具運動，容易），後期擠入深窄模穴（流動方向平行於模具運動，需要很大的力）。表面積對體積比大的部分（薄腹板、高肋）散熱快、摩擦大，最難鍛滿。鍛模潤滑常用水基或油基石墨、二硫化鉬、玻璃（高溫合金），作用是降低摩擦、隔熱、幫助脫模。</p>
+  <p><b>精密鍛造</b>（無飛邊）：拔模角 0–½°，鍛件接近淨形，幾乎不需切削，強度重量比高、流線最好；但胚料體積須精確，模具壽命短、壓力大，多用於鋁、鎂等流動應力低的合金。</p>
+
+  <h3>四、各種鍛造法</h3>
+  <div class="tbl"><table>
+    <tr><th>方法</th><th>說明</th></tr>
+    <tr><td>鍛頭（打頭）heading</td><td>在棒料端面施<b>軸向</b>壓力把端部鍛粗，做螺栓頭、鉚釘頭。未受拘束的長度與直徑比宜在 3 以下，以免彎曲。</td></tr>
+    <tr><td>旋轉型鍛 rotary swaging</td><td>多個模塊環繞工件，高頻（每秒數十次）徑向鎚擊，使棒管縮徑、做錐度或階級。工件可用芯棒控制內形，做槍管膛線、原子筆頭、氣壓缸管。噪音大。</td></tr>
+    <tr><td>徑向鍛造 radial forging</td><td>工件旋轉，2 或 4 支鍛錘徑向往復鍛打，CNC 控制，做實心或中空階級軸、槍管。</td></tr>
+    <tr><td>擺輾（軌道）鍛造 orbital forging</td><td>上模軸線傾斜一個小角度並繞軸擺動，每次只接觸局部，以漸進方式成形。成形力只有一般鍛造約 1／10，適合盤狀、法蘭、傘齒輪。</td></tr>
+    <tr><td>粉末鍛造</td><td>粉末壓製燒結成預成形體再熱鍛，密度近 100%，用於連桿（第三章）。</td></tr>
+    <tr><td>恆溫鍛造、熱模鍛造</td><td>模具加熱到與胚料相同（恆溫）或稍低約 200°C（熱模），避免胚料表面急冷，流動好、成形力低，可做近淨形；但速度慢、模具需耐熱。用於鈦合金與鎳基超合金航太件。</td></tr>
+    <tr><td>超塑性成形</td><td>晶粒小於約 10–15 μm 的等軸細晶材料（如 Ti-6Al-4V、Zn-22Al），在約 0.5 T<sub>m</sub> 以上、極低應變率（10⁻²–10⁻⁵ s⁻¹）下，伸長率可達數百到上千 %。可一體成形複雜件、成形力小，但速度很慢。</td></tr>
+    <tr><td>壓印 coining</td><td>閉模冷鍛，壓力可達材料流動應力的數倍，壓出硬幣、獎章的精細花紋，也用於尺寸矯正；模穴不可留潤滑劑。</td></tr>
+    <tr><td>壓模孔 hobbing</td><td>以硬化的母模壓入較軟的胚料，壓出模穴，用於製作塑膠模、壓鑄模的模穴。</td></tr>
+  </table></div>
+
+  <h3>五、鍛件缺陷</h3>
+  <div class="tbl"><table>
+    <tr><th>缺陷</th><th>原因</th><th>對策</th></tr>
+    <tr><td>摺疊（laps）</td><td>材料流動時表面被摺入，圓角太小、斷面變化大、模穴太深</td><td>加大圓角、改善預鍛分配體積、增加道次</td></tr>
+    <tr><td>充填不足</td><td>胚料體積不足、分配不當、壓力不足或溫度過低</td><td>修正胚料體積與預鍛形狀、提高壓力與溫度</td></tr>
+    <tr><td>流穿</td><td>多餘材料持續流向飛邊，切斷內部流線</td><td>適量胚料、預成形分配</td></tr>
+    <tr><td>內部破裂（中心破裂）</td><td>中心處產生過大拉應力</td><td>減少每道減縮量、修改模具使中心受壓</td></tr>
+    <tr><td>挫曲</td><td>胚料過長</td><td>縮短自由長度、多道次</td></tr>
+    <tr><td>過熱、過燒</td><td>溫度過高、時間過長</td><td>控制加熱溫度；過熱可以大鍛造比細化，過燒無法挽救</td></tr>
+    <tr><td>熱裂</td><td>加熱或冷卻太快，內外溫差大</td><td>控制升溫與冷卻速率，大鋼胚先預熱</td></tr>
+    <tr><td>鱗皮壓入、橘皮</td><td>未除鏽皮；晶粒粗大</td><td>除鱗；使用細晶粒胚料</td></tr>
+  </table></div>
+
+  <h3>六、鍛造設備</h3>
+  <div class="tbl"><table>
+    <tr><th>設備</th><th>原理</th><th>特點</th></tr>
+    <tr><td>重力落錘</td><td>把錘頭提升後自由落下，以位能轉動能衝擊</td><td>設備便宜、速度快、熱胚接觸時間短；需大砧座吸收衝擊（錘重 10–30 倍），震動噪音大，精度較低</td></tr>
+    <tr><td>動力落錘</td><td>落下時再加蒸汽、壓縮空氣或彈簧助力</td><td>能量更大</td></tr>
+    <tr><td>對擊錘</td><td>上下（或左右）兩錘相向對擊</td><td>能量損失少、不需大地基，適合對稱件終鍛</td></tr>
+    <tr><td>液壓壓鍛機</td><td>液壓缸以穩定速度加壓，負荷受限式</td><td>壓力可達工件中心、可調行程與保壓，適合大型件、應變率敏感材料、恆溫與超塑性鍛造；速度慢，熱胚易被模具冷卻</td></tr>
+    <tr><td>機械壓鍛機</td><td>飛輪儲能，經曲柄、偏心輪、肘節或楔塊驅動滑塊，行程受限式</td><td>每分鐘約 30–100 次，產量高、精度好、易自動化，適合中小件多工位大量生產</td></tr>
+    <tr><td>螺旋壓鍛機</td><td>飛輪帶動大螺桿使滑塊下壓，能量受限式</td><td>沒有固定下死點，兼具錘與壓機的特性，適合精密小量件</td></tr>
+    <tr><td>高能率鍛造機</td><td>高壓氣體或燃燒推動滑塊高速衝擊</td><td>一兩次鍛擊成形，適合對稱小件</td></tr>
+  </table></div>
+
+  <h3>七、可鍛性</h3>
+  <p>材料承受塑性變形而不破裂的能力，常以<b>熱鍛粗試驗</b>（壓到側面出現裂縫的變形量）與<b>熱扭轉試驗</b>（扭斷的圈數）評估，並找出最佳鍛造溫度。可鍛性較好的條件：FCC 結構（滑移系統多）、純金屬或單相、晶粒細、雜質少、受壓應力、溫度適當。部分鋼在約 200–300°C 延性反而下降，稱<b>藍脆</b>，應避開。</p>
+</section>
+
+<!-- ============ 5-4 ============ -->
+<section id="s4">
+  <h2><span class="no">5-4</span>擠製</h2>
+  <p><span class="key">擠製</span><span class="en">（extrusion）</span>把胚料放進盛錠筒，以沖桿施壓迫使材料從模孔流出，得到斷面一致的長條。可做出非常複雜的實心或中空斷面，一次成形，如鋁門窗框、散熱片、管件。</p>
+  <div class="formula sm">擠製比 R = A₀ ／ A<sub>f</sub>　　減縮率 = (1 − 1／R) × 100%</div>
+  <p>常用擠製比約 10–100，靜液壓擠製可達數百。鋁、銅、鎂多熱擠；冷擠用於小件，如牙膏管、火星塞殼。</p>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 170" role="img" aria-label="直接擠製：沖桿推動胚料朝模具方向前進，產品從模孔與沖桿同方向流出，胚料與盛錠筒壁摩擦">
+        <rect x="40" y="30" width="190" height="110" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="40" y="50" width="190" height="70" fill="var(--paper)"/>
+        <rect x="10" y="60" width="50" height="50" fill="var(--steel)" stroke="var(--ink)" stroke-width="1.5"/>
+        <rect x="60" y="50" width="22" height="70" fill="var(--ink)" opacity=".5"/>
+        <rect x="82" y="50" width="140" height="70" fill="var(--accent)"/>
+        <rect x="222" y="30" width="16" height="110" fill="var(--ink)" opacity=".7"/>
+        <rect x="222" y="72" width="16" height="26" fill="var(--accent)"/>
+        <rect x="238" y="72" width="56" height="26" fill="var(--accent)"/>
+        <path d="M14 152 h40" stroke="var(--fix)" stroke-width="3"/><path d="M50 146 l10 6-10 6z" fill="var(--fix)"/>
+        <path d="M250 112 h30" stroke="var(--fix)" stroke-width="3"/><path d="M276 106 l10 6-10 6z" fill="var(--fix)"/>
+        <g font-size="12" fill="var(--ink)"><text x="100" y="24">盛錠筒</text><text x="6" y="128">沖桿</text><text x="224" y="160">模具</text><text x="120" y="90" fill="var(--paper)">胚料</text></g>
+        <path d="M90 50 l120 0 M90 120 l120 0" stroke="var(--warn)" stroke-width="3" stroke-dasharray="3 5"/>
+      </svg>
+      <b>直接（前向）擠製</b><small>產品流出方向與沖桿運動相同。整根胚料在筒內滑動，與筒壁摩擦大，擠製力高，起始時出現峰值。</small>
+      </div>
+      <div>
+      <svg viewBox="0 0 300 170" role="img" aria-label="間接擠製：模具裝在中空沖桿前端壓入胚料，產品沿中空沖桿反向流出，胚料不相對筒壁滑動">
+        <rect x="40" y="30" width="200" height="110" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="40" y="50" width="200" height="70" fill="var(--paper)"/>
+        <rect x="232" y="30" width="16" height="110" fill="var(--steel)" stroke="var(--ink)" stroke-width="1.5"/>
+        <rect x="110" y="50" width="122" height="70" fill="var(--accent)"/>
+        <rect x="94" y="50" width="16" height="70" fill="var(--ink)" opacity=".7"/>
+        <rect x="94" y="72" width="16" height="26" fill="var(--accent)"/>
+        <rect x="10" y="56" width="84" height="12" fill="var(--steel)" stroke="var(--ink)"/><rect x="10" y="102" width="84" height="12" fill="var(--steel)" stroke="var(--ink)"/>
+        <rect x="10" y="72" width="84" height="26" fill="var(--accent)"/>
+        <path d="M60 152 h40" stroke="var(--fix)" stroke-width="3"/><path d="M96 146 l10 6-10 6z" fill="var(--fix)"/>
+        <path d="M60 136 h-30" stroke="var(--fix)" stroke-width="3"/><path d="M34 130 l-10 6 10 6z" fill="var(--fix)"/>
+        <g font-size="12" fill="var(--ink)"><text x="140" y="24">盛錠筒（封底）</text><text x="110" y="164">中空沖桿＋模具前進</text><text x="4" y="134" fill="var(--fix)">產品</text><text x="150" y="90" fill="var(--paper)">胚料</text></g>
+      </svg>
+      <b>間接（反向）擠製</b><small>模具裝在中空沖桿前端壓入胚料，產品反向流出。胚料不在筒內滑動，<b>沒有筒壁摩擦</b>，擠製力小、溫度均勻；但中空沖桿強度較低，產品長度與尺寸受限。</small>
+      </div>
+    </div>
+    <figcaption>圖 5-7　直接擠製與間接擠製</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>方法</th><th>特點</th></tr>
+    <tr><td>靜液壓擠製</td><td>以液體包圍胚料傳遞壓力，胚料不碰筒壁、摩擦極小；胚料受三向壓應力，連脆性材料也能擠製，擠製比可很大。缺點是密封困難、設備昂貴、速度慢。</td></tr>
+    <tr><td>衝擊擠製</td><td>沖頭高速衝擊模內的小塊胚料，材料沿沖頭與模壁的間隙反向流出，形成薄壁杯狀件（壁厚對直徑可小到 0.005），如牙膏管、電池殼、彈殼。多為冷作，用於鋁、鉛、鋅、銅等軟金屬。</td></tr>
+    <tr><td>中空斷面（橋模、蜘蛛模）</td><td>模具前方有支撐芯軸的橋或腿，材料被分成幾股繞過支架後在焊合室重新熔接，從模口與芯軸的間隙流出成管。只適合鋁、鎂等可在高溫壓力下焊合的金屬。</td></tr>
+  </table></div>
+  <p><b>擠製缺陷：</b><b>表面裂紋</b>（溫度或速度太高，表面受拉裂開，成竹節狀）；<b>管狀缺陷</b>（後段時胚料表面氧化物與雜質流向中心，可留料尾不擠或用擬似塊）；<b>中心爆裂（人字形裂紋）</b>（模角大、擠製比小、摩擦大時中心受拉）。</p>
+</section>
+
+<!-- ============ 5-5 ============ -->
+<section id="s5">
+  <h2><span class="no">5-5</span>抽拉</h2>
+  <p><span class="key">抽拉</span><span class="en">（drawing）</span>以拉力把棒、線、管拉過逐漸縮小的模孔，縮小斷面。與擠製的差別在於擠製是推、抽拉是拉。</p>
+  <figure>
+    <svg viewBox="0 0 640 200" role="img" aria-label="抽線模剖面：入口區、縮減區（模角 α）、軸承區（定徑帶）、出口區">
+      <path d="M180 20 H460 V80 L430 80 L380 93 L300 93 L230 60 L180 40 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M180 180 H460 V120 L430 120 L380 107 L300 107 L230 140 L180 160 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M20 70 H260 L300 93 H620 V107 H300 L260 130 H20 Z" fill="var(--accent)" opacity=".9"/>
+      <line x1="230" y1="60" x2="330" y2="60" stroke="var(--ink)" stroke-dasharray="3 3"/>
+      <path d="M290 60 A60 60 0 0 1 286 78" fill="none" stroke="var(--fix)" stroke-width="2"/><text x="296" y="74" font-size="13" fill="var(--fix)">α</text>
+      <path d="M560 100 h50" stroke="var(--fix)" stroke-width="3"/><path d="M606 94 l12 6-12 6z" fill="var(--fix)"/><text x="562" y="88" font-size="12.5" fill="var(--fix)">拉力</text>
+      <g font-size="12.5" fill="var(--ink)" text-anchor="middle"><text x="205" y="14">入口</text><text x="268" y="14">縮減區</text><text x="340" y="14">軸承區</text><text x="420" y="14">出口</text></g>
+      <g stroke="var(--ink)"><path d="M205 18 L205 34M268 18 L262 66M340 18 L340 90M420 18 L415 84"/></g>
+      <text x="40" y="60" font-size="12.5" fill="var(--ink)">D₀</text><text x="520" y="88" font-size="12.5" fill="var(--ink)">D<tspan font-size="10" dy="3">f</tspan></text>
+    </svg>
+    <figcaption>圖 5-8　抽線模的各區（模芯多為碳化鎢或鑽石，鑲在鋼殼內）</figcaption>
+  </figure>
+  <div class="cards c2">
+    <div class="card"><h4>模具各區</h4><p><b>入口</b>導入潤滑劑；<b>縮減區</b>以模角 α（約 6–15°）縮小斷面；<b>軸承區（定徑帶）</b>確定最終直徑、穩定尺寸，並讓模具磨耗後仍能修整使用；<b>出口</b>以斜角釋放，避免刮傷。</p></div>
+    <div class="card"><h4>壓力與磨耗</h4><p>模壁壓力在材料剛進入縮減區處最大，此處也是磨耗最嚴重、最先形成磨耗環的地方；軸承區壓力較低但磨耗決定尺寸精度。</p></div>
+  </div>
+  <p><b>每道最大減縮率：</b>出口端的材料要承受拉力而不再降伏，理想情況下單道次最大斷面減縮率約 63%（真應變 1），實際約 15–45%。總加工度大時，中間須<b>製程退火</b>。外圍受模壁剪切，硬度比中心高。</p>
+  <div class="tbl"><table>
+    <tr><th>製程（以鋼線為例）</th><th>內容</th></tr>
+    <tr><td>胚料</td><td>熱軋線材，端部以型鍛縮尖以便穿過模孔</td></tr>
+    <tr><td>熱處理</td><td>退火或韌化（patenting），得到適合抽拉的組織</td></tr>
+    <tr><td>除鏽</td><td>酸洗或反覆彎曲剝落鏽皮</td></tr>
+    <tr><td>潤滑</td><td>磷酸鹽皮膜加皂類；也可鍍銅</td></tr>
+    <tr><td>抽拉</td><td>連續串列式抽線機，各道次速度依斷面縮小而遞增</td></tr>
+  </table></div>
+  <p><b>管材抽拉</b>可用固定芯棒、浮動芯棒或長芯棒控制內徑；不用芯棒時只縮外徑、壁厚會增加。</p>
+</section>
+
+<!-- ============ 5-6 ============ -->
+<section id="s6">
+  <h2><span class="no">5-6</span>鈑金成形</h2>
+  <p>鈑金件重量輕、形狀多變、產量大，車身、家電外殼、飲料罐、飛機蒙皮都是。厚度約 6 mm 以下多冷作。主要方法有：沖壓（剪切、彎曲、引伸）、旋壓、伸張成形、高能率成形、珠擊成形與橡膠模成形。</p>
+
+  <h3>一、沖床</h3>
+  <div class="tbl"><table>
+    <tr><th>類型</th><th>特點</th></tr>
+    <tr><td>C 形（開背可傾式 OBI）沖床</td><td>三面開放易送料與架設自動化；但重負荷時機架張開產生角變形，沖頭與下模失準加速磨耗。</td></tr>
+    <tr><td>直壁形（雙柱）沖床</td><td>剛性高、偏心負荷下變形小，適合大型、高精度模具。</td></tr>
+    <tr><td>液壓沖床</td><td>行程長、可調，能在任意位置保壓，適合深引伸；速度較慢。</td></tr>
+  </table></div>
+
+  <h3>二、剪切加工</h3>
+  <figure>
+    <svg viewBox="0 0 640 230" role="img" aria-label="沖剪過程與剪切斷面：沖頭與下模間的間隙、塌角、光亮剪切面、破斷面、毛邊">
+      <rect x="40" y="20" width="110" height="80" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="20" y="100" width="300" height="20" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5"/>
+      <path d="M150 100 Q156 104 158 112 L162 120" fill="none" stroke="var(--warn)" stroke-width="2"/>
+      <rect x="164" y="120" width="160" height="70" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="20" y="120" width="130" height="70" fill="var(--steel)" opacity=".0"/>
+      <line x1="150" y1="200" x2="164" y2="200" stroke="var(--ink)"/><text x="132" y="218" font-size="12" fill="var(--ink)">間隙 c</text>
+      <path d="M95 6 v10" stroke="var(--fix)" stroke-width="3"/><path d="M89 12 l6 10 6-10z" fill="var(--fix)"/>
+      <g font-size="12.5" fill="var(--ink)"><text x="70" y="64" fill="var(--paper)">沖頭</text><text x="220" y="160" fill="var(--paper)">下模</text><text x="200" y="96">板料</text></g>
+      <g transform="translate(330 30)">
+        <rect x="0" y="0" width="200" height="140" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M0 0 H200 V16 Q120 26 0 22 Z" fill="var(--accent-soft)"/>
+        <rect x="0" y="22" width="200" height="50" fill="var(--accent)" opacity=".75"/>
+        <path d="M0 72 H200 V132 H0 Z" fill="var(--steel)" opacity=".7"/>
+        <path d="M0 132 H200 V140 H0Z" fill="var(--warn)"/>
+        <g font-size="12" fill="var(--ink)"><text x="210" y="16">塌角</text><text x="210" y="52">剪切面（光亮）</text><text x="210" y="104">破斷面（粗糙）</text><text x="210" y="142">毛邊</text></g>
+      </g>
+      <text x="430" y="200" font-size="12.5" text-anchor="middle" fill="var(--muted)">沖下件的剪切斷面</text>
+    </svg>
+    <figcaption>圖 5-9　沖剪：板料先塑性變形形成光亮剪切面，再從刃口處裂開形成破斷面</figcaption>
+  </figure>
+  <p>沖頭下壓時，板料先彈性變形、再塑性變形，最後在沖頭與下模刃口處產生裂紋並向內延伸而斷開。<b>間隙</b>一般約為板厚的 2–10%：太小則兩道裂紋錯開形成二次剪切、所需力大、模具磨耗快；太大則塌角與毛邊大、斷面傾斜。<b>沖孔時孔的尺寸由沖頭決定，下料時零件尺寸由下模決定</b>，間隙放在另一邊。</p>
+  <div class="formula sm">沖剪力 F ≈ 0.7 × UTS × t × L　（t 板厚，L 剪切周長）</div>
+  <div class="tbl"><table>
+    <tr><th>操作</th><th>說明</th></tr>
+    <tr><td>剪斷 shearing</td><td>直線剪開板材</td></tr>
+    <tr><td>下料 blanking</td><td>沖下來的是成品</td></tr>
+    <tr><td>沖孔 punching</td><td>沖下來的是廢料，留下的是成品</td></tr>
+    <tr><td>沖排孔 perforating</td><td>依規則排列沖出許多相同的孔</td></tr>
+    <tr><td>切口 notching</td><td>從板邊切去一塊</td></tr>
+    <tr><td>切縫 lancing</td><td>只切開而不分離，常配合彎起做百葉</td></tr>
+    <tr><td>分條 slitting</td><td>以一對圓盤刀把寬卷料縱向切成窄條</td></tr>
+    <tr><td>步沖 nibbling</td><td>小沖頭連續重疊沖出任意輪廓，小量生產經濟</td></tr>
+    <tr><td>修邊 shaving、整緣 trimming</td><td>切去少量餘料得到精確光滑的邊；切除引伸件的凸緣餘料</td></tr>
+  </table></div>
+  <p><b>排料：</b>依零件形狀斜排、交錯排或多行排列，並縮小搭邊，提高材料利用率 = 零件總面積 ／ 板料面積。</p>
+
+  <h3>三、精密下料</h3>
+  <p><span class="en">fine blanking</span>　在三動式沖床上：壓料板上的 <b>V 形環</b>先壓入板料周圍、下方以反壓頂料板夾緊，再以極小間隙（約板厚 0.5–1%）下料。材料處於三向壓應力，整個斷面幾乎都是光亮的剪切面、垂直無毛邊，可直接當功能面（如齒形、凸輪）。不適合脆性材料，模具昂貴。</p>
+</section>
+
+<!-- ============ 5-7 ============ -->
+<section id="s7">
+  <h2><span class="no">5-7</span>彎曲加工</h2>
+  <p>把板材彎成一定角度或曲率，製作外形，也用來增加剛性（加大斷面慣性矩）。彎曲時外側受拉伸長、內側受壓縮短，中立面移向內側；寬度方向因蒲松效應，外側變窄、內側變寬。外側拉應變過大會裂開，所以有<b>最小彎曲半徑</b>，通常以板厚的倍數表示，延性愈好可彎得愈小。</p>
+  <figure>
+    <svg viewBox="0 0 640 220" role="img" aria-label="V 形彎曲回彈：卸載後彎曲角變小、彎曲半徑變大">
+      <path d="M100 200 L220 200 L280 120 L340 200 L460 200 L460 210 L100 210 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M250 20 L310 20 L280 110 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M150 50 L280 118 L410 50" fill="none" stroke="var(--accent)" stroke-width="7" stroke-linejoin="round"/>
+      <path d="M140 76 L280 118 L420 76" fill="none" stroke="var(--fix)" stroke-width="3" stroke-dasharray="7 5" stroke-linejoin="round"/>
+      <g font-size="13" fill="var(--ink)"><text x="440" y="46" fill="var(--accent)">加壓時</text><text x="440" y="80" fill="var(--fix)">卸載後（回彈）</text><text x="266" y="14">沖頭</text><text x="470" y="206">V 形下模</text></g>
+    </svg>
+    <figcaption>圖 5-10　回彈：彈性變形部分在卸載後恢復，彎曲角變小、半徑變大</figcaption>
+  </figure>
+  <div class="cards c2">
+    <div class="card"><h4>回彈量較大的情況</h4><p>降伏強度高、彈性模數小（R／t 與 Y／E 大）；彎曲半徑大（變形量小、彈性區比例大）；彎曲角度大；V 形彎曲比 U 形大；空彎（不壓到底）比壓底彎大；模具間隙、圓角大；室溫比高溫大。</p></div>
+    <div class="card"><h4>控制回彈的方法</h4><p><b>過彎</b>（最常用，依經驗多彎一點）；<b>壓底</b>（bottoming，在彎角處施加高壓使其完全塑性化）；<b>拉彎</b>（彎曲時同時施加拉力）；先反向彎再正向彎；<b>熱彎</b>；改變沖頭形狀或使用橡膠下模。</p></div>
+  </div>
+  <p><b>增進彎曲性：</b>加熱、在靜液壓下彎曲、使用夾雜物少的材料、修整剪切邊（毛邊放在彎曲內側）、退火。</p>
+</section>
+
+<!-- ============ 5-8 ============ -->
+<section id="s8">
+  <h2><span class="no">5-8</span>其他加工</h2>
+  <h3>一、深引伸</h3>
+  <figure>
+    <svg viewBox="0 0 640 262" role="img" aria-label="深引伸：沖頭把胚料壓入下模，壓料板壓住凸緣防止起皺">
+      <path d="M250 10 H390 V196 Q390 204 382 204 H258 Q250 204 250 196 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="90" y="116" width="150" height="26" fill="var(--steel)" opacity=".75" stroke="var(--ink)" stroke-width="1.5"/>
+      <rect x="400" y="116" width="150" height="26" fill="var(--steel)" opacity=".75" stroke="var(--ink)" stroke-width="1.5"/>
+      <path d="M90 152 H232 Q244 152 244 164 V230 H90 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M550 152 H408 Q396 152 396 164 V230 H550 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M90 147 H234 Q247 147 247 160 V200 Q247 207 255 207 H385 Q393 207 393 200 V160 Q393 147 406 147 H550" fill="none" stroke="var(--accent)" stroke-width="6" stroke-linejoin="round"/>
+      <path d="M320 16 v24" stroke="var(--paper)" stroke-width="3"/><path d="M314 36 l6 10 6-10z" fill="var(--paper)"/>
+      <path d="M150 104 v10" stroke="var(--fix)" stroke-width="3"/><path d="M144 108 l6 10 6-10z" fill="var(--fix)"/>
+      <path d="M490 104 v10" stroke="var(--fix)" stroke-width="3"/><path d="M484 108 l6 10 6-10z" fill="var(--fix)"/>
+      <g font-size="13" fill="var(--ink)"><text x="300" y="90" fill="var(--paper)">沖頭</text><text x="96" y="98">壓料板</text><text x="130" y="196" fill="var(--paper)">下模</text><text x="460" y="196" fill="var(--paper)">下模</text><text x="430" y="98">凸緣（周向受壓）</text></g>
+      <text x="320" y="254" font-size="12.5" text-anchor="middle" fill="var(--warn)">杯底圓角上方側壁最薄、最易破裂</text>
+    </svg>
+    <figcaption>圖 5-11　深引伸</figcaption>
+  </figure>
+  <p>沖頭把圓形胚料壓入下模，凸緣材料一面向內流、一面周向受壓縮短，所以容易<b>起皺</b>；以<b>壓料板</b>施壓防止，但壓力太大會使側壁被拉斷。最危險處是沖頭圓角附近的杯底側壁，壁厚最薄。</p>
+  <div class="tbl"><table>
+    <tr><th>名詞</th><th>說明</th></tr>
+    <tr><td>引伸比 LDR</td><td>胚料直徑 D ／ 沖頭直徑 d；單次極限引伸比約 2（多在 1.8–2.2）。也常用引伸率 m = d／D 表示，總引伸率 = m₁ m₂ … m<sub>n</sub></td></tr>
+    <tr><td>再引伸</td><td>已引伸的杯再縮小直徑、加深。<b>直接再引伸</b>沿原方向；<b>反向再引伸</b>把杯翻面反向壓，材料內外互換、彎曲方向相反，可抵消部分加工硬化與殘留應力，得到較小直徑，但需較大的模圓角。</td></tr>
+    <tr><td>引縮（薄引）ironing</td><td>沖頭與下模間隙小於壁厚，把側壁擠薄、拉高，壁厚均勻。鋁罐在引伸、再引伸後連續引縮。</td></tr>
+    <tr><td>成耳 earing</td><td>板材有<b>平面異向性</b>，不同方向流動量不同，杯口出現 4 個（或 2、6 個）凸耳，需切邊。</td></tr>
+    <tr><td>塑性應變比 r</td><td>拉伸試驗中寬度應變與厚度應變之比 r = ε<sub>w</sub>／ε<sub>t</sub>。平均 r 值（r̄ = (r₀ + 2r₄₅ + r₉₀)／4）大，板材抗變薄能力強，<b>極限引伸比愈大</b>；Δr = (r₀ − 2r₄₅ + r₉₀)／2 不為零就會成耳。</td></tr>
+    <tr><td>壓花 embossing</td><td>以成對的公母模壓出淺凹凸花紋（如車牌、銘牌），板厚幾乎不變。</td></tr>
+  </table></div>
+  <p><b>影響深引伸的因素：</b>沖頭與模圓角半徑（太小易裂、太大易皺）、間隙、壓料力、潤滑（凸緣處要潤滑、沖頭處宜有摩擦）、材料的 r 值與加工硬化指數 n。</p>
+
+  <h3>二、伸張成形</h3>
+  <p><span class="en">stretch forming</span>　板材兩端夾緊拉到降伏以上，再以成形模頂出形狀。全斷面受拉，<b>沒有起皺、回彈小</b>，模具受力小可用木材、塑膠或鋅合金，常用於飛機蒙皮、車門外板。限制是只適合曲率平緩的件、夾持處產生廢料、產量低。與引伸相比：伸張的變形集中在中央、材料不流入；引伸則是凸緣材料流入模內。</p>
+
+  <h3>三、旋壓</h3>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 180" role="img" aria-label="傳統旋壓：滾輪把圓板逐漸壓貼到旋轉的心模上，壁厚不變、外徑縮小">
+        <path d="M110 20 H190 L220 150 H80 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M110 20 L80 150 M190 20 L220 150" stroke="var(--accent)" stroke-width="6"/>
+        <path d="M20 16 H280" stroke="var(--accent)" stroke-width="6" stroke-dasharray="4 4" opacity=".45"/>
+        <circle cx="246" cy="104" r="16" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M150 165 A20 8 0 1 1 152 165" fill="none" stroke="var(--fix)" stroke-width="2"/>
+        <g font-size="12" fill="var(--ink)"><text x="130" y="96" fill="var(--paper)">心模</text><text x="232" y="138">滾輪</text><text x="20" y="40" fill="var(--muted)">原圓板</text></g>
+      </svg>
+      <b>傳統旋壓</b><small>滾輪或棒把圓板分多道次推貼到心模上，<b>壁厚大致不變</b>、直徑縮小。設備與模具便宜，適合少量多樣的燈罩、鍋具、漏斗。</small>
+      </div>
+      <div>
+      <svg viewBox="0 0 300 180" role="img" aria-label="剪力旋壓：滾輪沿心模把板料壓薄，外徑不變，壁厚等於原厚度乘以 sin α">
+        <path d="M110 20 H190 L240 150 H60 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M110 20 L60 150 M190 20 L240 150" stroke="var(--accent)" stroke-width="3"/>
+        <path d="M40 16 H260" stroke="var(--accent)" stroke-width="7"/>
+        <circle cx="262" cy="104" r="16" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+        <g font-size="12" fill="var(--ink)"><text x="130" y="96" fill="var(--paper)">心模</text><text x="200" y="160">t = t₀ sin α</text></g>
+      </svg>
+      <b>剪力旋壓</b><small>又稱流動旋壓，以大力一次壓過，<b>外徑不變、壁厚變薄</b>為 t₀ sin α（α 為半錐角）。用於飛彈鼻錐、火箭殼。延性好的材料單道可減薄約 80%。管材以同理減壁稱為管旋壓。</small>
+      </div>
+    </div>
+    <figcaption>圖 5-12　傳統旋壓與剪力旋壓</figcaption>
+  </figure>
+
+  <h3>四、高能率成形</h3>
+  <div class="tbl"><table>
+    <tr><th>方法</th><th>原理</th><th>特點</th></tr>
+    <tr><td>爆炸成形</td><td>水中引爆炸藥產生震波，把板料壓入模具</td><td>設備簡單、零件尺寸幾乎不受限，用於大型航太件</td></tr>
+    <tr><td>電液成形</td><td>水中兩電極瞬間放電產生震波</td><td>能量較小、較安全，用於小件</td></tr>
+    <tr><td>電磁成形</td><td>線圈瞬間大電流，在導電工件中感應出反向電流而產生排斥力</td><td>不需接觸與潤滑、速度快，用於管件縮口、擴管、壓接</td></tr>
+  </table></div>
+
+  <h3>五、珠擊成形與其他</h3>
+  <p><b>珠擊成形</b>以高速鋼珠噴擊板面，表層塑性伸長而使板彎成曲面，用於大型機翼蒙皮；同時在表層留下壓縮殘留應力，提高疲勞強度（第九章）。<b>增量成形</b>以一支球頭工具依 CNC 路徑逐點壓入板料，不需專用模具，適合原型與少量件。<b>橡膠模成形</b>（Guerin 法、液壓成形）以橡膠墊或液壓代替其中一半模具，模具成本低。</p>
+</section>
+
+<!-- ============ 試題 ============ -->
+<section id="exam">
+  <h2><span class="no">試題</span>歷屆試題</h2>
+  <p class="hint">點選題目展開作答要點</p>
+
+  <details><summary><span class="qn">01</span><span>(a) 除平板輥軋外，列出 3 種用輥輪加工的成形製程並繪圖。(b) 比較壓模鍛造與精密鍛造；鋁合金與鋼何者較易精密鍛造？(c) 說明再引伸與反向引伸的差異。</span><span class="src">台大機械</span></summary>
+    <div class="ans"><ul><li>螺紋輥軋、環軋、無縫管穿孔、型輥軋、齒輪輥軋（任選三，附簡圖）。</li><li>壓模鍛造有飛邊、需切邊與後加工；精密鍛造無飛邊、拔模角極小、胚料體積須精確、近淨形。<b>鋁合金較易</b>：流動應力低、鍛造溫度低、模具負荷與磨耗小、氧化少。</li><li>直接再引伸沿原方向縮徑；反向再引伸把杯翻面反向壓，彎曲方向相反，內外表面互換，可減少加工硬化與殘留應力、得到較小直徑。</li></ul></div></details>
+
+  <details><summary><span class="qn">02</span><span>飛機起落架用鍛造，部分航太零件改用 3D 列印。比較鍛造後切削與 3D 列印的優缺點與適用的零件特徵。</span><span class="src">台大機械</span></summary>
+    <div class="ans">鍛造＋切削：纖維流線連續、無孔隙、韌性與疲勞強度最高，適合承受衝擊與循環負荷、形狀較單純的大型受力件（起落架、主軸）；但模具貴、交期長、材料浪費多（買飛比高）。3D 列印：可做內流道、晶格、拓樸最佳化的輕量化與一體化零件，不需模具、適合少量；但有孔隙、異向性與殘留應力，疲勞性能較差，常需熱均壓與後加工，尺寸受成形室限制。</div></details>
+
+  <details><summary><span class="qn">03</span><span>配合圖示說明 (1) 增量成形 (2) 壓印 (3) 剪力旋壓，並說明屬於塊材或板材成形。</span><span class="src">台大機械</span></summary>
+    <div class="ans">(1) 增量成形：球頭工具依 CNC 路徑逐層壓入夾緊的板料，不需專用模具，<b>板材成形</b>。(2) 壓印：閉模冷鍛壓出精細花紋，<b>塊材成形</b>。(3) 剪力旋壓：滾輪把板料沿心模壓薄，t = t₀ sin α，<b>板材成形</b>（見圖 5-12）。</div></details>
+
+  <details><summary><span class="qn">04</span><span>(1) 相較熱加工，溫間成形有何優點？(2) 熱加工殘留應力的成因？(3) 為何凹壓（杯突）試驗無法準確預測實際沖壓成形性？</span><span class="src">台大機械</span></summary>
+    <div class="ans"><ul><li>溫間成形：加熱溫度低，氧化鱗皮少、尺寸精度與表面較好、能耗低、模具壽命長；成形力又比冷作低、延性較好。</li><li>熱加工後冷卻不均：表層先冷收縮、心部後冷，相互拘束；以及不均勻變形與相變體積變化，留下殘留應力。</li><li>杯突試驗只是球頭雙軸伸張的單一應變路徑，與實際沖壓的應變狀態（引伸、平面應變、組合）、摩擦、壓料力、模具幾何、速度都不同，所以只能作為比較參考。</li></ul></div></details>
+
+  <details><summary><span class="qn">05</span><span>配合圖示說明擺輾鍛造的製程特徵與適合的工件造型。</span><span class="src">台大機械</span></summary>
+    <div class="ans">上模軸線傾斜小角度（約 1–2°）並繞工件軸線擺動，每瞬間只壓到局部，漸進成形；成形力約一般鍛造的 1／10，噪音震動小，可一次成形。適合軸對稱的盤狀、法蘭、傘齒輪、輪轂、鉚接頭。</div></details>
+
+  <details><summary><span class="qn">06</span><span>(1) 旋轉型鍛的製程與適合元件 (2) 以輥軋將實心鋼棒製成無縫鋼管的原理 (3) 擠製中蜘蛛模的原理 (4) 恆溫加工的特徵與應用。</span><span class="src">台大機械</span></summary>
+    <div class="ans"><ul><li>旋轉型鍛：模塊環繞工件高頻徑向鎚擊，縮徑、錐度、階級，可加芯棒做內形；適合軸對稱長件（槍管、管端縮口）。</li><li>無縫管：斜置錐形輥使圓胚邊轉邊前進，反覆徑向壓縮使中心產生拉應力而開孔（Mannesmann 效應），再以頂頭擴孔整形。</li><li>蜘蛛模：芯軸由幾支腿撐在模前，材料分股繞過後在焊合室於高溫高壓下重新焊合，從模口與芯軸間流出成中空型材；適合鋁、鎂。</li><li>恆溫加工：模具與胚料同溫，不會表面急冷，流動好、成形力低、可近淨形；用於鈦合金、超合金航太件。</li></ul></div></details>
+
+  <details><summary><span class="qn">07</span><span>以正齒輪齒形精修為例，詳述刮齒（gear shaving）的原理與製程特性。</span><span class="src">高考三等</span></summary>
+    <div class="ans">刮齒刀是一個齒面開有許多細槽（刃口）的高硬度齒輪，與已滾齒或插齒的工件以交錯軸（約 10–15°）嚙合並施加徑向壓力；交錯軸造成齒面間的軸向滑動，刃口沿齒面刮除 0.02–0.1 mm 的薄屑。特性：在熱處理前進行，修正齒形、齒向與節距誤差、改善表面；速度快、刀具壽命長、成本低；只能加工未淬硬的齒輪，淬硬後需改用磨齒或搪齒。</div></details>
+
+  <details><summary><span class="qn">08</span><span>詳述金屬板材塑性應變比的定義、意義、試驗方法與對深引伸的影響。</span><span class="src">高考三等</span></summary>
+    <div class="ans">r = ε<sub>w</sub>／ε<sub>t</sub>（寬度真應變比厚度真應變）。沿與軋延方向 0°、45°、90° 取拉伸試片，拉到約 15–20% 應變，量寬度與長度（由體積不變推得厚度應變）。r̄ = (r₀ + 2r₄₅ + r₉₀)／4 大，代表板厚方向抵抗變薄的能力強，凸緣容易流入而側壁不易被拉斷，<b>極限引伸比較大</b>；Δr = (r₀ − 2r₄₅ + r₉₀)／2 表示平面異向性，不為零就會成耳。</div></details>
+
+  <details><summary><span class="qn">09</span><span>說明金屬擠製與深抽拉的製程方法，各舉兩種工業產品。</span><span class="src">機械技師</span></summary>
+    <div class="ans">擠製：胚料在盛錠筒內被沖桿推過模孔成為等斷面長條，產品如鋁門窗框、散熱片、銅管。深抽拉（深引伸）：圓胚料被沖頭壓入下模成杯或筒，壓料板防皺，產品如鋁罐、不鏽鋼水槽、彈殼、機油濾殼。</div></details>
+
+  <details><summary><span class="qn">10</span><span>說明溢料（飛邊）在壓模鍛造中的功能。</span><span class="src">關務四等</span></summary>
+    <div class="ans">飛邊很薄、冷得快且加工硬化，流動阻力大，使模穴內壓力升高而把材料擠滿角落；容納多餘胚料，使胚料體積不必精確；並在上下模之間起緩衝作用。最後以切邊模切除。</div></details>
+
+  <details><summary><span class="qn">11</span><span>深引伸中的成耳是什麼？成因為何？</span><span class="src">關務四等</span></summary>
+    <div class="ans">引伸杯的口緣出現週期性凸起（通常 4 個），稱為成耳。原因是軋延板材有平面異向性（Δr ≠ 0），不同方向的材料流動與變薄程度不同；需額外切邊而浪費材料。可藉控制織構與退火、選 Δr 接近 0 的板材改善。</div></details>
+
+  <details><summary><span class="qn">12</span><span>詳述可製造圓筒形板件的旋壓與引伸之原理，並比較製程特性。</span><span class="src">普通考試</span></summary>
+    <div class="ans">旋壓：板料隨心模旋轉，滾輪逐漸推貼成形，局部連續變形，設備與模具便宜，適合少量多樣與大型件，但速度慢、精度依操作。引伸：沖頭一次把胚料壓入下模，需要成對模具與壓料板，生產快、尺寸一致，適合大量生產；受極限引伸比限制，深件需多道次。</div></details>
+
+  <details><summary><span class="qn">13</span><span>金屬彎板常有回彈，詳細說明影響回彈量的因素與效應。</span><span class="src">鐵路員級</span></summary>
+    <div class="ans">見 5-7 節：降伏強度高、彈性模數低、R／t 大、彎曲角大、V 形、空彎、模具間隙與圓角大、室溫加工時回彈大。效應：彎曲角變小、半徑變大，尺寸不準、組裝困難。控制方法：過彎、壓底、拉彎、熱彎。</div></details>
+
+  <details><summary><span class="qn">14</span><span>何謂間接擠製？主要在避免直接擠製的哪項缺點？</span><span class="src">港務公司</span></summary>
+    <div class="ans">模具裝在中空沖桿前端壓入胚料，產品反向流出。胚料與盛錠筒之間沒有相對滑動，<b>避免直接擠製中胚料與筒壁的摩擦</b>，所需擠製力小、溫度與組織均勻、表面缺陷少。</div></details>
+
+  <details><summary><span class="qn">15</span><span>(1) 以圖文說明直接擠製 (2) 以圖文說明間接擠製 (3) 何者擠製力較大？</span><span class="src">港務公司</span></summary>
+    <div class="ans">圖見圖 5-7。直接擠製較大：整根胚料在筒內滑動，要額外克服胚料與筒壁的摩擦，起始時壓力峰值最高；間接擠製沒有這項摩擦。</div></details>
+
+  <details><summary><span class="qn">16</span><span>「打鐵趁熱」在機械製造上的意義及其優缺點；哪些金屬可以不趁熱打？</span><span class="src">高考三級</span></summary>
+    <div class="ans">即熱作：在再結晶溫度以上加工，變形阻力小、延性好、可大變形、組織細化且無加工硬化；缺點是氧化鱗皮、尺寸精度差、需加熱能源。鉛、錫、鋅等再結晶溫度在室溫附近或以下的金屬，在室溫加工就相當於熱作，不會加工硬化，所以不必加熱。</div></details>
+
+  <details><summary><span class="qn">17</span><span>列出 5 種沖壓加工成形的類型。</span><span class="src">台北捷運</span></summary>
+    <div class="ans">下料、沖孔、彎曲、引伸、壓花（亦可答切口、切縫、凸緣成形、引縮）。</div></details>
+
+  <details><summary><span class="qn">18</span><span>列出輥軋時輥輪高轉速與低轉速的優缺點。</span><span class="src">地特三等</span></summary>
+    <div class="ans">高轉速：產量高、熱軋時胚料與輥接觸時間短而溫降小；但咬入困難（摩擦係數下降）、易打滑與振動、潤滑膜與冷卻要求高。低轉速：咬入容易、控制穩定、可做大減縮；但產量低、熱軋時胚料降溫多、輥輪受熱時間長。</div></details>
+
+  <details><summary><span class="qn">19</span><span>說明使用直徑較小的輥輪進行平板輥軋的優點與限制。</span><span class="src">地特四等</span></summary>
+    <div class="ans">優點：接觸長度短，軋延力與功率小，可軋更薄、更硬的板。限制：小輥容易撓曲，需背托輥（四重、叢集式）；最大咬入減縮量 Δh = μ²R 變小，每道減縮量受限；磨耗較快。</div></details>
+
+  <details><summary><span class="qn">20</span><span>Explain why indirect extrusion is suitable for processing high-strength steel.</span><span class="src">成大機械</span></summary>
+    <div class="ans">In indirect extrusion the billet does not slide against the container, so there is no billet–container friction. The required ram force is much lower and nearly constant over the stroke, which matters for high-strength steel whose flow stress is high and which would otherwise exceed press capacity and overheat. Lower friction also gives more uniform deformation and temperature, fewer surface defects and longer tooling life.</div></details>
+
+  <details><summary><span class="qn">21</span><span>說明圓棒抽拉時模具壓力分佈與模具磨損分佈的關係。</span><span class="src">成大機械</span></summary>
+    <div class="ans">模壁壓力在材料剛接觸縮減區的入口處最高，沿縮減區逐漸下降，到軸承區更低。磨損與壓力及滑動量相關，所以入口接觸處磨損最大、形成磨耗環；軸承區磨損雖小，卻直接決定產品直徑精度。</div></details>
+
+  <details><summary><span class="qn">22</span><span>A 片中碳鋼板由 25 mm 冷作至 15 mm，B 片由 25 mm 冷作至 10 mm，比較強度高低與所需再結晶時間。</span><span class="src">成大機械</span></summary>
+    <div class="ans">A 減縮 40%，B 減縮 60%。B 冷作量大，差排密度高、加工硬化多，<b>強度較高</b>；儲存的應變能大，再結晶驅動力大、成核點多，<b>再結晶溫度較低、所需時間較短</b>，且再結晶後晶粒較細。</div></details>
+
+  <details><summary><span class="qn">23</span><span>以圖說明可樂鋁罐或砲彈彈筒常用的深引伸製程與限制。</span><span class="src">高考三等</span></summary>
+    <div class="ans">鋁罐：下料成圓板 → 引伸成淺杯 → 再引伸 → 2–3 道引縮把壁擠薄拉高 → 罐底成形 → 切邊 → 縮頸與翻邊。限制：單次極限引伸比約 2，深件需多道次；起皺與杯底圓角破裂；成耳需切邊；加工硬化需控制或退火；需要高精度模具與潤滑。</div></details>
+
+  <details><summary><span class="qn">24</span><span>(1) 繪製圓桿抽拉模具並標示各部位，說明軸承面的功用。(2) 說明抽拉模具材料與耐磨耗的改善方法。</span><span class="src">地特四等</span></summary>
+    <div class="ans"><ul><li>見圖 5-8：入口、縮減區（模角）、軸承區、出口、鋼殼。軸承面確定成品直徑並穩定尺寸，磨耗後仍可修整重用。</li><li>模芯用燒結碳化鎢，細線用單晶或多晶鑽石；可鍍硬質塗層、拋光模孔、良好潤滑（磷酸鹽皮膜加皂）、適當模角與減縮率、模具冷卻。</li></ul></div></details>
+
+  <details><summary><span class="qn">25</span><span>試述金屬熱作的優點與缺點。</span><span class="src">關務四等</span></summary>
+    <div class="ans">優點：變形阻力小，可大變形；無加工硬化；鑄造的氣孔縮孔被壓合、晶粒細化，韌性好；脆性材料也可加工。缺點：表面氧化鱗皮、脫碳；熱脹冷縮使尺寸精度差；需加熱設備與能源；工具壽命短；作業環境差。</div></details>
+</section>
+
+</main>
+</div>
+
+<script src="assets/chapter.js"></script>
+</body>
+</html>

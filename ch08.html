@@ -1,0 +1,852 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>機械製造學 第八章 機械材料</title>
+<link rel="stylesheet" href="assets/chapter.css">
+<style>
+/* Layout: 與第一章相同的講義版面 — 左側節次分頁 + 右側正文；製程以剖面示意圖與流程框呈現 */
+:root{
+  --bg:#FBF8F5; --paper:#FFFFFF; --ink:#2A1D14; --muted:#6E5D50;
+  --accent:#A84A0C; --accent-soft:#F6E6D8; --line:#E6D5C7; --grid:rgba(168,74,12,.07);
+  --steel:#9A8A7D; --fix:#1D6B70; --fix-soft:#E3F1F1; --warn:#8E2F1C;
+  --f-display:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-body:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --steel:#6E5E52; --fix:#6CC3C7; --fix-soft:#16302F; --warn:#F08A73; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --steel:#6E5E52; --fix:#6CC3C7; --fix-soft:#16302F; --warn:#F08A73; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.8;padding-inline:16px}
+.wrap{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px;padding-block:0 64px}
+header.hero{max-width:1120px;margin:0 auto 32px;padding-block:36px 28px;border-bottom:1.5px solid var(--accent);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;
+  display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:24px;align-items:center}
+.hero-art{width:100%;max-width:260px;justify-self:end}
+.crumb{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,5vw,3.1rem);line-height:1.2;margin:.3em 0 .2em;text-wrap:balance}
+h1 small{font-size:.5em;font-weight:600;color:var(--muted);display:block;letter-spacing:.05em}
+.lede{max-width:62ch;color:var(--muted);margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px;font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+main{min-width:0}
+section{padding-block:8px 28px;border-bottom:1px solid var(--line);margin-bottom:28px;scroll-margin-top:16px}
+h2{font-family:var(--f-display);font-size:1.6rem;margin:0 0 .6em;display:flex;align-items:baseline;gap:14px;text-wrap:balance}
+h2 .no{font-family:var(--f-mono);font-size:.95rem;color:var(--paper);background:var(--accent);padding:2px 9px;border-radius:2px;font-weight:500}
+h3{font-size:1.12rem;margin:1.6em 0 .5em;color:var(--accent)}
+h4{font-size:1rem;margin:1.2em 0 .3em}
+p{max-width:68ch;margin:.4em 0 .9em}
+.en{font-family:var(--f-mono);font-size:.8em;color:var(--muted)}
+.key{background:linear-gradient(transparent 62%,var(--accent-soft) 62%);font-weight:700}
+figure{margin:20px 0 24px;background:var(--paper);border:1px solid var(--line);padding:20px}
+figcaption{font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-top:12px;letter-spacing:.04em}
+.scroll{overflow-x:auto}
+.tbl{overflow-x:auto;margin:14px 0 22px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px;background:var(--paper)}
+th,td{border:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);color:var(--accent);font-weight:700;white-space:nowrap}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);padding:12px 16px;margin:16px 0;font-size:15px}
+.callout b{color:var(--accent)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:12px 0 20px}
+.card{border:1px solid var(--line);background:var(--paper);padding:14px 16px}
+.card h4{margin:0 0 4px;color:var(--accent)}
+.card p{margin:0;font-size:14.5px}
+/* 流程圖共用 */
+.node{background:var(--paper);border:2px solid var(--accent);border-radius:6px;padding:10px 14px;position:relative}
+.node b{display:block;font-size:15.5px}
+.node small{display:block;color:var(--muted);font-size:13px;line-height:1.5}
+.node .n{font-family:var(--f-mono);font-size:11.5px;color:var(--accent);letter-spacing:.06em}
+.node.dark{background:var(--accent);border-color:var(--accent)}
+.node.dark b,.node.dark .n{color:var(--paper)} .node.dark small{color:var(--accent-soft)}
+.down{height:30px;position:relative;margin-left:50%}
+.down::before{content:"";position:absolute;left:-1px;top:0;bottom:8px;border-left:2px solid var(--fix)}
+.down::after{content:"";position:absolute;left:-7px;bottom:0;border:7px solid transparent;border-top:9px solid var(--fix);border-bottom:0}
+.right{flex:0 0 34px;align-self:center;height:2px;background:var(--fix);position:relative}
+.right::after{content:"";position:absolute;right:-2px;top:-6px;border:7px solid transparent;border-left:10px solid var(--fix);border-right:0}
+/* 設計流程 */
+.phases{display:grid;gap:0}
+.phase{border:1.5px dashed var(--steel);border-radius:10px;padding:26px 16px 14px;position:relative;display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:0 14px;align-items:center}
+.phase>.lab{position:absolute;top:-11px;left:14px;background:var(--paper);padding:0 8px;font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.08em}
+.phase .down{grid-column:1}
+.tool{font-family:var(--f-mono);font-size:12px;color:var(--accent);border:1.5px solid var(--accent);border-radius:999px;text-align:center;padding:3px 8px;position:relative;background:var(--paper)}
+.tool::before{content:"";position:absolute;right:100%;top:50%;width:14px;border-top:1.5px dashed var(--accent)}
+.gap{grid-column:2}
+/* IPO */
+.ipo{display:flex;align-items:stretch;gap:0}
+.ipo .col{flex:1;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.ipo .col h5{margin:0 0 4px;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;color:var(--accent);text-align:center}
+.pill{border:1.5px solid var(--accent);border-radius:999px;padding:2px 12px;font-size:14px;text-align:center;background:var(--paper)}
+.pill.solid{background:var(--accent);color:var(--paper)}
+.ipo .proc{flex:1;border:2px solid var(--accent);border-radius:8px;background:var(--accent);color:var(--paper);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:14px}
+.ipo .proc h5{color:var(--accent-soft)}
+.ipo .proc .pill{background:transparent;border-color:var(--accent-soft);color:var(--paper)}
+/* 分類樹 */
+.tree{width:max-content;min-width:100%;margin:0 auto}
+.tree ul{list-style:none;margin:0;padding:22px 0 0;display:flex;justify-content:center;position:relative}
+.tree li{position:relative;padding:22px 4px 0;text-align:center}
+.tree>ul{padding-top:0}.tree>ul>li{padding-top:0}
+.tree li::before,.tree li::after{content:"";position:absolute;top:0;width:50%;height:22px;border-top:2px solid var(--steel)}
+.tree li::before{right:50%}.tree li::after{left:50%;border-left:2px solid var(--steel)}
+.tree li:only-child::before,.tree li:only-child::after{display:none}
+.tree li:first-child::before,.tree li:last-child::after{border-top:none}
+.tree li:last-child::before{border-right:2px solid var(--steel);border-top-right-radius:6px}
+.tree li:first-child::after{border-top-left-radius:6px}
+.tree>ul>li::before,.tree>ul>li::after{display:none}
+.tree ul ul::before{content:"";position:absolute;top:0;left:50%;height:22px;border-left:2px solid var(--steel)}
+.tree .node{display:inline-block;padding:5px 9px;white-space:nowrap}
+.tree .node b{font-size:14.5px}
+/* 加工示意圖卡 */
+.procs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 20px}
+.procs.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.proc-card{background:var(--paper);border:1px solid var(--line);padding:12px 12px 10px;display:flex;flex-direction:column;gap:4px}
+.proc-card svg{width:100%;height:auto;background:var(--bg);border-radius:4px}
+.proc-card b{font-size:15px}
+.proc-card .en{display:block}
+.proc-card small{color:var(--muted);font-size:13px;line-height:1.5}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted);margin:-4px 0 12px}
+.legend i{display:inline-block;width:14px;height:10px;margin-right:6px;vertical-align:middle;border-radius:2px}
+/* 碳足跡 */
+.life{display:flex;align-items:stretch}
+.life .node{flex:1;text-align:center;padding:10px 8px}
+.offset{margin-top:14px;border:2px dashed var(--fix);border-radius:8px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:center;font-size:14.5px}
+.offset b{color:var(--fix)}
+.eq{font-family:var(--f-mono);font-size:15px;background:var(--fix);color:var(--paper);padding:2px 10px;border-radius:4px}
+/* 試題 */
+.fixbox{border:1.5px dashed var(--warn);background:var(--fix-soft);padding:14px 18px;margin:8px 0 0;font-size:14.5px}
+.fixbox h3{color:var(--warn);margin:0 0 6px;font-size:1rem}
+.fixbox ul{margin:0;padding-left:1.1em}
+.fixbox s{color:var(--muted)}
+details{border:1px solid var(--line);background:var(--paper);margin:10px 0;padding:0 16px}
+summary{cursor:pointer;padding:12px 0;font-weight:500;list-style:none;display:grid;grid-template-columns:2.4em minmax(0,1fr) auto;gap:8px}
+summary::-webkit-details-marker{display:none}
+summary .qn{font-family:var(--f-mono);color:var(--accent)}
+summary .src{font-size:12px;color:var(--muted);white-space:nowrap}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details[open] summary{border-bottom:1px dashed var(--line)}
+details .ans{padding:10px 0 14px 2.8em;font-size:15px}
+details .ans ul{margin:.2em 0;padding-left:1.1em}
+.hint{font-family:var(--f-mono);font-size:11px;color:var(--accent);letter-spacing:.1em}
+svg text{font-family:var(--f-body)}
+@media (max-width:820px){
+  header.hero{grid-template-columns:minmax(0,1fr)}.hero-art{justify-self:start;max-width:180px}
+  .wrap{grid-template-columns:minmax(0,1fr);gap:0}
+        .ipo,.life{flex-direction:column}
+  .ipo .right,.life .right{flex-basis:26px;width:2px;height:26px;align-self:center}
+  .ipo .right::after,.life .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
+  .phase{grid-template-columns:minmax(0,1fr) 92px}
+  .procs,.procs.c4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+.crumb a{color:inherit;text-decoration:none;border-bottom:1px dashed currentColor}
+.crumb a:hover{border-bottom-style:solid}
+.cards.c2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card .en{display:block;margin:-2px 0 4px}
+.flow6,.flow5{display:flex;align-items:stretch;min-width:0}
+.flow6 .node,.flow5 .node{flex:1 1 0;min-width:0;padding:8px 9px}
+.flow6 .right,.flow5 .right{flex-basis:22px}
+.flow5 .node small{font-size:12px}
+.formula{font-family:var(--f-mono);font-size:1.45rem;text-align:center;color:var(--accent);background:var(--accent-soft);padding:14px 12px;margin:12px 0 14px;border-radius:4px}
+.formula.sm{font-size:1.05rem;padding:8px;margin:8px 0}
+.example{border:1.5px solid var(--fix);background:var(--paper);padding:0 18px 12px;margin:18px 0 24px}
+.ex-h{display:inline-block;background:var(--fix);color:var(--paper);font-weight:700;font-size:14px;padding:3px 12px;margin:0 0 6px -18px}
+.example ul{margin:.2em 0 .6em;padding-left:1.2em;font-family:var(--f-mono);font-size:14px}
+figure.mini{margin:10px 0;padding:12px;background:var(--bg)}
+figure.mini svg{width:100%;max-width:420px;height:auto;display:block}
+ol.steps{counter-reset:st;list-style:none;padding:0;margin:10px 0 20px;display:grid;gap:8px;max-width:72ch}
+ol.steps li{counter-increment:st;display:grid;grid-template-columns:2.2em minmax(0,1fr);gap:10px;align-items:baseline}
+ol.steps li::before{content:counter(st,decimal-leading-zero);font-family:var(--f-mono);font-size:13px;color:var(--paper);background:var(--accent);text-align:center;border-radius:2px;padding:1px 0}
+.dc2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.dc2>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.dc2 svg{width:100%;height:auto;background:var(--bg);border-radius:4px}
+.dc2 b{font-size:15.5px;margin-top:4px}
+.dc2 small{color:var(--muted);font-size:13.5px;line-height:1.6}
+figure svg{max-width:100%}
+.scroll>svg{width:100%;height:auto;display:block}
+@media (max-width:820px){.dc2{grid-template-columns:minmax(0,1fr)}}
+
+/* fit-to-width：圖面一律縮放到版面寬度內，不出現水平捲動 */
+.scroll{overflow:visible}
+.scroll svg,figure svg{min-width:0!important;max-width:100%;height:auto}
+table{min-width:0}
+.tbl{overflow-x:visible}
+th{white-space:normal}
+@media (max-width:820px){
+  table{font-size:13.5px} th,td{padding:6px 8px}
+  .flow6,.flow5{flex-direction:column;min-width:0}
+  .flow6 .node,.flow5 .node{width:auto;flex:none}
+  .flow6 .right,.flow5 .right{flex:0 0 22px;width:2px;height:22px;align-self:center}
+  .flow6 .right::after,.flow5 .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
+}
+.tree.as-list{width:auto;min-width:0;margin:0}
+.tree.as-list ul{display:block;padding:0 0 0 16px;margin:0 0 0 12px;border-left:2px solid var(--steel)}
+.tree.as-list>ul{border-left:0;margin:0;padding:0}
+.tree.as-list li{padding:4px 0 4px 14px;text-align:left}
+.tree.as-list>ul>li{padding-left:0}
+.tree.as-list li::after,.tree.as-list ul ul::before{display:none}
+.tree.as-list li::before{display:block;content:"";position:absolute;left:-2px;top:20px;width:12px;height:0;border:0;border-top:2px solid var(--steel);border-radius:0}
+.tree.as-list>ul>li::before{display:none}
+.tree.as-list .node{white-space:normal}
+.tree .node{padding:4px 7px}
+.tree li{padding-left:3px;padding-right:3px}
+.tree.as-list ul:not(:has(ul))>li{padding:0}
+.tree.as-list ul:not(:has(ul)){display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px;padding:6px 0 6px 16px}
+.tree.as-list ul:not(:has(ul))>li::before{display:none}
+
+/* 砂輪標示 */
+.spec{border:1px solid var(--line);background:var(--paper);padding:14px 16px;margin:12px 0 18px}
+.spec-row{display:flex;flex-wrap:wrap;gap:6px}
+.spec .chip{flex:1 1 72px;min-width:0;border:1.5px solid var(--accent);border-radius:4px;text-align:center;padding:6px 4px}
+.spec .chip b{display:block;font-family:var(--f-mono);font-size:1.3rem;color:var(--accent)}
+.spec .chip small{display:block;font-size:12px;color:var(--muted);line-height:1.4}
+.spec-cap{margin:10px 0 0;font-size:13.5px;color:var(--muted);max-width:none}
+</style>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+</head>
+<body>
+<header class="hero">
+  <div>
+    <div class="crumb"><a href="manufacturing.html">知識動力場 · 機械製造學</a> · Chapter 08</div>
+    <h1>機械材料<small>Engineering Materials</small></h1>
+    <p class="lede">製程能不能做、做出來好不好用，最後都回到材料本身。本章先從巨觀量得到的物理、化學與機械性質談起，再往下看到晶體結構、滑移系統與缺陷，說明強化材料的幾種機制；最後以鐵碳平衡圖、連續冷卻變態圖與恆溫變態圖，解讀鋼在升降溫中的組織變化。</p>
+    <div class="meta"><span>5 節 · 10 題歷屆試題</span></div>
+  </div>
+  <svg class="hero-art" viewBox="0 0 260 230" role="img" aria-label="體心立方單位晶胞：立方體八個角各一個原子，中心一個原子">
+    <g stroke="var(--ink)" stroke-width="2" fill="none">
+      <path d="M50 90 h120 v120 h-120 z"/><path d="M100 40 h120 v120 h-120 z" stroke-dasharray="4 4" stroke="var(--muted)"/>
+      <path d="M50 90 L100 40 M170 90 L220 40 M170 210 L220 160 M50 210 L100 160" />
+    </g>
+    <g fill="var(--accent)" stroke="var(--ink)" stroke-width="1.5">
+      <circle cx="100" cy="40" r="13" opacity=".55"/><circle cx="220" cy="40" r="13"/><circle cx="220" cy="160" r="13"/><circle cx="100" cy="160" r="13" opacity=".55"/>
+      <circle cx="135" cy="125" r="17" fill="var(--fix)"/>
+      <circle cx="50" cy="90" r="13"/><circle cx="170" cy="90" r="13"/><circle cx="170" cy="210" r="13"/><circle cx="50" cy="210" r="13"/>
+    </g>
+    <text x="150" y="20" font-size="13" fill="var(--muted)">BCC · α-Fe</text>
+  </svg>
+</header>
+
+<div class="wrap">
+<nav class="tabs" role="tablist" aria-label="本章各節" aria-orientation="vertical">
+  <p class="tabs-label">SECTIONS</p>
+  <a class="tab" id="tab-s1" href="#s1" role="tab" aria-controls="s1" aria-selected="true"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M4 20h16"/><path d="M9 20v-6h6v6"/></svg></span><span class="tx"><span class="no">8-1</span><span class="nm">概述</span></span></a>
+  <a class="tab" id="tab-s2" href="#s2" role="tab" aria-controls="s2" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4"/><path d="M4 20h16"/><path d="M4 18l3-9 1 1c3-4 6-5 9-4l2 4"/></svg></span><span class="tx"><span class="no">8-2</span><span class="nm">金屬材料性質</span></span></a>
+  <a class="tab" id="tab-s3" href="#s3" role="tab" aria-controls="s3" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h10v10H5z"/><path d="M5 8l4-4h10l-4 4M19 4v10l-4 4"/><circle cx="10" cy="13" r="1.8"/></svg></span><span class="tx"><span class="no">8-3</span><span class="nm">材料結構</span></span></a>
+  <a class="tab" id="tab-s4" href="#s4" role="tab" aria-controls="s4" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="tx"><span class="no">8-4</span><span class="nm">材料強化機制</span></span></a>
+  <a class="tab" id="tab-s5" href="#s5" role="tab" aria-controls="s5" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4"/><path d="M4 20h16"/><path d="M4 6l4 3 6 7h6"/><path d="M8 9l-4 4"/><path d="M14 16V20"/></svg></span><span class="tx"><span class="no">8-5</span><span class="nm">鐵碳平衡圖</span></span></a>
+  <a class="tab" id="tab-exam" href="#exam" role="tab" aria-controls="exam" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 2.8h6"/><path d="M8.5 11l2 2 4-4M8.5 17h7"/></svg></span><span class="tx"><span class="no">試題</span><span class="nm">歷屆試題</span></span></a>
+</nav>
+
+<main>
+
+<!-- ============ 8-1 ============ -->
+<section id="s1">
+  <h2><span class="no">8-1</span>概述</h2>
+  <p>機械製造用到的金屬材料，可以從兩個尺度去理解：</p>
+  <div class="cards c2">
+    <div class="card"><h4>巨觀：材料性質</h4><p><b>物理性質</b>（比重、熔點、比熱、熱膨脹、熱傳導、比電阻）決定能否加工與耗能；<b>化學性質</b>決定耐蝕性；<b>機械性質</b>（強度、延性、硬度、韌性、疲勞、潛變）就是成品規格本身。</p></div>
+    <div class="card"><h4>微觀：結構與組織</h4><p>BCC、FCC、HCP 三種晶體結構與其滑移系統，決定材料天生的強度與延性；再以晶粒細化、固溶、散佈、時效、麻田散變態與應變硬化等手段<b>強化</b>。</p></div>
+  </div>
+  <p>工業上用量最大的是<b>鐵碳合金（鋼與鑄鐵）</b>。含碳量、溫度與冷卻速率共同決定其組織：緩慢冷卻看<b>鐵碳平衡圖</b>，實際冷卻速率的影響則看<b>連續冷卻變態圖（CCT）</b>與<b>恆溫變態圖（TTT）</b>。</p>
+  <div class="tree">
+    <ul><li><span class="node">機械材料</span>
+      <ul>
+        <li><span class="node">金屬材料性質</span><ul><li><span class="node">物理性質</span></li><li><span class="node">化學性質</span></li><li><span class="node">機械性質</span></li></ul></li>
+        <li><span class="node">結構與強化</span><ul><li><span class="node">晶體結構 BCC／FCC／HCP</span></li><li><span class="node">滑移系統與缺陷</span></li><li><span class="node">強化機制</span></li></ul></li>
+        <li><span class="node">鐵碳系</span><ul><li><span class="node">鐵碳平衡圖</span></li><li><span class="node">CCT 圖</span></li><li><span class="node">TTT 圖</span></li></ul></li>
+      </ul></li></ul>
+  </div>
+</section>
+
+<!-- ============ 8-2 ============ -->
+<section id="s2">
+  <h2><span class="no">8-2</span>金屬材料性質</h2>
+
+  <h3>一、物理性質</h3>
+  <p>物體不經化學變化就能表現出的性質，是選材與選製程的基本依據。</p>
+  <div class="tbl"><table>
+    <tr><th>性質</th><th>定義</th><th>對製造的意義</th></tr>
+    <tr><td><b>比重</b><span class="en">（specific gravity）</span></td><td>某物質重量與同體積 4 °C 純水重量之比，又稱相對密度。鐵 7.87、鋁 2.7</td><td>影響設備能耗與動力需求；鑄件經塑性加工壓實孔隙後，比重通常略增</td></tr>
+    <tr><td><b>熔點</b><span class="en">（melting point）</span></td><td>固液共存的溫度。純金屬為定值；合金依成分在一溫度範圍內熔化。鐵 1538 °C、鎢 3410 °C</td><td>熔點愈高愈難鑄造，鎢多以粉末冶金成形；再結晶溫度約與熔點成正比</td></tr>
+    <tr><td><b>比熱</b><span class="en">（specific heat）</span></td><td>單位質量升高 1 °C 所需熱量。鋁約 0.90 J/(g·K)，鋼約 0.46 J/(g·K)</td><td>比熱小者吸收同樣熱量升溫較大，加工時需注意熱變形與相變</td></tr>
+    <tr><td><b>熱膨脹係數</b><span class="en">（CTE）</span></td><td>溫度升高 1 °C 的長度（線）或體積（體）增加率</td><td>異材接合在溫度變化下產生熱應力；也可用來做熱套緊配合</td></tr>
+    <tr><td><b>熱傳導係數</b> k</td><td>單位面積、單位厚度、單位溫差下，每秒傳遞的熱量。銀 429、銅 401、鈦合金 &lt; 16 W/(m·K)</td><td>k 小者切削熱不易散出，刀尖溫度高、工件溫度不均易熱裂</td></tr>
+    <tr><td><b>比電阻</b><span class="en">（resistivity）</span></td><td>單位長度、單位截面積的電阻，單位 Ω·m；溫度升高時金屬比電阻增大</td><td>電阻銲時比電阻高者發熱多；同時要考慮熔點評估可銲性</td></tr>
+  </table></div>
+  <div class="formula sm">L = L₀(1 + αΔT)　　V = V₀(1 + γΔT)，γ ≈ 3α　　k = Q·L ／ (t·A·ΔT)</div>
+  <p>多數金屬受熱膨脹，常用金屬中鋅、鉛的線膨脹係數最大；銻、鉍等在凝固時反而膨脹。熱套時先把孔加熱膨脹，套入常溫的軸，冷卻後孔收縮即形成<b>緊配合</b>。</p>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 210" role="img" aria-label="加熱時間與溫度：固態升溫、在熔點固液共存呈水平段、液態升溫、在沸點液氣共存呈水平段、再為氣態">
+        <path d="M40 15 V180 H290" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M40 170 L90 130 H150 L190 80 H250 L285 50" fill="none" stroke="var(--accent)" stroke-width="3"/>
+        <g font-size="12" fill="var(--ink)"><text x="44" y="145">固態</text><text x="96" y="122">固液共存</text><text x="160" y="118">液態</text><text x="196" y="72">液氣共存</text><text x="262" y="44">氣態</text></g>
+        <g font-size="11.5" fill="var(--muted)"><text x="4" y="134">熔點</text><text x="4" y="84">沸點</text><text x="200" y="200">加熱時間</text><text x="46" y="14">溫度</text></g>
+        <path d="M40 130 H90 M40 80 H190" stroke="var(--muted)" stroke-dasharray="3 3"/>
+      </svg>
+      <figcaption>圖 8-1　加熱時間與溫度、狀態</figcaption></div>
+      <div>
+      <svg viewBox="0 0 300 210" role="img" aria-label="熱傳導：熱量 Q 在時間 t 內穿過截面積 A、厚度 L 的材料，兩側溫差 ΔT">
+        <path d="M90 50 L150 30 V140 L90 160 Z" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M150 30 L210 50 V160 L150 140" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2" opacity=".6"/>
+        <path d="M90 160 L150 180 L210 160" fill="none" stroke="var(--ink)" stroke-width="2"/><path d="M150 180 V140" stroke="var(--ink)" stroke-dasharray="3 3"/>
+        <path d="M30 100 H80" stroke="var(--warn)" stroke-width="3"/><path d="M80 94 l10 6 -10 6z" fill="var(--warn)"/>
+        <path d="M220 100 H270" stroke="var(--warn)" stroke-width="3"/><path d="M270 94 l10 6 -10 6z" fill="var(--warn)"/>
+        <g font-size="12" fill="var(--ink)"><text x="20" y="90">T + ΔT</text><text x="232" y="90">T</text><text x="110" y="105">A</text><text x="174" y="198">L</text><text x="134" y="18">Q／t</text></g>
+      </svg>
+      <figcaption>圖 8-2　熱傳導係數的定義</figcaption></div>
+    </div>
+  </figure>
+
+  <h3>二、化學性質：腐蝕</h3>
+  <p>機件與氧或環境中的鹽類、水分作用而逐漸蝕耗，稱為<b>腐蝕</b><span class="en">（corrosion）</span>。純鐵的氧化物疏鬆易剝落；加入鉻、鎳可形成緻密鈍化膜而成為不鏽鋼。</p>
+  <div class="cards c2">
+    <div class="card"><h4>化學腐蝕：氧化</h4><p>金屬直接與氧反應生成氧化物。氧化鐵疏鬆易脫落，持續向內腐蝕；<b>氧化鋁緻密</b>，可隔絕氧氣保護母材，且硬度、耐磨性高於鋁，陽極處理即利用此點。</p></div>
+    <div class="card"><h4>電化學腐蝕</h4><p>不同金屬，或同一金屬因偏析、殘留應力而存在電位差，在含水或電解質的環境中構成電池，<b>活性較大（電位較低）者為陽極</b>而溶解。銲接、異材接合、鑄造偏析處易發生。鍍鋅鐵板中鋅為陽極優先腐蝕，以保護鐵（犧牲陽極）。</p></div>
+  </div>
+
+  <h3>三、機械性質</h3>
+  <h4>（一）強度</h4>
+  <p>材料抵抗外力變形的能力，以拉伸試驗得到應力–應變曲線判讀。</p>
+  <figure>
+    <svg viewBox="0 0 560 290" role="img" aria-label="低碳鋼應力應變曲線：O 到 P 為直線比例區，Y 為降伏點，之後應變硬化上升到 U 點極限強度，再頸縮下降至斷裂">
+      <path d="M60 20 V250 H540" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+      <path d="M60 250 L100 110 L104 100 L110 112 L130 108 Q230 50 330 48 Q420 52 470 110" fill="none" stroke="var(--accent)" stroke-width="3"/>
+      <path d="M470 110 l6 -8 M470 110 l8 4" stroke="var(--ink)" stroke-width="1.5"/>
+      <g fill="var(--ink)"><circle cx="100" cy="110" r="4"/><circle cx="104" cy="100" r="4"/><circle cx="330" cy="48" r="4"/><circle cx="470" cy="110" r="4"/></g>
+      <g font-size="13" fill="var(--ink)"><text x="44" y="268">O</text><text x="80" y="128">P</text><text x="94" y="92">Y</text><text x="324" y="38">U</text><text x="478" y="114">斷裂</text></g>
+      <g font-size="12" fill="var(--muted)"><text x="112" y="140">比例限度 P</text><text x="112" y="80">降伏強度 Y</text><text x="350" y="38">抗拉強度 U</text></g>
+      <path d="M100 250 V262 M130 250 V262 M330 250 V262 M470 250 V262" stroke="var(--muted)"/>
+      <g font-size="12" fill="var(--fix)"><text x="66" y="280">彈性</text><text x="190" y="280">塑性：應變硬化</text><text x="370" y="280">頸縮</text></g>
+      <text x="20" y="30" font-size="12" fill="var(--muted)">σ</text><text x="530" y="244" font-size="12" fill="var(--muted)">ε</text>
+    </svg>
+    <figcaption>圖 8-4　碳鋼的應力–應變曲線</figcaption>
+  </figure>
+  <div class="cards">
+    <div class="card"><h4>比例限度 P</h4><p>O–P 間應力與應變成正比（虎克定律）；一般金屬的比例限度與彈性限度很接近。</p></div>
+    <div class="card"><h4>降伏強度 Y</h4><p>超過此應力即產生永久（塑性）變形，是<b>機械設計最重要的依據</b>；無明顯降伏點者取 0.2% 偏移法。</p></div>
+    <div class="card"><h4>抗拉強度 U</h4><p>破壞前所能承受的最大工程應力。碳鋼含碳量愈高強度愈高，熱處理可再提高。</p></div>
+  </div>
+
+  <h4>（二）延性</h4>
+  <p>材料受拉直到斷裂所能承受的塑性變形量。</p>
+  <div class="formula sm">伸長率 %EL = (L<sub>f</sub> − L₀) ／ L₀ × 100%　　斷面收縮率 %RA = (A₀ − A<sub>f</sub>) ／ A₀ × 100%</div>
+  <p>受壓直到破裂的變形能力稱<b>展性</b><span class="en">（malleability）</span>。兩者多半一致，但也有例外，如<b>鉛的展性很好、延性卻差</b>（拉不成細絲）。脆性材料的 %EL、%RA 都接近零。</p>
+
+  <h4>（三）硬度</h4>
+  <p>材料表面局部抵抗壓入或刮傷的能力，通常與強度、耐磨性成正相關。</p>
+  <figure>
+    <svg viewBox="0 0 640 250" role="img" aria-label="三種壓入硬度：勃氏以鋼球壓出球面凹痕量直徑 d；洛氏以鑽石圓錐或鋼球，先小負荷再大負荷，量深度差 t；維氏以 136 度鑽石方錐，量方形壓痕對角線 d">
+      <g stroke="var(--ink)" stroke-width="2">
+        <rect x="10" y="150" width="190" height="70" fill="var(--accent-soft)"/>
+        <rect x="225" y="150" width="190" height="70" fill="var(--accent-soft)"/>
+        <rect x="440" y="150" width="190" height="70" fill="var(--accent-soft)"/>
+      </g>
+      <path d="M105 40 V96" stroke="var(--warn)" stroke-width="3"/><path d="M98 90 l7 12 7-12z" fill="var(--warn)"/>
+      <circle cx="105" cy="128" r="30" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M80 150 Q105 168 130 150" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M80 236 H130 M80 230 V242 M130 230 V242" stroke="var(--fix)" stroke-width="1.5"/>
+      <g font-size="12.5" fill="var(--ink)"><text x="112" y="58">F</text><text x="140" y="126">D</text><text x="98" y="248" fill="var(--fix)">d</text><text x="40" y="26" font-size="14">勃氏 HB</text></g>
+      <path d="M320 40 V70" stroke="var(--warn)" stroke-width="3"/><path d="M313 64 l7 12 7-12z" fill="var(--warn)"/>
+      <path d="M300 80 h40 v40 l-20 34 -20 -34z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M298 150 L320 172 L342 150" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M350 160 H376 M350 172 H376 M370 160 V172" stroke="var(--fix)" stroke-width="1.5"/>
+      <g font-size="12.5" fill="var(--ink)"><text x="327" y="58">10 kgf + 大負荷</text><text x="380" y="171" fill="var(--fix)">t</text><text x="262" y="26" font-size="14">洛氏 HR</text><text x="232" y="214" font-size="11.5" fill="var(--muted)">卸大負荷後的深度差 t</text></g>
+      <path d="M535 40 V70" stroke="var(--warn)" stroke-width="3"/><path d="M528 64 l7 12 7-12z" fill="var(--warn)"/>
+      <path d="M515 80 h40 v30 l-20 40 -20 -40z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M520 110 l15 40 15-40" fill="none" stroke="var(--muted)" stroke-dasharray="3 3"/>
+      <path d="M590 170 l20 20 -20 20 -20 -20z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/><path d="M570 190 H610" stroke="var(--fix)" stroke-width="1.5"/>
+      <g font-size="12.5" fill="var(--ink)"><text x="545" y="58">F</text><text x="470" y="140">136°</text><text x="586" y="186" fill="var(--fix)">d</text><text x="470" y="26" font-size="14">維氏 HV</text><text x="452" y="214" font-size="11.5" fill="var(--muted)">壓痕俯視</text></g>
+    </svg>
+    <figcaption>圖 8-6～8-8　勃氏、洛氏與維氏硬度</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>方法</th><th>壓痕器與負荷</th><th>計算或讀值</th><th>特點</th></tr>
+    <tr><td><b>蕭氏 HS</b><br><small>回彈硬度</small></td><td>前端鑲鑽石的小錘自高度 h₀ 落下，量回彈高度 h</td><td>HS = (10000／65)·(h／h₀)</td><td>輕便、試件尺寸不限、幾乎不留痕，可測成品；精度較壓入法差</td></tr>
+    <tr><td><b>勃氏 HB</b></td><td>直徑 D = 10 mm 鋼球（或碳化鎢球）；鋼 3000 kgf、銅鋁等 500 kgf，保持一定時間</td><td>HB = 2F ／ [πD(D − √(D² − d²))]</td><td>壓痕大，可反映組織平均值，適合鑄件等粗晶材料；壓痕大且深，不適合成品檢驗與薄件</td></tr>
+    <tr><td><b>洛氏 HR</b></td><td>先加 10 kgf 小負荷歸零，再加大負荷後卸除，量深度差。HRA：鑽石圓錐 60 kgf；HRB：1/16 in 鋼球 100 kgf；HRC：120° 鑽石圓錐 150 kgf</td><td>直接由刻度讀出</td><td>快速、適合量產檢驗；HRA 測燒結碳化物，HRB（0–100）測低碳鋼、銅合金，HRC（20–70）測淬火鋼；不同標尺不能直接比較</td></tr>
+    <tr><td><b>維氏 HV</b></td><td>對面角 136° 的鑽石方錐，量方形壓痕對角線平均值 d</td><td>HV = 2F·sin68° ／ d² = 1.8544 F ／ d²</td><td>單一標尺涵蓋軟到極硬材料；可測薄件、鍍層、表面硬化層；表面需研磨拋光，多用於實驗室</td></tr>
+  </table></div>
+
+  <h4>（四）韌性</h4>
+  <p>材料受衝擊至斷裂所吸收的能量。金屬常用單次擺錘衝擊試驗，分<b>沙丕</b><span class="en">（Charpy）</span>與<b>易佐</b><span class="en">（Izod）</span>兩種。</p>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 230" role="img" aria-label="擺錘衝擊試驗：重量 W 的擺錘自擺角 α 落下打斷試片後升到擺角 β，吸收能量 E = WR(cos β − cos α)">
+        <circle cx="150" cy="30" r="5" fill="var(--ink)"/>
+        <path d="M150 30 L60 120" stroke="var(--muted)" stroke-width="2" stroke-dasharray="4 4"/><circle cx="60" cy="120" r="16" fill="var(--steel)" stroke="var(--ink)" stroke-width="2" opacity=".6"/>
+        <path d="M150 30 V170" stroke="var(--ink)" stroke-width="2.5"/><circle cx="150" cy="178" r="16" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M150 30 L225 140" stroke="var(--muted)" stroke-width="2" stroke-dasharray="4 4"/><circle cx="225" cy="140" r="16" fill="var(--steel)" stroke="var(--ink)" stroke-width="2" opacity=".6"/>
+        <rect x="128" y="198" width="44" height="12" fill="var(--accent)" stroke="var(--ink)"/>
+        <path d="M150 80 A50 50 0 0 1 115 65" fill="none" stroke="var(--fix)" stroke-width="1.5"/><path d="M150 80 A50 50 0 0 0 178 71" fill="none" stroke="var(--fix)" stroke-width="1.5"/>
+        <g font-size="12.5" fill="var(--ink)"><text x="114" y="94" fill="var(--fix)">α</text><text x="172" y="94" fill="var(--fix)">β</text><text x="30" y="112">W</text><text x="158" y="120">R</text><text x="180" y="210">試片</text></g>
+      </svg>
+      <figcaption>圖 8-9　衝擊試驗原理</figcaption></div>
+      <div>
+      <svg viewBox="0 0 300 230" role="img" aria-label="試片夾持：易佐法以懸臂樑方式夾持，缺口朝向擺錘；沙丕法以簡支樑方式放在兩支點上，擺錘打擊缺口背面">
+        <rect x="20" y="70" width="60" height="120" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="80" y="70" width="26" height="120" fill="var(--paper)" stroke="var(--ink)" stroke-width="2" opacity="0"/>
+        <rect x="44" y="20" width="18" height="170" fill="var(--accent)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M62 120 l-6 4 6 4" fill="var(--paper)" stroke="var(--ink)"/>
+        <path d="M110 40 l-36 6" stroke="var(--warn)" stroke-width="3"/><path d="M78 40 l-10 7 12 3z" fill="var(--warn)"/>
+        <text x="20" y="214" font-size="12.5" fill="var(--ink)">(a) Izod 懸臂</text>
+        <rect x="165" y="110" width="120" height="18" fill="var(--accent)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M219 110 l6 7 6 -7" fill="var(--paper)" stroke="var(--ink)"/>
+        <path d="M170 128 l-8 30 h20z M280 128 l-8 30 h20z" fill="var(--steel)" stroke="var(--ink)"/>
+        <path d="M225 180 V140" stroke="var(--warn)" stroke-width="3"/><path d="M219 146 l6 -10 6 10z" fill="var(--warn)"/>
+        <text x="190" y="88" font-size="11.5" fill="var(--muted)">缺口</text>
+        <text x="170" y="214" font-size="12.5" fill="var(--ink)">(b) Charpy 簡支</text>
+      </svg>
+      <figcaption>圖 8-10　易佐法與沙丕法</figcaption></div>
+    </div>
+  </figure>
+  <div class="formula">E = WR(1 − cos α) − WR(1 − cos β) = WR(cos β − cos α)</div>
+  <p>試片中間開缺口以集中應力。沙丕試片 10 × 10 × 55 mm，兩端簡支，擺錘打在缺口背面；易佐試片 10 × 10 × 75 mm，一端懸臂夾持，打擊缺口同側上端。E 愈大，韌性愈好。</p>
+
+  <h4>（五）疲勞強度</h4>
+  <p>機件承受反覆變動的應力，即使應力低於降伏強度，經過足夠次數仍會斷裂，稱為<b>疲勞</b>。旋轉彎曲試驗中試片表面一點交替受拉、受壓，紀錄應力 S 與破斷次數 N 得到 <b>S–N 曲線</b>。</p>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 220" role="img" aria-label="S–N 曲線：鋼材在約十的六到七次方次出現膝部後呈水平，水平值即疲勞限；鋁合金沒有水平段，取十的七次方次對應應力為疲勞強度">
+        <path d="M40 15 V180 H290" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M45 40 Q110 60 170 110 H285" fill="none" stroke="var(--accent)" stroke-width="3"/>
+        <path d="M45 60 Q140 100 285 160" fill="none" stroke="var(--fix)" stroke-width="3"/>
+        <circle cx="170" cy="110" r="4" fill="var(--ink)"/>
+        <path d="M40 110 H170" stroke="var(--muted)" stroke-dasharray="3 3"/><path d="M220 130 V180" stroke="var(--muted)" stroke-dasharray="3 3"/>
+        <g font-size="12" fill="var(--ink)"><text x="150" y="100">膝部</text><text x="230" y="104" fill="var(--accent)">鋼</text><text x="234" y="160" fill="var(--fix)">鋁合金</text><text x="2" y="114" font-size="11">疲勞限</text><text x="208" y="196" font-size="11">10⁷</text></g>
+        <g font-size="11.5" fill="var(--muted)"><text x="44" y="14">S</text><text x="240" y="212">N（對數）</text></g>
+      </svg>
+      <figcaption>圖 8-12　鋼與鋁合金的 S–N 曲線</figcaption></div>
+      <div>
+      <svg viewBox="0 0 300 220" role="img" aria-label="潛變曲線：初始應變 ε0 後，第一期潛變率逐漸下降，第二期潛變率最小且固定，第三期潛變率加速直到斷裂">
+        <path d="M40 15 V180 H290" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M40 150 V130 Q60 100 100 95 L210 72 Q250 62 270 25" fill="none" stroke="var(--accent)" stroke-width="3"/>
+        <path d="M270 25 l6 -4 M270 25 l-2 -7" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M100 90 V180 M210 66 V180" stroke="var(--muted)" stroke-dasharray="3 3"/>
+        <g font-size="12" fill="var(--ink)"><text x="58" y="170">一期</text><text x="138" y="170">二期</text><text x="226" y="170">三期</text><text x="276" y="30">斷裂</text><text x="120" y="76" fill="var(--fix)">最小潛變率</text><text x="10" y="138">ε₀</text></g>
+        <g font-size="11.5" fill="var(--muted)"><text x="44" y="14">應變</text><text x="250" y="200">時間</text></g>
+      </svg>
+      <figcaption>圖 8-13　潛變曲線</figcaption></div>
+    </div>
+  </figure>
+  <p>鋼材曲線在約 10⁶–10⁷ 次出現<b>膝部</b>後呈水平，其應力值稱<b>疲勞限</b>或<b>耐久限</b>：低於此值可承受無限次反覆負荷。鋁合金等非鐵金屬沒有水平段，以指定次數（如 10⁷）對應的應力作為<b>疲勞強度</b>。</p>
+  <div class="callout"><b>提高疲勞強度：</b>在表面留下<b>壓縮殘留應力</b>（珠擊、滾壓、表面硬化）；<b>降低表面粗糙度</b>（精車、研磨、拋光）；避免銳角缺口與應力集中；去除脫碳層。</div>
+
+  <h4>（六）潛變</h4>
+  <p>材料在<b>高溫</b>下承受固定負荷，應變隨時間緩慢增加的現象。施力瞬間產生初始應變 ε₀ 後分三期：</p>
+  <div class="cards">
+    <div class="card"><h4>第一期（初期）</h4><p>潛變率 Δε／Δt 一開始大，因應變硬化而逐漸減小。</p></div>
+    <div class="card"><h4>第二期（穩態）</h4><p>硬化與回復平衡，潛變率最小且固定，持續時間最長；工程上以此段外插預估壽命。</p></div>
+    <div class="card"><h4>第三期（加速）</h4><p>頸縮、內部孔洞與晶界裂縫形成，潛變率急增直到斷裂。</p></div>
+  </div>
+  <p>引擎、渦輪葉片、鍋爐管等高溫元件，必須選用抗潛變材料並估算潛變壽命。</p>
+</section>
+
+<!-- ============ 8-3 ============ -->
+<section id="s3">
+  <h2><span class="no">8-3</span>材料結構</h2>
+  <h3>一、金屬晶體結構</h3>
+  <p>金屬凝固時原子規則地重複排列，稱為<b>結晶</b>；能描述此規律的最小單元稱為<b>單位晶胞</b><span class="en">（unit cell）</span>。常見金屬多屬以下三種：</p>
+  <figure>
+    <svg viewBox="0 0 640 250" role="img" aria-label="三種晶體結構：體心立方 BCC 為立方體角落加中心一個原子；面心立方 FCC 為立方體角落加六個面心；六方最密堆積 HCP 為六角柱上下面各七個原子、中間層三個原子">
+      <g transform="translate(20 40)">
+        <g stroke="var(--ink)" stroke-width="1.5" fill="none"><path d="M0 50 h110 v110 h-110z"/><path d="M45 5 h110 v110 h-110z" stroke="var(--muted)" stroke-dasharray="3 3"/><path d="M0 50 L45 5 M110 50 L155 5 M110 160 L155 115 M0 160 L45 115"/></g>
+        <g fill="var(--accent)" stroke="var(--ink)"><circle cx="45" cy="5" r="9" opacity=".5"/><circle cx="155" cy="5" r="9"/><circle cx="155" cy="115" r="9"/><circle cx="45" cy="115" r="9" opacity=".5"/><circle cx="77" cy="82" r="12" fill="var(--fix)"/><circle cx="0" cy="50" r="9"/><circle cx="110" cy="50" r="9"/><circle cx="110" cy="160" r="9"/><circle cx="0" cy="160" r="9"/></g>
+        <text x="48" y="186" font-size="14" fill="var(--ink)">BCC</text>
+      </g>
+      <g transform="translate(230 40)">
+        <g stroke="var(--ink)" stroke-width="1.5" fill="none"><path d="M0 50 h110 v110 h-110z"/><path d="M45 5 h110 v110 h-110z" stroke="var(--muted)" stroke-dasharray="3 3"/><path d="M0 50 L45 5 M110 50 L155 5 M110 160 L155 115 M0 160 L45 115"/></g>
+        <g fill="var(--fix)" stroke="var(--ink)"><circle cx="100" cy="60" r="9" opacity=".5"/><circle cx="55" cy="105" r="9"/><circle cx="22" cy="82" r="9" opacity=".6"/><circle cx="132" cy="82" r="9"/><circle cx="77" cy="27" r="9"/><circle cx="77" cy="137" r="9" opacity=".6"/></g>
+        <g fill="var(--accent)" stroke="var(--ink)"><circle cx="45" cy="5" r="9" opacity=".5"/><circle cx="155" cy="5" r="9"/><circle cx="155" cy="115" r="9"/><circle cx="45" cy="115" r="9" opacity=".5"/><circle cx="0" cy="50" r="9"/><circle cx="110" cy="50" r="9"/><circle cx="110" cy="160" r="9"/><circle cx="0" cy="160" r="9"/></g>
+        <text x="48" y="186" font-size="14" fill="var(--ink)">FCC</text>
+      </g>
+      <g transform="translate(440 40)">
+        <g stroke="var(--ink)" stroke-width="1.5" fill="none"><path d="M20 30 L60 10 H120 L160 30 L120 50 H60 Z"/><path d="M20 150 L60 130 H120 L160 150 L120 170 H60 Z"/><path d="M20 30 V150 M60 50 V170 M120 50 V170 M160 30 V150"/><path d="M60 10 V130 M120 10 V130" stroke="var(--muted)" stroke-dasharray="3 3"/></g>
+        <g fill="var(--accent)" stroke="var(--ink)"><circle cx="20" cy="30" r="8"/><circle cx="60" cy="10" r="8" opacity=".5"/><circle cx="120" cy="10" r="8" opacity=".5"/><circle cx="160" cy="30" r="8"/><circle cx="120" cy="50" r="8"/><circle cx="60" cy="50" r="8"/><circle cx="90" cy="30" r="8"/>
+          <circle cx="20" cy="150" r="8"/><circle cx="160" cy="150" r="8"/><circle cx="120" cy="170" r="8"/><circle cx="60" cy="170" r="8"/><circle cx="90" cy="150" r="8"/></g>
+        <g fill="var(--fix)" stroke="var(--ink)"><circle cx="65" cy="95" r="9"/><circle cx="115" cy="95" r="9"/><circle cx="90" cy="80" r="9" opacity=".6"/></g>
+        <text x="70" y="196" font-size="14" fill="var(--ink)">HCP</text>
+      </g>
+    </svg>
+    <figcaption>圖 8-14～8-16　BCC、FCC、HCP 單位晶胞</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>結構</th><th>晶胞原子數</th><th>配位數</th><th>APF</th><th>主要滑移系統</th><th>性質</th><th>常見金屬</th></tr>
+    <tr><td><b>BCC</b> 體心立方</td><td>2</td><td>8</td><td>0.68</td><td>12</td><td>強度高、延性中等；低溫易脆</td><td>α-Fe、δ-Fe、Cr、Mo、W、V、高溫的 β-Ti</td></tr>
+    <tr><td><b>FCC</b> 面心立方</td><td>4</td><td>12</td><td>0.74</td><td>12</td><td>強度中等、延性最好，低溫不脆</td><td>γ-Fe、Al、Cu、Ni、Au、Ag、Pb</td></tr>
+    <tr><td><b>HCP</b> 六方最密</td><td>6</td><td>12</td><td>0.74</td><td>3</td><td>滑移系統少，常溫延性差、較脆；加熱可稍改善</td><td>Mg、Zn、Cd、常溫的 α-Ti</td></tr>
+  </table></div>
+  <div class="example">
+    <p class="ex-h">例題　計算 BCC 的原子堆積因子（APF）</p>
+    <p>原子沿體對角線相接觸，設原子半徑 R、晶胞邊長 a：4R = √3 a。晶胞內含 2 個原子。</p>
+    <div class="formula sm">APF = 2 × (4/3)πR³ ／ a³ = 2 × (4/3)π(√3a/4)³ ／ a³ = √3π ／ 8 ≈ 0.68</div>
+    <p>同理 FCC 原子沿面對角線接觸：4R = √2 a，含 4 原子，APF = √2π ／ 6 ≈ 0.74。</p>
+  </div>
+  <p>同一金屬在不同溫度具有不同晶體結構，結構間的轉換稱為<b>同素異形變態</b><span class="en">（allotropic transformation）</span>。純鐵：910 °C 以下為 BCC 的 α-Fe，910–1400 °C 為 FCC 的 γ-Fe，1400 °C 至熔點 1538 °C 為 BCC 的 δ-Fe。</p>
+
+  <h3>二、晶面與晶向的表示法</h3>
+  <p>立方晶系用<b>米勒指數</b><span class="en">（Miller indices）</span>，六方晶系用<b>米勒–布拉維指數</b><span class="en">（Miller–Bravais indices）</span>，用以描述晶胞內的方向與平面，判斷滑移方向與滑移面。</p>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 230" role="img" aria-label="立方晶胞中的晶向：自原點 O 到對角頂點的方向為 [111]，到 xy 平面對角的方向為 [110]">
+        <g transform="translate(60 40)">
+          <g stroke="var(--ink)" stroke-width="1.5" fill="none"><path d="M0 50 h120 v120 h-120z"/><path d="M50 0 h120 v120 h-120z" stroke="var(--muted)" stroke-dasharray="3 3"/><path d="M0 50 L50 0 M120 50 L170 0 M120 170 L170 120 M0 170 L50 120"/></g>
+          <path d="M0 170 L170 0" stroke="var(--accent)" stroke-width="3"/><path d="M170 0 l-12 3 9 9z" fill="var(--accent)"/>
+          <path d="M0 170 L170 120" stroke="var(--fix)" stroke-width="3"/><path d="M170 120 l-12 -3 3 10z" fill="var(--fix)"/>
+          <g font-size="12.5"><text x="-16" y="186" fill="var(--ink)">O</text><text x="120" y="30" fill="var(--accent)">[111]</text><text x="118" y="164" fill="var(--fix)">[110]</text></g>
+        </g>
+        <g font-size="11.5" fill="var(--muted)"><text x="38" y="225">x</text><text x="232" y="164">y</text><text x="40" y="40">z</text></g>
+      </svg>
+      <figcaption>圖 8-17　晶向</figcaption></div>
+      <div>
+      <svg viewBox="0 0 300 230" role="img" aria-label="立方晶胞中的 (111) 晶面：截距在 x、y、z 三軸都等於 1 的三角形平面">
+        <g transform="translate(60 40)">
+          <g stroke="var(--ink)" stroke-width="1.5" fill="none"><path d="M0 50 h120 v120 h-120z"/><path d="M50 0 h120 v120 h-120z" stroke="var(--muted)" stroke-dasharray="3 3"/><path d="M0 50 L50 0 M120 50 L170 0 M120 170 L170 120 M0 170 L50 120"/></g>
+          <path d="M0 50 L120 170 L170 120 Z" fill="var(--accent)" opacity=".35" stroke="var(--accent)" stroke-width="2"/>
+          <text x="80" y="122" font-size="13" fill="var(--ink)">(111)</text>
+        </g>
+        <text x="20" y="225" font-size="11.5" fill="var(--muted)">截距 1, 1, 1 → 倒數 1, 1, 1</text>
+      </svg>
+      <figcaption>圖 8-18　(111) 晶面</figcaption></div>
+    </div>
+  </figure>
+  <div class="cards c2">
+    <div class="card"><h4>晶向 [uvw]</h4><p>① 終點座標減起點座標；② 化為最小整數 u、v、w；③ 寫成 [uvw]，負值在數字上加橫線，如 [1<span style="text-decoration:overline">1</span>0]。<br>[uvw] 與其負向相反；正倍數為同一方向（[100] = [300]）。對稱等價的一族晶向寫成 〈uvw〉：〈100〉 6 個、〈110〉 12 個、〈111〉 8 個。</p></div>
+    <div class="card"><h4>晶面 (hkl)</h4><p>① 求平面在 x、y、z 軸的截距（若通過原點，改取相鄰晶胞的原點）；② 取倒數；③ 化為最簡整數，寫成 (hkl)。<br>(hkl) 與其負號表示同一組平行面；(001) 與 (002) 則面間距不同。等價晶面族寫成 {hkl}，如 {100} 包含立方體的 6 個面。立方晶系中 [hkl] 垂直於 (hkl)。</p></div>
+  </div>
+  <p>六方晶系取底面中心為原點，a₁、a₂、a₃ 三軸互成 120° 並垂直於 c 軸（z），以四個指數 [uvtw]、(hkil) 表示，其中只有三個獨立：<b>u + v + t = 0</b>。由三軸米勒指數 [u′v′w′] 換算：</p>
+  <div class="formula sm">u = n(2u′ − v′)／3　　v = n(2v′ − u′)／3　　t = −(u + v)　　w = n·w′</div>
+
+  <h3>三、滑移系統</h3>
+  <p>塑性變形主要靠原子面之間的<b>滑移</b>。最容易滑移的面是<b>原子排列最密的面</b>（滑移面），面上原子最密的方向是滑移方向；兩者合稱<b>滑移系統</b>。滑移系統愈多，延性通常愈好。</p>
+  <div class="tbl"><table>
+    <tr><th>結構</th><th>滑移面</th><th>滑移方向</th><th>滑移系統數</th></tr>
+    <tr><td>BCC</td><td>{110}（6 個面，每面 5 個原子）</td><td>〈111〉（每面 2 個）</td><td>6 × 2 = 12</td></tr>
+    <tr><td>FCC</td><td>{111}（4 個面，每面 6 個原子）</td><td>〈110〉（每面 3 個）</td><td>4 × 3 = 12</td></tr>
+    <tr><td>HCP</td><td>(0001) 基面（1 個）</td><td>〈11<span style="text-decoration:overline">2</span>0〉（3 個）</td><td>1 × 3 = 3</td></tr>
+  </table></div>
+  <p>BCC 與 FCC 雖同為 12 個系統，但 FCC 的 {111} 是真正的最密面，滑移所需應力較小，所以延性最好。HCP 只有 3 個系統，須靠<b>雙晶變形</b>或高溫時啟動柱面、錐面滑移來補足。開模鍛造時模具拘束材料，晶面會彎曲、轉動而產生內應力，協助胚料變形。</p>
+  <p>晶格中已滑移與未滑移區域的分界線稱為<b>差排</b><span class="en">（dislocation）</span>；實際金屬靠差排逐步移動來滑移，所以所需應力遠低於整面原子同時滑動的理論值。</p>
+</section>
+
+<!-- ============ 8-4 ============ -->
+<section id="s4">
+  <h2><span class="no">8-4</span>材料強化機制</h2>
+  <p>強化的共同原理是<b>阻礙差排運動</b>：差排愈難移動，材料就愈強、愈硬（但延性通常下降）。</p>
+
+  <h3>一、晶粒細化強化</h3>
+  <p>晶粒愈細，晶界總長愈多且愈曲折，差排越過晶界受阻，裂縫也難以延伸；受力時可分散到更多晶粒，變形較均勻。因此晶粒細化<b>同時提高強度與韌性</b>，是少數兩者兼得的方法（霍爾–佩奇關係：σ<sub>y</sub> = σ₀ + k·d<sup>−1/2</sup>）。</p>
+  <div class="formula sm">ASTM 晶粒度號數 n：放大 100 倍時每平方英吋晶粒數 N = 2<sup>n − 1</sup></div>
+  <p>n 愈大，晶粒愈多愈細。一般 5–8 號屬細晶粒，軋延板金等塑性加工常要求約 7 號。</p>
+
+  <h3>二、晶體缺陷</h3>
+  <p>實際晶格並非完美排列，存在各種<b>缺陷</b>；控制缺陷正是改善材料性質的手段。</p>
+  <figure>
+    <svg viewBox="0 0 640 200" role="img" aria-label="點缺陷：置換型固溶體中溶質原子取代晶格原子；間隙型固溶體中小原子擠入晶格間隙；空位是晶格中缺少一個原子">
+      <g transform="translate(20 20)">
+        <g fill="var(--steel)" stroke="var(--ink)">
+          <circle cx="15" cy="15" r="13"/><circle cx="45" cy="15" r="13"/><circle cx="75" cy="15" r="13"/><circle cx="105" cy="15" r="13"/><circle cx="135" cy="15" r="13"/>
+          <circle cx="15" cy="45" r="13"/><circle cx="45" cy="45" r="13"/><circle cx="105" cy="45" r="13"/><circle cx="135" cy="45" r="13"/>
+          <circle cx="15" cy="75" r="13"/><circle cx="45" cy="75" r="13"/><circle cx="75" cy="75" r="13"/><circle cx="105" cy="75" r="13"/><circle cx="135" cy="75" r="13"/>
+          <circle cx="15" cy="105" r="13"/><circle cx="45" cy="105" r="13"/><circle cx="75" cy="105" r="13"/><circle cx="105" cy="105" r="13"/><circle cx="135" cy="105" r="13"/>
+        </g>
+        <circle cx="75" cy="45" r="15" fill="var(--accent)" stroke="var(--ink)"/>
+        <text x="16" y="150" font-size="13" fill="var(--ink)">(a) 置換型固溶</text>
+      </g>
+      <g transform="translate(240 20)">
+        <g fill="var(--steel)" stroke="var(--ink)">
+          <circle cx="15" cy="15" r="13"/><circle cx="45" cy="15" r="13"/><circle cx="75" cy="15" r="13"/><circle cx="105" cy="15" r="13"/><circle cx="135" cy="15" r="13"/>
+          <circle cx="15" cy="45" r="13"/><circle cx="45" cy="45" r="13"/><circle cx="75" cy="45" r="13"/><circle cx="105" cy="45" r="13"/><circle cx="135" cy="45" r="13"/>
+          <circle cx="15" cy="75" r="13"/><circle cx="45" cy="75" r="13"/><circle cx="75" cy="75" r="13"/><circle cx="105" cy="75" r="13"/><circle cx="135" cy="75" r="13"/>
+          <circle cx="15" cy="105" r="13"/><circle cx="45" cy="105" r="13"/><circle cx="75" cy="105" r="13"/><circle cx="105" cy="105" r="13"/><circle cx="135" cy="105" r="13"/>
+        </g>
+        <circle cx="60" cy="60" r="6" fill="var(--fix)" stroke="var(--ink)"/>
+        <text x="16" y="150" font-size="13" fill="var(--ink)">(b) 間隙型固溶</text>
+      </g>
+      <g transform="translate(460 20)">
+        <g fill="var(--steel)" stroke="var(--ink)">
+          <circle cx="15" cy="15" r="13"/><circle cx="45" cy="15" r="13"/><circle cx="75" cy="15" r="13"/><circle cx="105" cy="15" r="13"/><circle cx="135" cy="15" r="13"/>
+          <circle cx="15" cy="45" r="13"/><circle cx="45" cy="45" r="13"/><circle cx="105" cy="45" r="13"/><circle cx="135" cy="45" r="13"/>
+          <circle cx="15" cy="75" r="13"/><circle cx="45" cy="75" r="13"/><circle cx="75" cy="75" r="13"/><circle cx="105" cy="75" r="13"/><circle cx="135" cy="75" r="13"/>
+          <circle cx="15" cy="105" r="13"/><circle cx="45" cy="105" r="13"/><circle cx="75" cy="105" r="13"/><circle cx="105" cy="105" r="13"/><circle cx="135" cy="105" r="13"/>
+        </g>
+        <circle cx="75" cy="45" r="13" fill="none" stroke="var(--warn)" stroke-width="2" stroke-dasharray="3 3"/>
+        <text x="40" y="150" font-size="13" fill="var(--ink)">(c) 空位</text>
+      </g>
+    </svg>
+    <figcaption>圖 8-24、8-25　點缺陷</figcaption>
+  </figure>
+  <div class="cards">
+    <div class="card"><h4>置換型固溶體</h4><p>溶質原子取代溶劑原子的位置，兩者原子大小相近。例：銅鎳合金（白銅）可任意比例互溶，為<b>無限固溶體</b>。</p></div>
+    <div class="card"><h4>間隙型固溶體</h4><p>小溶質原子擠進晶格間隙，兩者原子大小差異大。例：碳溶入鐵；溶解度有上限，為<b>有限固溶體</b>。</p></div>
+    <div class="card"><h4>空位</h4><p>晶格中缺少原子的位置。溫度升高或反覆塑性變形使空位增加，並助長擴散。</p></div>
+  </div>
+  <p><b>固溶強化：</b>溶質原子使周圍晶格扭曲，形成應力場拖住差排，提高變形抗力，並減少高溫下的強度損失。</p>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 210" role="img" aria-label="刃狀差排：晶格上半部多插入一排原子，終止在滑移面上方，形成倒 T 字記號">
+        <g stroke="var(--ink)" stroke-width="1.5" fill="none">
+          <path d="M40 20 V95 M80 20 V95 M120 20 V95 M150 20 V100 M180 20 V95 M220 20 V95 M260 20 V95"/>
+          <path d="M40 120 V190 M85 120 V190 M130 120 V190 M175 120 V190 M220 120 V190 M260 120 V190"/>
+        </g>
+        <path d="M150 20 V100" stroke="var(--accent)" stroke-width="3"/>
+        <path d="M20 108 H280" stroke="var(--fix)" stroke-dasharray="5 4" stroke-width="1.5"/>
+        <path d="M138 100 H162 M150 100 V88" stroke="var(--warn)" stroke-width="3"/>
+        <g font-size="12" fill="var(--ink)"><text x="160" y="40" fill="var(--accent)">多一排原子</text><text x="200" y="124" fill="var(--fix)">滑移面</text></g>
+      </svg>
+      <figcaption>(a) 刃狀差排</figcaption></div>
+      <div>
+      <svg viewBox="0 0 300 210" role="img" aria-label="螺旋差排：晶體沿一條軸線上下兩部分錯開一個原子間距，原子面繞差排線呈螺旋狀">
+        <path d="M40 70 L140 30 H260 L160 70 Z" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M40 70 V170 H160 V70" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M160 70 L260 30 V130 L160 170" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M100 70 V170 M100 70 L200 30" stroke="var(--fix)" stroke-width="2.5"/>
+        <path d="M100 70 L120 58 L140 70 L160 58 L180 70" fill="none" stroke="var(--warn)" stroke-width="2"/>
+        <g font-size="12" fill="var(--ink)"><text x="108" y="160" fill="var(--fix)">差排線</text><text x="186" y="88" fill="var(--warn)">錯開</text></g>
+      </svg>
+      <figcaption>(b) 螺旋差排</figcaption></div>
+    </div>
+    <figcaption>圖 8-26　線缺陷：差排</figcaption>
+  </figure>
+  <p>差排分<b>刃狀</b>（多插入半面原子）、<b>螺旋</b>（原子面沿軸線錯開成螺旋狀）及兩者混合。差排在凝固時即已存在，塑性加工使其大量增殖、彼此糾結牽制，移動愈來愈困難，這就是<b>應變（加工）硬化</b>的原因。</p>
+
+  <h3>三、散佈強化</h3>
+  <p>加入元素反應生成與基地不同的<b>第二相</b>，均勻分布在材料中，例如介金屬化合物（IMC）。含量多、較軟且連續的相稱<b>基地</b><span class="en">（matrix）</span>，保有延性；含量少、硬而脆的分散粒子稱<b>析出物</b>，以細小、量多、圓形、均勻分布為佳，可有效擋住差排。</p>
+  <div class="example"><p class="ex-h">例　波來鐵</p><p>波來鐵是約 88% 肥粒鐵（基地）與 12% 雪明碳鐵（Fe₃C）交互排列的層狀組織，含碳約 0.8%。Fe₃C 極硬，所以波來鐵的強度與硬度都高於純肥粒鐵。</p></div>
+
+  <h3>四、時效硬化（析出硬化）</h3>
+  <div class="flow5">
+    <div class="node"><span class="n">1</span><b>固溶處理</b><small>加熱到單相區，溶質完全溶入</small></div><div class="right"></div>
+    <div class="node"><span class="n">2</span><b>淬火</b><small>急冷保留過飽和固溶體</small></div><div class="right"></div>
+    <div class="node"><span class="n">3</span><b>時效</b><small>溶質析出成細微粒子</small></div><div class="right"></div>
+    <div class="node"><span class="n">4</span><b>峰值硬度</b><small>粒子細密，阻擋差排</small></div><div class="right"></div>
+    <div class="node dark"><span class="n">5</span><b>過時效</b><small>粒子粗化，硬度下降</small></div>
+  </div>
+  <p>在室溫放置即自行析出的稱<b>自然時效</b>；加熱到適當溫度（如鋁合金 150–200 °C）加速析出的稱<b>人工時效</b>，時間短、易控制。鋁合金（2xxx、6xxx、7xxx）、析出硬化不鏽鋼、鎳基超合金都靠此法強化。</p>
+
+  <h3>五、麻田散變態</h3>
+  <p>將<b>沃斯田鐵</b>（γ-Fe，FCC）急冷，碳原子來不及擴散析出，晶格以剪切方式瞬間（約 10⁻⁷ 秒）轉為碳過飽和的<b>體心正方（BCT）</b>結構，呈針狀或板條狀，即<b>麻田散鐵</b>。</p>
+  <figure>
+    <svg viewBox="0 0 560 225" role="img" aria-label="麻田散鐵：碳原子被困在體心正方晶格中使 c 軸拉長，顯微組織呈交錯針狀">
+      <g transform="translate(40 20)">
+        <g stroke="var(--ink)" stroke-width="1.5" fill="none"><path d="M0 50 h90 v120 h-90z"/><path d="M40 15 h90 v120 h-90z" stroke="var(--muted)" stroke-dasharray="3 3"/><path d="M0 50 L40 15 M90 50 L130 15 M90 170 L130 135 M0 170 L40 135"/></g>
+        <g fill="var(--steel)" stroke="var(--ink)"><circle cx="0" cy="50" r="8"/><circle cx="90" cy="50" r="8"/><circle cx="90" cy="170" r="8"/><circle cx="0" cy="170" r="8"/><circle cx="130" cy="15" r="8"/><circle cx="130" cy="135" r="8"/><circle cx="40" cy="15" r="8" opacity=".5"/><circle cx="40" cy="135" r="8" opacity=".5"/><circle cx="65" cy="92" r="9"/></g>
+        <g fill="var(--accent)"><circle cx="45" cy="50" r="4"/><circle cx="45" cy="170" r="4"/><circle cx="65" cy="32" r="4"/></g>
+        <g font-size="12.5" fill="var(--ink)"><text x="140" y="80">c</text><text x="38" y="190">a</text></g>
+        <text x="150" y="160" font-size="11.5" fill="var(--accent)">● C 原子位置</text>
+      </g>
+      <g transform="translate(320 20)">
+        <rect x="0" y="0" width="200" height="160" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="1.5"/>
+        <g stroke="var(--ink)" stroke-width="3" stroke-linecap="round">
+          <path d="M10 20 L90 70"/><path d="M60 10 L30 120"/><path d="M110 20 L190 90"/><path d="M120 150 L180 40"/><path d="M20 140 L110 100"/><path d="M80 60 L150 140"/><path d="M140 20 L100 70"/><path d="M40 90 L70 150"/><path d="M160 130 L195 150"/>
+        </g>
+      </g>
+      <g font-size="12.5" fill="var(--ink)"><text x="80" y="220">(a) BCT 晶格</text><text x="370" y="220">(b) 針狀麻田散組織</text></g>
+    </svg>
+    <figcaption>圖 8-28　BCT 與麻田散組織</figcaption>
+  </figure>
+  <div class="cards c2">
+    <div class="card"><h4>特徵</h4><p>無擴散的剪切型變態，成分不變；只與溫度有關，與時間無關，溫度降得愈低變態愈完全。是提高鋼硬度最主要的手段。</p></div>
+    <div class="card"><h4>注意</h4><p>麻田散鐵極硬但脆、內應力大且組織不安定，必須<b>回火</b>才能使用。冷卻中途停留，未變態的沃斯田鐵會變得較難再轉變，稱為<b>沃斯田鐵安定化</b>。</p></div>
+  </div>
+  <div class="key"><b>重點整理：</b>純金屬可用晶粒細化、應變硬化；合金另可用固溶強化、散佈（析出）強化、時效硬化；鋼另有麻田散變態。</div>
+</section>
+
+<!-- ============ 8-5 ============ -->
+<section id="s5">
+  <h2><span class="no">8-5</span>鐵碳平衡圖</h2>
+  <p>鐵碳平衡圖以極緩慢冷卻（平衡）為前提，描述含碳量與溫度對應的組織。橫軸為含碳量（wt%），縱軸為溫度；L 為液相，α 為肥粒鐵（BCC），γ 為沃斯田鐵（FCC），δ 為 δ 肥粒鐵（BCC），Fe₃C 為雪明碳鐵（含碳 6.67%）。</p>
+  <figure>
+    <svg viewBox="0 0 640 420" role="img" aria-label="鐵碳平衡圖：包晶點 0.17% 1495 度、共晶點 4.3% 1147 度、共析點 0.8% 727 度；γ 最大溶碳量 2.11%，α 最大溶碳量 0.02%；鋼與鑄鐵以 2.11% 為界">
+      <g font-size="11" fill="var(--muted)">
+        <path d="M70 20 V370 H612" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+        <g stroke="var(--line)"><path d="M70 120 H612 M70 220 H612 M70 320 H612"/></g>
+        <text x="30" y="124">1200</text><text x="36" y="224">800</text><text x="36" y="324">400</text><text x="30" y="24">1600</text>
+        <text x="66" y="386">0</text><text x="148" y="386">1</text><text x="229" y="386">2</text><text x="310" y="386">3</text><text x="391" y="386">4</text><text x="472" y="386">5</text><text x="553" y="386">6</text><text x="596" y="386">6.67</text>
+        <text x="270" y="410" font-size="12">含碳量（wt%）</text><text x="4" y="200" font-size="12">°C</text>
+      </g>
+      <g fill="none" stroke-width="2.5">
+        <path d="M70 35.5 L84 46 L418 133 L610 113" stroke="var(--accent)"/>
+        <path d="M70 35.5 L77 46 L70 70 M77 46 H105 M84 46 L94 46 L241 133" stroke="var(--ink)"/>
+        <path d="M241 133 H610" stroke="var(--ink)"/>
+        <path d="M70 70 L94 46" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M241 133 L135 238" stroke="var(--fix)"/>
+        <path d="M70 192.5 L135 238" stroke="var(--fix)"/>
+        <path d="M72 238 H610" stroke="var(--ink)"/>
+        <path d="M72 238 Q70 300 70 370" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M610 113 V370" stroke="var(--ink)"/>
+        <path d="M241 133 V370" stroke="var(--warn)" stroke-dasharray="5 4" stroke-width="1.5"/>
+      </g>
+      <g fill="var(--ink)"><circle cx="84" cy="46" r="4"/><circle cx="418" cy="133" r="4"/><circle cx="135" cy="238" r="4"/><circle cx="241" cy="133" r="4"/><circle cx="72" cy="238" r="3.5"/></g>
+      <g font-size="13" fill="var(--ink)">
+        <text x="300" y="70">L</text><text x="120" y="160">γ</text><text x="74" y="62" font-size="11">δ</text>
+        <text x="200" y="104" font-size="12">γ + L</text><text x="470" y="108" font-size="12">L + Fe₃C</text>
+        <text x="260" y="196" font-size="12">γ + Fe₃C</text><text x="300" y="300" font-size="12">α + Fe₃C</text>
+        <text x="80" y="226" font-size="11">α+γ</text><text x="74" y="290" font-size="11">α</text>
+      </g>
+      <g font-size="11.5" fill="var(--fix)">
+        <text x="104" y="34">包晶 B（0.17%, 1495 °C）</text>
+        <text x="390" y="150">共晶 E（4.3%, 1147 °C）</text>
+        <text x="145" y="254">共析 C（0.8%, 727 °C）A₁</text>
+        <text x="248" y="148">D（2.11%）</text>
+        <text x="96" y="186">A₃</text><text x="190" y="176">A<tspan font-size="9" dy="3">cm</tspan></text>
+      </g>
+      <g font-size="11.5" fill="var(--warn)"><text x="150" y="350">← 鋼</text><text x="250" y="350">鑄鐵 →</text></g>
+    </svg>
+    <figcaption>圖 8-29、8-30　鐵碳平衡圖（簡化）</figcaption>
+  </figure>
+
+  <h3>一、純鐵（C &lt; 0.02%）的變態點</h3>
+  <div class="tbl"><table>
+    <tr><th>溫度</th><th>名稱</th><th>變化</th></tr>
+    <tr><td>210 °C</td><td>A₀</td><td>雪明碳鐵的磁性變態（居禮點）</td></tr>
+    <tr><td>727 °C</td><td>A₁</td><td>鋼的共析變態線</td></tr>
+    <tr><td>768 °C</td><td>A₂</td><td>α-Fe 的磁性變態：以上失去鐵磁性（晶格不變）</td></tr>
+    <tr><td>910 °C</td><td>A₃</td><td>同素變態：α（BCC）⇄ γ（FCC）</td></tr>
+    <tr><td>1400 °C</td><td>A₄</td><td>同素變態：γ（FCC）⇄ δ（BCC）</td></tr>
+    <tr><td>1538 °C</td><td>熔點</td><td>固 ⇄ 液</td></tr>
+  </table></div>
+
+  <h3>二、三個恆溫（不變）反應</h3>
+  <div class="cards">
+    <div class="card"><h4>包晶反應 1495 °C</h4><p>液相與已凝固的固相反應，生成另一新固相：<br><b>L（0.53% C）+ δ（0.09% C）→ γ（0.17% C）</b></p></div>
+    <div class="card"><h4>共晶反應 1147 °C</h4><p>液相同時結晶出兩種固相：<br><b>L（4.3% C）→ γ（2.11% C）+ Fe₃C</b><br>生成的組織稱粒滴斑鐵（ledeburite）。</p></div>
+    <div class="card"><h4>共析反應 727 °C</h4><p>固相同時析出兩種固相：<br><b>γ（0.8% C）→ α（0.02% C）+ Fe₃C</b><br>即層狀的<b>波來鐵</b>。</p></div>
+  </div>
+
+  <h3>三、碳鋼（0.02–2.11% C）</h3>
+  <div class="tbl"><table>
+    <tr><th>種類</th><th>含碳量</th><th>由 γ 緩冷的過程</th><th>室溫組織</th></tr>
+    <tr><td><b>亞共析鋼</b></td><td>0.02–0.8%</td><td>降到 A₃ 線開始析出<b>初析肥粒鐵</b>，剩餘 γ 的含碳量沿 A₃ 線增加；到 727 °C 時剩餘 γ 達 0.8%，發生共析變態</td><td>初析肥粒鐵 + 波來鐵</td></tr>
+    <tr><td><b>共析鋼</b></td><td>0.8%</td><td>727 °C 時 γ 一次全部轉為波來鐵</td><td>全波來鐵</td></tr>
+    <tr><td><b>過共析鋼</b></td><td>0.8–2.11%</td><td>降到 A<sub>cm</sub> 線開始沿晶界析出<b>初析雪明碳鐵</b>，剩餘 γ 含碳量沿 A<sub>cm</sub> 降低；727 °C 時降到 0.8%，發生共析變態</td><td>初析雪明碳鐵 + 波來鐵</td></tr>
+  </table></div>
+  <p>含碳 2.11–6.67% 為<b>鑄鐵</b>：D 點（2.11%, 1147 °C）是 γ 的最大溶碳量；4.3% 的共晶成分熔點最低、流動性最好。</p>
+  <div class="example">
+    <p class="ex-h">例題　槓桿法則</p>
+    <p>0.4% C 亞共析鋼在 727 °C 剛完成共析變態後，初析肥粒鐵與波來鐵各占多少？</p>
+    <div class="formula sm">W<sub>波來鐵</sub> = (0.4 − 0.02) ／ (0.8 − 0.02) ≈ 49%　　W<sub>初析α</sub> ≈ 51%</div>
+  </div>
+
+  <h3>四、連續冷卻變態圖（CCT）</h3>
+  <p>平衡圖沒有時間因素。實際上冷卻速率不同，得到的組織也不同。以共析鋼為例，將不同冷卻速率下變態開始、結束的溫度與時間畫在一起，即為 CCT 圖。</p>
+  <figure>
+    <svg viewBox="0 0 640 320" role="img" aria-label="共析鋼 CCT 圖：波來變態開始線 Ps 與完成線 Pf，Ph 為波來變態中止線，Ms 約 220 度；爐冷得粗波來鐵、空冷得中等波來鐵、油冷得細波來鐵加麻田散鐵、水冷全麻田散鐵；VM 為臨界冷卻速率">
+      <path d="M70 20 V280 H620" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+      <path d="M70 50 H620" stroke="var(--muted)" stroke-dasharray="4 4"/><text x="560" y="44" font-size="11.5" fill="var(--muted)">A₁ 727 °C</text>
+      <path d="M200 50 Q215 110 260 130 Q360 150 600 150" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+      <path d="M240 50 Q265 120 320 145 Q420 165 600 168" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="6 4"/>
+      <path d="M255 132 L330 160" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M70 215 H620" stroke="var(--fix)" stroke-width="2"/><path d="M70 245 H620" stroke="var(--fix)" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <g fill="none" stroke-width="2">
+        <path d="M74 30 Q90 160 110 278" stroke="var(--warn)"/>
+        <path d="M78 30 Q130 140 190 200 Q230 240 300 278" stroke="var(--ink)"/>
+        <path d="M80 30 Q190 120 330 165 Q450 200 560 230" stroke="var(--steel)"/>
+        <path d="M84 30 Q300 110 600 125" stroke="var(--muted)"/>
+      </g>
+      <g font-size="11.5" fill="var(--ink)">
+        <text x="112" y="270" fill="var(--warn)">水冷</text><text x="236" y="262">油冷</text><text x="520" y="222">空冷</text><text x="540" y="118">爐冷</text>
+        <text x="186" y="66" fill="var(--accent)">Ps</text><text x="250" y="66" fill="var(--accent)">Pf</text><text x="268" y="188">Ph（中止線）</text>
+        <text x="74" y="210" fill="var(--fix)">Ms ≈ 220 °C</text><text x="74" y="240" fill="var(--fix)" font-size="11">M₉₀</text>
+        <text x="96" y="140" fill="var(--warn)" font-size="11">V<tspan font-size="9" dy="3">M</tspan></text>
+      </g>
+      <g font-size="11" fill="var(--muted)"><text x="560" y="300">時間（對數）</text><text x="20" y="30">溫度</text></g>
+    </svg>
+    <figcaption>圖 8-31　共析鋼的 CCT 圖（示意）</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>冷卻方式</th><th>過程</th><th>組織</th></tr>
+    <tr><td><b>爐冷</b>（最慢）</td><td>在較高溫跨過 Ps、Pf，碳充分擴散</td><td>粗波來鐵</td></tr>
+    <tr><td><b>空冷</b></td><td>在稍低溫完成波來變態</td><td>中等（細密）波來鐵，即糙斑鐵（sorbite）</td></tr>
+    <tr><td><b>油冷</b></td><td>約 550 °C 開始波來變態，碰到 Ph 線即中止；殘留 γ 降到 Ms 後變態為麻田散鐵</td><td>微細波來鐵（吐粒散鐵 troostite）+ 麻田散鐵</td></tr>
+    <tr><td><b>水冷</b>（最快）</td><td>不碰到波來變態線，直接降到 Ms 以下</td><td>麻田散鐵（+ 少量殘留沃斯田鐵）</td></tr>
+  </table></div>
+  <p>冷卻速率大於 <b>V<sub>M</sub>（臨界冷卻速率）</b>得全麻田散鐵；小於 V<sub>P</sub> 得全波來鐵；介於兩者之間得麻田散鐵與波來鐵的混合組織。合金元素使曲線右移、V<sub>M</sub> 降低，即<b>硬化能</b>提高。</p>
+
+  <h3>五、恆溫變態圖（TTT）</h3>
+  <p>將沃斯田化的共析鋼迅速放入 A₁ 與 Ms 之間某溫度的恆溫槽，保持溫度直到變態完成；把各溫度下開始、結束變態的時間連成曲線，即 TTT 圖（又稱 S 曲線、C 曲線）。</p>
+  <figure>
+    <svg viewBox="0 0 640 330" role="img" aria-label="共析鋼 TTT 圖：變態開始線與完成線呈 C 字形，鼻部約 550 度；鼻部以上恆溫變態得粗、細波來鐵；鼻部以下得上變韌鐵與下變韌鐵；Ms 以下為麻田散鐵，右側標硬度 HRC">
+      <path d="M70 20 V290 H560" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+      <path d="M70 40 H560" stroke="var(--muted)" stroke-dasharray="4 4"/>
+      <path d="M300 40 Q170 60 140 115 Q130 135 160 170 Q210 210 250 228" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+      <path d="M460 40 Q290 70 250 115 Q240 140 290 175 Q360 210 430 228" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="6 4"/>
+      <path d="M70 230 H560" stroke="var(--fix)" stroke-width="2"/><path d="M70 262 H560" stroke="var(--fix)" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <path d="M70 120 H140" stroke="var(--muted)" stroke-dasharray="3 3"/>
+      <g font-size="11.5" fill="var(--ink)">
+        <text x="80" y="80">過冷沃斯田鐵</text><text x="476" y="70">粗波來鐵</text><text x="300" y="112">微細波來鐵</text>
+        <text x="320" y="160">上變韌鐵（羽毛狀）</text><text x="360" y="206">下變韌鐵（針狀）</text>
+        <text x="200" y="252">麻田散鐵 M</text>
+        <text x="76" y="114" fill="var(--muted)" font-size="11">鼻部</text>
+        <text x="282" y="34" fill="var(--accent)" font-size="11">開始</text><text x="440" y="34" fill="var(--accent)" font-size="11">完成</text>
+        <text x="74" y="226" fill="var(--fix)">Ms</text><text x="74" y="258" fill="var(--fix)" font-size="11">M₉₀</text>
+        <text x="500" y="36" fill="var(--muted)" font-size="11">A₁ 727 °C</text>
+      </g>
+      <g font-size="11" fill="var(--warn)"><text x="574" y="70">HRC 15</text><text x="574" y="112">HRC 40</text><text x="574" y="160">HRC 45</text><text x="574" y="206">HRC 57</text><text x="574" y="256">HRC 66</text></g>
+      <g font-size="11" fill="var(--muted)"><text x="480" y="310">時間（對數）</text><text x="20" y="30">溫度</text></g>
+    </svg>
+    <figcaption>圖 8-32　共析鋼的 TTT 圖（示意）</figcaption>
+  </figure>
+  <div class="cards">
+    <div class="card"><h4>鼻部以上</h4><p>約 550–727 °C 恆溫，得<b>波來鐵</b>；溫度愈接近鼻部，層間距愈細、硬度愈高。</p></div>
+    <div class="card"><h4>鼻部</h4><p>約 550 °C，變態開始最快的溫度；淬火要得麻田散鐵，冷卻曲線必須避開鼻部。</p></div>
+    <div class="card"><h4>鼻部以下到 Ms</h4><p>得<b>變韌鐵</b>（bainite）：較高溫為羽毛狀上變韌鐵，較低溫為針狀下變韌鐵。</p></div>
+  </div>
+  <p>波來鐵是肥粒鐵與雪明碳鐵的層狀組織；變韌鐵則是過飽和碳的肥粒鐵中分散著極細碳化物，呈羽狀或針狀，強度與韌性兼具，硬度高於波來鐵。下變韌鐵的恆溫變態（<b>沃斯回火</b>）可得到良好的強韌性，但等溫時間較長；一般生產多以淬火得麻田散鐵，再以<b>回火</b>調整強度與韌性。</p>
+</section>
+
+<!-- ============ 試題 ============ -->
+<section id="exam">
+  <h2><span class="no">試題</span>歷屆試題</h2>
+  <p class="hint">點選題目展開作答要點</p>
+
+  <details><summary><span class="qn">01</span><span>(1) 定義鐵碳平衡圖中沃斯田鐵、α 肥粒鐵、雪明碳鐵及 δ 肥粒鐵；(2) 說明三個不變反應的名稱與反應式。</span><span class="src">鐵路高員</span></summary>
+    <div class="ans">(1) 沃斯田鐵 γ：碳固溶於 FCC 鐵，727–1495 °C 間穩定，最大溶碳 2.11%（1147 °C），無磁性、延性佳。α 肥粒鐵：碳固溶於 BCC 鐵，最大溶碳 0.02%（727 °C），軟而韌。雪明碳鐵 Fe₃C：含碳 6.67% 的介金屬化合物，極硬而脆。δ 肥粒鐵：1400–1538 °C 的 BCC 鐵，最大溶碳 0.09%。<br>(2) 包晶 1495 °C：L(0.53) + δ(0.09) → γ(0.17)；共晶 1147 °C：L(4.3) → γ(2.11) + Fe₃C；共析 727 °C：γ(0.8) → α(0.02) + Fe₃C。</div></details>
+
+  <details><summary><span class="qn">02</span><span>說明滑移系統在塑性變形上的意義，並以米勒–布拉維指數列出 HCP 的滑移面與方向，以及其補足滑移不足的變形機制。</span><span class="src">關務三等</span></summary>
+    <div class="ans">塑性變形主要靠差排沿滑移系統（最密面＋最密方向）移動；系統愈多，任意方向受力時愈容易找到有利的滑移系統，延性愈好。HCP：滑移面 (0001) 基面，滑移方向 〈11<span style="text-decoration:overline">2</span>0〉，共 1 × 3 = 3 個系統。補足機制：<b>雙晶變形</b>（twinning），以及在高溫時啟動柱面 {10<span style="text-decoration:overline">1</span>0}、錐面 {10<span style="text-decoration:overline">1</span>1} 滑移，所以鎂、鋅多在溫熱狀態下加工。</div></details>
+
+  <details><summary><span class="qn">03</span><span>寫出含 2 wt% C 之鐵碳合金在 1000 °C 時的平衡相組成。</span><span class="src">升資考試</span></summary>
+    <div class="ans">1000 °C 時 A<sub>cm</sub> 線約在 1.6% C，2% C 落在 <b>γ + Fe₃C</b> 兩相區。γ 含碳約 1.6%，Fe₃C 含碳 6.67%。槓桿法則：W<sub>γ</sub> ≈ (6.67 − 2)／(6.67 − 1.6) ≈ 92%，W<sub>Fe₃C</sub> ≈ 8%。</div></details>
+
+  <details><summary><span class="qn">04</span><span>說明衝擊試驗的目的、原理與方法。</span><span class="src">高考三級</span></summary>
+    <div class="ans">目的：量測材料在高應變率、缺口應力集中下的韌性，判斷脆性及延脆轉換溫度。原理：擺錘位能差即試片吸收能量 E = WR(cos β − cos α)。方法：沙丕法 10 × 10 × 55 mm V 型缺口試片簡支，擺錘打在缺口背面；易佐法 10 × 10 × 75 mm 試片懸臂夾持，打擊缺口側上端；可在不同溫度試驗得到轉換曲線。</div></details>
+
+  <details><summary><span class="qn">05</span><span>說明鑄鐵與鑄鋼在成分與機械性質上的主要差異。</span><span class="src">高考三級</span></summary>
+    <div class="ans">成分：鑄鋼含碳 &lt; 2%（通常 0.1–0.6%）；鑄鐵含碳 2.11–6.67%（實用約 2.5–4%），含矽較高，碳多以石墨或雪明碳鐵存在。性質：鑄鐵熔點低、流動性好、收縮小、易鑄造，抗壓、減振、耐磨、切削性好，但抗拉低、延性與韌性差、難銲接。鑄鋼強度與韌性高、可銲、可熱處理，但熔點高、流動性差、收縮大，鑄造較難。</div></details>
+
+  <details><summary><span class="qn">06</span><span>說明 Jominy 硬化能試驗的目的、原理與方法，並舉例說明合金元素的影響。</span><span class="src">高考三級</span></summary>
+    <div class="ans">目的：評估鋼淬火時能硬化的深度（硬化能）。原理：一端噴水，沿試棒長度冷卻速率由快到慢，相當於一次做了許多冷卻速率。方法：Φ25 × 100 mm 試棒沃斯田化後置於架上，自下端噴水淬冷；冷後沿長度磨平，每隔固定距離量 HRC，繪硬度–距淬火端距離曲線。合金元素（Cr、Mo、Mn、Ni、B）使 CCT 曲線右移，曲線下降較緩、硬化深度較大，如 4340 遠比 1040 平緩；含碳量主要決定淬火端的最高硬度。</div></details>
+
+  <details><summary><span class="qn">07</span><span>說明孔隙性對鑄件韌性、強度、彈性模數及熱傳導性、導電性的影響。</span><span class="src">升資考試</span></summary>
+    <div class="ans">孔隙減少承載截面積並造成應力集中，成為裂縫起點：強度、韌性、疲勞強度都下降；彈性模數隨孔隙率增加而降低；孔內氣體或真空阻礙熱與電子傳遞，熱傳導性與導電性也下降；同時也降低氣密性。</div></details>
+
+  <details><summary><span class="qn">08</span><span>金屬材料強化機構有哪些？何者適用純金屬？何者適用合金？</span><span class="src">地特三等</span></summary>
+    <div class="ans">晶粒細化、應變（加工）硬化、固溶強化、散佈強化、析出（時效）硬化、麻田散變態。純金屬只能用晶粒細化與應變硬化；合金則全部可用，固溶、散佈、析出強化需有合金元素，麻田散變態用於鋼等可淬火合金。</div></details>
+
+  <details><summary><span class="qn">09</span><span>繪恆溫變態曲線圖（TTT）解釋鋼的熱處理如何改變材料特性。</span><span class="src">地特三等</span></summary>
+    <div class="ans">見圖 8-32。共析鋼沃斯田化後急冷至不同溫度恆溫：鼻部以上得粗、細波來鐵（HRC 15–40）；鼻部以下得上、下變韌鐵（HRC 40–57）；冷卻曲線避開鼻部直接降到 Ms 以下得麻田散鐵（約 HRC 65），再回火調整。退火（爐冷）得軟的粗波來鐵；正常化（空冷）得細波來鐵；淬火得麻田散鐵；沃斯回火得下變韌鐵。</div></details>
+
+  <details><summary><span class="qn">10</span><span>說明三種常見結晶結構；鐵、鋁、銅各屬何種？比較三者的強度、熔點與導熱速度。</span><span class="src">升資考試</span></summary>
+    <div class="ans">BCC、FCC、HCP（見 8-3 節表）。常溫下鐵為 BCC（910 °C 以上為 FCC），鋁與銅為 FCC。強度：鐵 &gt; 銅 &gt; 鋁；熔點：鐵 1538 °C &gt; 銅 1085 °C &gt; 鋁 660 °C；熱傳導：銅約 400 &gt; 鋁約 237 &gt; 鐵約 80 W/(m·K)。</div></details>
+</section>
+
+</main>
+</div>
+
+<script src="assets/chapter.js"></script>
+</body>
+</html>

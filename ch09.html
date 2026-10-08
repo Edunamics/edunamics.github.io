@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>機械製造學 第九章 材料處理</title>
+<link rel="stylesheet" href="assets/chapter.css">
+<style>
+/* Layout: 與第一章相同的講義版面 — 左側節次分頁 + 右側正文；製程以剖面示意圖與流程框呈現 */
+:root{
+  --bg:#FBF8F5; --paper:#FFFFFF; --ink:#2A1D14; --muted:#6E5D50;
+  --accent:#A84A0C; --accent-soft:#F6E6D8; --line:#E6D5C7; --grid:rgba(168,74,12,.07);
+  --steel:#9A8A7D; --fix:#1D6B70; --fix-soft:#E3F1F1; --warn:#8E2F1C;
+  --f-display:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-body:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --steel:#6E5E52; --fix:#6CC3C7; --fix-soft:#16302F; --warn:#F08A73; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
+  --accent:#FF9E57; --accent-soft:#3A2416; --line:#3D2C20; --grid:rgba(255,158,87,.07);
+  --steel:#6E5E52; --fix:#6CC3C7; --fix-soft:#16302F; --warn:#F08A73; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.8;padding-inline:16px}
+.wrap{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px;padding-block:0 64px}
+header.hero{max-width:1120px;margin:0 auto 32px;padding-block:36px 28px;border-bottom:1.5px solid var(--accent);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;
+  display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:24px;align-items:center}
+.hero-art{width:100%;max-width:260px;justify-self:end}
+.crumb{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,5vw,3.1rem);line-height:1.2;margin:.3em 0 .2em;text-wrap:balance}
+h1 small{font-size:.5em;font-weight:600;color:var(--muted);display:block;letter-spacing:.05em}
+.lede{max-width:62ch;color:var(--muted);margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px;font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+main{min-width:0}
+section{padding-block:8px 28px;border-bottom:1px solid var(--line);margin-bottom:28px;scroll-margin-top:16px}
+h2{font-family:var(--f-display);font-size:1.6rem;margin:0 0 .6em;display:flex;align-items:baseline;gap:14px;text-wrap:balance}
+h2 .no{font-family:var(--f-mono);font-size:.95rem;color:var(--paper);background:var(--accent);padding:2px 9px;border-radius:2px;font-weight:500}
+h3{font-size:1.12rem;margin:1.6em 0 .5em;color:var(--accent)}
+h4{font-size:1rem;margin:1.2em 0 .3em}
+p{max-width:68ch;margin:.4em 0 .9em}
+.en{font-family:var(--f-mono);font-size:.8em;color:var(--muted)}
+.key{background:linear-gradient(transparent 62%,var(--accent-soft) 62%);font-weight:700}
+figure{margin:20px 0 24px;background:var(--paper);border:1px solid var(--line);padding:20px}
+figcaption{font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-top:12px;letter-spacing:.04em}
+.scroll{overflow-x:auto}
+.tbl{overflow-x:auto;margin:14px 0 22px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px;background:var(--paper)}
+th,td{border:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);color:var(--accent);font-weight:700;white-space:nowrap}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);padding:12px 16px;margin:16px 0;font-size:15px}
+.callout b{color:var(--accent)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:12px 0 20px}
+.card{border:1px solid var(--line);background:var(--paper);padding:14px 16px}
+.card h4{margin:0 0 4px;color:var(--accent)}
+.card p{margin:0;font-size:14.5px}
+/* 流程圖共用 */
+.node{background:var(--paper);border:2px solid var(--accent);border-radius:6px;padding:10px 14px;position:relative}
+.node b{display:block;font-size:15.5px}
+.node small{display:block;color:var(--muted);font-size:13px;line-height:1.5}
+.node .n{font-family:var(--f-mono);font-size:11.5px;color:var(--accent);letter-spacing:.06em}
+.node.dark{background:var(--accent);border-color:var(--accent)}
+.node.dark b,.node.dark .n{color:var(--paper)} .node.dark small{color:var(--accent-soft)}
+.down{height:30px;position:relative;margin-left:50%}
+.down::before{content:"";position:absolute;left:-1px;top:0;bottom:8px;border-left:2px solid var(--fix)}
+.down::after{content:"";position:absolute;left:-7px;bottom:0;border:7px solid transparent;border-top:9px solid var(--fix);border-bottom:0}
+.right{flex:0 0 34px;align-self:center;height:2px;background:var(--fix);position:relative}
+.right::after{content:"";position:absolute;right:-2px;top:-6px;border:7px solid transparent;border-left:10px solid var(--fix);border-right:0}
+/* 設計流程 */
+.phases{display:grid;gap:0}
+.phase{border:1.5px dashed var(--steel);border-radius:10px;padding:26px 16px 14px;position:relative;display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:0 14px;align-items:center}
+.phase>.lab{position:absolute;top:-11px;left:14px;background:var(--paper);padding:0 8px;font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.08em}
+.phase .down{grid-column:1}
+.tool{font-family:var(--f-mono);font-size:12px;color:var(--accent);border:1.5px solid var(--accent);border-radius:999px;text-align:center;padding:3px 8px;position:relative;background:var(--paper)}
+.tool::before{content:"";position:absolute;right:100%;top:50%;width:14px;border-top:1.5px dashed var(--accent)}
+.gap{grid-column:2}
+/* IPO */
+.ipo{display:flex;align-items:stretch;gap:0}
+.ipo .col{flex:1;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.ipo .col h5{margin:0 0 4px;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;color:var(--accent);text-align:center}
+.pill{border:1.5px solid var(--accent);border-radius:999px;padding:2px 12px;font-size:14px;text-align:center;background:var(--paper)}
+.pill.solid{background:var(--accent);color:var(--paper)}
+.ipo .proc{flex:1;border:2px solid var(--accent);border-radius:8px;background:var(--accent);color:var(--paper);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:14px}
+.ipo .proc h5{color:var(--accent-soft)}
+.ipo .proc .pill{background:transparent;border-color:var(--accent-soft);color:var(--paper)}
+/* 分類樹 */
+.tree{width:max-content;min-width:100%;margin:0 auto}
+.tree ul{list-style:none;margin:0;padding:22px 0 0;display:flex;justify-content:center;position:relative}
+.tree li{position:relative;padding:22px 4px 0;text-align:center}
+.tree>ul{padding-top:0}.tree>ul>li{padding-top:0}
+.tree li::before,.tree li::after{content:"";position:absolute;top:0;width:50%;height:22px;border-top:2px solid var(--steel)}
+.tree li::before{right:50%}.tree li::after{left:50%;border-left:2px solid var(--steel)}
+.tree li:only-child::before,.tree li:only-child::after{display:none}
+.tree li:first-child::before,.tree li:last-child::after{border-top:none}
+.tree li:last-child::before{border-right:2px solid var(--steel);border-top-right-radius:6px}
+.tree li:first-child::after{border-top-left-radius:6px}
+.tree>ul>li::before,.tree>ul>li::after{display:none}
+.tree ul ul::before{content:"";position:absolute;top:0;left:50%;height:22px;border-left:2px solid var(--steel)}
+.tree .node{display:inline-block;padding:5px 9px;white-space:nowrap}
+.tree .node b{font-size:14.5px}
+/* 加工示意圖卡 */
+.procs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 20px}
+.procs.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.proc-card{background:var(--paper);border:1px solid var(--line);padding:12px 12px 10px;display:flex;flex-direction:column;gap:4px}
+.proc-card svg{width:100%;height:auto;background:var(--bg);border-radius:4px}
+.proc-card b{font-size:15px}
+.proc-card .en{display:block}
+.proc-card small{color:var(--muted);font-size:13px;line-height:1.5}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted);margin:-4px 0 12px}
+.legend i{display:inline-block;width:14px;height:10px;margin-right:6px;vertical-align:middle;border-radius:2px}
+/* 碳足跡 */
+.life{display:flex;align-items:stretch}
+.life .node{flex:1;text-align:center;padding:10px 8px}
+.offset{margin-top:14px;border:2px dashed var(--fix);border-radius:8px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:center;font-size:14.5px}
+.offset b{color:var(--fix)}
+.eq{font-family:var(--f-mono);font-size:15px;background:var(--fix);color:var(--paper);padding:2px 10px;border-radius:4px}
+/* 試題 */
+.fixbox{border:1.5px dashed var(--warn);background:var(--fix-soft);padding:14px 18px;margin:8px 0 0;font-size:14.5px}
+.fixbox h3{color:var(--warn);margin:0 0 6px;font-size:1rem}
+.fixbox ul{margin:0;padding-left:1.1em}
+.fixbox s{color:var(--muted)}
+details{border:1px solid var(--line);background:var(--paper);margin:10px 0;padding:0 16px}
+summary{cursor:pointer;padding:12px 0;font-weight:500;list-style:none;display:grid;grid-template-columns:2.4em minmax(0,1fr) auto;gap:8px}
+summary::-webkit-details-marker{display:none}
+summary .qn{font-family:var(--f-mono);color:var(--accent)}
+summary .src{font-size:12px;color:var(--muted);white-space:nowrap}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details[open] summary{border-bottom:1px dashed var(--line)}
+details .ans{padding:10px 0 14px 2.8em;font-size:15px}
+details .ans ul{margin:.2em 0;padding-left:1.1em}
+.hint{font-family:var(--f-mono);font-size:11px;color:var(--accent);letter-spacing:.1em}
+svg text{font-family:var(--f-body)}
+@media (max-width:820px){
+  header.hero{grid-template-columns:minmax(0,1fr)}.hero-art{justify-self:start;max-width:180px}
+  .wrap{grid-template-columns:minmax(0,1fr);gap:0}
+        .ipo,.life{flex-direction:column}
+  .ipo .right,.life .right{flex-basis:26px;width:2px;height:26px;align-self:center}
+  .ipo .right::after,.life .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
+  .phase{grid-template-columns:minmax(0,1fr) 92px}
+  .procs,.procs.c4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+.crumb a{color:inherit;text-decoration:none;border-bottom:1px dashed currentColor}
+.crumb a:hover{border-bottom-style:solid}
+.cards.c2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card .en{display:block;margin:-2px 0 4px}
+.flow6,.flow5{display:flex;align-items:stretch;min-width:0}
+.flow6 .node,.flow5 .node{flex:1 1 0;min-width:0;padding:8px 9px}
+.flow6 .right,.flow5 .right{flex-basis:22px}
+.flow5 .node small{font-size:12px}
+.formula{font-family:var(--f-mono);font-size:1.45rem;text-align:center;color:var(--accent);background:var(--accent-soft);padding:14px 12px;margin:12px 0 14px;border-radius:4px}
+.formula.sm{font-size:1.05rem;padding:8px;margin:8px 0}
+.example{border:1.5px solid var(--fix);background:var(--paper);padding:0 18px 12px;margin:18px 0 24px}
+.ex-h{display:inline-block;background:var(--fix);color:var(--paper);font-weight:700;font-size:14px;padding:3px 12px;margin:0 0 6px -18px}
+.example ul{margin:.2em 0 .6em;padding-left:1.2em;font-family:var(--f-mono);font-size:14px}
+figure.mini{margin:10px 0;padding:12px;background:var(--bg)}
+figure.mini svg{width:100%;max-width:420px;height:auto;display:block}
+ol.steps{counter-reset:st;list-style:none;padding:0;margin:10px 0 20px;display:grid;gap:8px;max-width:72ch}
+ol.steps li{counter-increment:st;display:grid;grid-template-columns:2.2em minmax(0,1fr);gap:10px;align-items:baseline}
+ol.steps li::before{content:counter(st,decimal-leading-zero);font-family:var(--f-mono);font-size:13px;color:var(--paper);background:var(--accent);text-align:center;border-radius:2px;padding:1px 0}
+.dc2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.dc2>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.dc2 svg{width:100%;height:auto;background:var(--bg);border-radius:4px}
+.dc2 b{font-size:15.5px;margin-top:4px}
+.dc2 small{color:var(--muted);font-size:13.5px;line-height:1.6}
+figure svg{max-width:100%}
+.scroll>svg{width:100%;height:auto;display:block}
+@media (max-width:820px){.dc2{grid-template-columns:minmax(0,1fr)}}
+
+/* fit-to-width：圖面一律縮放到版面寬度內，不出現水平捲動 */
+.scroll{overflow:visible}
+.scroll svg,figure svg{min-width:0!important;max-width:100%;height:auto}
+table{min-width:0}
+.tbl{overflow-x:visible}
+th{white-space:normal}
+@media (max-width:820px){
+  table{font-size:13.5px} th,td{padding:6px 8px}
+  .flow6,.flow5{flex-direction:column;min-width:0}
+  .flow6 .node,.flow5 .node{width:auto;flex:none}
+  .flow6 .right,.flow5 .right{flex:0 0 22px;width:2px;height:22px;align-self:center}
+  .flow6 .right::after,.flow5 .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
+}
+.tree.as-list{width:auto;min-width:0;margin:0}
+.tree.as-list ul{display:block;padding:0 0 0 16px;margin:0 0 0 12px;border-left:2px solid var(--steel)}
+.tree.as-list>ul{border-left:0;margin:0;padding:0}
+.tree.as-list li{padding:4px 0 4px 14px;text-align:left}
+.tree.as-list>ul>li{padding-left:0}
+.tree.as-list li::after,.tree.as-list ul ul::before{display:none}
+.tree.as-list li::before{display:block;content:"";position:absolute;left:-2px;top:20px;width:12px;height:0;border:0;border-top:2px solid var(--steel);border-radius:0}
+.tree.as-list>ul>li::before{display:none}
+.tree.as-list .node{white-space:normal}
+.tree .node{padding:4px 7px}
+.tree li{padding-left:3px;padding-right:3px}
+.tree.as-list ul:not(:has(ul))>li{padding:0}
+.tree.as-list ul:not(:has(ul)){display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px;padding:6px 0 6px 16px}
+.tree.as-list ul:not(:has(ul))>li::before{display:none}
+
+/* 砂輪標示 */
+.spec{border:1px solid var(--line);background:var(--paper);padding:14px 16px;margin:12px 0 18px}
+.spec-row{display:flex;flex-wrap:wrap;gap:6px}
+.spec .chip{flex:1 1 72px;min-width:0;border:1.5px solid var(--accent);border-radius:4px;text-align:center;padding:6px 4px}
+.spec .chip b{display:block;font-family:var(--f-mono);font-size:1.3rem;color:var(--accent)}
+.spec .chip small{display:block;font-size:12px;color:var(--muted);line-height:1.4}
+.spec-cap{margin:10px 0 0;font-size:13.5px;color:var(--muted);max-width:none}
+</style>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+</head>
+<body>
+<header class="hero">
+  <div>
+    <div class="crumb"><a href="manufacturing.html">知識動力場 · 機械製造學</a> · Chapter 09</div>
+    <h1>材料處理<small>Heat Treatment &amp; Surface Treatment</small></h1>
+    <p class="lede">同一根鋼棒，退火後可以輕鬆切削，淬火後能當刀具，表面滲碳後又能做成外硬內韌的齒輪。本章先介紹改變材料整體性質的一般熱處理——退火、正常化、淬火、回火與恆溫處理，再介紹只改變表層的表面硬化與披覆技術。</p>
+    <div class="meta"><span>3 節 · 10 題歷屆試題</span></div>
+  </div>
+  <svg class="hero-art" viewBox="0 0 260 230" role="img" aria-label="熱處理溫度–時間曲線：加熱到 A1 以上保溫，再以爐冷、空冷或水冷不同速率冷卻">
+    <path d="M30 20 V200 H245" fill="none" stroke="var(--ink)" stroke-width="2"/>
+    <path d="M30 90 H245" stroke="var(--muted)" stroke-dasharray="4 4"/>
+    <path d="M30 190 L80 60 H130" fill="none" stroke="var(--accent)" stroke-width="3.5"/>
+    <path d="M130 60 Q200 80 240 170" fill="none" stroke="var(--steel)" stroke-width="3"/>
+    <path d="M130 60 Q160 120 200 190" fill="none" stroke="var(--fix)" stroke-width="3"/>
+    <path d="M130 60 Q136 150 150 192" fill="none" stroke="var(--warn)" stroke-width="3"/>
+    <text x="196" y="86" font-size="12" fill="var(--muted)">A₁</text>
+    <text x="196" y="124" font-size="12" fill="var(--steel)">爐冷</text><text x="190" y="170" font-size="12" fill="var(--fix)">空冷</text><text x="104" y="160" font-size="12" fill="var(--warn)">水冷</text>
+    <text x="84" y="50" font-size="12" fill="var(--ink)">保溫</text>
+  </svg>
+</header>
+
+<div class="wrap">
+<nav class="tabs" role="tablist" aria-label="本章各節" aria-orientation="vertical">
+  <p class="tabs-label">SECTIONS</p>
+  <a class="tab" id="tab-s1" href="#s1" role="tab" aria-controls="s1" aria-selected="true"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 4 5 6 5 10a5 5 0 0 1-10 0c0-2 1-3 2-5 1 2 2 2 3 2 0-3-1-5 0-7z"/></svg></span><span class="tx"><span class="no">9-1</span><span class="nm">概述</span></span></a>
+  <a class="tab" id="tab-s2" href="#s2" role="tab" aria-controls="s2" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18"/><path d="M4 18l4-12h6l2 4"/><path d="M16 10q2 4 4 8"/><path d="M14 6q1 6-1 12"/></svg></span><span class="tx"><span class="no">9-2</span><span class="nm">一般熱處理</span></span></a>
+  <a class="tab" id="tab-s3" href="#s3" role="tab" aria-controls="s3" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16h16v4H4z"/><path d="M4 13h16"/><path d="M7 10l2-4M12 10l2-6M17 10l1-3"/></svg></span><span class="tx"><span class="no">9-3</span><span class="nm">表面處理</span></span></a>
+  <a class="tab" id="tab-exam" href="#exam" role="tab" aria-controls="exam" aria-selected="false"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 2.8h6"/><path d="M8.5 11l2 2 4-4M8.5 17h7"/></svg></span><span class="tx"><span class="no">試題</span><span class="nm">歷屆試題</span></span></a>
+</nav>
+
+<main>
+
+<!-- ============ 9-1 ============ -->
+<section id="s1">
+  <h2><span class="no">9-1</span>概述</h2>
+  <p>依產品用途，對材料施以不同處理以獲得所需的機械性質。可分兩大類：</p>
+  <div class="cards c2">
+    <div class="card"><h4>一般熱處理</h4><p>控制加熱溫度、保溫時間與冷卻速率，改變材料<b>整體</b>的組織與性質：退火、正常化、淬火、回火，以及恆溫熱處理。用於承受高負荷、傳遞動力的元件，如結構鋼、汽車安全零件。</p></div>
+    <div class="card"><h4>表面處理</h4><p>只改變<b>表層</b>的機械或化學性質，得到<b>外硬內韌</b>或耐蝕、隔熱的表面：表層硬化（火焰、感應、滲碳、氮化）與表面披覆（PVD、CVD）。用於齒輪、凸輪、耐磨鋼板、刀具塗層等。</p></div>
+  </div>
+  <div class="tree">
+    <ul><li><span class="node">材料處理</span>
+      <ul>
+        <li><span class="node">一般熱處理</span><ul><li><span class="node">退火（7 種）</span></li><li><span class="node">正常化</span></li><li><span class="node">淬火</span></li><li><span class="node">回火</span></li><li><span class="node">恆溫熱處理</span></li></ul></li>
+        <li><span class="node">表層硬化</span><ul><li><span class="node">物理式：火焰、感應</span></li><li><span class="node">化學式：滲碳、氮化</span></li></ul></li>
+        <li><span class="node">表層披覆</span><ul><li><span class="node">PVD</span></li><li><span class="node">CVD</span></li></ul></li>
+      </ul></li></ul>
+  </div>
+</section>
+
+<!-- ============ 9-2 ============ -->
+<section id="s2">
+  <h2><span class="no">9-2</span>一般熱處理</h2>
+  <figure>
+    <svg viewBox="0 0 640 300" role="img" aria-label="四種基本熱處理的冷卻方式：退火爐冷最慢，正常化空冷，淬火水冷或油冷最快，回火是淬火後再加熱到 A1 以下保溫">
+      <path d="M50 20 V260 H620" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+      <path d="M50 110 H620" stroke="var(--muted)" stroke-dasharray="4 4"/><text x="590" y="104" font-size="12" fill="var(--muted)">A₁</text>
+      <path d="M52 250 L120 70 H200" fill="none" stroke="var(--accent)" stroke-width="3"/>
+      <path d="M200 70 Q330 90 420 250" fill="none" stroke="var(--steel)" stroke-width="2.5"/>
+      <path d="M200 70 Q250 140 300 250" fill="none" stroke="var(--fix)" stroke-width="2.5"/>
+      <path d="M200 70 Q206 200 222 250" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+      <path d="M440 250 L470 170 H540 L560 250" fill="none" stroke="var(--warn)" stroke-width="2.5" stroke-dasharray="6 4"/>
+      <g font-size="12.5"><text x="130" y="62" fill="var(--accent)">加熱、保溫（沃斯田化）</text><text x="360" y="150" fill="var(--steel)">退火：爐冷</text><text x="282" y="214" fill="var(--fix)">正常化：空冷</text><text x="230" y="244" fill="var(--warn)">淬火：水／油冷</text><text x="468" y="162" fill="var(--warn)">回火</text></g>
+      <g font-size="11.5" fill="var(--muted)"><text x="560" y="280">時間</text><text x="10" y="30">溫度</text></g>
+    </svg>
+    <figcaption>圖 9-8　退火、正常化、淬火、回火的溫度–時間關係</figcaption>
+  </figure>
+
+  <h3>一、退火</h3>
+  <p>將鋼加熱到適當溫度、保溫後<b>緩慢冷卻</b>（通常爐冷）。依目的與加熱溫度分為多種：</p>
+  <figure>
+    <svg viewBox="0 0 640 400" role="img" aria-label="各種退火的溫度範圍：均質化退火 1100 到 1300 度；完全退火在亞共析鋼為 A3 以上 30 到 50 度、過共析鋼為 A1 以上 30 到 50 度；球化退火在 A1 附近；再結晶退火與弛力退火在 A1 以下">
+      <path d="M70 20 V356 H590" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+      <g font-size="11" fill="var(--muted)">
+        <text x="30" y="24">1300</text><text x="30" y="108">1100</text><text x="36" y="192">900</text><text x="36" y="276">700</text><text x="36" y="360">500</text>
+        <text x="66" y="374">0</text><text x="128" y="374">0.2</text><text x="193" y="374">0.4</text><text x="258" y="374">0.6</text><text x="323" y="374">0.8</text><text x="388" y="374">1.0</text><text x="453" y="374">1.2</text><text x="518" y="374">1.4</text><text x="576" y="374">1.6</text>
+        <text x="260" y="394" font-size="12">含碳量（wt%）</text><text x="4" y="200" font-size="12">°C</text>
+      </g>
+      <rect x="70" y="20" width="520" height="84" fill="var(--warn)" opacity=".14"/>
+      <path d="M70 171 L330 248 L590 248 L590 239.6 L330 239.6 L70 162.6 Z" fill="var(--accent)" opacity=".35"/>
+      <rect x="200" y="241" width="390" height="34" fill="none" stroke="var(--fix)" stroke-width="2" stroke-dasharray="5 4"/>
+      <path d="M70 184 L330 261 L70 261 Z" fill="var(--steel)" opacity=".3"/>
+      <rect x="70" y="272" width="520" height="34" fill="var(--fix)" opacity=".18"/>
+      <rect x="70" y="314" width="520" height="42" fill="var(--steel)" opacity=".25"/>
+      <g fill="none" stroke="var(--ink)" stroke-width="2.2"><path d="M70 184 L330 261"/><path d="M330 261 L590 153"/><path d="M70 261 H590"/></g>
+      <g font-size="12" fill="var(--ink)">
+        <text x="250" y="66">均質化（擴散）退火 1100–1300 °C</text>
+        <text x="470" y="234" fill="var(--accent)">完全退火</text>
+        <text x="120" y="164" fill="var(--accent)">完全退火 A₃ + 30–50 °C</text>
+        <text x="78" y="252" fill="var(--ink)">不完全退火</text>
+        <text x="520" y="268" fill="var(--fix)">球化退火</text>
+        <text x="200" y="294">再結晶（製程）退火</text>
+        <text x="220" y="340">弛力退火 500–650 °C</text>
+        <text x="96" y="150" fill="var(--ink)" font-size="11.5">γ</text>
+      </g>
+      <g font-size="11.5" fill="var(--ink)"><text x="150" y="226">A₃</text><text x="530" y="176">A<tspan font-size="9" dy="3">cm</tspan></text><text x="594" y="265">A₁</text></g>
+    </svg>
+    <figcaption>圖 9-1　各種退火的溫度範圍（示意）</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>種類</th><th>目的</th><th>加熱溫度與操作</th><th>重點</th></tr>
+    <tr><td><b>均質化退火</b><br><small>擴散退火</small></td><td>消除鑄造、熱加工或銲接造成的<b>偏析</b>，使成分均勻</td><td>大鋼錠 1200–1300 °C；高碳鋼、加工半成品 1100–1200 °C；保溫數小時至數十小時後緩冷</td><td>晶粒會粗大，之後須再完全退火或正常化細化；用於高價合金、偏析嚴重的鋼錠</td></tr>
+    <tr><td><b>完全退火</b><br><small>相變退火</small></td><td><b>軟化</b>，改善切削性與塑性，細化並調整組織</td><td>亞共析鋼 A₃ + 30–50 °C，過共析鋼 A₁ + 30–50 °C；沃斯田化後爐冷</td><td>亞共析鋼得肥粒鐵 + 粗波來鐵。適合中碳鋼；低碳鋼退火後太軟黏刀，宜正常化；過共析鋼易沿晶界析出網狀雪明碳鐵而變脆，宜球化退火</td></tr>
+    <tr><td><b>球化退火</b></td><td>把層狀雪明碳鐵變成約 0.5–1.5 µm 的<b>球狀碳化物</b>散布在肥粒鐵中</td><td>例：加熱到 A₁ 稍上（760–780 °C）保溫，爐冷到約 600 °C 後空冷；或 A₁ 稍下長時間保溫、在 A₁ ± 30 °C 反覆加熱冷卻等</td><td>改善高碳鋼、工具鋼的切削性與冷加工性；作為淬火前處理可提高淬火後韌性、防止淬裂</td></tr>
+    <tr><td><b>不完全退火</b></td><td>同完全退火，用於亞共析鋼</td><td>加熱到 A₁ 與 A₃ 之間</td><td>只有波來鐵部分變成沃斯田鐵再變回，初析肥粒鐵不變；耗能少、脫碳氧化少</td></tr>
+    <tr><td><b>再結晶退火</b><br><small>製程退火</small></td><td>消除<b>冷作硬化</b>，恢復延性以便繼續加工</td><td>A₁ 以下的再結晶溫度範圍保溫</td><td>無相變態；過程依序為回復 → 再結晶 → 晶粒成長（見第 5 章）。加工度太小的工件不易再結晶，反而晶粒粗大</td></tr>
+    <tr><td><b>弛力退火</b><br><small>低溫退火</small></td><td>消除鑄造、銲接、加工後的<b>殘留應力</b></td><td>約 450 °C 以上應力開始釋放，常在 500–650 °C 保溫後緩冷</td><td>無組織變化、最省能；防止日後變形與應力腐蝕</td></tr>
+    <tr><td><b>恆溫退火</b></td><td>縮短退火時間，得到均勻的波來鐵，改善切削性</td><td>沃斯田化（約 800–900 °C）後急冷到 TTT 圖鼻部稍上（約 600–700 °C），恆溫到波來變態完成，再空冷</td><td>在變態最快的溫度附近恆溫，時間比爐冷大幅縮短；用於低合金鋼汽車零件</td></tr>
+  </table></div>
+
+  <h3>二、正常化</h3>
+  <p>將鋼加熱到 <b>A₃（亞共析鋼）或 A<sub>cm</sub>（過共析鋼）以上 30–50 °C</b>，完全沃斯田化後在<b>靜止空氣中冷卻</b>，得到均勻細密的標準組織（細波來鐵）。</p>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 220" role="img" aria-label="正常化溫度：亞共析鋼在 A3 以上 30 到 50 度，過共析鋼在 Acm 以上 30 到 50 度">
+        <path d="M40 14 V185 H285" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M40 14.5 L162 115.2 L254 14 L269 14 L162 126.2 L40 25.5 Z" fill="var(--accent)" opacity=".4"/>
+        <g fill="none" stroke="var(--ink)" stroke-width="2"><path d="M40 42 L162 142.7"/><path d="M162 142.7 L269 20"/><path d="M40 142.7 H285"/></g>
+        <g font-size="11.5" fill="var(--ink)"><text x="60" y="76">A₃</text><text x="222" y="86">A<tspan font-size="9" dy="3">cm</tspan></text><text x="250" y="158">A₁</text><text x="120" y="60" fill="var(--accent)">正常化</text><text x="140" y="180" fill="var(--muted)">0.8</text></g>
+        <g font-size="10.5" fill="var(--muted)"><text x="36" y="200">0</text><text x="270" y="200">1.6</text><text x="110" y="214">含碳量（wt%）</text></g>
+      </svg>
+      <figcaption>圖 9-4　正常化溫度</figcaption></div>
+      <div>
+      <svg viewBox="0 0 300 220" role="img" aria-label="淬火溫度：亞共析鋼在 A3 以上 30 到 50 度，過共析鋼在 A1 以上 30 到 50 度">
+        <path d="M40 14 V185 H285" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M40 14.5 L162 115.2 L285 115.2 L285 126.2 L162 126.2 L40 25.5 Z" fill="var(--warn)" opacity=".35"/>
+        <g fill="none" stroke="var(--ink)" stroke-width="2"><path d="M40 42 L162 142.7"/><path d="M162 142.7 L269 20"/><path d="M40 142.7 H285"/></g>
+        <g font-size="11.5" fill="var(--ink)"><text x="60" y="76">A₃</text><text x="222" y="86">A<tspan font-size="9" dy="3">cm</tspan></text><text x="250" y="158">A₁</text><text x="190" y="110" fill="var(--warn)">淬火</text><text x="140" y="180" fill="var(--muted)">0.8</text></g>
+        <g font-size="10.5" fill="var(--muted)"><text x="36" y="200">0</text><text x="270" y="200">1.6</text><text x="110" y="214">含碳量（wt%）</text></g>
+      </svg>
+      <figcaption>圖 9-6　淬火溫度</figcaption></div>
+    </div>
+  </figure>
+  <div class="cards">
+    <div class="card"><h4>目的</h4><p>細化晶粒、消除過熱或加工造成的粗大不均組織、消除殘留應力；過共析鋼加熱到 A<sub>cm</sub> 以上可打散網狀雪明碳鐵。</p></div>
+    <div class="card"><h4>與退火比較</h4><p>正常化空冷、退火爐冷；正常化組織較細，強度、硬度略高，且出爐冷卻，生產效率高。低碳鋼常以正常化取代退火以改善切削性。</p></div>
+    <div class="card"><h4>其他形式</h4><p><b>二段正常化</b>：先空冷到約 550 °C 再爐冷，減少複雜或斷面變化大零件的變形。<b>恆溫正常化</b>：以氣流冷到約 550 °C 恆溫完成波來變態後空冷。正常化也常作為淬火或球化退火的前處理。</p></div>
+  </div>
+
+  <h3>三、淬火</h3>
+  <p>亞共析鋼加熱到 <b>A₃ + 30–50 °C</b>、過共析鋼加熱到 <b>A₁ + 30–50 °C</b>，保溫使組織變為沃斯田鐵（過共析鋼保留部分雪明碳鐵以增耐磨性），再以大於臨界冷卻速率急冷，得到<b>麻田散鐵</b>，提高硬度與強度，但韌性下降。</p>
+  <figure>
+    <svg viewBox="0 0 560 250" role="img" aria-label="淬火冷卻要領：從淬火溫度到約 550 度的臨界區域要快冷，以免生成波來鐵；約 250 度以下的危險區域要慢冷，以免淬裂">
+      <path d="M60 20 V220 H540" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+      <rect x="60" y="40" width="480" height="60" fill="var(--warn)" opacity=".1"/>
+      <rect x="60" y="150" width="480" height="70" fill="var(--fix)" opacity=".12"/>
+      <path d="M60 40 H110 Q125 70 140 100 Q170 140 220 150 Q330 175 520 210" fill="none" stroke="var(--accent)" stroke-width="3"/>
+      <g font-size="12.5" fill="var(--ink)"><text x="190" y="76" fill="var(--warn)">臨界區域：急冷（避開鼻部）</text><text x="260" y="190" fill="var(--fix)">危險區域：緩冷（防淬裂）</text></g>
+      <g font-size="11.5" fill="var(--muted)"><text x="4" y="44">A₁/A₃</text><text x="2" y="104">550 °C</text><text x="2" y="154">250 °C</text><text x="500" y="238">時間</text></g>
+    </svg>
+    <figcaption>圖 9-7　淬火冷卻速率的要領</figcaption>
+  </figure>
+  <div class="cards c2">
+    <div class="card"><h4>注意事項</h4><p>沃斯田鐵變為麻田散鐵時<b>體積膨脹</b>，加上內外溫差產生熱應力，易變形、淬裂；淬火後脆而內應力大，<b>必須回火</b>。含碳量愈高淬火硬度愈高，但超過約 0.6% C 後增加趨緩。</p></div>
+    <div class="card"><h4>深冷處理</h4><p>麻田散變態量只與溫度有關；高碳鋼或合金鋼 Mf 低於室溫，淬到室溫仍有<b>殘留沃斯田鐵</b>，日後會緩慢變態造成尺寸變化。繼續冷到 0 °C 以下（如 −80 °C）使其轉為麻田散鐵，稱為<b>深冷（次零）處理</b>，常用於量規與精密零件。</p></div>
+  </div>
+  <p><b>質量效應：</b>工件尺寸愈大，中心冷速愈慢，表面得麻田散鐵而中心得吐粒散鐵等較軟組織，內外硬度不一甚至淬裂。添加 Cr、Mo、Mn、Ni 等合金元素可提高<b>硬化能</b>、減少質量效應。</p>
+
+  <h3>四、回火</h3>
+  <p>將淬火鋼再加熱到 <b>A₁ 以下</b>適當溫度保溫後冷卻，使麻田散鐵中過飽和的碳析出成碳化物，消除內應力、降低硬度並提高韌性。</p>
+  <div class="tbl"><table>
+    <tr><th>種類</th><th>溫度</th><th>組織</th><th>用途</th></tr>
+    <tr><td><b>低溫回火</b></td><td>150–200 °C</td><td>回火麻田散鐵</td><td>消除內應力與脆性，保持高硬度與耐磨性；刀具、量規、軸承、滲碳件</td></tr>
+    <tr><td><b>高溫回火</b></td><td>500–650 °C</td><td>回火糙斑鐵（肥粒鐵 + 粒狀雪明碳鐵）</td><td>強度、韌性、延性兼具。<b>淬火 + 高溫回火 = 調質處理</b>；軸、連桿、螺栓、齒輪</td></tr>
+  </table></div>
+  <div class="cards c2">
+    <div class="card"><h4>調質 vs. 正常化</h4><p>兩者都得到細密組織，但調質的雪明碳鐵呈<b>粒狀</b>，正常化呈<b>層片狀</b>；在相同硬度下，調質材的韌性、延性與疲勞強度都較好。</p></div>
+    <div class="card"><h4>回火脆性</h4><p>在某些溫度區間回火，韌性反而明顯下降：碳鋼約 <b>250–400 °C</b>（低溫回火脆性）；Cr、Ni、Mn 合金鋼在約 <b>450–550 °C</b> 回火或緩冷通過此區（高溫回火脆性），加 Mo 或回火後急冷可減輕。</p></div>
+  </div>
+
+  <h3>五、恆溫熱處理</h3>
+  <p>配合 TTT 圖，在冷卻途中於特定溫度停留，可減少淬裂與變形，或得到變韌鐵。</p>
+  <figure>
+    <svg viewBox="0 0 640 230" role="img" aria-label="三種恆溫熱處理：麻淬火在 Ms 稍上停留使內外溫度一致再冷過 Ms 得麻田散鐵後回火；沃斯回火在 Ms 以上恆溫完成變韌鐵變態；麻回火在 Ms 與 Mf 之間恆溫，得回火麻田散鐵與下變韌鐵">
+      <g id="ttt3">
+      <g transform="translate(10 10)">
+        <path d="M20 10 V180 H200" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M120 20 Q60 40 50 70 Q48 90 80 110" fill="none" stroke="var(--muted)" stroke-width="1.5"/><path d="M190 20 Q110 45 100 75 Q100 95 150 112" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <path d="M20 118 H200" stroke="var(--fix)" stroke-width="1.5"/><path d="M20 150 H200" stroke="var(--fix)" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <path d="M22 14 Q28 80 34 110 H70 Q80 150 110 176" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+        <path d="M22 14 Q24 80 26 110 Q30 150 50 176" fill="none" stroke="var(--warn)" stroke-width="2" stroke-dasharray="5 3"/>
+        <path d="M130 176 L150 140 H185" fill="none" stroke="var(--accent)" stroke-width="2"/>
+        <text x="156" y="134" font-size="10.5" fill="var(--accent)">回火</text>
+        <text x="40" y="200" font-size="12.5" fill="var(--ink)">(a) 麻淬火</text>
+      </g>
+      <g transform="translate(220 10)">
+        <path d="M20 10 V180 H200" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M120 20 Q60 40 50 70 Q48 90 80 110" fill="none" stroke="var(--muted)" stroke-width="1.5"/><path d="M190 20 Q110 45 100 75 Q100 95 150 112" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <path d="M20 118 H200" stroke="var(--fix)" stroke-width="1.5"/><path d="M20 150 H200" stroke="var(--fix)" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <path d="M22 14 Q28 70 34 96 H160 Q170 140 190 176" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+        <text x="96" y="90" font-size="10.5" fill="var(--accent)">變韌鐵</text>
+        <text x="40" y="200" font-size="12.5" fill="var(--ink)">(b) 沃斯回火</text>
+      </g>
+      <g transform="translate(430 10)">
+        <path d="M20 10 V180 H200" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M120 20 Q60 40 50 70 Q48 90 80 110" fill="none" stroke="var(--muted)" stroke-width="1.5"/><path d="M190 20 Q110 45 100 75 Q100 95 150 112" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <path d="M20 118 H200" stroke="var(--fix)" stroke-width="1.5"/><path d="M20 150 H200" stroke="var(--fix)" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <path d="M22 14 Q28 90 34 134 H170 Q178 160 190 176" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+        <text x="74" y="128" font-size="10.5" fill="var(--accent)">回火 M + 下變韌鐵</text>
+        <text x="40" y="200" font-size="12.5" fill="var(--ink)">(c) 麻回火</text>
+      </g>
+      </g>
+      <g font-size="10.5" fill="var(--fix)"><text x="616" y="132">Ms</text><text x="616" y="164">Mf</text></g>
+    </svg>
+    <figcaption>圖 9-9　麻淬火、沃斯回火與麻回火（灰線為 TTT 曲線）</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>方法</th><th>操作</th><th>組織與特點</th></tr>
+    <tr><td><b>麻淬火</b><br><small>marquenching</small></td><td>淬入 Ms 稍上的熱浴，停留到表面與中心溫度一致，再空冷通過 Ms，之後回火</td><td>麻田散鐵（再回火）；內外同時變態，<b>變形與淬裂大幅減少</b>，工時短，工業上應用最廣</td></tr>
+    <tr><td><b>沃斯回火</b><br><small>austempering，恆溫回火</small></td><td>淬入 Ms 以上、鼻部以下的熱浴，恆溫到<b>變韌鐵變態</b>完成後冷卻</td><td>下變韌鐵；不需回火，強韌性佳、變形小；受限於冷速，只適合小件、薄件</td></tr>
+    <tr><td><b>麻回火</b><br><small>Ms–Mf 間恆溫</small></td><td>淬入 Ms 與 Mf 之間的熱浴恆溫：已生成的麻田散鐵自行回火，其餘沃斯田鐵變為下變韌鐵</td><td>回火麻田散鐵 + 下變韌鐵，硬度與韌性兼具，不需另行回火；但變態時間長、成本高</td></tr>
+  </table></div>
+  <p class="hint">註：中文教材多沿用日本 JIS 的用語，「麻回火」指在 Ms–Mf 間恆溫；英文文獻的 martempering 通常與 marquenching 同義。</p>
+</section>
+
+<!-- ============ 9-3 ============ -->
+<section id="s3">
+  <h2><span class="no">9-3</span>表面處理</h2>
+  <h3>一、表層硬化：物理式（只加熱表面再淬火，成分不變）</h3>
+  <h4>（一）火焰硬化</h4>
+  <p>以氧乙炔等高溫火焰迅速加熱工件表層至沃斯田化溫度，緊接著噴水急冷，使表層變成麻田散鐵。適用含碳 <b>0.35–0.55%</b> 的中碳鋼、低合金鉻鉬鋼、鑄鋼與鑄鐵。加熱時間愈長、火焰移動愈慢，硬化層愈深。</p>
+  <div class="tbl"><table>
+    <tr><th>方式</th><th>操作</th></tr>
+    <tr><td>固定式</td><td>燃燒器與工件都不動，加熱後整體噴水；適合小面積局部硬化</td></tr>
+    <tr><td>回轉式</td><td>工件旋轉、燃燒器固定，周面加熱後一次噴水；適合小直徑軸、齒輪</td></tr>
+    <tr><td>線形移動式</td><td>燃燒器與冷卻管一起沿工件直線移動，邊加熱邊冷卻；適合導軌、長平面</td></tr>
+    <tr><td>回轉移動式</td><td>工件旋轉，燃燒器與冷卻管沿軸向移動；適合長軸</td></tr>
+  </table></div>
+  <div class="cards c2">
+    <div class="card"><h4>優點</h4><p>設備簡單、成本低、效率高；工件大小不受限；可做<b>局部（選擇性）淬火</b>。</p></div>
+    <div class="card"><h4>缺點</h4><p>溫度不易精確控制，硬度與硬化深度不均，大件更明顯；易過熱。</p></div>
+  </div>
+
+  <h4>（二）感應硬化</h4>
+  <figure>
+    <svg viewBox="0 0 560 220" role="img" aria-label="感應硬化：工件穿過通有高頻電流的感應線圈，表層產生渦電流而發熱，隨後的冷卻水噴灑使其淬火形成硬化層">
+      <rect x="30" y="80" width="500" height="60" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="30" y="80" width="250" height="10" fill="var(--accent)"/><rect x="30" y="130" width="250" height="10" fill="var(--accent)"/>
+      <rect x="280" y="80" width="80" height="10" fill="var(--warn)" opacity=".8"/><rect x="280" y="130" width="80" height="10" fill="var(--warn)" opacity=".8"/>
+      <g fill="none" stroke="var(--warn)" stroke-width="5"><ellipse cx="320" cy="110" rx="8" ry="46"/><ellipse cx="340" cy="110" rx="8" ry="46"/><ellipse cx="300" cy="110" rx="8" ry="46"/></g>
+      <g stroke="var(--fix)" stroke-width="2"><path d="M250 46 l-14 26 M230 46 l-14 26 M250 174 l-14 -26 M230 174 l-14 -26"/></g>
+      <rect x="210" y="34" width="56" height="12" fill="var(--fix)" opacity=".5"/><rect x="210" y="174" width="56" height="12" fill="var(--fix)" opacity=".5"/>
+      <path d="M420 110 H500" stroke="var(--ink)" stroke-width="2"/><path d="M420 104 l-10 6 10 6z" fill="var(--ink)"/>
+      <g font-size="12.5" fill="var(--ink)"><text x="290" y="30" fill="var(--warn)">感應線圈（高頻電流）</text><text x="190" y="204" fill="var(--fix)">冷卻水</text><text x="60" y="74" fill="var(--accent)">硬化層</text><text x="358" y="76" fill="var(--warn)">加熱層</text><text x="430" y="98">工件移動</text></g>
+    </svg>
+    <figcaption>圖 9-11　感應硬化</figcaption>
+  </figure>
+  <p>線圈通以高頻交流電，在工件表層感應出<b>渦電流</b>，依焦耳熱迅速升溫，隨即噴水淬火。適用含碳 0.4% 以上的碳鋼與合金鋼。電流集中在表面的現象稱<b>集膚效應</b>：<b>頻率愈高，加熱層愈薄</b>——小而薄的工件用高頻，大而厚的工件用較低頻率。</p>
+  <div class="cards c2">
+    <div class="card"><h4>優點</h4><p>加熱快、溫度易控制、硬化層均勻；氧化脫碳少；表層晶粒細；易納入生產線自動化，效率高。</p></div>
+    <div class="card"><h4>缺點</h4><p>設備與線圈成本高，線圈須配合工件形狀設計，複雜形狀不易處理；加熱時間短，碳化物不易完全固溶。</p></div>
+  </div>
+  <p>此外也可用<b>雷射、電子束、電漿</b>等高能束加熱表面，熱輸入集中、變形極小，可自冷淬火。</p>
+
+  <h4>（三）喬米尼硬化能試驗</h4>
+  <figure>
+    <div class="dc2">
+      <div>
+      <svg viewBox="0 0 300 230" role="img" aria-label="喬米尼試驗裝置：直徑 25.4 公釐、長 101.6 公釐的試棒上端懸吊，下端距噴水口 12.7 公釐，自由水柱高 63.5 公釐向上噴射">
+        <rect x="100" y="14" width="100" height="12" fill="var(--steel)" stroke="var(--ink)"/>
+        <rect x="130" y="26" width="40" height="126" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M150 152 V180" stroke="var(--fix)" stroke-width="10" opacity=".6"/>
+        <rect x="138" y="180" width="24" height="30" fill="var(--steel)" stroke="var(--ink)"/>
+        <path d="M214 26 V152 M208 26 h12 M208 152 h12" stroke="var(--muted)"/><path d="M180 152 V180 M174 180 h12" stroke="var(--muted)"/>
+        <g font-size="11.5" fill="var(--ink)"><text x="222" y="94">101.6</text><text x="70" y="94">Φ25.4</text><text x="188" y="172">12.7</text><text x="40" y="200" fill="var(--fix)">噴水口 Φ12.7</text><text x="40" y="224" font-size="10.5" fill="var(--muted)">自由水柱高 63.5（mm）</text></g>
+      </svg>
+      <figcaption>圖 9-12、9-14　試棒與噴水裝置</figcaption></div>
+      <div>
+      <svg viewBox="0 0 300 230" role="img" aria-label="喬米尼曲線：淬火端硬度最高，隨距離增加硬度下降；合金鋼曲線下降緩慢，碳鋼下降很快">
+        <path d="M40 14 V190 H290" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M42 30 Q100 40 150 70 Q220 100 285 110" fill="none" stroke="var(--accent)" stroke-width="3"/>
+        <path d="M42 34 Q60 60 80 130 Q120 170 285 176" fill="none" stroke="var(--steel)" stroke-width="3"/>
+        <g font-size="11.5"><text x="190" y="88" fill="var(--accent)">合金鋼（硬化能高）</text><text x="110" y="166" fill="var(--steel)">碳鋼</text></g>
+        <g font-size="11" fill="var(--muted)"><text x="4" y="24">HRC</text><text x="120" y="212">距淬火端距離</text></g>
+      </svg>
+      <figcaption>圖 9-16　硬化能曲線</figcaption></div>
+    </div>
+  </figure>
+  <p>用來比較不同鋼種的<b>硬化能</b>（淬火時能硬化的深度）。標準試棒 Φ25.4 × 101.6 mm，沃斯田化（如 1018 鋼加熱到 925 °C）後上端懸吊，以自由水柱由下往上噴淬火端約 10 分鐘；冷卻後沿長度磨出平面，每隔固定距離量 HRC。淬火端冷速最快、硬度最高，愈往上愈軟；曲線愈平緩表示硬化能愈好。</p>
+
+  <h3>二、表層硬化：化學式（改變表層成分）</h3>
+  <h4>（一）滲碳法</h4>
+  <p>將<b>低碳鋼</b>（約 0.1–0.25% C）在沃斯田鐵狀態下讓碳原子擴散進入表層，使表層含碳量提高到約 0.8–1.0%，再<b>淬火、低溫回火</b>：表面硬而耐磨，心部仍為低碳而強韌。不需滲碳的部位可<b>鍍銅</b>遮蔽。</p>
+  <div class="tbl"><table>
+    <tr><th>方法</th><th>做法</th><th>特點</th></tr>
+    <tr><td><b>固體滲碳</b></td><td>工件埋入滲碳劑（木炭粉約 70% + 碳酸鋇等促進劑約 30%），密封於箱中加熱到 850–950 °C 保溫</td><td>設備簡單；層深可厚，但加熱慢、深度不易精確控制、勞力多<br><small>2C + O₂ → 2CO；BaCO₃ → BaO + CO₂，CO₂ + C → 2CO；3Fe + 2CO → Fe₃C + CO₂</small></td></tr>
+    <tr><td><b>液體滲碳</b><br><small>氰化法</small></td><td>浸入熔融氰化鈉（NaCN）鹽浴；高於約 700 °C 以滲碳為主，較低溫則氮化作用增強，故又稱<b>滲碳氮化</b></td><td>加熱均勻快速、層薄（約 0.3–0.8 mm）、表面光潔、變形小；氰鹽<b>劇毒</b>，廢液處理困難</td></tr>
+    <tr><td><b>氣體滲碳</b></td><td>在爐中通入天然氣、丙烷或 CO 系吸熱型氣體，加熱分解出活性碳<br><small>2CO ⇄ C + CO₂；CH₄ → C + 2H₂</small></td><td>碳勢與層深容易精確控制、品質穩定、可連續作業，是<b>目前量產最主要</b>的滲碳法</td></tr>
+  </table></div>
+  <div class="callout"><b>滲碳後熱處理：</b>滲碳在高溫長時間進行，晶粒粗大。傳統做法為<b>二次淬火</b>：第一次自較高溫（心部 A₃ 以上）淬火細化心部組織；第二次自表層 A₁ 稍上淬火使滲碳層硬化；最後低溫回火（必要時加深冷處理消除殘留沃斯田鐵）。</div>
+
+  <h4>（二）氮化法</h4>
+  <p>先將含 <b>Al、Cr、Mo</b> 的氮化鋼淬火、回火（調質），再在約 <b>500–550 °C</b> 的氨氣中長時間加熱：2NH₃ → 2N + 3H₂，活性氮擴散入表層與合金元素形成硬的氮化物。Al 主要提高表面硬度，Cr 有助增加氮化層深度。<b>氮化後不需淬火</b>。</p>
+  <div class="tbl"><table>
+    <tr><th>方法</th><th>做法</th><th>特點</th></tr>
+    <tr><td><b>氣體氮化</b></td><td>NH₃ 氣流中 500–550 °C 加熱數十小時</td><td>層深與硬度隨時間、溫度增加；處理時間很長</td></tr>
+    <tr><td><b>液體氮化</b></td><td>以氰化鹽浴取代氨氣</td><td>活性氮濃度高，時間大幅縮短；鹽浴有毒</td></tr>
+    <tr><td><b>軟氮化</b><br><small>Tufftride</small></td><td>以氰酸鹽（KCNO 等）鹽浴為主，吹入空氣分解出活性 N 與少量 C，約 570 °C 短時間處理</td><td>化合物層僅數 µm 至約 20 µm，但耐磨、耐蝕、抗咬合佳，任何鋼種皆可；適合量大的小零件</td></tr>
+    <tr><td><b>離子氮化</b></td><td>爐內抽真空後通入 N₂ + H₂（約 100–1000 Pa），<b>工件接陰極、爐壁為陽極</b>，加直流高壓產生輝光放電，氮離子轟擊工件表面滲氮</td><td>時間短、變形小、層均勻、可局部遮蔽、無公害；適用各種鋼、鑄鐵與鈦合金</td></tr>
+  </table></div>
+  <figure>
+    <svg viewBox="0 0 520 220" role="img" aria-label="離子氮化裝置：真空爐體為陽極，工件為陰極，通入氮氫混合氣，直流高壓產生輝光放電包覆工件">
+      <rect x="100" y="20" width="260" height="170" rx="10" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.5"/>
+      <rect x="190" y="90" width="80" height="60" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="182" y="82" width="96" height="76" rx="6" fill="none" stroke="var(--accent)" stroke-width="4" opacity=".6"/>
+      <path d="M230 150 V190" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M40 60 H100" stroke="var(--fix)" stroke-width="3"/><path d="M92 54 l10 6 -10 6z" fill="var(--fix)"/>
+      <path d="M360 160 H420" stroke="var(--muted)" stroke-width="3"/><path d="M412 154 l10 6 -10 6z" fill="var(--muted)"/>
+      <rect x="400" y="40" width="90" height="44" fill="var(--accent-soft)" stroke="var(--ink)"/>
+      <path d="M445 84 V200 H230 V190 M400 62 H360" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+      <g font-size="12" fill="var(--ink)"><text x="20" y="50" fill="var(--fix)">N₂ + H₂</text><text x="430" y="152" fill="var(--muted)">抽氣</text><text x="414" y="66">直流電源</text><text x="200" y="124">工件（−）</text><text x="110" y="40">爐體（＋）</text><text x="160" y="76" fill="var(--accent)">輝光放電</text></g>
+    </svg>
+    <figcaption>圖 9-17　離子氮化</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>比較</th><th>滲碳</th><th>氮化</th></tr>
+    <tr><td>材料</td><td>低碳鋼、低碳合金鋼</td><td>含 Al、Cr、Mo 的氮化鋼（先調質）</td></tr>
+    <tr><td>溫度</td><td>850–950 °C（沃斯田鐵區）</td><td>500–550 °C（A₁ 以下，無相變）</td></tr>
+    <tr><td>後處理</td><td>須淬火、回火</td><td>不需淬火</td></tr>
+    <tr><td>硬化層</td><td>較厚（約 0.5–2 mm）</td><td>較薄（約 0.1–0.6 mm），但硬度更高（約 HV 900–1200）</td></tr>
+    <tr><td>變形</td><td>較大</td><td>極小，可在精加工後處理</td></tr>
+    <tr><td>其他</td><td>可承受較大接觸負荷</td><td>表面高壓縮殘留應力，疲勞限高；耐蝕、耐熱軟化；處理時間長</td></tr>
+  </table></div>
+
+  <h3>三、表層披覆</h3>
+  <h4>（一）物理氣相沉積 PVD</h4>
+  <p>在真空中以物理方式使鍍膜材料變成原子、分子或離子，飛到工件表面凝結成薄膜，工件溫度約 200–500 °C。</p>
+  <figure>
+    <svg viewBox="0 0 640 240" role="img" aria-label="三種 PVD：真空蒸鍍以電子束或電阻加熱使材料蒸發沉積於工件；濺鍍以氬離子撞擊靶材使原子濺出沉積；離子鍍膜使蒸發物在電漿中離子化並被負偏壓工件吸引">
+      <g transform="translate(10 10)">
+        <path d="M10 10 H190 V190 H10 Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="60" y="24" width="80" height="16" fill="var(--steel)" stroke="var(--ink)"/>
+        <path d="M70 168 h60 v14 h-60z" fill="var(--accent)" stroke="var(--ink)"/>
+        <path d="M100 160 L80 48 M100 160 L100 48 M100 160 L120 48" stroke="var(--accent)" stroke-dasharray="3 4"/>
+        <path d="M20 140 Q60 110 90 162" fill="none" stroke="var(--warn)" stroke-width="2"/>
+        <g font-size="11" fill="var(--ink)"><text x="70" y="20">工件</text><text x="132" y="160">鍍材</text><text x="16" y="132" fill="var(--warn)">電子束</text></g>
+        <text x="50" y="214" font-size="12.5" fill="var(--ink)">(a) 真空蒸鍍</text>
+      </g>
+      <g transform="translate(220 10)">
+        <path d="M10 10 H190 V190 H10 Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="60" y="24" width="80" height="16" fill="var(--steel)" stroke="var(--ink)"/>
+        <rect x="50" y="166" width="100" height="16" fill="var(--accent)" stroke="var(--ink)"/>
+        <g fill="var(--fix)"><circle cx="60" cy="120" r="4"/><circle cx="100" cy="100" r="4"/><circle cx="140" cy="126" r="4"/></g>
+        <path d="M60 126 l4 32 M100 106 l0 52 M140 132 l-4 26" stroke="var(--fix)" stroke-width="1.5"/>
+        <path d="M80 160 L74 50 M120 160 L126 50" stroke="var(--accent)" stroke-dasharray="3 4"/>
+        <g font-size="11" fill="var(--ink)"><text x="70" y="20">工件（＋）</text><text x="14" y="160" font-size="10.5">靶材（−）</text><text x="150" y="110" fill="var(--fix)">Ar⁺</text></g>
+        <text x="66" y="214" font-size="12.5" fill="var(--ink)">(b) 濺鍍</text>
+      </g>
+      <g transform="translate(430 10)">
+        <path d="M10 10 H190 V190 H10 Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="60" y="24" width="80" height="16" fill="var(--steel)" stroke="var(--ink)"/>
+        <path d="M70 168 h60 v14 h-60z" fill="var(--accent)" stroke="var(--ink)"/>
+        <ellipse cx="100" cy="100" rx="70" ry="40" fill="var(--accent)" opacity=".15"/>
+        <path d="M100 160 L100 48" stroke="var(--accent)" stroke-width="2"/><path d="M94 56 l6 -10 6 10z" fill="var(--accent)"/>
+        <g font-size="11" fill="var(--ink)"><text x="70" y="20">工件（負偏壓）</text><text x="132" y="160">鍍材</text><text x="24" y="104" fill="var(--accent)">電漿</text></g>
+        <text x="56" y="214" font-size="12.5" fill="var(--ink)">(c) 離子鍍膜</text>
+      </g>
+    </svg>
+    <figcaption>圖 9-18　PVD 的三種方式</figcaption>
+  </figure>
+  <div class="cards">
+    <div class="card"><h4>真空蒸鍍</h4><p>高真空中以電阻或電子束加熱鍍材使其蒸發，蒸氣直線飛到工件凝結。最簡單普及；真空度愈高膜質愈好，但附著力較弱、有陰影效應。</p></div>
+    <div class="card"><h4>濺鍍</h4><p>通入低壓氬氣，<b>鍍材作靶（陰極）</b>，加高壓使氬氣輝光放電，Ar⁺ 撞擊靶材把原子濺出，沉積在工件上。可鍍高熔點金屬與合金，成分容易保持，膜緻密均勻。</p></div>
+    <div class="card"><h4>離子鍍膜</h4><p>蒸發的鍍材在電漿中離子化，被<b>負偏壓的工件</b>加速吸引而撞擊沉積，附著力最好、繞鍍性佳。刀具 TiN、TiAlN 塗層多用此法。</p></div>
+  </div>
+
+  <h4>（二）化學氣相沉積 CVD</h4>
+  <figure>
+    <svg viewBox="0 0 560 190" role="img" aria-label="CVD：反應氣體通入加熱的反應室，在工件表面發生化學反應沉積成膜，副產物由真空泵抽出">
+      <rect x="150" y="30" width="260" height="120" rx="8" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.5"/>
+      <rect x="150" y="30" width="260" height="120" rx="8" fill="var(--warn)" opacity=".08"/>
+      <rect x="230" y="96" width="100" height="30" fill="var(--steel)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="230" y="90" width="100" height="6" fill="var(--accent)"/>
+      <path d="M40 90 H150" stroke="var(--fix)" stroke-width="3"/><path d="M142 84 l10 6 -10 6z" fill="var(--fix)"/>
+      <path d="M410 90 H520" stroke="var(--muted)" stroke-width="3"/><path d="M512 84 l10 6 -10 6z" fill="var(--muted)"/>
+      <g stroke="var(--warn)" stroke-width="2"><path d="M170 160 v14 M200 160 v14 M230 160 v14 M260 160 v14 M290 160 v14 M320 160 v14 M350 160 v14 M380 160 v14"/></g>
+      <g font-size="12" fill="var(--ink)"><text x="36" y="78" fill="var(--fix)">反應氣體</text><text x="430" y="78" fill="var(--muted)">抽氣／副產物</text><text x="252" y="116">工件</text><text x="236" y="82" fill="var(--accent)">沉積膜</text><text x="200" y="22">反應室（加熱）</text></g>
+    </svg>
+    <figcaption>圖 9-19　CVD</figcaption>
+  </figure>
+  <p>將工件置於加熱的反應室，通入含鍍膜元素的反應氣體（如 TiCl₄ + N₂ + H₂），在工件表面發生<b>化學反應</b>而沉積成膜（如 TiN、TiC、Al₂O₃）。</p>
+  <div class="tbl"><table>
+    <tr><th>比較</th><th>PVD</th><th>CVD</th></tr>
+    <tr><td>原理</td><td>物理蒸發、濺射後凝結</td><td>氣相化學反應生成</td></tr>
+    <tr><td>處理溫度</td><td>低，約 200–500 °C</td><td>高，約 800–1100 °C（電漿輔助 PECVD 可降低）</td></tr>
+    <tr><td>附著力與繞鍍性</td><td>直線性，複雜形狀較差</td><td>附著力好，可均勻鍍覆複雜形狀與孔內</td></tr>
+    <tr><td>對基材影響</td><td>小，可用於已淬硬的高速鋼與精密件</td><td>高溫使淬火鋼軟化、變形，精密件需再熱處理；適合碳化物刀片</td></tr>
+    <tr><td>環保</td><td>乾式、無毒</td><td>反應氣體與副產物常有毒或腐蝕性</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ 試題 ============ -->
+<section id="exam">
+  <h2><span class="no">試題</span>歷屆試題</h2>
+  <p class="hint">點選題目展開作答要點</p>
+
+  <details><summary><span class="qn">01</span><span>繪圖說明碳鋼表面感應硬化法的加熱原理和操作程序。</span><span class="src">鐵路員級</span></summary>
+    <div class="ans">見圖 9-11。原理：高頻交流電通過感應線圈產生交變磁場，在工件表層感應渦電流，因集膚效應集中於表面，依焦耳熱迅速加熱到沃斯田化溫度；頻率愈高加熱層愈薄。程序：選中碳鋼（≥ 0.4% C）並先調質 → 依硬化深度選頻率與線圈 → 工件穿過線圈（或線圈移動）連續加熱 → 緊隨噴水急冷成麻田散鐵 → 低溫回火消除應力。</div></details>
+
+  <details><summary><span class="qn">02</span><span>分別說明滲碳法和氮化法的硬化處理過程、硬度分布及硬化深度。</span><span class="src">關務三等</span></summary>
+    <div class="ans">滲碳：低碳鋼於 850–950 °C 在固體、液體或氣體滲碳劑中使碳擴散入表層，再淬火、低溫回火；硬度由表面約 HRC 60 隨含碳量下降逐漸降至心部，硬化層約 0.5–2 mm。氮化：含 Al、Cr、Mo 的鋼先調質，於 500–550 °C 氨氣中長時間加熱，形成氮化物，不需淬火；表面硬度更高（約 HV 900–1200），但向內陡降，層深約 0.1–0.6 mm。見 9-3 節比較表。</div></details>
+
+  <details><summary><span class="qn">03</span><span>說明 VLSI 製程中 PVD 及 CVD 兩種薄膜製程及其優缺點。</span><span class="src">鐵路員級</span></summary>
+    <div class="ans">PVD：真空中以蒸鍍或濺鍍使靶材原子沉積（如鋁、銅導線層、阻障層）；優點為低溫、膜純度高、無毒、可鍍金屬與合金；缺點為階梯覆蓋差、深孔填充不佳。CVD：反應氣體在晶圓表面化學反應成膜（如 SiO₂、Si₃N₄、多晶矽、鎢）；優點為階梯覆蓋與均勻性好、可大量批次、膜成分易調；缺點為溫度較高、氣體有毒、可能有雜質，可用 LPCVD、PECVD 降低溫度。</div></details>
+
+  <details><summary><span class="qn">04</span><span>詳述珠擊以及滲碳法在表面處理上的重要目的。</span><span class="src">機械技師</span></summary>
+    <div class="ans">珠擊：以高速鋼珠撞擊表面，使表層塑性變形並產生壓縮殘留應力與加工硬化，抵消外加拉應力，<b>大幅提高疲勞強度</b>並抑制應力腐蝕裂縫，用於彈簧、齒輪、曲軸。滲碳：提高低碳鋼表層含碳量，淬火後<b>表面硬而耐磨、心部保持韌性</b>，承受衝擊與接觸疲勞，用於齒輪、凸輪、活塞銷；淬火後表層亦有壓縮應力，有利疲勞強度。</div></details>
+
+  <details><summary><span class="qn">05</span><span>說明經嚴重塑性加工的金屬在退火時發生再結晶的原因與過程。</span><span class="src">地特四等</span></summary>
+    <div class="ans">原因：冷加工使差排密度大增，晶粒內儲存大量應變能，處於不穩定狀態，成為再結晶的驅動力；加工度愈大，再結晶溫度愈低。過程：① 回復——空位與差排重新排列，內應力降低，硬度變化不大；② 再結晶——在應變能高處形成無應變的新晶核並成長取代變形晶粒，強度、硬度下降，延性恢復；③ 晶粒成長——為降低晶界能，晶粒合併長大。</div></details>
+
+  <details><summary><span class="qn">06</span><span>試述退火、回火及正常化的差異。</span><span class="src">鐵路員級</span></summary>
+    <div class="ans">退火：加熱到依目的而定的溫度後<b>爐冷</b>，目的為軟化、均質化、消除應力；組織為粗波來鐵或球化碳化物。正常化：加熱到 A₃／A<sub>cm</sub> 以上 30–50 °C 後<b>空冷</b>，得細波來鐵，細化晶粒、強度略高於退火。回火：<b>淬火後</b>再加熱到 A₁ 以下保溫冷卻，消除淬火應力、調整硬度與韌性；退火與正常化都經沃斯田化，回火則不經相變。</div></details>
+
+  <details><summary><span class="qn">07</span><span>何謂熱處理？其功能及重要步驟為何？</span><span class="src">高考三等</span></summary>
+    <div class="ans">熱處理是在固態下控制加熱溫度、保溫時間與冷卻速率，改變金屬組織以得到所需性質的方法。功能：軟化以利加工、硬化強化、提高韌性、消除殘留應力、細化晶粒、均質化、改善切削性與耐磨性。步驟：加熱（控制升溫速率避免熱應力）→ 保溫（使組織均勻變態，如沃斯田化）→ 冷卻（以爐冷、空冷、油冷、水冷決定組織），必要時再回火。</div></details>
+
+  <details><summary><span class="qn">08</span><span>何謂 CVD 及 PVD？其加工原理為何？</span><span class="src">高考三等</span></summary>
+    <div class="ans">PVD（物理氣相沉積）：真空中以蒸發、濺射或離子化等物理方式使鍍材成為氣相粒子，直線飛到工件表面凝結成膜，溫度約 200–500 °C。CVD（化學氣相沉積）：反應氣體送入加熱反應室，在工件表面發生化學反應生成固態膜（如 TiCl₄ + ½N₂ + 2H₂ → TiN + 4HCl），溫度約 800–1100 °C。見 9-3 節比較表。</div></details>
+
+  <details><summary><span class="qn">09</span><span>金屬熱處理如何改變材料性質？</span><span class="src">關務四等</span></summary>
+    <div class="ans">藉由相變態與擴散改變微觀組織：加熱到 A₁／A₃ 以上形成沃斯田鐵，冷卻速率決定產物——緩冷得粗波來鐵（軟、韌），空冷得細波來鐵，中速得變韌鐵，急冷得麻田散鐵（最硬）；回火使碳化物析出、內應力消除。另外再結晶退火藉晶粒重生消除加工硬化，均質化退火靠擴散消除偏析，時效硬化靠析出物阻擋差排。</div></details>
+
+  <details><summary><span class="qn">10</span><span>說明火焰硬化熱處理製程及其增加材料表面硬度的機制。</span><span class="src">關務三等</span></summary>
+    <div class="ans">製程：以氧乙炔等高溫火焰迅速加熱中碳鋼（0.35–0.55% C）或鑄鐵表層到沃斯田化溫度，緊接著噴水急冷；依工件形狀採固定式、回轉式、線形移動式或回轉移動式，之後低溫回火。機制：只有表層被加熱到 A₃ 以上成為沃斯田鐵，急冷時以大於臨界冷卻速率冷卻轉變為<b>麻田散鐵</b>而變硬；心部未達變態溫度，維持原有韌性，形成外硬內韌，且表層體積膨脹產生壓縮殘留應力。</div></details>
+</section>
+
+</main>
+</div>
+
+<script src="assets/chapter.js"></script>
+</body>
+</html>

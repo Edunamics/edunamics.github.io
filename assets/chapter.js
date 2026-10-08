@@ -9,7 +9,9 @@
     document.querySelectorAll('.tree').forEach(function(t){
       if(!t.offsetParent)return;
       t.classList.remove('as-list');
-      if(t.scrollWidth>t.parentElement.clientWidth+2)t.classList.add('as-list');
+      var pe=t.parentElement,cs=getComputedStyle(pe);
+      var avail=pe.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
+      if(t.scrollWidth>avail+1)t.classList.add('as-list');
     });
   }
 
