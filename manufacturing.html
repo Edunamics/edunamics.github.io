@@ -4,19 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>機械製造學</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: 工程圖紙 — 圖框＋標題欄開場，製程地圖分群，章節卡依製程家族排列，右下角圖面標題欄收尾 */
 @font-face{font-family:"HanWangHeiHeavy";src:url("fonts/HanWangHeiHeavy-subset.woff2") format("woff2");font-display:swap}
+html{font-synthesis:none}
 :root{
   --bg:#FBF8F5; --paper:#FFFFFF; --ink:#2A1D14; --muted:#6E5D50;
   --accent:#A84A0C; --accent-soft:#F6E6D8; --line:#E6D5C7; --grid:rgba(168,74,12,.07);
   --exam:#1D6B70; --ok:#2E7D4F; --ok-soft:#E5F2EA;
-  --f-site:"HanWangHeiHeavy","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
-  --f-head:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
-  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
-  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --f-site:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-head:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-body:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#1A120C; --paper:#231810; --ink:#F3E9E1; --muted:#B3A397;
@@ -132,7 +131,7 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
     </div>
     <div class="facts" aria-label="科目概況">
       <div><b>9</b><span>章</span></div>
-      <div><b>374</b><span>頁講義</span></div>
+      <div><b>4</b><span>章已上線</span></div>
       <div><b>148</b><span>題歷屆試題</span></div>
     </div>
   </section>
@@ -165,11 +164,11 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
         <!-- 成形 -->
         <rect x="322" y="68" width="430" height="54" fill="var(--paper)" stroke="var(--accent)"/>
         <text x="338" y="100" font-size="15" font-weight="700" fill="var(--accent)">成形加工</text>
-        <text x="420" y="100" font-size="14" fill="var(--ink)">CH 2 鑄造　·　CH 3 粉末冶金　·　CH 5 塑性加工</text>
+        <text x="420" y="100" font-size="14" fill="var(--ink)">CH2 鑄造 · CH3 粉末冶金 · CH5 塑性加工</text>
         <!-- 去除 -->
         <rect x="322" y="138" width="430" height="54" fill="var(--paper)" stroke="var(--accent)"/>
         <text x="338" y="170" font-size="15" font-weight="700" fill="var(--accent)">去除加工</text>
-        <text x="420" y="170" font-size="14" fill="var(--ink)">CH 4 切削　·　CH 7 非傳統加工</text>
+        <text x="420" y="170" font-size="14" fill="var(--ink)">CH4 切削 · CH7 非傳統加工</text>
         <!-- 接合 -->
         <rect x="322" y="208" width="430" height="54" fill="var(--paper)" stroke="var(--accent)"/>
         <text x="338" y="240" font-size="15" font-weight="700" fill="var(--accent)">接合</text>
@@ -187,7 +186,7 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
   <section aria-labelledby="ch-h">
     <div class="sec-head">
       <h2 id="ch-h">章節</h2>
-      <p>依製程家族分組；頁碼為講義印刷頁碼</p>
+      <p>依製程家族分組，點選講義進入各章</p>
     </div>
 
     <div class="family">
@@ -197,7 +196,7 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
           <div class="num">01<small>CH</small></div>
           <h3>緒論 <span class="pill on">已上線</span></h3>
           <p>製造的演進、設計與材料與製造的關係、製造系統、加工方法分類、精實生產、碳足跡與碳中和。</p>
-          <div class="meta"><span>p.1–18</span><span class="exam">試題 8</span></div>
+          <div class="meta"><span class="exam">試題 8</span></div>
           <div class="links"><a href="ch01.html">講義</a></div>
         </article>
       </div>
@@ -210,21 +209,21 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
           <div class="num">02<small>CH</small></div>
           <h3>鑄造 <span class="pill on">已上線</span></h3>
           <p>凝固理論、Chvorinov 定則、砂模鑄造、各種特殊鑄造、單晶渦輪葉片。</p>
-          <div class="meta"><span>p.19–65</span><span class="exam">試題 25</span></div>
+          <div class="meta"><span class="exam">試題 25</span></div>
           <div class="links"><a href="ch02.html">講義</a></div>
         </article>
         <article class="ch">
           <div class="num">03<small>CH</small></div>
           <h3>粉末冶金 <span class="pill on">已上線</span></h3>
           <p>製粉、成型、HIP 與 CIP、金屬射出成形 MIM、燒結，以及 SLS、3DP、SLA 積層製造。</p>
-          <div class="meta"><span>p.67–89</span><span class="exam">試題 10</span></div>
+          <div class="meta"><span class="exam">試題 10</span></div>
           <div class="links"><a href="ch03.html">講義</a></div>
         </article>
         <article class="ch">
           <div class="num">05<small>CH</small></div>
           <h3>塑性加工 <span class="pill">製作中</span></h3>
           <p>輥軋、鍛造、擠製、抽拉、鈑金成形與高能率成形，熱作與冷作以再結晶溫度為界。</p>
-          <div class="meta"><span>p.167–237</span><span class="exam">試題 25</span></div>
+          <div class="meta"><span class="exam">試題 25</span></div>
         </article>
       </div>
     </div>
@@ -236,14 +235,14 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
           <div class="num">04<small>CH</small></div>
           <h3>切削 <span class="pill on">已上線</span></h3>
           <p>Merchant 切削力分析、刀具磨耗與 Taylor 刀具壽命方程式、刀具材料、各類工具機、磨削。</p>
-          <div class="meta"><span>p.91–165</span><span class="exam">試題 25</span></div>
+          <div class="meta"><span class="exam">試題 25</span></div>
           <div class="links"><a href="ch04.html">講義</a></div>
         </article>
         <article class="ch">
           <div class="num">07<small>CH</small></div>
           <h3>非傳統加工 <span class="pill">製作中</span></h3>
           <p>USM、AJM、WJM、AFM、ECM、EDM、EBM、LBM、PAM 與快速原型 RP。</p>
-          <div class="meta"><span>p.287–320</span><span class="exam">試題 10</span></div>
+          <div class="meta"><span class="exam">試題 10</span></div>
         </article>
       </div>
     </div>
@@ -255,7 +254,7 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
           <div class="num">06<small>CH</small></div>
           <h3>接合銲接 <span class="pill">製作中</span></h3>
           <p>電阻銲、氣銲、電子束銲 EBW、雷射銲 LBW、鋁熱銲，以及各式電弧銲與銲條規格。</p>
-          <div class="meta"><span>p.239–285</span><span class="exam">試題 25</span></div>
+          <div class="meta"><span class="exam">試題 25</span></div>
         </article>
       </div>
     </div>
@@ -267,13 +266,13 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
           <div class="num">08<small>CH</small></div>
           <h3>機械材料 <span class="pill">製作中</span></h3>
           <p>材料性質、晶體結構與米勒指數、強化機制、鐵碳平衡圖、CCT 與 TTT 曲線。</p>
-          <div class="meta"><span>p.321–351</span><span class="exam">試題 10</span></div>
+          <div class="meta"><span class="exam">試題 10</span></div>
         </article>
         <article class="ch">
           <div class="num">09<small>CH</small></div>
           <h3>材料處理 <span class="pill">製作中</span></h3>
           <p>退火、正常化、淬火、回火、表面硬化，以及 PVD 與 CVD 鍍膜。</p>
-          <div class="meta"><span>p.353–374</span><span class="exam">試題 10</span></div>
+          <div class="meta"><span class="exam">試題 10</span></div>
         </article>
       </div>
     </div>

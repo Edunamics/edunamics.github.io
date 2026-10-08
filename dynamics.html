@@ -4,19 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>動力學｜功能原理</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&amp;family=Noto+Serif+TC:wght@600;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
 <style>
+@font-face{font-family:"HanWangHeiHeavy";src:url("fonts/HanWangHeiHeavy-subset.woff2") format("woff2");font-display:swap}
+html{font-synthesis:none}
 body{margin:0;background:#FAFAF7}
 a{color:#0F6B3A}a:hover{color:#094526}
 </style>
 </head>
 <body>
-<div style="font-family: 'Noto Sans TC', sans-serif; color: #2D3436; background: #FAFAF7; line-height: 1.8; font-size: 17px">
+<div style="font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; color: #2D3436; background: #FAFAF7; line-height: 1.8; font-size: 17px">
 
 <header style="background: #0F6B3A; color: #FFFFFF">
 <nav style="max-width: 1120px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
-<a href="index.html" style="color: #FFFFFF; text-decoration: none; font-family: 'Noto Serif TC', serif; font-weight: 900; font-size: 22px; letter-spacing: 2px">知識動力場</a>
+<a href="index.html" style="color: #FFFFFF; text-decoration: none; font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-weight: 900; font-size: 22px; letter-spacing: 2px">知識動力場</a>
 <div style="display: flex; flex-wrap: wrap; gap: 8px">
 <a href="manufacturing.html" style="color: #D3EBDC; text-decoration: none; padding: 10px 14px; font-size: 15px">機械製造</a>
 <a href="statics.html" style="color: #D3EBDC; text-decoration: none; padding: 10px 14px; font-size: 15px">靜力學</a>
@@ -25,8 +25,8 @@ a{color:#0F6B3A}a:hover{color:#094526}
 </div>
 </nav>
 <div id="top" style="max-width: 1120px; margin: 0 auto; padding: 48px 24px 56px; background-image: linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px); background-size: 32px 32px">
-<div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #9FD3B3; letter-spacing: 2px">CH.04 質點動力學 ／ 第 2 節</div>
-<h1 style="margin: 8px 0 12px; font-family: 'Noto Serif TC', serif; font-weight: 900; font-size: 44px; line-height: 1.3">功能原理</h1>
+<div style="font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 14px; color: #9FD3B3; letter-spacing: 2px">CH.04 質點動力學 ／ 第 2 節</div>
+<h1 style="margin: 8px 0 12px; font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-weight: 900; font-size: 44px; line-height: 1.3">功能原理</h1>
 <p style="margin: 0; max-width: 640px; color: #D3EBDC; font-size: 18px">題目問「速度」與「位置」的關係時，不必先求加速度，直接用能量守恆最快。</p>
 </div>
 </header>
@@ -51,12 +51,12 @@ a{color:#0F6B3A}a:hover{color:#094526}
 <article style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 32px">
 
 <section id="s1" style="display: flex; flex-direction: column; gap: 16px">
-<h2 style="margin: 0; font-family: 'Noto Serif TC', serif; font-size: 30px; color: #0F6B3A">1　功與動能</h2>
+<h2 style="margin: 0; font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 30px; color: #0F6B3A">1　功與動能</h2>
 <p style="margin: 0">作用在物體上的總功，等於物體動能的變化量。這個關係由牛頓第二定律 F = ma 對位移積分而來。</p>
 <div style="background: #E4F2E9; border-radius: 12px; overflow: hidden">
 <div style="background: #0F6B3A; color: #FFFFFF; padding: 8px 20px; font-size: 14px; font-weight: 700; letter-spacing: 1px">定義・公式</div>
 <div style="padding: 20px 24px; display: flex; flex-direction: column; gap: 12px">
-<div style="font-family: 'JetBrains Mono', monospace; font-size: 28px; color: #0F6B3A; text-align: center; padding: 12px 0">T<sub>1</sub> + U<sub>1→2</sub> = T<sub>2</sub></div>
+<div style="font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 28px; color: #0F6B3A; text-align: center; padding: 12px 0">T<sub>1</sub> + U<sub>1→2</sub> = T<sub>2</sub></div>
 <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; font-size: 15px">
 <div style="background: #FFFFFF; border-radius: 8px; padding: 12px"><strong style="color: #0F6B3A">T</strong>　動能<br>½ m v²（J）</div>
 <div style="background: #FFFFFF; border-radius: 8px; padding: 12px"><strong style="color: #0F6B3A">U</strong>　外力做功<br>F·s（J）</div>
@@ -67,7 +67,7 @@ a{color:#0F6B3A}a:hover{color:#094526}
 </section>
 
 <section id="s2" style="display: flex; flex-direction: column; gap: 16px">
-<h2 style="margin: 0; font-family: 'Noto Serif TC', serif; font-size: 30px; color: #0F6B3A">2　解題方法選擇</h2>
+<h2 style="margin: 0; font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 30px; color: #0F6B3A">2　解題方法選擇</h2>
 <div style="background: #FDF1E5; border-radius: 12px; overflow: hidden">
 <div style="background: #B35A0F; color: #FFFFFF; padding: 8px 20px; font-size: 14px; font-weight: 700; letter-spacing: 1px">考試重點</div>
 <div style="padding: 20px 24px; display: flex; flex-direction: column; gap: 8px">
@@ -85,7 +85,7 @@ a{color:#0F6B3A}a:hover{color:#094526}
 </section>
 
 <section id="s3" style="display: flex; flex-direction: column; gap: 16px">
-<h2 style="margin: 0; font-family: 'Noto Serif TC', serif; font-size: 30px; color: #0F6B3A">3　例題演練</h2>
+<h2 style="margin: 0; font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 30px; color: #0F6B3A">3　例題演練</h2>
 <div style="background: #FFFFFF; border: 1px solid #DCE3EA; border-radius: 12px; padding: 20px 24px">
 <div style="font-weight: 700; margin-bottom: 4px">【例題】</div>
 質量 2 kg 的滑塊自光滑斜面頂端由靜止釋放，斜面垂直高度 5 m，求滑塊到達底部時的速度（g = 9.81 m/s²）。
@@ -94,15 +94,15 @@ a{color:#0F6B3A}a:hover{color:#094526}
 <div style="background: #1D6B70; color: #FFFFFF; padding: 8px 20px; font-size: 14px; font-weight: 700; letter-spacing: 1px">解答</div>
 <div style="padding: 20px 24px; display: flex; flex-direction: column; gap: 8px">
 <div>斜面光滑，只有重力做功，U = mgh：</div>
-<div style="font-family: 'JetBrains Mono', monospace; font-size: 18px">0 + 2 × 9.81 × 5 = ½ × 2 × v²</div>
-<div style="font-family: 'JetBrains Mono', monospace; font-size: 18px">v = √(2gh) = √98.1 ≈ 9.90 m/s</div>
+<div style="font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 18px">0 + 2 × 9.81 × 5 = ½ × 2 × v²</div>
+<div style="font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 18px">v = √(2gh) = √98.1 ≈ 9.90 m/s</div>
 <div>結果與質量、斜面角度都無關，只取決於高度差。</div>
 </div>
 </div>
 </section>
 
 <section id="s4" style="display: flex; flex-direction: column; gap: 16px">
-<h2 style="margin: 0; font-family: 'Noto Serif TC', serif; font-size: 30px; color: #0F6B3A">4　易錯觀念</h2>
+<h2 style="margin: 0; font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 30px; color: #0F6B3A">4　易錯觀念</h2>
 <div style="background: #FBEAEA; border-radius: 12px; overflow: hidden">
 <div style="background: #C62828; color: #FFFFFF; padding: 8px 20px; font-size: 14px; font-weight: 700; letter-spacing: 1px">常見錯誤</div>
 <ul style="margin: 0; padding: 20px 24px 20px 44px; display: flex; flex-direction: column; gap: 8px">
