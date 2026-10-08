@@ -37,7 +37,7 @@ a{color:inherit}
 /* 頂列 */
 .top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-site);font-weight:900;font-size:18px;color:var(--accent)}
-.brand svg{width:28px;height:28px}
+.brand svg{width:32px;height:32px;flex-shrink:0}
 .subjects{display:flex;flex-wrap:wrap;gap:6px;font-size:14px;font-family:var(--f-site)}
 .subjects a{padding:4px 12px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--muted);background:var(--paper)}
 .subjects a[aria-current]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
@@ -115,7 +115,7 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
 <div class="wrap">
   <header class="top">
     <a class="brand" href="index.html" aria-label="回知識動力場首頁">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="7" fill="var(--accent)"/><path d="M16 7v18M7 16h18" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="16" r="5.5" fill="none" stroke="var(--bg)" stroke-width="2.4"/></svg>
+      <svg viewBox="0 0 120 120" width="32" height="32" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 18V102M38 18V102M22 18L38 42L22 66L38 90M38 18H98V34H38M38 52H86V68H38M38 86H98V102H38M22 18H38M22 102H38"/></svg>
       知識動力場
     </a>
     <nav class="subjects" aria-label="科目">
