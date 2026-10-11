@@ -3,133 +3,368 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>材料力學｜應力與應變</title>
+<title>材料力學</title>
 <style>
+/* Layout: 工程圖紙 — 圖框＋標題欄開場，解題地圖（基礎→四種負載→強度與勁度→進階），章節卡依主題分組，右下角圖面標題欄收尾 */
 @font-face{font-family:"HanWangHeiHeavy";src:url("fonts/HanWangHeiHeavy-subset.woff2") format("woff2");font-display:swap}
 html{font-synthesis:none}
-body{margin:0;background:#FAFAF7}
-a{color:#4B2A9A}a:hover{color:#311A6B}
+:root{
+  --bg:#F8F6FB; --paper:#FFFFFF; --ink:#1E1830; --muted:#625A76;
+  --accent:#4B2A9A; --accent-soft:#EEE8F8; --line:#DDD5EC; --grid:rgba(75,42,154,.07);
+  --exam:#B35A0F; --ok:#2E7D4F; --ok-soft:#E5F2EA;
+  --f-site:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-head:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-body:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#120E1C; --paper:#1B1529; --ink:#ECE6F7; --muted:#ABA0C4;
+  --accent:#B79CF0; --accent-soft:#2A2040; --line:#352A4D; --grid:rgba(183,156,240,.07);
+  --exam:#F2A65A; --ok:#7CC79A; --ok-soft:#18301F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#120E1C; --paper:#1B1529; --ink:#ECE6F7; --muted:#ABA0C4;
+  --accent:#B79CF0; --accent-soft:#2A2040; --line:#352A4D; --grid:rgba(183,156,240,.07);
+  --exam:#F2A65A; --ok:#7CC79A; --ok-soft:#18301F; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:24px 48px;display:flex;flex-direction:column;gap:40px}
+
+/* 頂列 */
+.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-site);font-weight:900;font-size:18px;color:var(--accent)}
+.brand svg{width:32px;height:32px;flex-shrink:0}
+.subjects{display:flex;flex-wrap:wrap;gap:6px;font-size:14px;font-family:var(--f-site)}
+.subjects a{padding:4px 12px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--muted);background:var(--paper)}
+.subjects a[aria-current]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.subjects a:hover{border-color:var(--accent);color:var(--accent)}
+.subjects a[aria-current]:hover{color:var(--bg)}
+
+/* 開場：圖框 */
+.hero{position:relative;border:2px solid var(--accent);background:var(--paper);padding:36px 32px 28px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px}
+.hero::before{content:"";position:absolute;inset:6px;border:1px solid var(--line);pointer-events:none}
+.eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase}
+h1{font-family:var(--f-head);font-weight:900;font-size:clamp(36px,6vw,60px);line-height:1.1;margin:8px 0 12px;text-wrap:balance}
+.lede{max-width:34em;color:var(--muted);margin:0}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);align-self:end}
+.facts div{padding:12px 14px;border-right:1px solid var(--line)}
+.facts div:last-child{border-right:0}
+.facts b{display:block;font-family:var(--f-mono);font-size:28px;font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.2}
+.facts span{font-size:13px;color:var(--muted)}
+
+/* 製程地圖 */
+h2{font-family:var(--f-head);font-weight:900;font-size:26px;margin:0;text-wrap:balance}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 16px;margin-bottom:16px}
+.sec-head p{margin:0;color:var(--muted);font-size:14px}
+.map{background:var(--paper);border:1px solid var(--line);padding:12px}
+.map svg{display:block;width:100%;height:auto}
+.map text{font-family:var(--f-body)}
+
+/* 章節 */
+.family{display:flex;flex-direction:column;gap:12px}
+.family + .family{margin-top:28px}
+.fam-label{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--accent);font-weight:700}
+.fam-label::after{content:"";flex:1;border-top:1px dashed var(--line)}
+.fam-label .mono{font-family:var(--f-mono);font-weight:400;letter-spacing:.08em}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.ch{display:grid;grid-template-columns:64px minmax(0,1fr);gap:0 16px;background:var(--paper);border:1px solid var(--line);padding:18px 18px 16px;text-decoration:none;color:var(--ink);transition:border-color .15s, transform .15s}
+a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
+.num{grid-row:1/4;font-family:var(--f-mono);font-size:40px;line-height:1;color:var(--accent);font-weight:500}
+.num small{display:block;font-size:11px;letter-spacing:.12em;color:var(--muted);margin-top:6px}
+.ch h3{font-family:var(--f-head);font-weight:900;font-size:21px;margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.ch p{margin:4px 0 10px;font-size:14px;color:var(--muted);line-height:1.6}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--f-mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.meta .exam{color:var(--exam)}
+.pill{font-family:var(--f-body);font-size:12px;font-weight:500;padding:1px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.pill.on{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
+.links{display:flex;gap:8px;margin-top:10px}
+.links a{font-size:13px;padding:3px 12px;border:1px solid var(--accent);color:var(--accent);text-decoration:none;border-radius:2px}
+.links a:hover{background:var(--accent);color:var(--bg)}
+
+/* 學習建議 */
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.tip{background:var(--paper);border:1px solid var(--line);padding:16px 18px}
+.tip b{display:block;font-family:var(--f-head);font-size:17px;margin-bottom:4px}
+.tip p{margin:0;font-size:14px;color:var(--muted)}
+.tip.exam b{color:var(--exam)}
+
+/* 標題欄 */
+.titleblock{margin-left:auto;width:min(100%,520px);border:2px solid var(--accent);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));font-size:12px;background:var(--paper)}
+.titleblock div{padding:6px 10px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.titleblock div:nth-child(4n){border-right:0}
+.titleblock .k{color:var(--muted);font-size:11px}
+.titleblock .v{font-family:var(--f-mono);color:var(--ink)}
+.titleblock .wide{grid-column:span 4;border-right:0;border-bottom:0;font-family:var(--f-head);font-weight:900;font-size:16px;color:var(--accent)}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;padding:28px 20px 20px}
+  .cards{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.ch.soon{background:transparent;border-style:dashed}
+.ch.soon .num{color:var(--muted)}
 </style>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 </head>
 <body>
-<div style="font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; color: #2D3436; background: #FAFAF7; line-height: 1.8; font-size: 17px">
 
-<header style="background: #4B2A9A; color: #FFFFFF">
-<nav style="max-width: 1120px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
-<a href="index.html" aria-label="回知識動力場首頁" style="display: flex; align-items: center; gap: 10px; color: #FFFFFF; text-decoration: none; font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-weight: 900; font-size: 22px; letter-spacing: 2px"><svg viewBox="0 0 120 120" width="32" height="32" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M22 18V102M38 18V102M22 18L38 42L22 66L38 90M38 18H98V34H38M38 52H86V68H38M38 86H98V102H38M22 18H38M22 102H38"/></svg>知識動力場</a>
-<div style="display: flex; flex-wrap: wrap; gap: 8px">
-<a href="manufacturing.html" style="color: #E1D8F3; text-decoration: none; padding: 10px 14px; font-size: 15px">機械製造</a>
-<a href="statics.html" style="color: #E1D8F3; text-decoration: none; padding: 10px 14px; font-size: 15px">靜力學</a>
-<a href="dynamics.html" style="color: #E1D8F3; text-decoration: none; padding: 10px 14px; font-size: 15px">動力學</a>
-<a href="#top" style="color: #FFFFFF; text-decoration: none; padding: 10px 14px; border-radius: 6px; background: rgba(255,255,255,0.14); font-size: 15px">材料力學</a>
-</div>
-</nav>
-<div id="top" style="max-width: 1120px; margin: 0 auto; padding: 48px 24px 56px; background-image: linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px); background-size: 32px 32px">
-<div style="font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 14px; color: #BFAEE8; letter-spacing: 2px">CH.01 應力與應變 ／ 第 1 節</div>
-<h1 style="margin: 8px 0 12px; font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-weight: 900; font-size: 44px; line-height: 1.3">軸向負載的應力與變形</h1>
-<p style="margin: 0; max-width: 640px; color: #E1D8F3; font-size: 18px">材料力學的第一步：構件受拉受壓時，內部承受多大應力、會伸長多少。</p>
-</div>
-</header>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="index.html" aria-label="回知識動力場首頁">
+      <svg viewBox="0 0 120 120" width="32" height="32" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 18V102M38 18V102M22 18L38 42L22 66L38 90M38 18H98V34H38M38 52H86V68H38M38 86H98V102H38M22 18H38M22 102H38"/></svg>
+      知識動力場
+    </a>
+    <nav class="subjects" aria-label="科目">
+      <a href="manufacturing.html">機械製造</a>
+      <a href="statics.html">靜力學</a>
+      <a href="dynamics.html">動力學</a>
+      <a href="mechanics-of-materials.html" aria-current="page">材料力學</a>
+    </nav>
+  </header>
 
-<main style="max-width: 1120px; margin: 0 auto; padding: 40px 24px 64px; display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Mechanics of Materials</div>
+      <h1>材料力學</h1>
+      <p class="lede">靜力學算出外力與反力，材料力學接著問：構件裡面受多大的力、會變形多少、會不會壞。本科目共十五章：先複習內力，建立應力、應變與材料組成律，再依序分析軸向、扭轉、彎曲與組合負載，最後以能量法、非線性分析與柱的挫曲收尾。每章附範例、計算題與國考選擇題。</p>
+    </div>
+    <div class="facts" aria-label="科目概況">
+      <div><b>15</b><span>章</span></div>
+      <div><b>58</b><span>節</span></div>
+      <div><b>237</b><span>道範例</span></div>
+    </div>
+  </section>
 
-<aside style="flex: 1 1 220px; max-width: 260px; display: flex; flex-direction: column; gap: 4px; font-size: 15px">
-<div style="font-weight: 700; color: #4B2A9A; margin-bottom: 8px">本節目錄</div>
-<a href="#s1" style="text-decoration: none; padding: 8px 12px; border-radius: 6px; background: #EEE8F8; color: #4B2A9A; font-weight: 500">1　應力與應變</a>
-<a href="#s2" style="text-decoration: none; padding: 8px 12px; border-radius: 6px; color: #4A5560">2　虎克定律</a>
-<a href="#s3" style="text-decoration: none; padding: 8px 12px; border-radius: 6px; color: #4A5560">3　例題演練</a>
-<a href="#s4" style="text-decoration: none; padding: 8px 12px; border-radius: 6px; color: #4A5560">4　易錯觀念</a>
-<div style="margin-top: 24px; padding: 16px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DCE3EA; display: flex; flex-direction: column; gap: 8px; font-size: 14px">
-<div style="font-weight: 700; color: #2D3436">色彩標示說明</div>
-<div style="display: flex; align-items: center; gap: 8px"><span style="width: 14px; height: 14px; border-radius: 3px; background: #4B2A9A"></span>定義／公式</div>
-<div style="display: flex; align-items: center; gap: 8px"><span style="width: 14px; height: 14px; border-radius: 3px; background: #2E7D32"></span>例題解答</div>
-<div style="display: flex; align-items: center; gap: 8px"><span style="width: 14px; height: 14px; border-radius: 3px; background: #E67E22"></span>考試重點</div>
-<div style="display: flex; align-items: center; gap: 8px"><span style="width: 14px; height: 14px; border-radius: 3px; background: #C62828"></span>常見錯誤</div>
-</div>
-</aside>
+  <section aria-labelledby="map-h">
+    <div class="sec-head">
+      <h2 id="map-h">解題地圖</h2>
+      <p>先打基礎，再逐一分析四種負載，最後深入能量與穩定</p>
+    </div>
+    <div class="map">
+      <svg viewBox="0 0 960 350" role="img" aria-label="解題地圖：第一到四章建立內力、應力、應變與材料組成律；第七章斷面性質提供慣性矩；接著分析軸向負載與薄壁容器、扭轉、樑的剪力彎矩與應力、組合應力、樑的變形，目標是求出應力與變形；最後以第十三章能量法、第十四章非線性分析、第十五章柱的挫曲深入">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--accent)"/></marker>
+        </defs>
+        <rect x="10" y="10" width="940" height="330" fill="none" stroke="var(--line)" stroke-dasharray="6 5"/>
+        <text x="24" y="34" font-size="14" fill="var(--accent)" font-weight="700">材料力學：構件內部的力與變形</text>
+        <!-- CH1–4 -->
+        <rect x="30" y="52" width="200" height="200" fill="var(--accent-soft)" stroke="var(--accent)"/>
+        <text x="130" y="80" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">基礎觀念</text>
+        <text x="130" y="110" text-anchor="middle" font-size="14" fill="var(--ink)">CH 1 內力複習</text>
+        <text x="130" y="134" text-anchor="middle" font-size="14" fill="var(--ink)">CH 2 應力</text>
+        <text x="130" y="158" text-anchor="middle" font-size="14" fill="var(--ink)">CH 3 應變</text>
+        <text x="130" y="182" text-anchor="middle" font-size="14" fill="var(--ink)">CH 4 材料組成律</text>
+        <text x="130" y="212" text-anchor="middle" font-size="12" fill="var(--muted)">力 → 應力，變形 → 應變</text>
+        <text x="130" y="234" text-anchor="middle" font-size="12" fill="var(--muted)">σ = Eε、τ = Gγ</text>
+        <!-- CH7 -->
+        <rect x="30" y="272" width="200" height="50" fill="var(--paper)" stroke="var(--accent)"/>
+        <text x="46" y="302" font-size="15" font-weight="700" fill="var(--accent)">斷面</text>
+        <text x="90" y="302" font-size="14" fill="var(--ink)">CH 7 形心與慣性矩</text>
+        <path d="M230 297 L280 297 L280 266" stroke="var(--accent)" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#ar)"/>
+        <text x="255" y="289" text-anchor="middle" font-size="12" fill="var(--muted)">I、J</text>
+        <!-- 分支 -->
+        <path d="M230 152 L280 152" stroke="var(--accent)" stroke-width="2" fill="none"/>
+        <path d="M280 76 L280 260" stroke="var(--accent)" stroke-width="2" fill="none"/>
+        <text x="255" y="143" text-anchor="middle" font-size="12" fill="var(--muted)">加負載</text>
+        <rect x="316" y="58" width="340" height="36" fill="var(--accent)"/>
+        <text x="330" y="82" font-size="15" font-weight="700" fill="var(--bg)">軸</text>
+        <text x="366" y="82" font-size="14" fill="var(--bg)">CH 5–6 軸向、薄壁容器</text>
+        <text x="642" y="82" text-anchor="end" font-size="12" fill="var(--bg)">δ = PL / AE</text>
+        <path d="M280 76 L312 76" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+        <path d="M656 76 L690 76" stroke="var(--accent)" stroke-width="2" fill="none"/>
+        <rect x="316" y="104" width="340" height="36" fill="var(--accent)"/>
+        <text x="330" y="128" font-size="15" font-weight="700" fill="var(--bg)">扭</text>
+        <text x="366" y="128" font-size="14" fill="var(--bg)">CH 8 扭轉</text>
+        <text x="642" y="128" text-anchor="end" font-size="12" fill="var(--bg)">τ = Tρ / J</text>
+        <path d="M280 122 L312 122" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+        <path d="M656 122 L690 122" stroke="var(--accent)" stroke-width="2" fill="none"/>
+        <rect x="316" y="150" width="340" height="36" fill="var(--accent)"/>
+        <text x="330" y="174" font-size="15" font-weight="700" fill="var(--bg)">彎</text>
+        <text x="366" y="174" font-size="14" fill="var(--bg)">CH 9–10 剪力彎矩與樑應力</text>
+        <text x="642" y="174" text-anchor="end" font-size="12" fill="var(--bg)">σ = My / I</text>
+        <path d="M280 168 L312 168" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+        <path d="M656 168 L690 168" stroke="var(--accent)" stroke-width="2" fill="none"/>
+        <rect x="316" y="196" width="340" height="36" fill="var(--accent)"/>
+        <text x="330" y="220" font-size="15" font-weight="700" fill="var(--bg)">合</text>
+        <text x="366" y="220" font-size="14" fill="var(--bg)">CH 11 組合應力</text>
+        <text x="642" y="220" text-anchor="end" font-size="12" fill="var(--bg)">破壞理論</text>
+        <path d="M280 214 L312 214" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+        <path d="M656 214 L690 214" stroke="var(--accent)" stroke-width="2" fill="none"/>
+        <rect x="316" y="242" width="340" height="36" fill="var(--accent)"/>
+        <text x="330" y="266" font-size="15" font-weight="700" fill="var(--bg)">撓</text>
+        <text x="366" y="266" font-size="14" fill="var(--bg)">CH 12 樑的彎曲變形</text>
+        <text x="642" y="266" text-anchor="end" font-size="12" fill="var(--bg)">EI·y″ = M</text>
+        <path d="M280 260 L312 260" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+        <path d="M656 260 L690 260" stroke="var(--accent)" stroke-width="2" fill="none"/>
+        <path d="M690 76 L690 260" stroke="var(--accent)" stroke-width="2" fill="none"/>
+        <path d="M690 168 L712 168" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+        <rect x="716" y="133" width="220" height="70" fill="var(--paper)" stroke="var(--accent)"/>
+        <text x="826" y="163" text-anchor="middle" font-size="15" font-weight="700" fill="var(--accent)">求出應力與變形</text>
+        <text x="826" y="187" text-anchor="middle" font-size="12" fill="var(--muted)">檢核強度與勁度</text>
+        <!-- 進階 -->
+        <path d="M826 203 L826 226" stroke="var(--accent)" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#ar)"/>
+        <text x="840" y="220" font-size="12" fill="var(--muted)">再深入</text>
+        <rect x="716" y="230" width="220" height="92" fill="var(--accent-soft)" stroke="var(--accent)"/>
+        <text x="732" y="256" font-size="14" fill="var(--ink)">CH 13 能量法</text>
+        <text x="920" y="256" text-anchor="end" font-size="12" fill="var(--muted)">卡氏定理</text>
+        <text x="732" y="282" font-size="14" fill="var(--ink)">CH 14 非線性</text>
+        <text x="920" y="282" text-anchor="end" font-size="12" fill="var(--muted)">塑性、殘留應力</text>
+        <text x="732" y="308" font-size="14" fill="var(--ink)">CH 15 柱</text>
+        <text x="920" y="308" text-anchor="end" font-size="12" fill="var(--muted)">挫曲</text>
+      </svg>
+    </div>
+  </section>
 
-<article style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 32px">
+  <section aria-labelledby="ch-h">
+    <div class="sec-head">
+      <h2 id="ch-h">章節</h2>
+      <p>依主題分組，講義陸續上線</p>
+    </div>
 
-<section id="s1" style="display: flex; flex-direction: column; gap: 16px">
-<h2 style="margin: 0; font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 30px; color: #4B2A9A">1　應力與應變</h2>
-<p style="margin: 0">應力是單位面積上的內力，應變是單位長度的變形量。兩者都和構件尺寸無關，才能拿來比較不同大小的零件。</p>
-<div style="background: #EEE8F8; border-radius: 12px; overflow: hidden">
-<div style="background: #4B2A9A; color: #FFFFFF; padding: 8px 20px; font-size: 14px; font-weight: 700; letter-spacing: 1px">定義・公式</div>
-<div style="padding: 20px 24px; display: flex; flex-direction: column; gap: 12px">
-<div style="font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 28px; color: #4B2A9A; text-align: center; padding: 12px 0">σ = P ／ A　　ε = δ ／ L</div>
-<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; font-size: 15px">
-<div style="background: #FFFFFF; border-radius: 8px; padding: 12px"><strong style="color: #4B2A9A">σ</strong>　正向應力，MPa（N/mm²）<br><strong style="color: #4B2A9A">P</strong>　軸向負載，N　<strong style="color: #4B2A9A">A</strong>　截面積，mm²</div>
-<div style="background: #FFFFFF; border-radius: 8px; padding: 12px"><strong style="color: #4B2A9A">ε</strong>　正向應變，無因次<br><strong style="color: #4B2A9A">δ</strong>　伸長量，mm　<strong style="color: #4B2A9A">L</strong>　原長，mm</div>
-</div>
-</div>
-</div>
-</section>
+    <div class="family">
+      <div class="fam-label">應力應變基礎 <span class="mono">FUNDAMENTALS</span></div>
+      <div class="cards">
+        <article class="ch soon">
+          <div class="num">01<small>CH</small></div>
+          <h3>力的基本觀念 <span class="pill">建置中</span></h3>
+          <p>力學分類與 SI 單位、力矩與力偶、自由體圖與支承反力、平面力系的平衡，以及用截面法求桿件的軸力、剪力與彎矩。</p>
+          <div class="meta"><span>4 節</span><span>11 道範例</span><span class="exam">12 題演練</span></div>
+        </article>
+        <article class="ch soon">
+          <div class="num">02<small>CH</small></div>
+          <h3>應力 <span class="pill">建置中</span></h3>
+          <p>正向應力、剪應力與安全係數，平面應力轉換、主應力與莫爾圓，三維應力張量、柯西公式與應力場。</p>
+          <div class="meta"><span>4 節</span><span>23 道範例</span><span class="exam">56 題演練</span></div>
+        </article>
+        <article class="ch soon">
+          <div class="num">03<small>CH</small></div>
+          <h3>應變分析 <span class="pill">建置中</span></h3>
+          <p>正向與剪應變、平面應變轉換、主應變與應變莫爾圓、應變規菊花座，以及應變張量與諧和方程式。</p>
+          <div class="meta"><span>4 節</span><span>11 道範例</span><span class="exam">11 題演練</span></div>
+        </article>
+        <article class="ch soon">
+          <div class="num">04<small>CH</small></div>
+          <h3>材料組成律 <span class="pill">建置中</span></h3>
+          <p>拉伸試驗與應力應變圖、延性與脆性、廣義虎克定律、體積變化與應變能密度，以及彈塑性材料與殘留應力。</p>
+          <div class="meta"><span>4 節</span><span>15 道範例</span><span class="exam">38 題演練</span></div>
+        </article>
+      </div>
+    </div>
 
-<section id="s2" style="display: flex; flex-direction: column; gap: 16px">
-<h2 style="margin: 0; font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 30px; color: #4B2A9A">2　虎克定律</h2>
-<p style="margin: 0">虎克（Robert Hooke）於 1678 年提出：在比例限度內，應力與應變成正比。比例常數 E 稱為彈性係數（楊氏係數）。</p>
-<div style="background: #EEE8F8; border-radius: 12px; overflow: hidden">
-<div style="background: #4B2A9A; color: #FFFFFF; padding: 8px 20px; font-size: 14px; font-weight: 700; letter-spacing: 1px">定義・公式</div>
-<div style="padding: 20px 24px">
-<div style="font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 26px; color: #4B2A9A; text-align: center; padding: 12px 0">σ = E ε　→　δ = P L ／ (A E)</div>
-</div>
-</div>
-<div style="background: #FDF1E5; border-radius: 12px; overflow: hidden">
-<div style="background: #B35A0F; color: #FFFFFF; padding: 8px 20px; font-size: 14px; font-weight: 700; letter-spacing: 1px">考試重點</div>
-<div style="padding: 20px 24px; display: flex; flex-direction: column; gap: 8px">
-<div>常用材料的彈性係數要記得量級，題目常省略不給：</div>
-<div style="overflow-x: auto">
-<table style="width: 100%; min-width: 360px; border-collapse: collapse; font-size: 15px; background: #FFFFFF; border-radius: 8px">
-<tr style="text-align: left; color: #8A4510"><th style="padding: 10px 14px; border-bottom: 1px solid #F0D6BC">材料</th><th style="padding: 10px 14px; border-bottom: 1px solid #F0D6BC">E（約）</th></tr>
-<tr><td style="padding: 10px 14px; border-bottom: 1px solid #F3E6D8">鋼</td><td style="padding: 10px 14px; border-bottom: 1px solid #F3E6D8">200 – 210 GPa</td></tr>
-<tr><td style="padding: 10px 14px; border-bottom: 1px solid #F3E6D8">銅</td><td style="padding: 10px 14px; border-bottom: 1px solid #F3E6D8">110 – 120 GPa</td></tr>
-<tr><td style="padding: 10px 14px">鋁合金</td><td style="padding: 10px 14px">約 70 GPa</td></tr>
-</table>
-</div>
-<div>鋼的 E 值幾乎不隨強度等級改變：高強度鋼「更強」但「不更硬」，相同負載下變形量一樣。</div>
-</div>
-</div>
-</section>
+    <div class="family">
+      <div class="fam-label">軸向負載與壓力容器 <span class="mono">AXIAL & PRESSURE</span></div>
+      <div class="cards">
+        <article class="ch soon">
+          <div class="num">05<small>CH</small></div>
+          <h3>薄壁容器 <span class="pill">建置中</span></h3>
+          <p>內壓薄壁圓筒的環向與軸向應力、球形容器，再搭配應力轉換求焊道上的正向應力與剪應力。</p>
+          <div class="meta"><span>2 節</span><span>10 道範例</span><span class="exam">20 題演練</span></div>
+        </article>
+        <article class="ch soon">
+          <div class="num">06<small>CH</small></div>
+          <h3>桿構件之軸向負載 <span class="pill">建置中</span></h3>
+          <p>聖維南原理、變斷面與階梯桿的伸長量、靜不定桿件、熱應力、軸向應變能，以及用維氏圖求節點位移。</p>
+          <div class="meta"><span>5 節</span><span>22 道範例</span><span class="exam">56 題演練</span></div>
+        </article>
+      </div>
+    </div>
 
-<section id="s3" style="display: flex; flex-direction: column; gap: 16px">
-<h2 style="margin: 0; font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 30px; color: #4B2A9A">3　例題演練</h2>
-<div style="background: #FFFFFF; border: 1px solid #DCE3EA; border-radius: 12px; padding: 20px 24px">
-<div style="font-weight: 700; margin-bottom: 4px">【例題】</div>
-直徑 20 mm、長 2 m 的鋼桿承受 31.4 kN 軸向拉力，E = 200 GPa，求桿內應力與伸長量。
-</div>
-<div style="background: #EAF4EB; border-radius: 12px; overflow: hidden">
-<div style="background: #2E7D32; color: #FFFFFF; padding: 8px 20px; font-size: 14px; font-weight: 700; letter-spacing: 1px">解答</div>
-<div style="padding: 20px 24px; display: flex; flex-direction: column; gap: 8px">
-<div>截面積（用半徑 10 mm）：</div>
-<div style="font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 18px">A = π × 10² ≈ 314.2 mm²</div>
-<div style="font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 18px">σ = 31400 ／ 314.2 ≈ 100 MPa</div>
-<div>統一用 N、mm、MPa 代入（200 GPa = 200000 MPa）：</div>
-<div style="font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 18px">δ = 31400 × 2000 ／ (314.2 × 200000) ≈ 1.0 mm</div>
-</div>
-</div>
-</section>
+    <div class="family">
+      <div class="fam-label">斷面性質與扭轉 <span class="mono">SECTIONS & TORSION</span></div>
+      <div class="cards">
+        <article class="ch soon">
+          <div class="num">07<small>CH</small></div>
+          <h3>質心、形心及慣性矩 <span class="pill">建置中</span></h3>
+          <p>重心、形心與質心、組合圖形的形心、面積慣性矩與平行軸定理、極慣性矩，以及慣性積與主軸。</p>
+          <div class="meta"><span>4 節</span><span>7 道範例</span><span class="exam">56 題演練</span></div>
+        </article>
+        <article class="ch soon">
+          <div class="num">08<small>CH</small></div>
+          <h3>扭轉 <span class="pill">建置中</span></h3>
+          <p>圓軸的扭轉剪應力與扭轉角、靜不定軸、功率傳遞、扭轉應變能，以及薄壁管的剪力流與非圓斷面。</p>
+          <div class="meta"><span>5 節</span><span>19 道範例</span><span class="exam">41 題演練</span></div>
+        </article>
+      </div>
+    </div>
 
-<section id="s4" style="display: flex; flex-direction: column; gap: 16px">
-<h2 style="margin: 0; font-family: 'HanWangHeiHeavy', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 30px; color: #4B2A9A">4　易錯觀念</h2>
-<div style="background: #FBEAEA; border-radius: 12px; overflow: hidden">
-<div style="background: #C62828; color: #FFFFFF; padding: 8px 20px; font-size: 14px; font-weight: 700; letter-spacing: 1px">常見錯誤</div>
-<ul style="margin: 0; padding: 20px 24px 20px 44px; display: flex; flex-direction: column; gap: 8px">
-<li>截面積代入直徑：A = πr² 用半徑，或寫成 πd²／4。</li>
-<li>GPa 未換算：混用 m 與 mm 時最容易差 1000 倍，建議全程用 N、mm、MPa。</li>
-<li>超過比例限度仍套虎克定律：進入塑性區後 σ 與 ε 不再成正比。</li>
-<li>把強度和剛性混為一談：降伏強度決定會不會壞，E 值決定變形多少。</li>
-</ul>
+    <div class="family">
+      <div class="fam-label">樑與組合負載 <span class="mono">BEAMS & COMBINED LOADING</span></div>
+      <div class="cards">
+        <article class="ch soon">
+          <div class="num">09<small>CH</small></div>
+          <h3>剪力圖與彎矩圖 <span class="pill">建置中</span></h3>
+          <p>樑的支承與分類、支承反力、剪力與彎矩方程式，以及負載、剪力、彎矩三者的微積分關係與危險斷面。</p>
+          <div class="meta"><span>3 節</span><span>20 道範例</span><span class="exam">39 題演練</span></div>
+        </article>
+        <article class="ch soon">
+          <div class="num">10<small>CH</small></div>
+          <h3>樑的應力 <span class="pill">建置中</span></h3>
+          <p>彎曲應力公式與斷面模數、以轉換斷面法分析複合樑、樑的剪應力，以及剪力流與剪力中心。</p>
+          <div class="meta"><span>4 節</span><span>25 道範例</span><span class="exam">45 題演練</span></div>
+        </article>
+        <article class="ch soon">
+          <div class="num">11<small>CH</small></div>
+          <h3>組合應力及破壞理論 <span class="pill">建置中</span></h3>
+          <p>軸力、扭矩與彎矩的組合應力，延性與脆性材料的破壞理論，以及不對稱彎曲與中性軸位置。</p>
+          <div class="meta"><span>3 節</span><span>15 道範例</span><span class="exam">54 題演練</span></div>
+        </article>
+        <article class="ch soon">
+          <div class="num">12<small>CH</small></div>
+          <h3>樑的彎曲變形 <span class="pill">建置中</span></h3>
+          <p>撓曲線微分方程式、奇異函數法、力矩面積法、重疊原理與溫度彎曲，以及靜不定樑的反力。</p>
+          <div class="meta"><span>5 節</span><span>25 道範例</span><span class="exam">50 題演練</span></div>
+        </article>
+      </div>
+    </div>
+
+    <div class="family">
+      <div class="fam-label">能量、塑性與穩定 <span class="mono">ENERGY · PLASTICITY · STABILITY</span></div>
+      <div class="cards">
+        <article class="ch soon">
+          <div class="num">13<small>CH</small></div>
+          <h3>能量法 <span class="pill">建置中</span></h3>
+          <p>各種負載下的應變能、卡氏定理、虛功原理與單位力法，並延伸到溫度效應與衝擊負載。</p>
+          <div class="meta"><span>6 節</span><span>14 道範例</span><span class="exam">34 題演練</span></div>
+        </article>
+        <article class="ch soon">
+          <div class="num">14<small>CH</small></div>
+          <h3>非線性分析 <span class="pill">建置中</span></h3>
+          <p>彈性—完全塑性材料在軸向、扭轉與彎曲下的分析：塑性扭矩、塑性彎矩、形狀因數與殘留應力。</p>
+          <div class="meta"><span>3 節</span><span>8 道範例</span><span class="exam">13 題演練</span></div>
+        </article>
+        <article class="ch soon">
+          <div class="num">15<small>CH</small></div>
+          <h3>柱 <span class="pill">建置中</span></h3>
+          <p>結構穩定性與臨界負載、剛性桿彈簧模型、尤拉公式與各種端點條件的有效長度，以及偏心受壓柱。</p>
+          <div class="meta"><span>2 節</span><span>12 道範例</span><span class="exam">17 題演練</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="tip-h">
+    <div class="sec-head"><h2 id="tip-h">怎麼讀這一科</h2></div>
+    <div class="tips">
+      <div class="tip"><b>先把應力、應變與虎克定律打穩</b><p>第二到四章是全科的共同語言。應力轉換與莫爾圓會在薄壁容器、組合應力與破壞理論一再出現，先練到能直接畫出來。</p></div>
+      <div class="tip"><b>每種負載都走同一套流程</b><p>內力分析、斷面分析、應力分析、變形分析；遇到靜不定再補一條變位一致性。軸向、扭轉、彎曲三種負載的公式結構幾乎一樣，對照著讀最省力。</p></div>
+      <div class="tip exam"><b>考試重心</b><p>講義演練題最多的是應力轉換、軸向負載、斷面性質、組合應力與樑的變形，各章五十題上下；題目來源涵蓋高普考、地方特考、台電與各校研究所。</p></div>
+    </div>
+  </section>
+
+  <footer class="titleblock" aria-label="圖面標題欄">
+    <div class="wide">知識動力場 · 材料力學</div>
+    <div><span class="k">圖號</span><br><span class="v">MOM-000</span></div>
+    <div><span class="k">比例</span><br><span class="v">1 : 15 章</span></div>
+    <div><span class="k">單位</span><br><span class="v">MPa · mm</span></div>
+    <div><span class="k">版次</span><br><span class="v">A · 2026.10</span></div>
+  </footer>
 </div>
-</section>
 
-</article>
-</main>
-
-<footer style="border-top: 1px solid #DCE3EA; padding: 24px; text-align: center; font-size: 14px; color: #5F6B76">知識動力場｜機械製造・靜力學・動力學・材料力學</footer>
-
-</div>
 </body>
 </html>
