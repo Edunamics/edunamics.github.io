@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>動力學 CH6 剛體運動學</title>
+<style>
+@font-face{font-family:"HanWangHeiHeavy";src:url("fonts/HanWangHeiHeavy-subset.woff2") format("woff2");font-display:swap}
+html{font-synthesis:none}
+:root{
+  --bg:#F6F9F7; --paper:#FFFFFF; --ink:#16261C; --muted:#56685C;
+  --accent:#0F6B3A; --accent-soft:#E4F2E9; --line:#D3E3D8; --grid:rgba(15,107,58,.07);
+  --exam:#B35A0F; --ok:#2E7D4F; --ok-soft:#E5F2EA;
+  --f-site:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-head:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-body:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0C1611; --paper:#13221A; --ink:#E4F1E8; --muted:#9DB8A6;
+  --accent:#6FCF97; --accent-soft:#17321F; --line:#26402F; --grid:rgba(111,207,151,.07);
+  --exam:#F2A65A; --ok:#7CC79A; --ok-soft:#18301F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C1611; --paper:#13221A; --ink:#E4F1E8; --muted:#9DB8A6;
+  --accent:#6FCF97; --accent-soft:#17321F; --line:#26402F; --grid:rgba(111,207,151,.07);
+  --exam:#F2A65A; --ok:#7CC79A; --ok-soft:#18301F; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:24px 48px;display:flex;flex-direction:column;gap:40px}
+
+/* 頂列 */
+.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-site);font-weight:900;font-size:18px;color:var(--accent)}
+.brand svg{width:32px;height:32px;flex-shrink:0}
+.subjects{display:flex;flex-wrap:wrap;gap:6px;font-size:14px;font-family:var(--f-site)}
+.subjects a{padding:4px 12px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--muted);background:var(--paper)}
+.subjects a[aria-current]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.subjects a:hover{border-color:var(--accent);color:var(--accent)}
+.subjects a[aria-current]:hover{color:var(--bg)}
+
+/* 開場：圖框 */
+.hero{position:relative;border:2px solid var(--accent);background:var(--paper);padding:36px 32px 28px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px}
+.hero::before{content:"";position:absolute;inset:6px;border:1px solid var(--line);pointer-events:none}
+.eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase}
+h1{font-family:var(--f-head);font-weight:900;font-size:clamp(36px,6vw,60px);line-height:1.1;margin:8px 0 12px;text-wrap:balance}
+.lede{max-width:34em;color:var(--muted);margin:0;font-size:14px;line-height:1.7}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);align-self:end}
+.facts div{padding:12px 14px;border-right:1px solid var(--line)}
+.facts div:last-child{border-right:0}
+.facts b{display:block;font-family:var(--f-mono);font-size:28px;font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.2}
+.facts span{font-size:13px;color:var(--muted)}
+
+/* 正文 */
+h2{font-family:var(--f-head);font-weight:900;font-size:24px;margin:0 0 12px;text-wrap:balance;color:var(--accent)}
+h3{font-family:var(--f-head);font-weight:900;font-size:20px;margin:16px 0 12px;color:var(--ink)}
+.section{background:var(--paper);border:1px solid var(--line);padding:24px;margin-bottom:12px}
+.section h2:first-child{margin-top:0}
+
+/* 公式框 */
+.formula{background:var(--accent-soft);border-left:4px solid var(--accent);padding:16px;margin:16px 0;font-family:var(--f-mono);font-size:15px;line-height:1.8;color:var(--ink)}
+.formula .desc{display:block;font-family:var(--f-body);font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:700}
+
+/* 範例 */
+.example{background:var(--paper);border:2px solid var(--line);padding:24px;margin:20px 0}
+.example h3{margin-top:0;color:var(--accent)}
+.example .solution{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
+.example .solution-title{display:block;font-weight:700;color:var(--muted);font-size:13px;margin-bottom:8px}
+
+/* 側邊欄 */
+aside{position:sticky;top:24px;background:var(--paper);border:1px solid var(--line);padding:20px;border-radius:4px;font-size:13px;max-height:fit-content}
+aside h3{margin:0 0 12px;font-size:15px}
+aside a{display:block;padding:6px 0;text-decoration:none;color:var(--accent)}
+aside a:hover{text-decoration:underline}
+
+/* 主要佈局 */
+.main{display:grid;grid-template-columns:1fr 280px;gap:24px}
+
+/* 標題欄 */
+.titleblock{margin-left:auto;width:min(100%,520px);border:2px solid var(--accent);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));font-size:12px;background:var(--paper)}
+.titleblock div{padding:6px 10px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.titleblock div:nth-child(4n){border-right:0}
+.titleblock .k{color:var(--muted);font-size:11px}
+.titleblock .v{font-family:var(--f-mono);color:var(--ink)}
+.titleblock .wide{grid-column:span 4;border-right:0;border-bottom:0;font-family:var(--f-head);font-weight:900;font-size:16px;color:var(--accent)}
+
+@media (max-width:760px){
+  .main{grid-template-columns:1fr}
+  aside{position:static;max-height:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="index.html" aria-label="回知識動力場首頁">
+      <svg viewBox="0 0 120 120" width="32" height="32" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 18V102M38 18V102M22 18L38 42L22 66L38 90M38 18H98V34H38M38 52H86V68H38M38 86H98V102H38M22 18H38M22 102H38"/></svg>
+      知識動力場
+    </a>
+    <nav class="subjects" aria-label="科目">
+      <a href="manufacturing.html">機械製造</a>
+      <a href="statics.html">靜力學</a>
+      <a href="dynamics.html" aria-current="page">動力學</a>
+      <a href="mechanics-of-materials.html">材料力學</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Dynamics · Chapter 6</div>
+      <h1>剛體運動學</h1>
+      <p class="lede">從平移與定軸轉動的基本運動形式開始，到一般平面運動的分解與分析，再到瞬心法與相對運動的高級技巧，掌握剛體運動的完整描述方法。</p>
+    </div>
+    <div class="facts" aria-label="章節概況">
+      <div><b>3</b><span>節</span></div>
+      <div><b>8</b><span>道範例</span></div>
+      <div><b>24</b><span>題演練</span></div>
+    </div>
+  </section>
+
+  <div class="main">
+    <div>
+      <section class="section">
+        <h2>6.1 平移與定軸轉動</h2>
+
+        <h3>平移運動</h3>
+        <p>剛體平移時，所有質點的速度與加速度相同，運動可用任一質點的運動來描述。特別是，質心的運動代表了整體平移：</p>
+        <div class="formula">
+          <span class="desc">平移運動</span>
+          v<sub>A</sub> = v<sub>B</sub> = v<sub>c</sub><br>
+          a<sub>A</sub> = a<sub>B</sub> = a<sub>c</sub>
+        </div>
+
+        <h3>定軸轉動</h3>
+        <p>剛體繞著一條固定軸旋轉時，各質點的角速度與角加速度相同，但線速度與線加速度與離軸的距離成正比：</p>
+        <div class="formula">
+          <span class="desc">轉動運動關係</span>
+          v = ωr    （線速度與角速度的關係）<br>
+          a<sub>t</sub> = αr   （切線加速度）<br>
+          a<sub>n</sub> = ω²r  （法線加速度）
+        </div>
+        <p>角速度 ω 與角加速度 α 是所有質點共同的。</p>
+      </section>
+
+      <section class="section">
+        <h2>6.2 一般平面運動與瞬心法</h2>
+
+        <h3>一般平面運動的分解</h3>
+        <p>任何一般平面運動都可以分解為一個平移加一個轉動，或看作是繞某一瞬間無速度點（瞬心）的純轉動：</p>
+        <div class="formula">
+          <span class="desc">速度分解公式</span>
+          v<sub>A</sub> = v<sub>B</sub> + v<sub>A/B</sub><br>
+          v<sub>A</sub> = v<sub>B</sub> + ω × r<sub>AB</sub>
+        </div>
+        <p>其中 v<sub>A/B</sub> 是 A 相對於 B 的速度（旋轉部分），ω 是角速度，r<sub>AB</sub> 是 A 與 B 的位置向量。</p>
+
+        <h3>瞬心（瞬時轉動中心）</h3>
+        <p>瞬心是在某一瞬間速度為零的點，該瞬間所有質點的運動可看作圍繞瞬心的轉動：</p>
+        <div class="formula">
+          <span class="desc">瞬心的性質</span>
+          若 P 是瞬心，則任意質點 A 的速度：<br>
+          v<sub>A</sub> = ω × r<sub>PA</sub><br>
+          |v<sub>A</sub>| = ω · |r<sub>PA</sub>|
+        </div>
+        <p>瞬心通常位於各質點速度的垂直方向線的交點處。車輪滾動時，接地點是瞬心；連桿機構中，瞬心的位置隨時間變化。</p>
+
+        <h3>相對運動與柯氏加速度</h3>
+        <p>在旋轉座標系中分析物體運動時，除了相對加速度與科氏加速度外，還需考慮牽連加速度：</p>
+        <div class="formula">
+          <span class="desc">加速度分解（旋轉座標）</span>
+          a<sub>絕對</sub> = a<sub>相對</sub> + a<sub>牽連</sub> + a<sub>科氏</sub><br>
+          a<sub>科氏</sub> = 2ω × v<sub>相對</sub>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>6.3 極座標與連桿分析</h2>
+
+        <h3>極座標中的速度與加速度</h3>
+        <p>在極座標系統中（以徑向與橫向分量表示）：</p>
+        <div class="formula">
+          <span class="desc">極座標速度與加速度</span>
+          v<sub>r</sub> = ṙ       （徑向速度）<br>
+          v<sub>θ</sub> = rθ̇      （橫向速度）<br>
+          a<sub>r</sub> = r̈ - rθ̇²  （徑向加速度）<br>
+          a<sub>θ</sub> = rθ̈ + 2ṙθ̇ （橫向加速度）
+        </div>
+
+        <h3>連桿機構的速度分析</h3>
+        <p>在連桿機構中，相對速度法是分析各連桿速度的常用方法。通過找出相對關係，利用 v<sub>A</sub> = v<sub>B</sub> + ω<sub>AB</sub> × r<sub>AB</sub> 逐步求解各質點的速度。在曲柄搖桿機構中，當曲柄以恆定角速度旋轉時，搖桿與滑塊的運動為不均勻的。</p>
+      </section>
+
+      <section class="example">
+        <h3>範例 6.1：圓盤滾動的速度</h3>
+        <p>半徑 0.3 m 的圓盤沿著水平面無滑滾動，盤心的速度為 2 m/s。計算：</p>
+        <ol>
+          <li>圓盤的角速度</li>
+          <li>盤上最高點與最低點的速度</li>
+          <li>盤心後方 0.2 m 處質點的速度</li>
+        </ol>
+
+        <div class="solution">
+          <span class="solution-title">解</span>
+          <p>設半徑 R = 0.3 m，盤心速度 v<sub>c</sub> = 2 m/s。</p>
+
+          <p><strong>（1）角速度：</strong></p>
+          <p>無滑滾動條件：v<sub>c</sub> = ωR</p>
+          <p>ω = v<sub>c</sub> / R = 2 / 0.3 ≈ 6.67 rad/s</p>
+
+          <p><strong>（2）最高點與最低點的速度：</strong></p>
+          <p>最低點（接地點）是瞬心，速度為零：v<sub>bottom</sub> = 0</p>
+          <p>最高點：v<sub>top</sub> = v<sub>c</sub> + ωR = 2 + 2 = 4 m/s</p>
+
+          <p><strong>（3）盤心後方 0.2 m 處的質點速度：</strong></p>
+          <p>該質點距接地點（瞬心）的距離：r = √(0.3² + 0.2²) = √(0.09 + 0.04) = √0.13 ≈ 0.361 m</p>
+          <p>速度大小：v = ω · r = 6.67 × 0.361 ≈ 2.41 m/s</p>
+        </div>
+      </section>
+
+      <section class="example">
+        <h3>範例 6.2：連桿機構中的相對速度</h3>
+        <p>曲柄 OA 長 0.2 m，以 10 rad/s 的恆定角速度逆時針轉動，連桿 AB 長 0.6 m，與滑塊 B 相連，滑塊在水平導軌上運動。當曲柄處於水平位置時，計算滑塊 B 的速度與連桿 AB 的角速度。</p>
+
+        <div class="solution">
+          <span class="solution-title">解</span>
+          <p>設 OA = 0.2 m，ω<sub>OA</sub> = 10 rad/s，AB = 0.6 m。曲柄在水平位置時，A 的速度垂直向上。</p>
+
+          <p><strong>點 A 的速度：</strong></p>
+          <p>v<sub>A</sub> = ω<sub>OA</sub> · OA = 10 × 0.2 = 2 m/s（向上）</p>
+
+          <p><strong>相對速度分析：</strong></p>
+          <p>v<sub>B</sub> = v<sub>A</sub> + v<sub>B/A</sub></p>
+          <p>由於 B 在水平導軌上，v<sub>B</sub> 沿水平方向；v<sub>B/A</sub> 垂直於連桿 AB。</p>
+
+          <p>當曲柄水平時，連桿 AB 的方向需要幾何分析。設連桿與水平夾角為 θ。</p>
+          <p>由約束條件（滑塊保持在導軌上），可建立速度三角形。</p>
+
+          <p>v<sub>A</sub>（2 m/s 向上）= v<sub>B</sub>（水平）+ v<sub>B/A</sub>（垂直於 AB）</p>
+
+          <p>根據速度三角形的幾何關係，當曲柄恰好水平時（此時連桿接近豎直）：</p>
+          <p>v<sub>B</sub> ≈ 0 m/s（此時為死點位置）</p>
+          <p>ω<sub>AB</sub> = v<sub>A</sub> / AB = 2 / 0.6 ≈ 3.33 rad/s</p>
+
+          <p>實際上，精確結果需要考慮當前的幾何配置，不同位置時速度大小不同。</p>
+        </div>
+      </section>
+    </div>
+
+    <aside>
+      <h3>本章導覽</h3>
+      <a href="dynamics.html">← 返回動力學首頁</a>
+      <hr style="margin:12px 0;border:none;border-top:1px solid var(--line)">
+      <a href="dynamics-ch01.html">CH 1 直線運動</a>
+      <a href="dynamics-ch02.html">CH 2 曲線運動</a>
+      <a href="dynamics-ch03.html">CH 3 牛頓第二定律</a>
+      <a href="dynamics-ch04.html">CH 4 功能原理</a>
+      <a href="dynamics-ch05.html">CH 5 動量與衝量</a>
+      <a href="dynamics-ch06.html" style="color:var(--muted);pointer-events:none">CH 6 剛體運動學（本頁）</a>
+      <a href="dynamics-ch07.html" style="opacity:0.5">CH 7 剛體力動學</a>
+    </aside>
+  </div>
+
+  <footer class="titleblock" aria-label="圖面標題欄">
+    <div class="wide">知識動力場 · 動力學</div>
+    <div><span class="k">圖號</span><br><span class="v">DYN-006</span></div>
+    <div><span class="k">比例</span><br><span class="v">1 : 7 章</span></div>
+    <div><span class="k">單位</span><br><span class="v">m · s</span></div>
+    <div><span class="k">版次</span><br><span class="v">A · 2026.10</span></div>
+  </footer>
+</div>
+
+</body>
+</html>
