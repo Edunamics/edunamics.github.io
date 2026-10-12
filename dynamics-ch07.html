@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>動力學 CH7 剛體力動學</title>
+<style>
+@font-face{font-family:"HanWangHeiHeavy";src:url("fonts/HanWangHeiHeavy-subset.woff2") format("woff2");font-display:swap}
+html{font-synthesis:none}
+:root{
+  --bg:#F6F9F7; --paper:#FFFFFF; --ink:#16261C; --muted:#56685C;
+  --accent:#0F6B3A; --accent-soft:#E4F2E9; --line:#D3E3D8; --grid:rgba(15,107,58,.07);
+  --exam:#B35A0F; --ok:#2E7D4F; --ok-soft:#E5F2EA;
+  --f-site:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-head:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-body:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0C1611; --paper:#13221A; --ink:#E4F1E8; --muted:#9DB8A6;
+  --accent:#6FCF97; --accent-soft:#17321F; --line:#26402F; --grid:rgba(111,207,151,.07);
+  --exam:#F2A65A; --ok:#7CC79A; --ok-soft:#18301F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C1611; --paper:#13221A; --ink:#E4F1E8; --muted:#9DB8A6;
+  --accent:#6FCF97; --accent-soft:#17321F; --line:#26402F; --grid:rgba(111,207,151,.07);
+  --exam:#F2A65A; --ok:#7CC79A; --ok-soft:#18301F; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:24px 48px;display:flex;flex-direction:column;gap:40px}
+
+/* 頂列 */
+.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-site);font-weight:900;font-size:18px;color:var(--accent)}
+.brand svg{width:32px;height:32px;flex-shrink:0}
+.subjects{display:flex;flex-wrap:wrap;gap:6px;font-size:14px;font-family:var(--f-site)}
+.subjects a{padding:4px 12px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--muted);background:var(--paper)}
+.subjects a[aria-current]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.subjects a:hover{border-color:var(--accent);color:var(--accent)}
+.subjects a[aria-current]:hover{color:var(--bg)}
+
+/* 開場：圖框 */
+.hero{position:relative;border:2px solid var(--accent);background:var(--paper);padding:36px 32px 28px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px}
+.hero::before{content:"";position:absolute;inset:6px;border:1px solid var(--line);pointer-events:none}
+.eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase}
+h1{font-family:var(--f-head);font-weight:900;font-size:clamp(36px,6vw,60px);line-height:1.1;margin:8px 0 12px;text-wrap:balance}
+.lede{max-width:34em;color:var(--muted);margin:0;font-size:14px;line-height:1.7}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);align-self:end}
+.facts div{padding:12px 14px;border-right:1px solid var(--line)}
+.facts div:last-child{border-right:0}
+.facts b{display:block;font-family:var(--f-mono);font-size:28px;font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.2}
+.facts span{font-size:13px;color:var(--muted)}
+
+/* 正文 */
+h2{font-family:var(--f-head);font-weight:900;font-size:24px;margin:0 0 12px;text-wrap:balance;color:var(--accent)}
+h3{font-family:var(--f-head);font-weight:900;font-size:20px;margin:16px 0 12px;color:var(--ink)}
+.section{background:var(--paper);border:1px solid var(--line);padding:24px;margin-bottom:12px}
+.section h2:first-child{margin-top:0}
+
+/* 公式框 */
+.formula{background:var(--accent-soft);border-left:4px solid var(--accent);padding:16px;margin:16px 0;font-family:var(--f-mono);font-size:15px;line-height:1.8;color:var(--ink)}
+.formula .desc{display:block;font-family:var(--f-body);font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:700}
+
+/* 範例 */
+.example{background:var(--paper);border:2px solid var(--line);padding:24px;margin:20px 0}
+.example h3{margin-top:0;color:var(--accent)}
+.example .solution{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
+.example .solution-title{display:block;font-weight:700;color:var(--muted);font-size:13px;margin-bottom:8px}
+
+/* 側邊欄 */
+aside{position:sticky;top:24px;background:var(--paper);border:1px solid var(--line);padding:20px;border-radius:4px;font-size:13px;max-height:fit-content}
+aside h3{margin:0 0 12px;font-size:15px}
+aside a{display:block;padding:6px 0;text-decoration:none;color:var(--accent)}
+aside a:hover{text-decoration:underline}
+
+/* 主要佈局 */
+.main{display:grid;grid-template-columns:1fr 280px;gap:24px}
+
+/* 標題欄 */
+.titleblock{margin-left:auto;width:min(100%,520px);border:2px solid var(--accent);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));font-size:12px;background:var(--paper)}
+.titleblock div{padding:6px 10px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.titleblock div:nth-child(4n){border-right:0}
+.titleblock .k{color:var(--muted);font-size:11px}
+.titleblock .v{font-family:var(--f-mono);color:var(--ink)}
+.titleblock .wide{grid-column:span 4;border-right:0;border-bottom:0;font-family:var(--f-head);font-weight:900;font-size:16px;color:var(--accent)}
+
+@media (max-width:760px){
+  .main{grid-template-columns:1fr}
+  aside{position:static;max-height:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="index.html" aria-label="回知識動力場首頁">
+      <svg viewBox="0 0 120 120" width="32" height="32" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 18V102M38 18V102M22 18L38 42L22 66L38 90M38 18H98V34H38M38 52H86V68H38M38 86H98V102H38M22 18H38M22 102H38"/></svg>
+      知識動力場
+    </a>
+    <nav class="subjects" aria-label="科目">
+      <a href="manufacturing.html">機械製造</a>
+      <a href="statics.html">靜力學</a>
+      <a href="dynamics.html" aria-current="page">動力學</a>
+      <a href="mechanics-of-materials.html">材料力學</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Dynamics · Chapter 7</div>
+      <h1>剛體力動學</h1>
+      <p class="lede">從慣性矩的概念與計算開始，掌握平面剛體運動方程式，分析滾動與滑動的條件，最後用功能定理擴展動力學的解題手段，完成古典力學的全部體系。</p>
+    </div>
+    <div class="facts" aria-label="章節概況">
+      <div><b>3</b><span>節</span></div>
+      <div><b>5</b><span>道範例</span></div>
+      <div><b>10</b><span>題演練</span></div>
+    </div>
+  </section>
+
+  <div class="main">
+    <div>
+      <section class="section">
+        <h2>7.1 慣性矩與平行軸定理</h2>
+
+        <h3>慣性矩的定義</h3>
+        <p>慣性矩是描述剛體對軸旋轉的抵抗程度的量，定義為各質點的質量與其到軸距離平方的乘積之和：</p>
+        <div class="formula">
+          <span class="desc">慣性矩定義</span>
+          I = Σm<sub>i</sub>r<sub>i</sub>²  或  I = ∫r² dm
+        </div>
+        <p>對於連續體，積分遍及整個物體。常見幾何體的慣性矩可查表：例如，均勻棒繞中心軸 I = (1/12)mL²；均勻圓盤繞中心軸 I = (1/2)mR²。</p>
+
+        <h3>平行軸定理</h3>
+        <p>若已知物體繞過質心的軸的慣性矩 I<sub>c</sub>，可用平行軸定理求繞任意平行軸的慣性矩：</p>
+        <div class="formula">
+          <span class="desc">平行軸定理</span>
+          I = I<sub>c</sub> + md²
+        </div>
+        <p>其中 d 是兩軸之間的距離，m 是物體的質量。這個定理大大簡化了慣性矩的計算。</p>
+      </section>
+
+      <section class="section">
+        <h2>7.2 平面剛體運動方程式</h2>
+
+        <h3>平移運動方程</h3>
+        <p>剛體的平移運動由質心的運動方程式描述，與質點的運動方程式相同：</p>
+        <div class="formula">
+          <span class="desc">平移運動方程</span>
+          ΣF = Ma<sub>c</sub>
+        </div>
+        <p>其中 M 是物體的總質量，a<sub>c</sub> 是質心的加速度。</p>
+
+        <h3>轉動運動方程</h3>
+        <p>繞過質心的軸的轉動運動由角動量原理給出：</p>
+        <div class="formula">
+          <span class="desc">轉動運動方程</span>
+          Στ<sub>c</sub> = I<sub>c</sub>α
+        </div>
+        <p>其中 Στ<sub>c</sub> 是相對於質心的合力矩，I<sub>c</sub> 是繞質心軸的慣性矩，α 是角加速度。</p>
+
+        <h3>一般平面運動方程</h3>
+        <p>對於一般平面運動（平移加轉動），需要同時應用平移與轉動方程，並利用運動約束條件（如無滑滾動）關聯質心加速度與角加速度。</p>
+      </section>
+
+      <section class="section">
+        <h2>7.3 滾動、滑動與剛體功能定理</h2>
+
+        <h3>無滑滾動條件</h3>
+        <p>圓形物體在平面上無滑滾動時，接地點的速度為零，這給出質心速度與角速度的關係：</p>
+        <div class="formula">
+          <span class="desc">無滑滾動條件</span>
+          v<sub>c</sub> = ωR   （速度關係）<br>
+          a<sub>c</sub> = αR   （加速度關係）
+        </div>
+        <p>其中 R 是滾動物體的半徑。滾動摩擦力由這個約束條件決定。</p>
+
+        <h3>判斷滑動與滾動</h3>
+        <p>當物體受力時，需判斷是否滿足無滑條件。若由動力學方程計算出的所需摩擦力超過靜摩擦的最大值，物體將滑動；否則無滑滾動：</p>
+        <div class="formula">
+          <span class="desc">滑動判斷條件</span>
+          若 |f| ≤ μ<sub>s</sub>N，則無滑滾動<br>
+          若 |f| &gt; μ<sub>s</sub>N，則物體滑動
+        </div>
+
+        <h3>剛體的功能定理</h3>
+        <p>剛體的功能定理結合了質心的動能與轉動的動能：</p>
+        <div class="formula">
+          <span class="desc">剛體總動能</span>
+          T = T<sub>平移</sub> + T<sub>轉動</sub><br>
+          T = ½Mv<sub>c</sub>² + ½I<sub>c</sub>ω²
+        </div>
+        <p>應用功能定理：W<sub>合</sub> = ΔT，可以像處理質點運動一樣分析剛體，在涉及速度與位移的問題中特別有效。</p>
+      </section>
+
+      <section class="example">
+        <h3>範例 7.1：無滑滾動圓盤的運動</h3>
+        <p>質量 2 kg、半徑 0.2 m 的均勻圓盤，在傾斜角 30° 的斜面上無滑滾動。計算：</p>
+        <ol>
+          <li>圓盤的加速度</li>
+          <li>摩擦力的大小</li>
+          <li>圓盤滾動 2 m 時的速度（取 g = 10 m/s²）</li>
+        </ol>
+
+        <div class="solution">
+          <span class="solution-title">解</span>
+          <p>均勻圓盤的慣性矩 I<sub>c</sub> = (1/2)mR² = (1/2) × 2 × 0.2² = 0.04 kg·m²。</p>
+
+          <p><strong>（1）列出運動方程：</strong></p>
+          <p>沿斜面的力：mg sin θ - f = ma<sub>c</sub> ... (1)</p>
+          <p>力矩方程（繞質心）：f·R = I<sub>c</sub>α ... (2)</p>
+          <p>無滑條件：a<sub>c</sub> = αR ... (3)</p>
+
+          <p><strong>（2）求解：</strong></p>
+          <p>由 (2) 和 (3)：f = I<sub>c</sub>α / R = I<sub>c</sub>a<sub>c</sub> / R²</p>
+          <p>代入 (1)：mg sin θ - I<sub>c</sub>a<sub>c</sub> / R² = ma<sub>c</sub></p>
+          <p>mg sin θ = a<sub>c</sub>(m + I<sub>c</sub> / R²)</p>
+          <p>a<sub>c</sub> = g sin θ / (1 + I<sub>c</sub> / (mR²))</p>
+          <p>a<sub>c</sub> = 10 × 0.5 / (1 + 0.04 / (2 × 0.04)) = 5 / (1 + 0.5) = 10/3 ≈ 3.33 m/s²</p>
+
+          <p><strong>（3）摩擦力：</strong></p>
+          <p>f = I<sub>c</sub>a<sub>c</sub> / R² = 0.04 × 3.33 / 0.04 = 3.33 N</p>
+
+          <p><strong>（4）滾動 2 m 時的速度：</strong></p>
+          <p>用動能定理：mg sin θ × 2 - f × 2 = ½Mv<sub>c</sub>² + ½I<sub>c</sub>ω²</p>
+          <p>但更簡單的方法：v<sub>c</sub>² = 2a<sub>c</sub>s = 2 × 3.33 × 2 ≈ 13.32</p>
+          <p>v<sub>c</sub> ≈ 3.65 m/s</p>
+        </div>
+      </section>
+
+      <section class="example">
+        <h3>範例 7.2：圓盤轉動慣性矩的應用</h3>
+        <p>一個質量 5 kg、半徑 0.3 m 的均勻圓盤，初始靜止。現在在其邊緣施加一個切向力 F = 10 N。計算：</p>
+        <ol>
+          <li>圓盤的角加速度</li>
+          <li>圓盤邊緣處質點的切線加速度</li>
+          <li>圓盤轉動 5 圈時的角速度</li>
+        </ol>
+
+        <div class="solution">
+          <span class="solution-title">解</span>
+          <p>均勻圓盤繞中心軸的慣性矩：I = (1/2)mR² = (1/2) × 5 × 0.3² = 0.225 kg·m²</p>
+
+          <p><strong>（1）角加速度：</strong></p>
+          <p>力矩：τ = F·R = 10 × 0.3 = 3 N·m</p>
+          <p>轉動方程：τ = Iα</p>
+          <p>α = τ / I = 3 / 0.225 ≈ 13.33 rad/s²</p>
+
+          <p><strong>（2）邊緣質點的切線加速度：</strong></p>
+          <p>a<sub>t</sub> = αR = 13.33 × 0.3 = 4 m/s²</p>
+
+          <p><strong>（3）轉動 5 圈時的角速度：</strong></p>
+          <p>轉動 5 圈的角位移：θ = 5 × 2π = 10π rad</p>
+          <p>用運動學公式：ω² = ω₀² + 2αθ = 0 + 2 × 13.33 × 10π</p>
+          <p>ω² ≈ 837 rad²/s²</p>
+          <p>ω ≈ 28.9 rad/s</p>
+        </div>
+      </section>
+    </div>
+
+    <aside>
+      <h3>本章導覽</h3>
+      <a href="dynamics.html">← 返回動力學首頁</a>
+      <hr style="margin:12px 0;border:none;border-top:1px solid var(--line)">
+      <a href="dynamics-ch01.html">CH 1 直線運動</a>
+      <a href="dynamics-ch02.html">CH 2 曲線運動</a>
+      <a href="dynamics-ch03.html">CH 3 牛頓第二定律</a>
+      <a href="dynamics-ch04.html">CH 4 功能原理</a>
+      <a href="dynamics-ch05.html">CH 5 動量與衝量</a>
+      <a href="dynamics-ch06.html">CH 6 剛體運動學</a>
+      <a href="dynamics-ch07.html" style="color:var(--muted);pointer-events:none">CH 7 剛體力動學（本頁）</a>
+    </aside>
+  </div>
+
+  <footer class="titleblock" aria-label="圖面標題欄">
+    <div class="wide">知識動力場 · 動力學</div>
+    <div><span class="k">圖號</span><br><span class="v">DYN-007</span></div>
+    <div><span class="k">比例</span><br><span class="v">1 : 7 章</span></div>
+    <div><span class="k">單位</span><br><span class="v">m · s</span></div>
+    <div><span class="k">版次</span><br><span class="v">A · 2026.10</span></div>
+  </footer>
+</div>
+
+</body>
+</html>
