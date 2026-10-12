@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>動力學 CH4 功能原理</title>
+<style>
+@font-face{font-family:"HanWangHeiHeavy";src:url("fonts/HanWangHeiHeavy-subset.woff2") format("woff2");font-display:swap}
+html{font-synthesis:none}
+:root{
+  --bg:#F6F9F7; --paper:#FFFFFF; --ink:#16261C; --muted:#56685C;
+  --accent:#0F6B3A; --accent-soft:#E4F2E9; --line:#D3E3D8; --grid:rgba(15,107,58,.07);
+  --exam:#B35A0F; --ok:#2E7D4F; --ok-soft:#E5F2EA;
+  --f-site:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-head:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-body:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0C1611; --paper:#13221A; --ink:#E4F1E8; --muted:#9DB8A6;
+  --accent:#6FCF97; --accent-soft:#17321F; --line:#26402F; --grid:rgba(111,207,151,.07);
+  --exam:#F2A65A; --ok:#7CC79A; --ok-soft:#18301F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C1611; --paper:#13221A; --ink:#E4F1E8; --muted:#9DB8A6;
+  --accent:#6FCF97; --accent-soft:#17321F; --line:#26402F; --grid:rgba(111,207,151,.07);
+  --exam:#F2A65A; --ok:#7CC79A; --ok-soft:#18301F; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:24px 48px;display:flex;flex-direction:column;gap:40px}
+
+/* 頂列 */
+.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-site);font-weight:900;font-size:18px;color:var(--accent)}
+.brand svg{width:32px;height:32px;flex-shrink:0}
+.subjects{display:flex;flex-wrap:wrap;gap:6px;font-size:14px;font-family:var(--f-site)}
+.subjects a{padding:4px 12px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--muted);background:var(--paper)}
+.subjects a[aria-current]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.subjects a:hover{border-color:var(--accent);color:var(--accent)}
+.subjects a[aria-current]:hover{color:var(--bg)}
+
+/* 開場：圖框 */
+.hero{position:relative;border:2px solid var(--accent);background:var(--paper);padding:36px 32px 28px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px}
+.hero::before{content:"";position:absolute;inset:6px;border:1px solid var(--line);pointer-events:none}
+.eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase}
+h1{font-family:var(--f-head);font-weight:900;font-size:clamp(36px,6vw,60px);line-height:1.1;margin:8px 0 12px;text-wrap:balance}
+.lede{max-width:34em;color:var(--muted);margin:0;font-size:14px;line-height:1.7}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);align-self:end}
+.facts div{padding:12px 14px;border-right:1px solid var(--line)}
+.facts div:last-child{border-right:0}
+.facts b{display:block;font-family:var(--f-mono);font-size:28px;font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.2}
+.facts span{font-size:13px;color:var(--muted)}
+
+/* 正文 */
+h2{font-family:var(--f-head);font-weight:900;font-size:24px;margin:0 0 12px;text-wrap:balance;color:var(--accent)}
+h3{font-family:var(--f-head);font-weight:900;font-size:20px;margin:16px 0 12px;color:var(--ink)}
+.section{background:var(--paper);border:1px solid var(--line);padding:24px;margin-bottom:12px}
+.section h2:first-child{margin-top:0}
+
+/* 公式框 */
+.formula{background:var(--accent-soft);border-left:4px solid var(--accent);padding:16px;margin:16px 0;font-family:var(--f-mono);font-size:15px;line-height:1.8;color:var(--ink)}
+.formula .desc{display:block;font-family:var(--f-body);font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:700}
+
+/* 範例 */
+.example{background:var(--paper);border:2px solid var(--line);padding:24px;margin:20px 0}
+.example h3{margin-top:0;color:var(--accent)}
+.example .solution{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
+.example .solution-title{display:block;font-weight:700;color:var(--muted);font-size:13px;margin-bottom:8px}
+
+/* 側邊欄 */
+aside{position:sticky;top:24px;background:var(--paper);border:1px solid var(--line);padding:20px;border-radius:4px;font-size:13px;max-height:fit-content}
+aside h3{margin:0 0 12px;font-size:15px}
+aside a{display:block;padding:6px 0;text-decoration:none;color:var(--accent)}
+aside a:hover{text-decoration:underline}
+
+/* 主要佈局 */
+.main{display:grid;grid-template-columns:1fr 280px;gap:24px}
+
+/* 標題欄 */
+.titleblock{margin-left:auto;width:min(100%,520px);border:2px solid var(--accent);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));font-size:12px;background:var(--paper)}
+.titleblock div{padding:6px 10px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.titleblock div:nth-child(4n){border-right:0}
+.titleblock .k{color:var(--muted);font-size:11px}
+.titleblock .v{font-family:var(--f-mono);color:var(--ink)}
+.titleblock .wide{grid-column:span 4;border-right:0;border-bottom:0;font-family:var(--f-head);font-weight:900;font-size:16px;color:var(--accent)}
+
+@media (max-width:760px){
+  .main{grid-template-columns:1fr}
+  aside{position:static;max-height:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="index.html" aria-label="回知識動力場首頁">
+      <svg viewBox="0 0 120 120" width="32" height="32" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 18V102M38 18V102M22 18L38 42L22 66L38 90M38 18H98V34H38M38 52H86V68H38M38 86H98V102H38M22 18H38M22 102H38"/></svg>
+      知識動力場
+    </a>
+    <nav class="subjects" aria-label="科目">
+      <a href="manufacturing.html">機械製造</a>
+      <a href="statics.html">靜力學</a>
+      <a href="dynamics.html" aria-current="page">動力學</a>
+      <a href="mechanics-of-materials.html">材料力學</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Dynamics · Chapter 4</div>
+      <h1>功能原理</h1>
+      <p class="lede">功能原理是解決涉及速度與位移關係的問題的利器。從功的定義、動能與位能的推導，到功能原理與機械能守恆，最後考慮摩擦等非保守力與功率效率的計算。</p>
+    </div>
+    <div class="facts" aria-label="章節概況">
+      <div><b>1</b><span>節</span></div>
+      <div><b>8</b><span>道範例</span></div>
+      <div><b>58</b><span>題演練</span></div>
+    </div>
+  </section>
+
+  <div class="main">
+    <div>
+      <section class="section">
+        <h2>4.1 功與動能</h2>
+        <p>功（work）是力對物體的作用，定義為力與位移的點積：</p>
+        <div class="formula">
+          <span class="desc">功的定義</span>
+          W = F · Δs = F Δs cos θ
+        </div>
+        <p>其中 θ 是力與位移的夾角。當力與位移同向時 θ = 0°，W = F·Δs；當垂直時 θ = 90°，W = 0；當反向時 θ = 180°，W = -F·Δs。功的單位是焦耳（J）或牛頓·米（N·m）。</p>
+
+        <h3>動能與動能定理</h3>
+        <p>物體因運動而具有的能量稱為動能：</p>
+        <div class="formula">
+          <span class="desc">動能公式</span>
+          T = ½mv²
+        </div>
+        <p>動能定理指出，物體受到的總功等於其動能的變化：</p>
+        <div class="formula">
+          <span class="desc">動能定理</span>
+          W<sub>總</sub> = ΔT = T₂ - T₁ = ½m(v₂² - v₁²)
+        </div>
+        <p>這個定理在題目給定速度或位移關係時特別好用。</p>
+      </section>
+
+      <section class="section">
+        <h2>4.2 重力位能與彈簧位能</h2>
+
+        <h3>重力位能</h3>
+        <p>物體在地球重力場中因高度差而具有的位能稱為重力位能：</p>
+        <div class="formula">
+          <span class="desc">重力位能</span>
+          U<sub>g</sub> = mgh
+        </div>
+        <p>其中 h 是相對於參考點（通常取地面）的高度。重力做功等於重力位能的減少量。</p>
+
+        <h3>彈簧位能</h3>
+        <p>彈簧受壓或拉伸時儲存的能量稱為彈簧位能（或彈性位能）：</p>
+        <div class="formula">
+          <span class="desc">彈簧位能（虎克定律）</span>
+          U<sub>s</sub> = ½kx²
+        </div>
+        <p>其中 k 是彈簧常數，x 是相對於自然長度的變形量（伸長或壓縮）。彈簧力做功等於彈簧位能的減少量。</p>
+      </section>
+
+      <section class="section">
+        <h2>4.3 功能原理與機械能守恆</h2>
+
+        <h3>功能原理（工能關係）</h3>
+        <p>在保守力與非保守力共同作用下，功能原理表述為：</p>
+        <div class="formula">
+          <span class="desc">功能原理</span>
+          T₁ + U₁ + W<sub>非保守</sub> = T₂ + U₂<br>
+          其中 U = U<sub>g</sub> + U<sub>s</sub> 是總位能
+        </div>
+        <p>或簡寫為：T₁ + U₁₂ = T₂（當只有重力或彈簧做功時）。</p>
+
+        <h3>機械能守恆</h3>
+        <p>當物體只受保守力（重力、彈簧力）作用時，機械能 E = T + U 保持不變：</p>
+        <div class="formula">
+          <span class="desc">機械能守恆</span>
+          E = T + U = 常數<br>
+          T₁ + U₁ = T₂ + U₂<br>
+          ½mv₁² + mgh₁ = ½mv₂² + mgh₂
+        </div>
+        <p>注意：機械能守恆只在沒有摩擦等非保守力時成立。有摩擦時，機械能會轉化為熱能，不再守恆。</p>
+      </section>
+
+      <section class="section">
+        <h2>4.4 含摩擦的非保守功</h2>
+
+        <h3>摩擦力做功</h3>
+        <p>摩擦力總是與物體運動方向相反，因此摩擦力做功永遠為負：</p>
+        <div class="formula">
+          <span class="desc">摩擦力做功</span>
+          W<sub>f</sub> = -f · d = -μN · d
+        </div>
+        <p>其中 f = μN 是摩擦力，N 是支持力，d 是運動的距離。摩擦力做的負功等於損失的機械能。</p>
+
+        <h3>含摩擦的功能方程</h3>
+        <p>有摩擦時，應用功能原理：</p>
+        <div class="formula">
+          <span class="desc">含摩擦的功能原理</span>
+          T₁ + U₁ - f·d = T₂ + U₂<br>
+          或 T₁ + U₁ = T₂ + U₂ + f·d
+        </div>
+        <p>其中 f·d 是摩擦力做的負功，也表示被轉化為熱量的機械能。</p>
+      </section>
+
+      <section class="section">
+        <h2>4.5 功率與效率</h2>
+
+        <h3>功率定義</h3>
+        <p>功率（power）是單位時間內完成的功，反映做功的快慢：</p>
+        <div class="formula">
+          <span class="desc">平均功率</span>
+          P<sub>avg</sub> = W / Δt<br>
+          <span class="desc">瞬時功率</span>
+          P = dW/dt = F · v
+        </div>
+        <p>功率的單位是瓦特（W），1 W = 1 J/s。瞬時功率等於力與速度的點積。</p>
+
+        <h3>機械效率</h3>
+        <p>機械效率定義為有用功與輸入總功的比值：</p>
+        <div class="formula">
+          <span class="desc">機械效率</span>
+          η = W<sub>useful</sub> / W<sub>input</sub> × 100%<br>
+          或 η = P<sub>useful</sub> / P<sub>input</sub> × 100%
+        </div>
+        <p>例如，升降機的有用功是克服重力，輸入功則包括克服摩擦等損失。實際機械效率永遠 &lt; 100%，損失部分轉化為熱。</p>
+      </section>
+
+      <section class="example">
+        <h3>範例 4.1：滑梯上的滑行（含摩擦）</h3>
+        <p>質量 50 kg 的人從高度 10 m 的滑梯頂端從靜止開始滑下，滑梯長 20 m，摩擦係數 μ = 0.2，取 g = 10 m/s²。計算：</p>
+        <ol>
+          <li>摩擦力的大小</li>
+          <li>摩擦力做的功</li>
+          <li>到達底端時的速度</li>
+        </ol>
+
+        <div class="solution">
+          <span class="solution-title">解</span>
+          <p>設質量 m = 50 kg，高度 h = 10 m，滑梯長 L = 20 m，摩擦係數 μ = 0.2。</p>
+
+          <p><strong>（1）摩擦力的大小：</strong></p>
+          <p>先求滑梯的傾角：sin θ = h / L = 10 / 20 = 0.5，所以 θ = 30°</p>
+          <p>支持力 N = mg cos θ = 50 × 10 × cos 30° = 500 × (√3/2) ≈ 433 N</p>
+          <p>摩擦力 f = μN = 0.2 × 433 ≈ 86.6 N</p>
+
+          <p><strong>（2）摩擦力做的功：</strong></p>
+          <p>摩擦力沿滑梯方向（與運動相反），做功為負：</p>
+          <p>W<sub>f</sub> = -f · L = -86.6 × 20 ≈ -1732 J</p>
+
+          <p><strong>（3）到達底端時的速度：</strong></p>
+          <p>初始時位能 U₁ = mgh = 50 × 10 × 10 = 5000 J，動能 T₁ = 0</p>
+          <p>應用功能原理：T₁ + U₁ + W<sub>f</sub> = T₂ + U₂</p>
+          <p>0 + 5000 - 1732 = ½ × 50 × v² + 0</p>
+          <p>3268 = 25v²</p>
+          <p>v = √(3268/25) ≈ 11.4 m/s</p>
+
+          <p>或者用更簡單的形式：mgh - f·L = ½mv²，得到相同答案。</p>
+        </div>
+      </section>
+
+      <section class="example">
+        <h3>範例 4.2：彈簧與重力的功能問題</h3>
+        <p>質量 2 kg 的木塊放在豎直的彈簧上，彈簧被壓縮 0.5 m 後釋放。若彈簧常數 k = 200 N/m，不計摩擦，取 g = 10 m/s²，計算：</p>
+        <ol>
+          <li>彈簧的初始位能</li>
+          <li>木塊被彈簧推起，離開時的速度</li>
+          <li>木塊能上升的最大高度（以離開點為參考）</li>
+        </ol>
+
+        <div class="solution">
+          <span class="solution-title">解</span>
+          <p>設質量 m = 2 kg，彈簧常數 k = 200 N/m，初始壓縮量 x = 0.5 m，g = 10 m/s²。</p>
+
+          <p><strong>（1）彈簧的初始位能：</strong></p>
+          <p>U<sub>s</sub> = ½kx² = ½ × 200 × 0.5² = 100 × 0.25 = 25 J</p>
+
+          <p><strong>（2）離開時的速度：</strong></p>
+          <p>木塊從壓縮狀態被推起，到離開彈簧時（彈簧回到自然長度），木塊上升了 h = 0.5 m。</p>
+          <p>初狀態：T₁ = 0，U<sub>s</sub> = 25 J，U<sub>g</sub> = 0（以離開點為基準，初始位置在下方 0.5 m）</p>
+          <p>實際上以壓縮位置為基準更方便：U<sub>g</sub> = -mgh = -2 × 10 × 0.5 = -10 J</p>
+          <p>機械能守恆：0 + 25 - 10 = ½ × 2 × v² + 0</p>
+          <p>15 = v²，v = √15 ≈ 3.87 m/s</p>
+
+          <p><strong>（3）最大高度：</strong></p>
+          <p>離開後，只有重力做功，機械能守恆：</p>
+          <p>½mv² = mgh<sub>max</sub></p>
+          <p>15 = 2 × 10 × h<sub>max</sub></p>
+          <p>h<sub>max</sub> = 15 / 20 = 0.75 m</p>
+
+          <p>木塊能上升到離開點上方 0.75 m 處。</p>
+        </div>
+      </section>
+    </div>
+
+    <aside>
+      <h3>本章導覽</h3>
+      <a href="dynamics.html">← 返回動力學首頁</a>
+      <hr style="margin:12px 0;border:none;border-top:1px solid var(--line)">
+      <a href="dynamics-ch01.html">CH 1 直線運動</a>
+      <a href="dynamics-ch02.html">CH 2 曲線運動</a>
+      <a href="dynamics-ch03.html">CH 3 牛頓第二定律</a>
+      <a href="dynamics-ch04.html" style="color:var(--muted);pointer-events:none">CH 4 功能原理（本頁）</a>
+      <a href="dynamics-ch05.html" style="opacity:0.5">CH 5 動量與衝量</a>
+      <a href="dynamics-ch06.html" style="opacity:0.5">CH 6 剛體運動學</a>
+      <a href="dynamics-ch07.html" style="opacity:0.5">CH 7 剛體力動學</a>
+    </aside>
+  </div>
+
+  <footer class="titleblock" aria-label="圖面標題欄">
+    <div class="wide">知識動力場 · 動力學</div>
+    <div><span class="k">圖號</span><br><span class="v">DYN-004</span></div>
+    <div><span class="k">比例</span><br><span class="v">1 : 7 章</span></div>
+    <div><span class="k">單位</span><br><span class="v">m · s</span></div>
+    <div><span class="k">版次</span><br><span class="v">A · 2026.10</span></div>
+  </footer>
+</div>
+
+</body>
+</html>
