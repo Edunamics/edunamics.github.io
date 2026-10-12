@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>動力學 CH3 牛頓第二運動定律</title>
+<style>
+@font-face{font-family:"HanWangHeiHeavy";src:url("fonts/HanWangHeiHeavy-subset.woff2") format("woff2");font-display:swap}
+html{font-synthesis:none}
+:root{
+  --bg:#F6F9F7; --paper:#FFFFFF; --ink:#16261C; --muted:#56685C;
+  --accent:#0F6B3A; --accent-soft:#E4F2E9; --line:#D3E3D8; --grid:rgba(15,107,58,.07);
+  --exam:#B35A0F; --ok:#2E7D4F; --ok-soft:#E5F2EA;
+  --f-site:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-head:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-body:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0C1611; --paper:#13221A; --ink:#E4F1E8; --muted:#9DB8A6;
+  --accent:#6FCF97; --accent-soft:#17321F; --line:#26402F; --grid:rgba(111,207,151,.07);
+  --exam:#F2A65A; --ok:#7CC79A; --ok-soft:#18301F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C1611; --paper:#13221A; --ink:#E4F1E8; --muted:#9DB8A6;
+  --accent:#6FCF97; --accent-soft:#17321F; --line:#26402F; --grid:rgba(111,207,151,.07);
+  --exam:#F2A65A; --ok:#7CC79A; --ok-soft:#18301F; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:24px 48px;display:flex;flex-direction:column;gap:40px}
+
+/* 頂列 */
+.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-site);font-weight:900;font-size:18px;color:var(--accent)}
+.brand svg{width:32px;height:32px;flex-shrink:0}
+.subjects{display:flex;flex-wrap:wrap;gap:6px;font-size:14px;font-family:var(--f-site)}
+.subjects a{padding:4px 12px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--muted);background:var(--paper)}
+.subjects a[aria-current]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.subjects a:hover{border-color:var(--accent);color:var(--accent)}
+.subjects a[aria-current]:hover{color:var(--bg)}
+
+/* 開場：圖框 */
+.hero{position:relative;border:2px solid var(--accent);background:var(--paper);padding:36px 32px 28px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px}
+.hero::before{content:"";position:absolute;inset:6px;border:1px solid var(--line);pointer-events:none}
+.eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase}
+h1{font-family:var(--f-head);font-weight:900;font-size:clamp(36px,6vw,60px);line-height:1.1;margin:8px 0 12px;text-wrap:balance}
+.lede{max-width:34em;color:var(--muted);margin:0;font-size:14px;line-height:1.7}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);align-self:end}
+.facts div{padding:12px 14px;border-right:1px solid var(--line)}
+.facts div:last-child{border-right:0}
+.facts b{display:block;font-family:var(--f-mono);font-size:28px;font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.2}
+.facts span{font-size:13px;color:var(--muted)}
+
+/* 正文 */
+h2{font-family:var(--f-head);font-weight:900;font-size:24px;margin:0 0 12px;text-wrap:balance;color:var(--accent)}
+h3{font-family:var(--f-head);font-weight:900;font-size:20px;margin:16px 0 12px;color:var(--ink)}
+.section{background:var(--paper);border:1px solid var(--line);padding:24px;margin-bottom:12px}
+.section h2:first-child{margin-top:0}
+
+/* 公式框 */
+.formula{background:var(--accent-soft);border-left:4px solid var(--accent);padding:16px;margin:16px 0;font-family:var(--f-mono);font-size:15px;line-height:1.8;color:var(--ink)}
+.formula .desc{display:block;font-family:var(--f-body);font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:700}
+
+/* 範例 */
+.example{background:var(--paper);border:2px solid var(--line);padding:24px;margin:20px 0}
+.example h3{margin-top:0;color:var(--accent)}
+.example .solution{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
+.example .solution-title{display:block;font-weight:700;color:var(--muted);font-size:13px;margin-bottom:8px}
+
+/* 側邊欄 */
+aside{position:sticky;top:24px;background:var(--paper);border:1px solid var(--line);padding:20px;border-radius:4px;font-size:13px;max-height:fit-content}
+aside h3{margin:0 0 12px;font-size:15px}
+aside a{display:block;padding:6px 0;text-decoration:none;color:var(--accent)}
+aside a:hover{text-decoration:underline}
+
+/* 主要佈局 */
+.main{display:grid;grid-template-columns:1fr 280px;gap:24px}
+
+/* 標題欄 */
+.titleblock{margin-left:auto;width:min(100%,520px);border:2px solid var(--accent);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));font-size:12px;background:var(--paper)}
+.titleblock div{padding:6px 10px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.titleblock div:nth-child(4n){border-right:0}
+.titleblock .k{color:var(--muted);font-size:11px}
+.titleblock .v{font-family:var(--f-mono);color:var(--ink)}
+.titleblock .wide{grid-column:span 4;border-right:0;border-bottom:0;font-family:var(--f-head);font-weight:900;font-size:16px;color:var(--accent)}
+
+@media (max-width:760px){
+  .main{grid-template-columns:1fr}
+  aside{position:static;max-height:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="index.html" aria-label="回知識動力場首頁">
+      <svg viewBox="0 0 120 120" width="32" height="32" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 18V102M38 18V102M22 18L38 42L22 66L38 90M38 18H98V34H38M38 52H86V68H38M38 86H98V102H38M22 18H38M22 102H38"/></svg>
+      知識動力場
+    </a>
+    <nav class="subjects" aria-label="科目">
+      <a href="manufacturing.html">機械製造</a>
+      <a href="statics.html">靜力學</a>
+      <a href="dynamics.html" aria-current="page">動力學</a>
+      <a href="mechanics-of-materials.html">材料力學</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Dynamics · Chapter 3</div>
+      <h1>牛頓第二運動定律</h1>
+      <p class="lede">牛頓三大定律是古典力學的基礎，第二定律 ΣF = ma 最常用於解題。根據題目給的條件選用直角座標或曲線座標，分析升降機、滑輪、斜面與圓周運動等常見題型。</p>
+    </div>
+    <div class="facts" aria-label="章節概況">
+      <div><b>1</b><span>節</span></div>
+      <div><b>5</b><span>道範例</span></div>
+      <div><b>52</b><span>題演練</span></div>
+    </div>
+  </section>
+
+  <div class="main">
+    <div>
+      <section class="section">
+        <h2>3.1 牛頓三大定律與力的單位</h2>
+        <p>牛頓的三大定律構成古典力學的基礎：</p>
+
+        <h3>第一定律（慣性定律）</h3>
+        <p>物體不受力或受力平衡時，靜者恆靜，動者恆以等速直線運動。</p>
+
+        <h3>第二定律（加速度定律）</h3>
+        <p>物體受合力作用時，加速度的大小正比於合力，方向與合力相同：</p>
+        <div class="formula">
+          <span class="desc">牛頓第二定律</span>
+          ΣF = ma<br>
+          a = ΣF / m
+        </div>
+        <p>其中 ΣF 是合力（N），m 是質量（kg），a 是加速度（m/s²）。</p>
+
+        <h3>第三定律（作用反作用定律）</h3>
+        <p>兩物體間的作用力與反作用力，大小相等、方向相反、作用在不同物體上。</p>
+
+        <h3>力的單位</h3>
+        <p>國際單位制中，力的單位為牛頓（N）：</p>
+        <div class="formula">
+          <span class="desc">力的單位</span>
+          1 N = 1 kg·m/s² = 1 kgf / 9.8
+        </div>
+        <p>舊制中以公斤力（kgf）表示，1 kgf ≈ 9.8 N 是 1 kg 物體的重力。</p>
+      </section>
+
+      <section class="section">
+        <h2>3.2 直角座標與曲線座標中的運動方程式</h2>
+
+        <h3>直角座標（x-y）</h3>
+        <p>當力與運動沿著水平與豎直方向時，在各方向分別應用牛頓第二定律：</p>
+        <div class="formula">
+          <span class="desc">直角座標運動方程式</span>
+          ΣF<sub>x</sub> = ma<sub>x</sub><br>
+          ΣF<sub>y</sub> = ma<sub>y</sub>
+        </div>
+
+        <h3>曲線座標（切線與法線）</h3>
+        <p>當物體沿曲線路徑運動（如圓周運動）時，分解為切線方向（沿速度方向）與法線方向（指向圓心）：</p>
+        <div class="formula">
+          <span class="desc">曲線座標運動方程式</span>
+          ΣF<sub>t</sub> = ma<sub>t</sub>  （切線方向，改變速度大小）<br>
+          ΣF<sub>n</sub> = ma<sub>n</sub> = mv²/r  （法線方向，改變速度方向）
+        </div>
+        <p>其中 a<sub>t</sub> = dv/dt 是切線加速度，a<sub>n</sub> = v²/r 是法線加速度。</p>
+      </section>
+
+      <section class="section">
+        <h2>3.3 常見題型：升降機、滑輪、斜面與圓周運動</h2>
+
+        <h3>升降機中的重力與支持力</h3>
+        <p>人或物品在升降機內感受到的「視重」（稱重時的數值）取決於加速度方向：</p>
+        <div class="formula">
+          <span class="desc">升降機中的支持力</span>
+          N - W = ma<br>
+          N = m(g + a)  當升降機向上加速<br>
+          N = m(g - a)  當升降機向下加速
+        </div>
+        <p>其中 N 是支持力，W = mg 是重力。升降機上升時支持力變大，下降時支持力變小。</p>
+
+        <h3>滑輪系統</h3>
+        <p>兩個以上質量的物體通過輕繩與滑輪相連，繩子兩端張力相等（假設繩子與滑輪都無質量）。對每個物體分別寫運動方程式，利用繩子長度不變的約束條件（相依運動）求解。</p>
+
+        <h3>斜面上的物體</h3>
+        <p>沿著斜面建立座標系，分解重力為平行斜面分量（mg sin θ）與垂直斜面分量（mg cos θ）：</p>
+        <div class="formula">
+          <span class="desc">斜面上的加速度（無摩擦）</span>
+          a = g sin θ
+        </div>
+        <p>含摩擦時，需考慮摩擦力 f = μN = μmg cos θ，其中 μ 是摩擦係數。</p>
+
+        <h3>圓周運動中的向心力</h3>
+        <p>物體以恆定速度進行圓周運動時，需要指向圓心的向心力，大小為：</p>
+        <div class="formula">
+          <span class="desc">向心力公式</span>
+          F<sub>c</sub> = mv²/r = mω²r = m(v/T)²
+        </div>
+        <p>其中 r 是圓周半徑，v 是速度，ω 是角速度，T 是週期。常見例子包括：圓盤上的物體因摩擦提供向心力、繩子的張力提供向心力、重力與支持力的合力提供向心力（如車過彎時）。</p>
+      </section>
+
+      <section class="example">
+        <h3>範例 3.1：升降機中的重力測量</h3>
+        <p>質量 60 kg 的人站在升降機內，秤上的讀數（支持力）為多少，在下列情況下？</p>
+        <ol>
+          <li>升降機以 2 m/s² 向上加速</li>
+          <li>升降機以 2 m/s² 向下加速</li>
+          <li>升降機以 10 m/s 勻速上升（取 g = 10 m/s²）</li>
+        </ol>
+
+        <div class="solution">
+          <span class="solution-title">解</span>
+          <p>設人的質量 m = 60 kg，g = 10 m/s²，人的重力 W = mg = 60 × 10 = 600 N。</p>
+
+          <p><strong>（1）向上加速，a = 2 m/s²：</strong></p>
+          <p>以向上為正方向，N - W = ma</p>
+          <p>N = W + ma = 600 + 60 × 2 = 720 N</p>
+
+          <p><strong>（2）向下加速，a = 2 m/s²：</strong></p>
+          <p>以向上為正方向，N - W = -ma</p>
+          <p>N = W - ma = 600 - 60 × 2 = 480 N</p>
+
+          <p><strong>（3）勻速上升，a = 0：</strong></p>
+          <p>N - W = 0</p>
+          <p>N = W = 600 N</p>
+
+          <p>向上加速時，秤上讀數 720 N（感覺變重）；向下加速時，讀數 480 N（感覺變輕）；勻速時，讀數 600 N（正常）。</p>
+        </div>
+      </section>
+
+      <section class="example">
+        <h3>範例 3.2：圓周運動中的向心力</h3>
+        <p>一輛質量 1200 kg 的汽車在半徑 40 m 的圓形彎道上，以 20 m/s（時速 72 km/h）的恆定速度行駛。若路面的靜摩擦係數為 0.8，計算：</p>
+        <ol>
+          <li>汽車所需的向心力</li>
+          <li>路面能提供的最大摩擦力</li>
+          <li>汽車是否會打滑？</li>
+        </ol>
+
+        <div class="solution">
+          <span class="solution-title">解</span>
+          <p>設汽車質量 m = 1200 kg，速度 v = 20 m/s，半徑 r = 40 m，摩擦係數 μ = 0.8，g = 10 m/s²。</p>
+
+          <p><strong>（1）所需向心力：</strong></p>
+          <p>F<sub>c</sub> = mv²/r = 1200 × 20² / 40</p>
+          <p>F<sub>c</sub> = 1200 × 400 / 40 = 12000 N</p>
+
+          <p><strong>（2）路面能提供的最大摩擦力：</strong></p>
+          <p>在水平路面上，支持力 N = mg = 1200 × 10 = 12000 N</p>
+          <p>最大摩擦力 f<sub>max</sub> = μN = 0.8 × 12000 = 9600 N</p>
+
+          <p><strong>（3）是否打滑：</strong></p>
+          <p>因為所需向心力 12000 N &gt; 最大摩擦力 9600 N，路面摩擦不足以提供所需向心力，汽車會打滑滑向外側。</p>
+
+          <p>不打滑的最高速度：v<sub>max</sub> = √(μgr) = √(0.8 × 10 × 40) = √320 ≈ 17.9 m/s</p>
+        </div>
+      </section>
+    </div>
+
+    <aside>
+      <h3>本章導覽</h3>
+      <a href="dynamics.html">← 返回動力學首頁</a>
+      <hr style="margin:12px 0;border:none;border-top:1px solid var(--line)">
+      <a href="dynamics-ch01.html">CH 1 直線運動</a>
+      <a href="dynamics-ch02.html">CH 2 曲線運動</a>
+      <a href="dynamics-ch03.html" style="color:var(--muted);pointer-events:none">CH 3 牛頓第二定律（本頁）</a>
+      <a href="dynamics-ch04.html" style="opacity:0.5">CH 4 功能原理</a>
+      <a href="dynamics-ch05.html" style="opacity:0.5">CH 5 動量與衝量</a>
+      <a href="dynamics-ch06.html" style="opacity:0.5">CH 6 剛體運動學</a>
+      <a href="dynamics-ch07.html" style="opacity:0.5">CH 7 剛體力動學</a>
+    </aside>
+  </div>
+
+  <footer class="titleblock" aria-label="圖面標題欄">
+    <div class="wide">知識動力場 · 動力學</div>
+    <div><span class="k">圖號</span><br><span class="v">DYN-003</span></div>
+    <div><span class="k">比例</span><br><span class="v">1 : 7 章</span></div>
+    <div><span class="k">單位</span><br><span class="v">m · s</span></div>
+    <div><span class="k">版次</span><br><span class="v">A · 2026.10</span></div>
+  </footer>
+</div>
+
+</body>
+</html>
