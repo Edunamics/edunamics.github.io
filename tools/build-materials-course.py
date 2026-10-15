@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the 15 chapter course, outlined formula images and redrawn SVG figures.
 PYTHONPATH=/private/tmp/dynamics-math-render:/private/tmp/materials-pdf python3 tools/build-materials-course.py
-Prefer working source PDFs in ../sources/materials; published copies are a fallback.
+Read private working source PDFs in ../sources/materials; never publish PDF copies.
 """
 from pathlib import Path
 from io import BytesIO
@@ -20,7 +20,8 @@ def mod(name,file):
 data=mod('materials_data','materials-course-data.py');u=mod('materials_math','course-formula-utils.py')
 def source_path(n):
  working=ROOT.parent/f'sources/materials/ch{n:02}.pdf'
- return working if working.exists() else ROOT/f'assets/materials/materials-ch{n:02}.pdf'
+ if not working.exists():raise FileNotFoundError(f'Working source required outside website: {working}')
+ return working
 FONT='/System/Library/Fonts/Supplemental/Arial Unicode.ttf'
 fontManager.addfont(FONT);fp=FontProperties(fname=FONT,size=12)
 GREEN='#0f6b3a';INK='#152231';FORCE='#c2410c';MUTED='#566677';FILL='#e1f0e8'
@@ -235,7 +236,6 @@ if __name__=='__main__':
  out=ROOT/'assets/materials';out.mkdir(parents=True,exist_ok=True)
  for n,c in enumerate(data.CHAPTERS,1):
   name=f'materials-ch{n:02}.html';pdf=f'assets/materials/materials-ch{n:02}.pdf';count,starts=source_pages(n,c)
-  if source_path(n).resolve()!=(ROOT/pdf).resolve():shutil.copyfile(source_path(n),ROOT/pdf)
   entries=[(f'sec{i}',f'{n}-{i}',s['title']) for i,s in enumerate(c['sections'],1)]+[('ex','範例','教學例題'),('source','原文','完整原講義')]
   tabs=''.join(f'<a class="tab" id="tab-{id}" href="#{id}" role="tab" aria-controls="{id}" aria-selected="{"true" if j==0 else "false"}"><span class="ic">{icon(j)}</span><span class="tx"><span class="no">{no}</span><span class="nm">{html.escape(title)}</span></span></a>' for j,(id,no,title) in enumerate(entries))
   body=[]
@@ -282,3 +282,6 @@ if __name__=='__main__':
  (ROOT.parent/'output').mkdir(parents=True,exist_ok=True)
  (ROOT.parent/'output/materials-course-manifest.json').write_text(json.dumps({'chapters':manifest,'totals':{'chapters':15,'sections':sum(m['sections'] for m in manifest),'examples':30,'source_pages':sum(m['source_pages'] for m in manifest),'formulas':sum(m['formulas'] for m in manifest),'figures':sum(m['figures'] for m in manifest)}},ensure_ascii=False,indent=2))
  print('Built',len(FIGURES),'unique figures;',len(EQUATIONS),'unique formula images')
+ # Preserve the complete chapter and the user's no-download publication policy.
+ module_full=mod('materials_ch01_full','build-materials-ch01-full.py');module_full.build()
+ mod('materials_pdf_withdrawal','withdraw-materials-pdfs.py').withdraw()
