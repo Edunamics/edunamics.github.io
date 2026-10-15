@@ -1,0 +1,606 @@
+[
+  {
+    "page": "ch02.html",
+    "index": 1,
+    "file": "ch02-eq01.svg",
+    "original": "ts = C · ( V ／ A )n",
+    "rows": [
+      [
+        "t_s=C\\left(\\frac{V}{A}\\right)^n",
+        "Chvorinov 凝固時間定律"
+      ]
+    ]
+  },
+  {
+    "page": "ch02.html",
+    "index": 2,
+    "file": "ch02-eq02.svg",
+    "original": "h + p／ρg + v²／2g = 常數",
+    "rows": [
+      [
+        "h+\\frac{p}{\\rho g}+\\frac{v^2}{2g}=\\mathrm{constant}",
+        "白努利方程式"
+      ]
+    ]
+  },
+  {
+    "page": "ch02.html",
+    "index": 3,
+    "file": "ch02-eq03.svg",
+    "original": "Q = A₁v₁ = A₂v₂",
+    "rows": [
+      [
+        "Q=A_1v_1=A_2v_2",
+        "連續方程式"
+      ]
+    ]
+  },
+  {
+    "page": "ch03.html",
+    "index": 1,
+    "file": "ch03-eq01.svg",
+    "original": "V燒結 = V生胚 (1 − ΔL／L₀)³ ρ燒結 = ρ生胚 ／ (1 − ΔL／L₀)³",
+    "rows": [
+      [
+        "V_s=V_g\\left(1-\\frac{\\Delta L}{L_0}\\right)^3",
+        "Vs：燒結體積；Vg：生胚體積"
+      ],
+      [
+        "\\rho_s=\\frac{\\rho_g}{(1-\\Delta L/L_0)^3}",
+        "ρs：燒結密度；ρg：生胚密度"
+      ]
+    ]
+  },
+  {
+    "page": "ch04.html",
+    "index": 1,
+    "file": "ch04-eq01.svg",
+    "original": "切削速度 V = π D N ／ 1000 （m/min；D 為工件或刀具直徑 mm，N 為轉速 rpm）",
+    "rows": [
+      [
+        "V=\\frac{\\pi DN}{1000}",
+        "V：切削速度（m/min）"
+      ],
+      [
+        "D\\;[\\mathrm{mm}],\\quad N\\;[\\mathrm{rpm}]",
+        "D 為工件或刀具直徑；N 為轉速"
+      ]
+    ]
+  },
+  {
+    "page": "ch04.html",
+    "index": 2,
+    "file": "ch04-eq02.svg",
+    "original": "r = t ／ tc ＜ 1 tan φ = r cos α ／ (1 − r sin α)",
+    "rows": [
+      [
+        "r=\\frac{t}{t_c}<1",
+        ""
+      ],
+      [
+        "\\tan\\phi=\\frac{r\\cos\\alpha}{1-r\\sin\\alpha}",
+        ""
+      ]
+    ]
+  },
+  {
+    "page": "ch04.html",
+    "index": 3,
+    "file": "ch04-eq03.svg",
+    "original": "γ = cot φ + tan(φ − α)",
+    "rows": [
+      [
+        "\\gamma=\\cot\\phi+\\tan(\\phi-\\alpha)",
+        ""
+      ]
+    ]
+  },
+  {
+    "page": "ch04.html",
+    "index": 4,
+    "file": "ch04-eq04.svg",
+    "original": "u = FP V ／ (V b t) = FP ／ (b t) ＝ us（剪切）＋ uf（摩擦）",
+    "rows": [
+      [
+        "u=\\frac{F_PV}{Vbt}=\\frac{F_P}{bt}=u_s+u_f",
+        "us 為剪切能；uf 為摩擦能"
+      ]
+    ]
+  },
+  {
+    "page": "ch04.html",
+    "index": 5,
+    "file": "ch04-eq05.svg",
+    "original": "θT ∝ Va fb 碳化物 a ≈ 0.2、b ≈ 0.125；高速鋼 a ≈ 0.5、b ≈ 0.375",
+    "rows": [
+      [
+        "\\theta_T\\propto V^af^b",
+        ""
+      ],
+      [
+        "a\\approx0.2,\\quad b\\approx0.125",
+        "碳化物刀具"
+      ],
+      [
+        "a\\approx0.5,\\quad b\\approx0.375",
+        "高速鋼刀具"
+      ]
+    ]
+  },
+  {
+    "page": "ch04.html",
+    "index": 6,
+    "file": "ch04-eq06.svg",
+    "original": "V Tn = C",
+    "rows": [
+      [
+        "VT^n=C",
+        "泰勒刀具壽命式"
+      ]
+    ]
+  },
+  {
+    "page": "ch04.html",
+    "index": 7,
+    "file": "ch04-eq07.svg",
+    "original": "磨削比 G = 工件材料移除體積 ／ 砂輪磨耗體積 （一般約 2–200，CBN 可達數千）",
+    "rows": [
+      [
+        "G=\\frac{V_{\\mathrm{removed}}}{V_{\\mathrm{wheel}}}",
+        "工件材料移除體積 ÷ 砂輪磨耗體積"
+      ],
+      [
+        "G\\approx2\\!\\sim\\!200",
+        "一般範圍；CBN 可達數千"
+      ]
+    ]
+  },
+  {
+    "page": "ch05.html",
+    "index": 1,
+    "file": "ch05-eq01.svg",
+    "original": "冷加工量 CW = (A₀ − Af) ／ A₀ × 100%",
+    "rows": [
+      [
+        "CW=\\frac{A_0-A_f}{A_0}\\times100\\%",
+        "冷加工量"
+      ]
+    ]
+  },
+  {
+    "page": "ch05.html",
+    "index": 2,
+    "file": "ch05-eq02.svg",
+    "original": "擠製比 R = A₀ ／ Af 減縮率 = (1 − 1／R) × 100%",
+    "rows": [
+      [
+        "R=\\frac{A_0}{A_f}",
+        "擠製比"
+      ],
+      [
+        "\\left(1-\\frac{1}{R}\\right)\\times100\\%",
+        "減縮率"
+      ]
+    ]
+  },
+  {
+    "page": "ch05.html",
+    "index": 3,
+    "file": "ch05-eq03.svg",
+    "original": "沖剪力 F ≈ 0.7 × UTS × t × L （t 板厚，L 剪切周長）",
+    "rows": [
+      [
+        "F\\approx0.7\\,\\mathrm{UTS}\\,tL",
+        "t 為板厚；L 為剪切周長"
+      ]
+    ]
+  },
+  {
+    "page": "ch06.html",
+    "index": 1,
+    "file": "ch06-eq01.svg",
+    "original": "H = I² R t （I 電流，R 電阻，t 通電時間）",
+    "rows": [
+      [
+        "H=I^2Rt",
+        "I：電流；R：電阻；t：通電時間"
+      ]
+    ]
+  },
+  {
+    "page": "ch06.html",
+    "index": 2,
+    "file": "ch06-eq02.svg",
+    "original": "熱輸入 H = η V I ／ v （η 熱效率，V 電壓，I 電流，v 銲接速度）",
+    "rows": [
+      [
+        "H=\\frac{\\eta VI}{v}",
+        "η：熱效率；V：電壓；I：電流；v：銲接速度"
+      ]
+    ]
+  },
+  {
+    "page": "ch08.html",
+    "index": 1,
+    "file": "ch08-eq01.svg",
+    "original": "L = L₀(1 + αΔT) V = V₀(1 + γΔT)，γ ≈ 3α k = Q·L ／ (t·A·ΔT)",
+    "rows": [
+      [
+        "L=L_0(1+\\alpha\\Delta T)",
+        ""
+      ],
+      [
+        "V=V_0(1+\\gamma\\Delta T),\\quad\\gamma\\approx3\\alpha",
+        ""
+      ],
+      [
+        "k=\\frac{QL}{tA\\Delta T}",
+        ""
+      ]
+    ]
+  },
+  {
+    "page": "ch08.html",
+    "index": 2,
+    "file": "ch08-eq02.svg",
+    "original": "伸長率 %EL = (Lf − L₀) ／ L₀ × 100% 斷面收縮率 %RA = (A₀ − Af) ／ A₀ × 100%",
+    "rows": [
+      [
+        "\\%EL=\\frac{L_f-L_0}{L_0}\\times100\\%",
+        "伸長率"
+      ],
+      [
+        "\\%RA=\\frac{A_0-A_f}{A_0}\\times100\\%",
+        "斷面收縮率"
+      ]
+    ]
+  },
+  {
+    "page": "ch08.html",
+    "index": 3,
+    "file": "ch08-eq03.svg",
+    "original": "E = WR(1 − cos α) − WR(1 − cos β) = WR(cos β − cos α)",
+    "rows": [
+      [
+        "E=WR(1-\\cos\\alpha)-WR(1-\\cos\\beta)",
+        ""
+      ],
+      [
+        "E=WR(\\cos\\beta-\\cos\\alpha)",
+        ""
+      ]
+    ]
+  },
+  {
+    "page": "ch08.html",
+    "index": 4,
+    "file": "ch08-eq04.svg",
+    "original": "APF = 2 × (4/3)πR³ ／ a³ = 2 × (4/3)π(√3a/4)³ ／ a³ = √3π ／ 8 ≈ 0.68",
+    "rows": [
+      [
+        "\\mathrm{APF}=\\frac{2(4/3)\\pi R^3}{a^3}",
+        ""
+      ],
+      [
+        "\\mathrm{APF}=\\frac{2(4/3)\\pi(\\sqrt{3}a/4)^3}{a^3}",
+        ""
+      ],
+      [
+        "\\mathrm{APF}=\\frac{\\sqrt{3}\\pi}{8}\\approx0.68",
+        ""
+      ]
+    ]
+  },
+  {
+    "page": "ch08.html",
+    "index": 5,
+    "file": "ch08-eq05.svg",
+    "original": "u = n(2u′ − v′)／3 v = n(2v′ − u′)／3 t = −(u + v) w = n·w′",
+    "rows": [
+      [
+        "u=\\frac{n(2u^{\\prime}-v^{\\prime})}{3}",
+        ""
+      ],
+      [
+        "v=\\frac{n(2v^{\\prime}-u^{\\prime})}{3}",
+        ""
+      ],
+      [
+        "t=-(u+v),\\quad w=nw^{\\prime}",
+        ""
+      ]
+    ]
+  },
+  {
+    "page": "ch08.html",
+    "index": 6,
+    "file": "ch08-eq06.svg",
+    "original": "ASTM 晶粒度號數 n：放大 100 倍時每平方英吋晶粒數 N = 2n − 1",
+    "rows": [
+      [
+        "N=2^{n-1}",
+        "ASTM 晶粒度：放大 100 倍，每平方英吋的晶粒數"
+      ]
+    ]
+  },
+  {
+    "page": "ch08.html",
+    "index": 7,
+    "file": "ch08-eq07.svg",
+    "original": "W波來鐵 = (0.4 − 0.02) ／ (0.8 − 0.02) ≈ 49% W初析α ≈ 51%",
+    "rows": [
+      [
+        "W_P=\\frac{0.4-0.02}{0.8-0.02}\\approx49\\%",
+        "波來鐵重量百分率"
+      ],
+      [
+        "W_{\\alpha}\\approx51\\%",
+        "初析 α 重量百分率"
+      ]
+    ]
+  },
+  {
+    "page": "statics-ch01.html",
+    "index": 1,
+    "file": "statics-ch01-eq01.svg",
+    "original": "定義1 N = 1 kg × 1 m/s²使質量 1 kg 的物體產生 1 m/s² 加速度所需的力，稱為 1 牛頓。",
+    "rows": [
+      [
+        "1\\,\\mathrm{N}=1\\,\\mathrm{kg}\\times1\\,\\mathrm{m}/\\mathrm{s}^2",
+        "使 1 kg 質量產生 1 m/s² 加速度所需的力"
+      ]
+    ]
+  },
+  {
+    "page": "statics-ch01.html",
+    "index": 2,
+    "file": "statics-ch01-eq02.svg",
+    "original": "直角分量 F = Fx i + Fy j = F cos θ i + F sin θ j F = √(Fx² + Fy²) θ = tan⁻¹(Fy / Fx)",
+    "rows": [
+      [
+        "\\mathbf{F}=F_x\\mathbf{i}+F_y\\mathbf{j}",
+        ""
+      ],
+      [
+        "\\mathbf{F}=F\\cos\\theta\\,\\mathbf{i}+F\\sin\\theta\\,\\mathbf{j}",
+        ""
+      ],
+      [
+        "F=\\sqrt{F_x^2+F_y^2}",
+        ""
+      ],
+      [
+        "\\theta=\\tan^{-1}\\!\\left(\\frac{F_y}{F_x}\\right)",
+        "依分量正負判斷象限"
+      ]
+    ]
+  },
+  {
+    "page": "statics-ch01.html",
+    "index": 3,
+    "file": "statics-ch01-eq03.svg",
+    "original": "代數法 ΣFx = F1 cos θ1 + F2 cos θ2 + … ΣFy = F1 sin θ1 + F2 sin θ2 + … R = √((ΣFx)² + (ΣFy)²) α = tan⁻¹(ΣFy / ΣFx)",
+    "rows": [
+      [
+        "\\sum F_x=F_1\\cos\\theta_1+F_2\\cos\\theta_2+\\cdots",
+        ""
+      ],
+      [
+        "\\sum F_y=F_1\\sin\\theta_1+F_2\\sin\\theta_2+\\cdots",
+        ""
+      ],
+      [
+        "R=\\sqrt{(\\sum F_x)^2+(\\sum F_y)^2}",
+        ""
+      ],
+      [
+        "\\alpha=\\tan^{-1}\\!\\left(\\frac{\\sum F_y}{\\sum F_x}\\right)",
+        "依合力分量判斷象限"
+      ]
+    ]
+  },
+  {
+    "page": "statics-ch01.html",
+    "index": 4,
+    "file": "statics-ch01-eq04.svg",
+    "original": "餘弦定律求大小 R = √(P² + Q² + 2PQ cos α) tan θ = Q sin α / (P + Q cos α)",
+    "rows": [
+      [
+        "R=\\sqrt{P^2+Q^2+2PQ\\cos\\alpha}",
+        ""
+      ],
+      [
+        "\\tan\\theta=\\frac{Q\\sin\\alpha}{P+Q\\cos\\alpha}",
+        ""
+      ]
+    ]
+  },
+  {
+    "page": "statics-ch01.html",
+    "index": 5,
+    "file": "statics-ch01-eq05.svg",
+    "original": "正弦定律求方向 Q / sin θ = R / sin(180° − α) = R / sin α",
+    "rows": [
+      [
+        "\\frac{Q}{\\sin\\theta}=\\frac{R}{\\sin(180^{\\circ}-\\alpha)}",
+        ""
+      ],
+      [
+        "\\frac{R}{\\sin(180^{\\circ}-\\alpha)}=\\frac{R}{\\sin\\alpha}",
+        ""
+      ]
+    ]
+  },
+  {
+    "page": "statics-ch01.html",
+    "index": 6,
+    "file": "statics-ch01-eq06.svg",
+    "original": "力矩 MO = F · d 向量形式：MO = r × F 平面上：MO = x Fy − y Fx（逆時針為正） 單位：N·m、kN·m、kgf·m",
+    "rows": [
+      [
+        "M_O=Fd",
+        ""
+      ],
+      [
+        "\\mathbf{M}_O=\\mathbf{r}\\times\\mathbf{F}",
+        "向量形式"
+      ],
+      [
+        "M_O=xF_y-yF_x",
+        "平面上：逆時針為正"
+      ],
+      [
+        "\\mathrm{N}\\!\\cdot\\!\\mathrm{m},\\;\\mathrm{kN}\\!\\cdot\\!\\mathrm{m},\\;\\mathrm{kgf}\\!\\cdot\\!\\mathrm{m}",
+        "力矩單位"
+      ]
+    ]
+  },
+  {
+    "page": "statics-ch01.html",
+    "index": 7,
+    "file": "statics-ch01-eq07.svg",
+    "original": "任意分布 w(x) R = ∫ w(x) dx x̄ = ∫ x·w(x) dx ／ ∫ w(x) dx 合力 = 負載曲線下的面積；作用位置 = 該面積的形心。",
+    "rows": [
+      [
+        "R=\\int w(x)\\,\\mathrm{d}x",
+        "合力為負載曲線下的面積"
+      ],
+      [
+        "\\bar{x}=\\frac{\\int xw(x)\\,\\mathrm{d}x}{\\int w(x)\\,\\mathrm{d}x}",
+        "作用位置為該面積的形心"
+      ]
+    ]
+  },
+  {
+    "page": "statics-ch02.html",
+    "index": 1,
+    "file": "statics-ch02-eq01.svg",
+    "original": "平衡條件R = 0 ⇔ ΣFx = 0，ΣFy = 0圖解法：各力首尾相接的力多邊形封閉，合力即為零。",
+    "rows": [
+      [
+        "\\mathbf{R}=0\\;\\Longleftrightarrow\\;\\sum F_x=0,\\;\\sum F_y=0",
+        "力多邊形封閉，合力為零"
+      ]
+    ]
+  },
+  {
+    "page": "statics-ch02.html",
+    "index": 2,
+    "file": "statics-ch02-eq02.svg",
+    "original": "拉密定理（Lami's theorem）F1 / sin θ1 = F2 / sin θ2 = F3 / sin θ3只適用於三個共點力平衡；θ 是每個力「對面」兩力之間的夾角，三角相加為 360°。",
+    "rows": [
+      [
+        "\\frac{F_1}{\\sin\\theta_1}=\\frac{F_2}{\\sin\\theta_2}=\\frac{F_3}{\\sin\\theta_3}",
+        "拉密定理：三個共點力平衡"
+      ],
+      [
+        "\\theta_1+\\theta_2+\\theta_3=360^{\\circ}",
+        "θ 為每個力對面兩力之間的夾角"
+      ]
+    ]
+  },
+  {
+    "page": "statics-ch02.html",
+    "index": 3,
+    "file": "statics-ch02-eq03.svg",
+    "original": "直角分量F = Fx i + Fy j + Fz kF = √(Fx² + Fy² + Fz²) cos θx = Fx/F，cos θy = Fy/F，cos θz = Fz/F",
+    "rows": [
+      [
+        "\\mathbf{F}=F_x\\mathbf{i}+F_y\\mathbf{j}+F_z\\mathbf{k}",
+        ""
+      ],
+      [
+        "F=\\sqrt{F_x^2+F_y^2+F_z^2}",
+        ""
+      ],
+      [
+        "\\cos\\theta_x=\\frac{F_x}{F},\\quad\\cos\\theta_y=\\frac{F_y}{F}",
+        ""
+      ],
+      [
+        "\\cos\\theta_z=\\frac{F_z}{F}",
+        ""
+      ]
+    ]
+  },
+  {
+    "page": "statics-ch02.html",
+    "index": 4,
+    "file": "statics-ch02-eq04.svg",
+    "original": "單位向量法F = F · r / |r|r 為沿作用線的位置向量（終點座標減起點座標），方向要與力的指向一致。",
+    "rows": [
+      [
+        "\\mathbf{F}=F\\frac{\\mathbf{r}}{|\\mathbf{r}|}",
+        "r：沿作用線的位置向量（終點座標減起點座標）"
+      ]
+    ]
+  },
+  {
+    "page": "statics-ch02.html",
+    "index": 5,
+    "file": "statics-ch02-eq05.svg",
+    "original": "空間共點力系ΣFx = 0ΣFy = 0ΣFz = 0",
+    "rows": [
+      [
+        "\\sum F_x=0,\\quad\\sum F_y=0,\\quad\\sum F_z=0",
+        ""
+      ]
+    ]
+  },
+  {
+    "page": "statics-ch02.html",
+    "index": 6,
+    "file": "statics-ch02-eq06.svg",
+    "original": "空間一般力系ΣFx = ΣFy = ΣFz = 0ΣMx = ΣMy = ΣMz = 0最多解 6 個未知數",
+    "rows": [
+      [
+        "\\sum F_x=\\sum F_y=\\sum F_z=0",
+        ""
+      ],
+      [
+        "\\sum M_x=\\sum M_y=\\sum M_z=0",
+        "最多可解 6 個未知數"
+      ]
+    ]
+  },
+  {
+    "page": "statics-ch02.html",
+    "index": 7,
+    "file": "statics-ch02-eq07.svg",
+    "original": "力對點的力矩MO = r × F= (yFz − zFy) i + (zFx − xFz) j + (xFy − yFx) k",
+    "rows": [
+      [
+        "\\mathbf{M}_O=\\mathbf{r}\\times\\mathbf{F}",
+        ""
+      ],
+      [
+        "\\mathbf{M}_O=(yF_z-zF_y)\\mathbf{i}",
+        ""
+      ],
+      [
+        "\\qquad+(zF_x-xF_z)\\mathbf{j}",
+        ""
+      ],
+      [
+        "\\qquad+(xF_y-yF_x)\\mathbf{k}",
+        ""
+      ]
+    ]
+  },
+  {
+    "page": "statics-ch02.html",
+    "index": 8,
+    "file": "statics-ch02-eq08.svg",
+    "original": "力對軸的力矩Ma = (r × F) · ea結果是純量（純量三重積）；若要向量形式，再乘上 ea。力與軸平行或相交時，對該軸的力矩為零。",
+    "rows": [
+      [
+        "M_a=(\\mathbf{r}\\times\\mathbf{F})\\cdot\\mathbf{e}_a",
+        "純量三重積；求向量時再乘 ea"
+      ],
+      [
+        "M_a=0",
+        "力與軸平行或相交時，對該軸的力矩為零"
+      ]
+    ]
+  }
+]
