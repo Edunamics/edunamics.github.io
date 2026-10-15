@@ -4,136 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>動力學 CH5 動量與衝量</title>
-<style>
-@font-face{font-family:"HanWangHeiHeavy";src:url("fonts/HanWangHeiHeavy-subset.woff2") format("woff2");font-display:swap}
-html{font-synthesis:none}
-:root{
-  --bg:#F6F9F7; --paper:#FFFFFF; --ink:#16261C; --muted:#56685C;
-  --accent:#0F6B3A; --accent-soft:#E4F2E9; --line:#D3E3D8; --grid:rgba(15,107,58,.07);
-  --exam:#B35A0F; --ok:#2E7D4F; --ok-soft:#E5F2EA;
-  --f-site:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
-  --f-head:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
-  --f-body:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
-  --f-mono:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
-}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0C1611; --paper:#13221A; --ink:#E4F1E8; --muted:#9DB8A6;
-  --accent:#6FCF97; --accent-soft:#17321F; --line:#26402F; --grid:rgba(111,207,151,.07);
-  --exam:#F2A65A; --ok:#7CC79A; --ok-soft:#18301F; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0C1611; --paper:#13221A; --ink:#E4F1E8; --muted:#9DB8A6;
-  --accent:#6FCF97; --accent-soft:#17321F; --line:#26402F; --grid:rgba(111,207,151,.07);
-  --exam:#F2A65A; --ok:#7CC79A; --ok-soft:#18301F; color-scheme:dark}
-
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-  background-size:24px 24px}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:24px 48px;display:flex;flex-direction:column;gap:40px}
-
-/* 頂列 */
-.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-site);font-weight:900;font-size:18px;color:var(--accent)}
-.brand svg{width:32px;height:32px;flex-shrink:0}
-.subjects{display:flex;flex-wrap:wrap;gap:6px;font-size:14px;font-family:var(--f-site)}
-.subjects a{padding:4px 12px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--muted);background:var(--paper)}
-.subjects a[aria-current]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
-.subjects a:hover{border-color:var(--accent);color:var(--accent)}
-.subjects a[aria-current]:hover{color:var(--bg)}
-
-/* 開場：圖框 */
-.hero{position:relative;border:2px solid var(--accent);background:var(--paper);padding:36px 32px 28px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px}
-.hero::before{content:"";position:absolute;inset:6px;border:1px solid var(--line);pointer-events:none}
-.eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase}
-h1{font-family:var(--f-head);font-weight:900;font-size:clamp(36px,6vw,60px);line-height:1.1;margin:8px 0 12px;text-wrap:balance}
-.lede{max-width:34em;color:var(--muted);margin:0;font-size:14px;line-height:1.7}
-.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);align-self:end}
-.facts div{padding:12px 14px;border-right:1px solid var(--line)}
-.facts div:last-child{border-right:0}
-.facts b{display:block;font-family:var(--f-mono);font-size:28px;font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.2}
-.facts span{font-size:13px;color:var(--muted)}
-
-/* 正文 */
-h2{font-family:var(--f-head);font-weight:900;font-size:24px;margin:0 0 12px;text-wrap:balance;color:var(--accent)}
-h3{font-family:var(--f-head);font-weight:900;font-size:20px;margin:16px 0 12px;color:var(--ink)}
-.section{background:var(--paper);border:1px solid var(--line);padding:24px;margin-bottom:12px}
-.section h2:first-child{margin-top:0}
-
-/* 公式框 */
-.formula{background:var(--accent-soft);border-left:4px solid var(--accent);padding:16px;margin:16px 0;font-family:var(--f-mono);font-size:15px;line-height:1.8;color:var(--ink)}
-.formula .desc{display:block;font-family:var(--f-body);font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:700}
-
-/* 範例 */
-.example{background:var(--paper);border:2px solid var(--line);padding:24px;margin:20px 0}
-.example h3{margin-top:0;color:var(--accent)}
-.example .solution{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
-.example .solution-title{display:block;font-weight:700;color:var(--muted);font-size:13px;margin-bottom:8px}
-
-/* 側邊欄 */
-aside{position:sticky;top:24px;background:var(--paper);border:1px solid var(--line);padding:20px;border-radius:4px;font-size:13px;max-height:fit-content}
-aside h3{margin:0 0 12px;font-size:15px}
-aside a{display:block;padding:6px 0;text-decoration:none;color:var(--accent)}
-aside a:hover{text-decoration:underline}
-
-/* 主要佈局 */
-.main{display:grid;grid-template-columns:1fr 280px;gap:24px}
-
-/* 標題欄 */
-.titleblock{margin-left:auto;width:min(100%,520px);border:2px solid var(--accent);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));font-size:12px;background:var(--paper)}
-.titleblock div{padding:6px 10px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
-.titleblock div:nth-child(4n){border-right:0}
-.titleblock .k{color:var(--muted);font-size:11px}
-.titleblock .v{font-family:var(--f-mono);color:var(--ink)}
-.titleblock .wide{grid-column:span 4;border-right:0;border-bottom:0;font-family:var(--f-head);font-weight:900;font-size:16px;color:var(--accent)}
-
-@media (max-width:760px){
-  .main{grid-template-columns:1fr}
-  aside{position:static;max-height:none}
-}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-</style>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="assets/dynamics-figures.css">
-</head>
+<link rel="stylesheet" href="assets/chapter.css"><link rel="stylesheet" href="assets/dynamics-chapter.css"><link rel="stylesheet" href="assets/dynamics-figures.css"></head>
 <body>
 
-<div class="wrap">
-  <header class="top">
-    <a class="brand" href="index.html" aria-label="回知識動力場首頁">
-      <svg viewBox="0 0 120 120" width="32" height="32" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 18V102M38 18V102M22 18L38 42L22 66L38 90M38 18H98V34H38M38 52H86V68H38M38 86H98V102H38M22 18H38M22 102H38"/></svg>
-      知識動力場
-    </a>
-    <nav class="subjects" aria-label="科目">
-      <a href="manufacturing.html">機械製造</a>
-      <a href="statics.html">靜力學</a>
-      <a href="dynamics.html" aria-current="page">動力學</a>
-      <a href="mechanics-of-materials.html">材料力學</a>
-    </nav>
-  </header>
-
-  <section class="hero">
+<header class="hero">
     <div>
-      <div class="eyebrow">Dynamics · Chapter 5</div>
-      <h1>動量與衝量</h1>
+      <div class="crumb"><a href="dynamics.html">動力學</a> / CH 05</div><h1>動量與衝量<small>Momentum and Impulse</small></h1>
       <p class="lede">衝量動量定理在涉及時間與力的關係時特別有效。從基本定義到線動量守恆，再到碰撞問題與恢復係數的應用，展示動量守恆在各類問題中的強大威力。</p>
-    </div>
-    <div class="facts" aria-label="章節概況">
-      <div><b>2</b><span>節</span></div>
-      <div><b>8</b><span>道範例</span></div>
-      <div><b>24</b><span>題演練</span></div>
-    </div>
-  </section>
+    <div class="meta"><span>3 節</span><span>2 道範例精解</span></div></div>
+    <div class="hero-art" aria-hidden="true"><svg viewbox="0 0 240 150"><path d="M20 125H220M35 135V20" opacity=".25"></path><g transform="translate(70 22) scale(4)"><path d="M4 19V5m0 14h16M6 17L18 5m-6 0h6v6"></path></g></svg></div></header>
 
-  <div class="main">
-    <div>
-      <section class="section">
-        <h2>5.1 衝量、動量與質心</h2>
-
-        <h3>線動量定義</h3>
+  <div class="wrap"><nav class="tabs" role="tablist" aria-label="本章各節" aria-orientation="vertical"><p class="tabs-label">SECTIONS</p><a class="tab" id="tab-sec1" href="#sec1" role="tab" aria-controls="sec1" aria-selected="true"><span class="ic"><svg viewbox="0 0 24 24" aria-hidden="true"><path d="M4 19V5m0 14h16M6 17L18 5m-6 0h6v6"></path></svg></span><span class="tx"><span class="no">5-1</span><span class="nm">衝量、動量與質心</span></span></a><a class="tab" id="tab-sec2" href="#sec2" role="tab" aria-controls="sec2" aria-selected="false"><span class="ic"><svg viewbox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="14" r="4"></circle><circle cx="18" cy="14" r="4"></circle><path d="M3 5h6m-2-2 2 2-2 2m14-2h-6m2-2-2 2 2 2"></path></svg></span><span class="tx"><span class="no">5-2</span><span class="nm">線動量守恆與碰撞</span></span></a><a class="tab" id="tab-sec3" href="#sec3" role="tab" aria-controls="sec3" aria-selected="false"><span class="ic"><svg viewbox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2"></circle><path d="M12 12l6-6M5 17a8 8 0 1 1 14 0M2 15l3 2 2-3"></path></svg></span><span class="tx"><span class="no">5-3</span><span class="nm">角動量</span></span></a><a class="tab" id="tab-ex" href="#ex" role="tab" aria-controls="ex" aria-selected="false"><span class="ic"><svg viewbox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4"></path><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"></path></svg></span><span class="tx"><span class="no">範例</span><span class="nm">範例精解</span></span></a></nav><main><section id="sec1">
+        <h2 id="h-sec1"><span class="no">5-1</span>衝量、動量與質心</h2><h3>線動量定義</h3>
         <p>物體的動量定義為質量與速度的乘積：</p>
         <div class="formula">
           <span class="desc">線動量</span>
@@ -164,10 +49,8 @@ aside a:hover{text-decoration:underline}
         <p>質心速度等於系統總動量除以總質量。</p>
       </section>
 
-      <section class="section">
-        <h2>5.2 線動量守恆與碰撞</h2>
-
-        <h3>線動量守恆定律</h3>
+      <section id="sec2">
+        <h2 id="h-sec2"><span class="no">5-2</span>線動量守恆與碰撞</h2><h3>線動量守恆定律</h3>
         <p>當系統不受外力（或外力平衡）時，系統的總動量保持不變：</p>
         <div class="formula">
           <span class="desc">線動量守恆</span>
@@ -199,10 +82,8 @@ aside a:hover{text-decoration:underline}
 
       </section>
 
-      <section class="section">
-        <h2>5.3 角動量</h2>
-
-        <h3>角動量定義</h3>
+      <section id="sec3">
+        <h2 id="h-sec3"><span class="no">5-3</span>角動量</h2><h3>角動量定義</h3>
         <p>以某一固定點 O 為參考，質點的角動量定義為：</p>
         <div class="formula">
           <span class="desc">角動量</span>
@@ -226,7 +107,7 @@ aside a:hover{text-decoration:underline}
         <p>典型例子包括行星在太陽周圍的軌道運動（中心力）以及冰上旋轉的人收緊雙臂加快轉速的現象。</p>
       </section>
 
-      <section class="example">
+      <section id="ex"><h2><span class="no">範例</span>範例精解</h2><article class="example">
         <h3>範例 5.1：完全非彈性碰撞</h3>
         <p>質量 2 kg 的小球以 10 m/s 的速度沿著水平面滑行，與靜止的質量 3 kg 的小球正面相碰，兩球碰撞後粘在一起。計算：</p>
         <ol>
@@ -251,9 +132,9 @@ aside a:hover{text-decoration:underline}
 
           <p>這 60 J 轉化為形變、熱量和聲音等，不再是機械能。</p>
         </div>
-      </section>
+      </article>
 
-      <section class="example">
+      <article class="example">
         <h3>範例 5.2：有恢復係數的碰撞</h3>
         <p>質量 1.5 kg 的球 A 以 8 m/s 速度沿著光滑水平面滑動，迎面碰撞靜止的質量 2.5 kg 的球 B。碰撞的恢復係數 e = 0.6。計算碰撞後兩球的速度。</p>
 
@@ -280,31 +161,6 @@ aside a:hover{text-decoration:underline}
 
           <p>碰撞後，球 A 靜止，球 B 以 4.8 m/s 運動。</p>
         </div>
-      </section>
-    </div>
-
-    <aside>
-      <h3>本章導覽</h3>
-      <a href="dynamics.html">← 返回動力學首頁</a>
-      <hr style="margin:12px 0;border:none;border-top:1px solid var(--line)">
-      <a href="dynamics-ch01.html">CH 1 直線運動</a>
-      <a href="dynamics-ch02.html">CH 2 曲線運動</a>
-      <a href="dynamics-ch03.html">CH 3 牛頓第二定律</a>
-      <a href="dynamics-ch04.html">CH 4 功能原理</a>
-      <a href="dynamics-ch05.html" style="color:var(--muted);pointer-events:none">CH 5 動量與衝量（本頁）</a>
-      <a href="dynamics-ch06.html" style="opacity:0.5">CH 6 剛體運動學</a>
-      <a href="dynamics-ch07.html" style="opacity:0.5">CH 7 剛體力動學</a>
-    </aside>
-  </div>
-
-  <footer class="titleblock" aria-label="圖面標題欄">
-    <div class="wide">知識動力場 · 動力學</div>
-    <div><span class="k">圖號</span><br><span class="v">DYN-005</span></div>
-    <div><span class="k">比例</span><br><span class="v">1 : 7 章</span></div>
-    <div><span class="k">單位</span><br><span class="v">m · s</span></div>
-    <div><span class="k">版次</span><br><span class="v">A · 2026.10</span></div>
-  </footer>
-</div>
-
-</body>
+      </article>
+    </section><nav class="chapter-nav" aria-label="章節導覽"><a href="dynamics-ch04.html">← 上一章</a><a href="dynamics.html">動力學章節總覽</a><a href="dynamics-ch06.html">下一章 →</a></nav></main></div><script src="assets/chapter.js"></script></body>
 </html>
