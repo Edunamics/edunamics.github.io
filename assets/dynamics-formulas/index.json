@@ -1,0 +1,906 @@
+[
+  {
+    "chapter": 1,
+    "index": 1,
+    "label": "平均速度",
+    "file": "ch01-eq01.svg",
+    "equations": [
+      {
+        "tex": "v_{\\mathrm{avg}}=\\frac{\\Delta x}{\\Delta t}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 1,
+    "index": 2,
+    "label": "瞬時速度",
+    "file": "ch01-eq02.svg",
+    "equations": [
+      {
+        "tex": "v=\\frac{\\mathrm{d}x}{\\mathrm{d}t}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 1,
+    "index": 3,
+    "label": "平均加速度",
+    "file": "ch01-eq03.svg",
+    "equations": [
+      {
+        "tex": "a_{\\mathrm{avg}}=\\frac{\\Delta v}{\\Delta t}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 1,
+    "index": 4,
+    "label": "瞬時加速度",
+    "file": "ch01-eq04.svg",
+    "equations": [
+      {
+        "tex": "a=\\frac{\\mathrm{d}v}{\\mathrm{d}t}=\\frac{\\mathrm{d}^{2}x}{\\mathrm{d}t^{2}}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 1,
+    "index": 5,
+    "label": "1. 速度與時間的關係",
+    "file": "ch01-eq05.svg",
+    "equations": [
+      {
+        "tex": "v=v_0+at",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 1,
+    "index": 6,
+    "label": "2. 位移與時間的關係",
+    "file": "ch01-eq06.svg",
+    "equations": [
+      {
+        "tex": "s=v_0t+\\frac{1}{2}at^2",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 1,
+    "index": 7,
+    "label": "3. 速度與位移的關係（逢考必出）",
+    "file": "ch01-eq07.svg",
+    "equations": [
+      {
+        "tex": "v^2=v_0^2+2as",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 1,
+    "index": 8,
+    "label": "自由落體運動公式",
+    "file": "ch01-eq08.svg",
+    "equations": [
+      {
+        "tex": "h=\\frac{1}{2}gt^2",
+        "note": ""
+      },
+      {
+        "tex": "v=gt",
+        "note": ""
+      },
+      {
+        "tex": "v^2=2gh",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 2,
+    "index": 1,
+    "label": "角位移與弧長的關係",
+    "file": "ch02-eq01.svg",
+    "equations": [
+      {
+        "tex": "\\theta=\\frac{s}{r}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 2,
+    "index": 2,
+    "label": "平均角速度與瞬時角速度",
+    "file": "ch02-eq02.svg",
+    "equations": [
+      {
+        "tex": "\\omega_{\\mathrm{avg}}=\\frac{\\Delta\\theta}{\\Delta t}",
+        "note": "平均角速度"
+      },
+      {
+        "tex": "\\omega=\\frac{\\mathrm{d}\\theta}{\\mathrm{d}t}",
+        "note": "瞬時角速度"
+      }
+    ]
+  },
+  {
+    "chapter": 2,
+    "index": 3,
+    "label": "線速度與角速度的關係",
+    "file": "ch02-eq03.svg",
+    "equations": [
+      {
+        "tex": "v=\\omega r",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 2,
+    "index": 4,
+    "label": "平均角加速度與瞬時角加速度",
+    "file": "ch02-eq04.svg",
+    "equations": [
+      {
+        "tex": "\\alpha_{\\mathrm{avg}}=\\frac{\\Delta\\omega}{\\Delta t}",
+        "note": "平均角加速度"
+      },
+      {
+        "tex": "\\alpha=\\frac{\\mathrm{d}\\omega}{\\mathrm{d}t}",
+        "note": "瞬時角加速度"
+      }
+    ]
+  },
+  {
+    "chapter": 2,
+    "index": 5,
+    "label": "切線加速度與角加速度的關係",
+    "file": "ch02-eq05.svg",
+    "equations": [
+      {
+        "tex": "a_t=\\alpha r",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 2,
+    "index": 6,
+    "label": "等角加速度公式",
+    "file": "ch02-eq06.svg",
+    "equations": [
+      {
+        "tex": "\\omega=\\omega_0+\\alpha t",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 2,
+    "index": 7,
+    "label": "",
+    "file": "ch02-eq07.svg",
+    "equations": [
+      {
+        "tex": "\\theta=\\omega_0t+\\frac{1}{2}\\alpha t^2",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 2,
+    "index": 8,
+    "label": "",
+    "file": "ch02-eq08.svg",
+    "equations": [
+      {
+        "tex": "\\omega^2=\\omega_0^2+2\\alpha\\theta",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 2,
+    "index": 9,
+    "label": "水平拋體的飛行時間",
+    "file": "ch02-eq09.svg",
+    "equations": [
+      {
+        "tex": "t=\\sqrt{\\frac{2h}{g}}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 2,
+    "index": 10,
+    "label": "水平射程",
+    "file": "ch02-eq10.svg",
+    "equations": [
+      {
+        "tex": "x=v_0t=v_0\\sqrt{\\frac{2h}{g}}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 2,
+    "index": 11,
+    "label": "上升至最高點的時間",
+    "file": "ch02-eq11.svg",
+    "equations": [
+      {
+        "tex": "t_{\\max}=\\frac{v_0\\sin\\theta}{g}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 2,
+    "index": 12,
+    "label": "最大高度",
+    "file": "ch02-eq12.svg",
+    "equations": [
+      {
+        "tex": "h_{\\max}=\\frac{(v_0\\sin\\theta)^2}{2g}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 2,
+    "index": 13,
+    "label": "射程（地面發射且著地）",
+    "file": "ch02-eq13.svg",
+    "equations": [
+      {
+        "tex": "R=\\frac{v_0^2\\sin(2\\theta)}{g}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 2,
+    "index": 14,
+    "label": "向心加速度",
+    "file": "ch02-eq14.svg",
+    "equations": [
+      {
+        "tex": "a_c=\\frac{v^2}{r}=\\omega^2r",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 2,
+    "index": 15,
+    "label": "向心力",
+    "file": "ch02-eq15.svg",
+    "equations": [
+      {
+        "tex": "F_c=\\frac{mv^2}{r}=m\\omega^2r",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 2,
+    "index": 16,
+    "label": "總加速度大小",
+    "file": "ch02-eq16.svg",
+    "equations": [
+      {
+        "tex": "a=\\sqrt{a_t^2+a_n^2}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 3,
+    "index": 1,
+    "label": "牛頓第二定律",
+    "file": "ch03-eq01.svg",
+    "equations": [
+      {
+        "tex": "\\sum F=ma",
+        "note": ""
+      },
+      {
+        "tex": "a=\\frac{\\sum F}{m}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 3,
+    "index": 2,
+    "label": "力的單位",
+    "file": "ch03-eq02.svg",
+    "equations": [
+      {
+        "tex": "1\\,\\mathrm{N}=1\\,\\mathrm{kg}\\!\\cdot\\!\\mathrm{m}/\\mathrm{s}^2",
+        "note": ""
+      },
+      {
+        "tex": "1\\,\\mathrm{N}=\\frac{1}{9.8}\\,\\mathrm{kgf}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 3,
+    "index": 3,
+    "label": "直角座標運動方程式",
+    "file": "ch03-eq03.svg",
+    "equations": [
+      {
+        "tex": "\\sum F_x=ma_x",
+        "note": ""
+      },
+      {
+        "tex": "\\sum F_y=ma_y",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 3,
+    "index": 4,
+    "label": "曲線座標運動方程式",
+    "file": "ch03-eq04.svg",
+    "equations": [
+      {
+        "tex": "\\sum F_t=ma_t",
+        "note": "切線方向，改變速度大小"
+      },
+      {
+        "tex": "\\sum F_n=ma_n=\\frac{mv^2}{r}",
+        "note": "法線方向，改變速度方向"
+      }
+    ]
+  },
+  {
+    "chapter": 3,
+    "index": 5,
+    "label": "升降機中的支持力",
+    "file": "ch03-eq05.svg",
+    "equations": [
+      {
+        "tex": "N-W=ma",
+        "note": ""
+      },
+      {
+        "tex": "N=m(g+a)",
+        "note": "升降機向上加速"
+      },
+      {
+        "tex": "N=m(g-a)",
+        "note": "升降機向下加速"
+      }
+    ]
+  },
+  {
+    "chapter": 3,
+    "index": 6,
+    "label": "斜面上的加速度（無摩擦）",
+    "file": "ch03-eq06.svg",
+    "equations": [
+      {
+        "tex": "a=g\\sin\\theta",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 3,
+    "index": 7,
+    "label": "向心力公式",
+    "file": "ch03-eq07.svg",
+    "equations": [
+      {
+        "tex": "F_c=\\frac{mv^2}{r}=m\\omega^2r",
+        "note": ""
+      },
+      {
+        "tex": "F_c=\\frac{4\\pi^2mr}{T^2}",
+        "note": "以週期表示；T 為週期"
+      }
+    ]
+  },
+  {
+    "chapter": 4,
+    "index": 1,
+    "label": "功的定義",
+    "file": "ch04-eq01.svg",
+    "equations": [
+      {
+        "tex": "W=\\mathbf{F}\\cdot\\Delta\\mathbf{s}=F\\Delta s\\cos\\theta",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 4,
+    "index": 2,
+    "label": "動能公式",
+    "file": "ch04-eq02.svg",
+    "equations": [
+      {
+        "tex": "T=\\frac{1}{2}mv^2",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 4,
+    "index": 3,
+    "label": "動能定理",
+    "file": "ch04-eq03.svg",
+    "equations": [
+      {
+        "tex": "W_{\\mathrm{total}}=\\Delta T=T_2-T_1",
+        "note": "總功等於動能變化"
+      },
+      {
+        "tex": "\\Delta T=\\frac{1}{2}m(v_2^2-v_1^2)",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 4,
+    "index": 4,
+    "label": "重力位能",
+    "file": "ch04-eq04.svg",
+    "equations": [
+      {
+        "tex": "U_g=mgh",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 4,
+    "index": 5,
+    "label": "彈簧位能（虎克定律）",
+    "file": "ch04-eq05.svg",
+    "equations": [
+      {
+        "tex": "U_s=\\frac{1}{2}kx^2",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 4,
+    "index": 6,
+    "label": "功能原理",
+    "file": "ch04-eq06.svg",
+    "equations": [
+      {
+        "tex": "T_1+U_1+W_{\\mathrm{nc}}=T_2+U_2",
+        "note": "Wnc 為非保守力所做的功"
+      },
+      {
+        "tex": "U=U_g+U_s",
+        "note": "總位能"
+      }
+    ]
+  },
+  {
+    "chapter": 4,
+    "index": 7,
+    "label": "機械能守恆",
+    "file": "ch04-eq07.svg",
+    "equations": [
+      {
+        "tex": "E=T+U=\\mathrm{constant}",
+        "note": "機械能為常數"
+      },
+      {
+        "tex": "T_1+U_1=T_2+U_2",
+        "note": ""
+      },
+      {
+        "tex": "\\frac{1}{2}mv_1^2+mgh_1=\\frac{1}{2}mv_2^2+mgh_2",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 4,
+    "index": 8,
+    "label": "摩擦力做功",
+    "file": "ch04-eq08.svg",
+    "equations": [
+      {
+        "tex": "W_f=-fd=-\\mu Nd",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 4,
+    "index": 9,
+    "label": "含摩擦的功能原理",
+    "file": "ch04-eq09.svg",
+    "equations": [
+      {
+        "tex": "T_1+U_1-fd=T_2+U_2",
+        "note": ""
+      },
+      {
+        "tex": "T_1+U_1=T_2+U_2+fd",
+        "note": "等價寫法"
+      }
+    ]
+  },
+  {
+    "chapter": 4,
+    "index": 10,
+    "label": "平均功率",
+    "file": "ch04-eq10.svg",
+    "equations": [
+      {
+        "tex": "P_{\\mathrm{avg}}=\\frac{W}{\\Delta t}",
+        "note": "平均功率"
+      },
+      {
+        "tex": "P=\\frac{\\mathrm{d}W}{\\mathrm{d}t}=\\mathbf{F}\\cdot\\mathbf{v}",
+        "note": "瞬時功率"
+      }
+    ]
+  },
+  {
+    "chapter": 4,
+    "index": 11,
+    "label": "機械效率",
+    "file": "ch04-eq11.svg",
+    "equations": [
+      {
+        "tex": "\\eta=\\frac{W_{\\mathrm{useful}}}{W_{\\mathrm{input}}}\\times100\\%",
+        "note": ""
+      },
+      {
+        "tex": "\\eta=\\frac{P_{\\mathrm{useful}}}{P_{\\mathrm{input}}}\\times100\\%",
+        "note": "等價寫法"
+      }
+    ]
+  },
+  {
+    "chapter": 5,
+    "index": 1,
+    "label": "線動量",
+    "file": "ch05-eq01.svg",
+    "equations": [
+      {
+        "tex": "\\mathbf{p}=m\\mathbf{v}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 5,
+    "index": 2,
+    "label": "衝量",
+    "file": "ch05-eq02.svg",
+    "equations": [
+      {
+        "tex": "\\mathbf{I}=\\mathbf{F}\\Delta t=\\int\\mathbf{F}\\,\\mathrm{d}t",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 5,
+    "index": 3,
+    "label": "衝量動量定理",
+    "file": "ch05-eq03.svg",
+    "equations": [
+      {
+        "tex": "\\mathbf{I}=\\Delta\\mathbf{p}",
+        "note": ""
+      },
+      {
+        "tex": "\\mathbf{F}\\Delta t=m(\\mathbf{v}_2-\\mathbf{v}_1)",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 5,
+    "index": 4,
+    "label": "質心位置",
+    "file": "ch05-eq04.svg",
+    "equations": [
+      {
+        "tex": "x_c=\\frac{m_1x_1+m_2x_2+\\cdots}{m_1+m_2+\\cdots}",
+        "note": ""
+      },
+      {
+        "tex": "v_c=\\frac{m_1v_1+m_2v_2+\\cdots}{m_1+m_2+\\cdots}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 5,
+    "index": 5,
+    "label": "線動量守恆",
+    "file": "ch05-eq05.svg",
+    "equations": [
+      {
+        "tex": "p_{\\mathrm{initial}}=p_{\\mathrm{final}}",
+        "note": "初動量等於末動量"
+      },
+      {
+        "tex": "m_1v_1+m_2v_2=m_1v_1^{\\prime}+m_2v_2^{\\prime}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 5,
+    "index": 6,
+    "label": "恢復係數",
+    "file": "ch05-eq06.svg",
+    "equations": [
+      {
+        "tex": "e=\\frac{v_2^{\\prime}-v_1^{\\prime}}{v_1-v_2}",
+        "note": "相對分離速度 ÷ 相對接近速度"
+      }
+    ]
+  },
+  {
+    "chapter": 5,
+    "index": 7,
+    "label": "角動量",
+    "file": "ch05-eq07.svg",
+    "equations": [
+      {
+        "tex": "\\mathbf{L}_O=\\mathbf{r}\\times\\mathbf{p}=\\mathbf{r}\\times(m\\mathbf{v})",
+        "note": ""
+      },
+      {
+        "tex": "L_O=mrv\\sin\\theta",
+        "note": "角動量的大小"
+      }
+    ]
+  },
+  {
+    "chapter": 5,
+    "index": 8,
+    "label": "角動量守恆條件",
+    "file": "ch05-eq08.svg",
+    "equations": [
+      {
+        "tex": "\\tau=0\\;\\Longrightarrow\\;L=\\mathrm{constant}",
+        "note": "角動量為常數"
+      },
+      {
+        "tex": "\\mathbf{r}\\times\\mathbf{F}=0",
+        "note": ""
+      },
+      {
+        "tex": "\\mathbf{r}\\times(m\\mathbf{v})=\\mathrm{constant}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 6,
+    "index": 1,
+    "label": "平移運動",
+    "file": "ch06-eq01.svg",
+    "equations": [
+      {
+        "tex": "\\mathbf{v}_A=\\mathbf{v}_B=\\mathbf{v}_c",
+        "note": ""
+      },
+      {
+        "tex": "\\mathbf{a}_A=\\mathbf{a}_B=\\mathbf{a}_c",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 6,
+    "index": 2,
+    "label": "轉動運動關係",
+    "file": "ch06-eq02.svg",
+    "equations": [
+      {
+        "tex": "v=\\omega r",
+        "note": "線速度與角速度的關係"
+      },
+      {
+        "tex": "a_t=\\alpha r",
+        "note": "切線加速度"
+      },
+      {
+        "tex": "a_n=\\omega^2r",
+        "note": "法線加速度"
+      }
+    ]
+  },
+  {
+    "chapter": 6,
+    "index": 3,
+    "label": "速度分解公式",
+    "file": "ch06-eq03.svg",
+    "equations": [
+      {
+        "tex": "\\mathbf{v}_A=\\mathbf{v}_B+\\mathbf{v}_{A/B}",
+        "note": ""
+      },
+      {
+        "tex": "\\mathbf{v}_A=\\mathbf{v}_B+\\boldsymbol{\\omega}\\times\\mathbf{r}_{AB}",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 6,
+    "index": 4,
+    "label": "瞬心的性質",
+    "file": "ch06-eq04.svg",
+    "equations": [
+      {
+        "tex": "\\mathbf{v}_A=\\boldsymbol{\\omega}\\times\\mathbf{r}_{PA}",
+        "note": "P 為瞬心"
+      },
+      {
+        "tex": "|\\mathbf{v}_A|=\\omega|\\mathbf{r}_{PA}|",
+        "note": "速度大小"
+      }
+    ]
+  },
+  {
+    "chapter": 6,
+    "index": 5,
+    "label": "加速度分解（旋轉座標）",
+    "file": "ch06-eq05.svg",
+    "equations": [
+      {
+        "tex": "\\mathbf{a}_{\\mathrm{abs}}=\\mathbf{a}_{\\mathrm{rel}}+\\mathbf{a}_{\\mathrm{transport}}+\\mathbf{a}_{\\mathrm{Cor}}",
+        "note": "絕對加速度＝相對＋牽連＋科氏加速度"
+      },
+      {
+        "tex": "\\mathbf{a}_{\\mathrm{Cor}}=2\\boldsymbol{\\omega}\\times\\mathbf{v}_{\\mathrm{rel}}",
+        "note": "科氏加速度"
+      }
+    ]
+  },
+  {
+    "chapter": 6,
+    "index": 6,
+    "label": "極座標速度與加速度",
+    "file": "ch06-eq06.svg",
+    "equations": [
+      {
+        "tex": "v_r=\\dot{r}",
+        "note": "徑向速度"
+      },
+      {
+        "tex": "v_{\\theta}=r\\dot{\\theta}",
+        "note": "橫向速度"
+      },
+      {
+        "tex": "a_r=\\ddot{r}-r\\dot{\\theta}^{2}",
+        "note": "徑向加速度"
+      },
+      {
+        "tex": "a_{\\theta}=r\\ddot{\\theta}+2\\dot{r}\\dot{\\theta}",
+        "note": "橫向加速度"
+      }
+    ]
+  },
+  {
+    "chapter": 7,
+    "index": 1,
+    "label": "慣性矩定義",
+    "file": "ch07-eq01.svg",
+    "equations": [
+      {
+        "tex": "I=\\sum_i m_ir_i^2",
+        "note": "離散質點"
+      },
+      {
+        "tex": "I=\\int r^2\\,\\mathrm{d}m",
+        "note": "連續體"
+      }
+    ]
+  },
+  {
+    "chapter": 7,
+    "index": 2,
+    "label": "平行軸定理",
+    "file": "ch07-eq02.svg",
+    "equations": [
+      {
+        "tex": "I=I_c+md^2",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 7,
+    "index": 3,
+    "label": "平移運動方程",
+    "file": "ch07-eq03.svg",
+    "equations": [
+      {
+        "tex": "\\sum\\mathbf{F}=M\\mathbf{a}_c",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 7,
+    "index": 4,
+    "label": "轉動運動方程",
+    "file": "ch07-eq04.svg",
+    "equations": [
+      {
+        "tex": "\\sum\\tau_c=I_c\\alpha",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "chapter": 7,
+    "index": 5,
+    "label": "無滑滾動條件",
+    "file": "ch07-eq05.svg",
+    "equations": [
+      {
+        "tex": "v_c=\\omega R",
+        "note": "速度關係"
+      },
+      {
+        "tex": "a_c=\\alpha R",
+        "note": "加速度關係"
+      }
+    ]
+  },
+  {
+    "chapter": 7,
+    "index": 6,
+    "label": "滑動判斷條件",
+    "file": "ch07-eq06.svg",
+    "equations": [
+      {
+        "tex": "|f|\\leq\\mu_sN",
+        "note": "無滑滾動所需摩擦力未超過最大靜摩擦力"
+      },
+      {
+        "tex": "|f|>\\mu_sN",
+        "note": "超過最大靜摩擦力時發生滑動"
+      }
+    ]
+  },
+  {
+    "chapter": 7,
+    "index": 7,
+    "label": "剛體總動能",
+    "file": "ch07-eq07.svg",
+    "equations": [
+      {
+        "tex": "T=T_{\\mathrm{translation}}+T_{\\mathrm{rotation}}",
+        "note": "總動能＝平移動能＋轉動動能"
+      },
+      {
+        "tex": "T=\\frac{1}{2}Mv_c^2+\\frac{1}{2}I_c\\omega^2",
+        "note": ""
+      }
+    ]
+  }
+]
