@@ -73,6 +73,7 @@ h2{font-family:var(--f-head);font-weight:900;font-size:26px;margin:0;text-wrap:b
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
 .ch{display:grid;grid-template-columns:64px minmax(0,1fr);gap:0 16px;background:var(--paper);border:1px solid var(--line);padding:18px 18px 16px;text-decoration:none;color:var(--ink);transition:border-color .15s, transform .15s}
 a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
+a.ch:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .num{grid-row:1/4;font-family:var(--f-mono);font-size:40px;line-height:1;color:var(--accent);font-weight:500}
 .num small{display:block;font-size:11px;letter-spacing:.12em;color:var(--muted);margin-top:6px}
 .ch h3{font-family:var(--f-head);font-weight:900;font-size:21px;margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
@@ -81,9 +82,6 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
 .meta .exam{color:var(--exam)}
 .pill{font-family:var(--f-body);font-size:12px;font-weight:500;padding:1px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
 .pill.on{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
-.links{display:flex;gap:8px;margin-top:10px}
-.links a{font-size:13px;padding:3px 12px;border:1px solid var(--accent);color:var(--accent);text-decoration:none;border-radius:2px}
-.links a:hover{background:var(--accent);color:var(--bg)}
 
 /* 學習建議 */
 .tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
@@ -200,32 +198,30 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
   <section aria-labelledby="ch-h">
     <div class="sec-head">
       <h2 id="ch-h">章節</h2>
-      <p>依主題分組，點選講義進入各章</p>
+      <p>依主題分組，點選章節卡片進入各章</p>
     </div>
 
     <div class="family">
       <div class="fam-label">基礎觀念 <span class="mono">FUNDAMENTALS</span></div>
       <div class="cards">
-        <article class="ch">
+        <a href="statics-ch01.html" class="ch">
           <div class="num">01<small>CH</small></div>
-          <h3>力的基本觀念 <span class="pill on">已上線</span></h3>
+          <h3>力的基本觀念</h3>
           <p>力學分類、純量與向量、SI 單位、力的分解與合成、力矩與力偶、分布負載的等效集中力。</p>
           <div class="meta"><span>6 節</span><span>7 道範例</span><span class="exam">29 題演練</span></div>
-          <div class="links"><a href="statics-ch01.html">講義</a></div>
-        </article>
+        </a>
       </div>
     </div>
 
     <div class="family">
       <div class="fam-label">平衡分析 <span class="mono">EQUILIBRIUM</span></div>
       <div class="cards">
-        <article class="ch">
+        <a href="statics-ch02.html" class="ch">
           <div class="num">02<small>CH</small></div>
-          <h3>平面力系與平衡 <span class="pill on">已上線</span></h3>
+          <h3>平面力系與平衡</h3>
           <p>自由體圖、支承反力、各類力系、平衡方程式、三力平衡、拉密定理，以及空間力系的平衡。</p>
           <div class="meta"><span>3 節</span><span>16 道範例</span><span class="exam">36 題演練</span></div>
-          <div class="links"><a href="statics-ch02.html">講義</a></div>
-        </article>
+        </a>
         <article class="ch soon">
           <div class="num">03<small>CH</small></div>
           <h3>結構分析 <span class="pill">建置中</span></h3>
