@@ -1,0 +1,24 @@
+/* Statics palette, shared by all six chapters. */
+
+:root{
+  --bg:#F6F8FB; --paper:#FFFFFF; --ink:#152231; --muted:#566677;
+  --accent:#0E4A8A; --accent-soft:#E2EBF6; --line:#D3DDEA; --grid:rgba(14,74,138,.07);
+  --steel:#8796A7; --force:#C2410C; --res:#0E4A8A; --ok:#2E7D4F; --ok-soft:#E5F2EA; --warn:#B35A0F; --warn-soft:#FBEFE3;
+  --beam:#DCE4EE; --blk:#E9EEF4;
+  --f-display:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-body:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-mono:"HanWangHeiHeavy","PingFang TC","Microsoft JhengHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0C141E; --paper:#132030; --ink:#E5EDF6; --muted:#9DB0C4;
+  --accent:#7FB2F0; --accent-soft:#1A3050; --line:#26384D; --grid:rgba(127,178,240,.07);
+  --steel:#5F7287; --force:#FF8A5B; --res:#7FB2F0; --ok:#7CC79A; --ok-soft:#14291C; --warn:#F2A65A; --warn-soft:#2E2014;
+  --beam:#22344A; --blk:#1B2B3E; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C141E; --paper:#132030; --ink:#E5EDF6; --muted:#9DB0C4;
+  --accent:#7FB2F0; --accent-soft:#1A3050; --line:#26384D; --grid:rgba(127,178,240,.07);
+  --steel:#5F7287; --force:#FF8A5B; --res:#7FB2F0; --ok:#7CC79A; --ok-soft:#14291C; --warn:#F2A65A; --warn-soft:#2E2014;
+  --beam:#22344A; --blk:#1B2B3E; color-scheme:dark}
+
+.chapter-nav{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--line);padding-top:20px;margin-top:20px;font-size:14px}.chapter-nav a{color:var(--accent);text-decoration:none}.chapter-nav a:hover{text-decoration:underline}.chapter-nav a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.zoom-close{border-color:#0e4a8a;color:#0e4a8a}

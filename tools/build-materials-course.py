@@ -231,53 +231,54 @@ def source_pages(n,c):
   pages.append(found)
  return len(d),pages
 
-out=ROOT/'assets/materials';out.mkdir(parents=True,exist_ok=True)
-for n,c in enumerate(data.CHAPTERS,1):
- name=f'materials-ch{n:02}.html';pdf=f'assets/materials/materials-ch{n:02}.pdf';count,starts=source_pages(n,c)
- if source_path(n).resolve()!=(ROOT/pdf).resolve():shutil.copyfile(source_path(n),ROOT/pdf)
- entries=[(f'sec{i}',f'{n}-{i}',s['title']) for i,s in enumerate(c['sections'],1)]+[('ex','範例','教學例題'),('source','原文','完整原講義')]
- tabs=''.join(f'<a class="tab" id="tab-{id}" href="#{id}" role="tab" aria-controls="{id}" aria-selected="{"true" if j==0 else "false"}"><span class="ic">{icon(j)}</span><span class="tx"><span class="no">{no}</span><span class="nm">{html.escape(title)}</span></span></a>' for j,(id,no,title) in enumerate(entries))
- body=[]
- for i,s in enumerate(c['sections'],1):
-  text=''.join('<p>'+html.escape(p)+'</p>' for p in s['text']);eqs=''.join(formula(*eq) for eq in s['eqs']);points=''.join('<li>'+html.escape(p)+'</li>' for p in s['points'])
-  drawing=''
-  if s['fig']:
-   f=figure(s['fig']);drawing=f'<figure class="lecture-figure"><button class="figure-zoom" data-zoom aria-label="放大：{html.escape(f["title"])}"><img src="{encoded(f["bytes"])}" width="806" height="355" alt="{html.escape(f["caption"])}" decoding="async"></button><figcaption>重繪示意圖｜{html.escape(f["caption"])}。點圖可放大。</figcaption></figure>'
-  note=f'<p class="callout warn">{html.escape(s["note"])}</p>' if s['note'] else ''
-  body.append(f'<section id="sec{i}" aria-labelledby="h-sec{i}"><h2 id="h-sec{i}"><span class="no">{n}-{i}</span>{html.escape(s["title"])}</h2><p class="source-ref"><a href="{pdf}#page={starts[i-1]}" target="_blank" rel="noopener">對照原講義第 {starts[i-1]} 頁 ↗</a></p>{text}{drawing}{eqs}<h3>解題順序與檢查</h3><ul>{points}</ul>{note}</section>')
- examples=[]
- for i,e in enumerate(c['examples'],1):
-  steps=''.join('<li>'+html.escape(s)+'</li>' for s in e['steps']);eqs=''.join(formula(*eq) for eq in e['eqs'])
-  examples.append(f'<article class="example"><h3>例 {n}-{i}　{html.escape(e["title"])}</h3><p>{html.escape(e["q"])}</p><details class="worked-solution"><summary><span class="qn">解</span><span>展開完整計算</span></summary><div class="solution"><ol>{steps}</ol>{eqs}<p class="answer">{html.escape(e["answer"])}</p></div></details></article>')
- body.append('<section id="ex" aria-labelledby="h-ex"><h2 id="h-ex"><span class="no">EX</span>教學例題</h2><p class="source-ref">以下為依本章觀念編寫並重新計算的教學例題。原講義所有例題、考題與解析保留於「完整原講義」。</p>'+''.join(examples)+'</section>')
- body.append(f'<section id="source" aria-labelledby="h-source"><h2 id="h-source"><span class="no">PDF</span>完整原講義</h2><p>本章原講義共 {count} 頁，保留全部圖題、例題、考題與推導。網頁各節提供重點講解、公式圖檔及重繪示意圖，可搭配原文查閱。</p><p><a class="source-open" href="{pdf}" target="_blank" rel="noopener">另開完整原講義 ↗</a> <a class="source-open" href="{pdf}" download>下載本章 PDF ↓</a></p><div class="pdf-reader" data-pdf="{pdf}"><p>切換至此節後載入原講義。手機若未顯示預覽，請使用上方「另開完整原講義」。</p></div></section>')
- prev=f'<a href="materials-ch{n-1:02}.html">← 上一章</a>' if n>1 else '<span></span>'
- nxt=f'<a href="materials-ch{n+1:02}.html">下一章 →</a>' if n<15 else '<span></span>'
- nav=f'<nav class="chapter-nav" aria-label="章節導覽">{prev}<a href="mechanics-of-materials.html#ch-h">材料力學章節總覽</a>{nxt}</nav>'
- result=f'''<!doctype html>
+if __name__=='__main__':
+ out=ROOT/'assets/materials';out.mkdir(parents=True,exist_ok=True)
+ for n,c in enumerate(data.CHAPTERS,1):
+  name=f'materials-ch{n:02}.html';pdf=f'assets/materials/materials-ch{n:02}.pdf';count,starts=source_pages(n,c)
+  if source_path(n).resolve()!=(ROOT/pdf).resolve():shutil.copyfile(source_path(n),ROOT/pdf)
+  entries=[(f'sec{i}',f'{n}-{i}',s['title']) for i,s in enumerate(c['sections'],1)]+[('ex','範例','教學例題'),('source','原文','完整原講義')]
+  tabs=''.join(f'<a class="tab" id="tab-{id}" href="#{id}" role="tab" aria-controls="{id}" aria-selected="{"true" if j==0 else "false"}"><span class="ic">{icon(j)}</span><span class="tx"><span class="no">{no}</span><span class="nm">{html.escape(title)}</span></span></a>' for j,(id,no,title) in enumerate(entries))
+  body=[]
+  for i,s in enumerate(c['sections'],1):
+   text=''.join('<p>'+html.escape(p)+'</p>' for p in s['text']);eqs=''.join(formula(*eq) for eq in s['eqs']);points=''.join('<li>'+html.escape(p)+'</li>' for p in s['points'])
+   drawing=''
+   if s['fig']:
+    f=figure(s['fig']);drawing=f'<figure class="lecture-figure"><button class="figure-zoom" data-zoom aria-label="放大：{html.escape(f["title"])}"><img src="{encoded(f["bytes"])}" width="806" height="355" alt="{html.escape(f["caption"])}" decoding="async"></button><figcaption>重繪示意圖｜{html.escape(f["caption"])}。點圖可放大。</figcaption></figure>'
+   note=f'<p class="callout warn">{html.escape(s["note"])}</p>' if s['note'] else ''
+   body.append(f'<section id="sec{i}" aria-labelledby="h-sec{i}"><h2 id="h-sec{i}"><span class="no">{n}-{i}</span>{html.escape(s["title"])}</h2><p class="source-ref"><a href="{pdf}#page={starts[i-1]}" target="_blank" rel="noopener">對照原講義第 {starts[i-1]} 頁 ↗</a></p>{text}{drawing}{eqs}<h3>解題順序與檢查</h3><ul>{points}</ul>{note}</section>')
+  examples=[]
+  for i,e in enumerate(c['examples'],1):
+   steps=''.join('<li>'+html.escape(s)+'</li>' for s in e['steps']);eqs=''.join(formula(*eq) for eq in e['eqs'])
+   examples.append(f'<article class="example"><h3>例 {n}-{i}　{html.escape(e["title"])}</h3><p>{html.escape(e["q"])}</p><details class="worked-solution"><summary><span class="qn">解</span><span>展開完整計算</span></summary><div class="solution"><ol>{steps}</ol>{eqs}<p class="answer">{html.escape(e["answer"])}</p></div></details></article>')
+  body.append('<section id="ex" aria-labelledby="h-ex"><h2 id="h-ex"><span class="no">EX</span>教學例題</h2><p class="source-ref">以下為依本章觀念編寫並重新計算的教學例題。原講義所有例題、考題與解析保留於「完整原講義」。</p>'+''.join(examples)+'</section>')
+  body.append(f'<section id="source" aria-labelledby="h-source"><h2 id="h-source"><span class="no">PDF</span>完整原講義</h2><p>本章原講義共 {count} 頁，保留全部圖題、例題、考題與推導。網頁各節提供重點講解、公式圖檔及重繪示意圖，可搭配原文查閱。</p><p><a class="source-open" href="{pdf}" target="_blank" rel="noopener">另開完整原講義 ↗</a> <a class="source-open" href="{pdf}" download>下載本章 PDF ↓</a></p><div class="pdf-reader" data-pdf="{pdf}"><p>切換至此節後載入原講義。手機若未顯示預覽，請使用上方「另開完整原講義」。</p></div></section>')
+  prev=f'<a href="materials-ch{n-1:02}.html">← 上一章</a>' if n>1 else '<span></span>'
+  nxt=f'<a href="materials-ch{n+1:02}.html">下一章 →</a>' if n<15 else '<span></span>'
+  nav=f'<nav class="chapter-nav" aria-label="章節導覽">{prev}<a href="mechanics-of-materials.html#ch-h">材料力學章節總覽</a>{nxt}</nav>'
+  result=f'''<!doctype html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>材料力學 第{n}章 {c['title']}｜知識動力場</title><meta name="description" content="{html.escape(c['lede'],quote=True)}"><link rel="stylesheet" href="assets/chapter.css"><link rel="stylesheet" href="assets/dynamics-chapter.css"><link rel="stylesheet" href="assets/materials-course.css"></head><body>
 <header class="hero"><div><div class="crumb"><a href="mechanics-of-materials.html">材料力學</a> / CH {n:02}</div><h1>{c['title']}<small>{c['en']}</small></h1><p class="lede">{c['lede']}</p><div class="meta"><span>{len(c['sections'])} 節</span><span>{len(c['examples'])} 道教學例題</span><span>完整原講義 {count} 頁</span></div></div><div class="hero-art" aria-hidden="true">{icon(n)}</div></header>
 <div class="wrap"><nav class="tabs" role="tablist" aria-label="本章各節" aria-orientation="vertical"><p class="tabs-label">SECTIONS</p>{tabs}</nav><main>{''.join(body)}{nav}</main></div><dialog id="figure-dialog" aria-label="放大示意圖"><button class="zoom-close" autofocus>關閉 ×</button><img alt=""><p></p></dialog><script src="assets/chapter.js"></script><script src="assets/materials-course.js"></script></body></html>'''
- (ROOT/name).write_text(result)
- manifest.append({'chapter':n,'file':name,'title':c['title'],'sections':len(c['sections']),'examples':len(c['examples']),'source_pages':count,'section_start_pages':starts,'formulas':sum(len(s['eqs']) for s in c['sections'])+sum(len(e['eqs']) for e in c['examples']),'figures':sum(bool(s['fig']) for s in c['sections'])})
- print(n,c['title'],len(c['sections']),'sections',count,'source pages')
+  (ROOT/name).write_text(result)
+  manifest.append({'chapter':n,'file':name,'title':c['title'],'sections':len(c['sections']),'examples':len(c['examples']),'source_pages':count,'section_start_pages':starts,'formulas':sum(len(s['eqs']) for s in c['sections'])+sum(len(e['eqs']) for e in c['examples']),'figures':sum(bool(s['fig']) for s in c['sections'])})
+  print(n,c['title'],len(c['sections']),'sections',count,'source pages')
 
-# Turn existing chapter cards into direct links, matching Dynamics.
-from lxml import html as LH
-page=ROOT/'mechanics-of-materials.html';doc=LH.fromstring(page.read_text());cards=doc.xpath('//*[contains(concat(" ",normalize-space(@class)," ")," ch ")]');assert len(cards)==15
-for n,(card,c,m) in enumerate(zip(cards,data.CHAPTERS,manifest),1):
- card.tag='a';card.set('class','ch');card.set('href',m['file'])
- for pill in card.xpath('.//*[contains(concat(" ",normalize-space(@class)," ")," pill ")]'):pill.getparent().remove(pill)
- h=card.find('h3');h.clear();h.text=c['title']
- meta=card.xpath('.//*[@class="meta"]')[0];meta.clear();meta.set('class','meta')
- for text in [f'{m["sections"]} 節',f'{m["examples"]} 道教學例題',f'原講義 {m["source_pages"]} 頁']:LH.etree.SubElement(meta,'span').text=text
-facts=doc.xpath('//*[@class="facts"]/div');facts[1].find('b').text=str(sum(m['sections'] for m in manifest));facts[2].find('b').text='30';facts[2].find('span').text='道教學例題'
-lede=doc.xpath('//*[@class="lede"]')[0];lede.text='靜力學算出外力與反力，材料力學接著問：構件裡面受多大的力、會變形多少、會不會壞。依完整十五章研所講義編排，從應力與應變，逐步分析軸向、扭轉、彎曲及組合負載，最後進入能量法、塑性與柱的挫曲。各章提供公式圖檔、重繪示意圖與教學例題，並保留完整原講義。'
-for e in doc.xpath('//p'):
- if e.text=='依主題分組，講義陸續上線':e.text='十五章完整上線，點選章節進入閱讀'
-head=doc.find('head')
-if not head.xpath('./link[@href="assets/materials-course.css"]'):LH.etree.SubElement(head,'link',rel='stylesheet',href='assets/materials-course.css')
-page.write_text('<!doctype html>\n'+LH.tostring(doc,encoding='unicode')+'\n')
-(ROOT.parent/'output').mkdir(parents=True,exist_ok=True)
-(ROOT.parent/'output/materials-course-manifest.json').write_text(json.dumps({'chapters':manifest,'totals':{'chapters':15,'sections':sum(m['sections'] for m in manifest),'examples':30,'source_pages':sum(m['source_pages'] for m in manifest),'formulas':sum(m['formulas'] for m in manifest),'figures':sum(m['figures'] for m in manifest)}},ensure_ascii=False,indent=2))
-print('Built',len(FIGURES),'unique figures;',len(EQUATIONS),'unique formula images')
+ # Turn existing chapter cards into direct links, matching Dynamics.
+ from lxml import html as LH
+ page=ROOT/'mechanics-of-materials.html';doc=LH.fromstring(page.read_text());cards=doc.xpath('//*[contains(concat(" ",normalize-space(@class)," ")," ch ")]');assert len(cards)==15
+ for n,(card,c,m) in enumerate(zip(cards,data.CHAPTERS,manifest),1):
+  card.tag='a';card.set('class','ch');card.set('href',m['file'])
+  for pill in card.xpath('.//*[contains(concat(" ",normalize-space(@class)," ")," pill ")]'):pill.getparent().remove(pill)
+  h=card.find('h3');h.clear();h.text=c['title']
+  meta=card.xpath('.//*[@class="meta"]')[0];meta.clear();meta.set('class','meta')
+  for text in [f'{m["sections"]} 節',f'{m["examples"]} 道教學例題',f'原講義 {m["source_pages"]} 頁']:LH.etree.SubElement(meta,'span').text=text
+ facts=doc.xpath('//*[@class="facts"]/div');facts[1].find('b').text=str(sum(m['sections'] for m in manifest));facts[2].find('b').text='30';facts[2].find('span').text='道教學例題'
+ lede=doc.xpath('//*[@class="lede"]')[0];lede.text='靜力學算出外力與反力，材料力學接著問：構件裡面受多大的力、會變形多少、會不會壞。依完整十五章研所講義編排，從應力與應變，逐步分析軸向、扭轉、彎曲及組合負載，最後進入能量法、塑性與柱的挫曲。各章提供公式圖檔、重繪示意圖與教學例題，並保留完整原講義。'
+ for e in doc.xpath('//p'):
+  if e.text=='依主題分組，講義陸續上線':e.text='十五章完整上線，點選章節進入閱讀'
+ head=doc.find('head')
+ if not head.xpath('./link[@href="assets/materials-course.css"]'):LH.etree.SubElement(head,'link',rel='stylesheet',href='assets/materials-course.css')
+ page.write_text('<!doctype html>\n'+LH.tostring(doc,encoding='unicode')+'\n')
+ (ROOT.parent/'output').mkdir(parents=True,exist_ok=True)
+ (ROOT.parent/'output/materials-course-manifest.json').write_text(json.dumps({'chapters':manifest,'totals':{'chapters':15,'sections':sum(m['sections'] for m in manifest),'examples':30,'source_pages':sum(m['source_pages'] for m in manifest),'formulas':sum(m['formulas'] for m in manifest),'figures':sum(m['figures'] for m in manifest)}},ensure_ascii=False,indent=2))
+ print('Built',len(FIGURES),'unique figures;',len(EQUATIONS),'unique formula images')
