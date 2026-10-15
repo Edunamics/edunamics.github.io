@@ -1,0 +1,11 @@
+/* 公式以字形輪廓 SVG 圖檔呈現，不依賴網頁字型。 */
+.math-display,.math-inline{height:auto;max-width:100%;object-fit:contain;filter:none}
+.math-display{display:block}
+.formula-image-link{display:block;max-width:100%;border-radius:3px;width:fit-content}
+.formula-image-link:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.math-inline{display:inline-block;vertical-align:middle;margin:1px 1px 3px}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .math-display,:root:not([data-theme="light"]) .math-inline{filter:invert(1) hue-rotate(180deg)}}
+:root[data-theme="dark"] .math-display,:root[data-theme="dark"] .math-inline{filter:invert(1) hue-rotate(180deg)}
+@media print{.math-display,.math-inline{filter:none!important}}
+
+.formula.formula-image{font-family:var(--f-body);font-size:16px;text-align:left}.formula-image-link{margin-inline:auto}.formula .lab{font-size:12px;color:var(--accent);margin-bottom:8px}.math-inline{max-width:100%}
