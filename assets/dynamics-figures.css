@@ -1,0 +1,8 @@
+/* 重繪講義 SVG：清楚的向量線條與可放大的文字。 */
+figure.lecture-figure{margin:20px 0 28px;padding:16px;background:var(--paper,#fff);border:1px solid var(--line,#d3dcd8);border-radius:8px}
+.lecture-figure>a{display:flex;justify-content:center;background:var(--paper,#fff);padding:12px;border-radius:4px}
+.lecture-figure img{display:block;width:100%;max-width:740px;height:auto;object-fit:contain;border-radius:4px}
+.lecture-figure figcaption{margin:12px 0 0;color:var(--muted,#566677);font-size:13px;line-height:1.7;overflow-wrap:anywhere}
+.lecture-figure figcaption a{color:var(--accent,#0f6b3a);text-underline-offset:3px}
+.lecture-figure a:focus-visible{outline:2px solid var(--accent,#0f6b3a);outline-offset:4px}
+@media(max-width:480px){figure.lecture-figure{padding:10px}.lecture-figure>a{padding:6px}}
