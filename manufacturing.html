@@ -73,6 +73,7 @@ h2{font-family:var(--f-head);font-weight:900;font-size:26px;margin:0;text-wrap:b
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
 .ch{display:grid;grid-template-columns:64px minmax(0,1fr);gap:0 16px;background:var(--paper);border:1px solid var(--line);padding:18px 18px 16px;text-decoration:none;color:var(--ink);transition:border-color .15s, transform .15s}
 a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
+a.ch:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .num{grid-row:1/4;font-family:var(--f-mono);font-size:40px;line-height:1;color:var(--accent);font-weight:500}
 .num small{display:block;font-size:11px;letter-spacing:.12em;color:var(--muted);margin-top:6px}
 .ch h3{font-family:var(--f-head);font-weight:900;font-size:21px;margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
@@ -81,9 +82,6 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
 .meta .exam{color:var(--exam)}
 .pill{font-family:var(--f-body);font-size:12px;font-weight:500;padding:1px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
 .pill.on{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
-.links{display:flex;gap:8px;margin-top:10px}
-.links a{font-size:13px;padding:3px 12px;border:1px solid var(--accent);color:var(--accent);text-decoration:none;border-radius:2px}
-.links a:hover{background:var(--accent);color:var(--bg)}
 
 /* 學習建議 */
 .tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
@@ -189,90 +187,81 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
   <section aria-labelledby="ch-h">
     <div class="sec-head">
       <h2 id="ch-h">章節</h2>
-      <p>依製程家族分組，點選講義進入各章</p>
+      <p>依製程家族分組，點選章節卡片進入各章</p>
     </div>
 
     <div class="family">
       <div class="fam-label">總論 <span class="mono">OVERVIEW</span></div>
       <div class="cards">
-        <article class="ch">
+        <a href="ch01.html" class="ch">
           <div class="num">01<small>CH</small></div>
-          <h3>緒論 <span class="pill on">已上線</span></h3>
+          <h3>緒論</h3>
           <p>製造的演進、設計與材料與製造的關係、製造系統、加工方法分類、精實生產、碳足跡與碳中和。</p>
-          <div class="links"><a href="ch01.html">講義</a></div>
-        </article>
+        </a>
       </div>
     </div>
 
     <div class="family">
       <div class="fam-label">成形加工 <span class="mono">FORMING</span></div>
       <div class="cards">
-        <article class="ch">
+        <a href="ch02.html" class="ch">
           <div class="num">02<small>CH</small></div>
-          <h3>鑄造 <span class="pill on">已上線</span></h3>
+          <h3>鑄造</h3>
           <p>凝固理論、Chvorinov 定則、砂模鑄造、各種特殊鑄造、單晶渦輪葉片。</p>
-          <div class="links"><a href="ch02.html">講義</a></div>
-        </article>
-        <article class="ch">
+        </a>
+        <a href="ch03.html" class="ch">
           <div class="num">03<small>CH</small></div>
-          <h3>粉末冶金 <span class="pill on">已上線</span></h3>
+          <h3>粉末冶金</h3>
           <p>製粉、成型、HIP 與 CIP、金屬射出成形 MIM、燒結，以及 SLS、3DP、SLA 積層製造。</p>
-          <div class="links"><a href="ch03.html">講義</a></div>
-        </article>
-        <article class="ch">
+        </a>
+        <a href="ch05.html" class="ch">
           <div class="num">05<small>CH</small></div>
-          <h3>塑性加工 <span class="pill on">已上線</span></h3>
+          <h3>塑性加工</h3>
           <p>輥軋、鍛造、擠製、抽拉、鈑金成形與高能率成形，熱作與冷作以再結晶溫度為界。</p>
-          <div class="links"><a href="ch05.html">講義</a></div>
-        </article>
+        </a>
       </div>
     </div>
 
     <div class="family">
       <div class="fam-label">去除加工 <span class="mono">MATERIAL REMOVAL</span></div>
       <div class="cards">
-        <article class="ch">
+        <a href="ch04.html" class="ch">
           <div class="num">04<small>CH</small></div>
-          <h3>切削 <span class="pill on">已上線</span></h3>
+          <h3>切削</h3>
           <p>Merchant 切削力分析、刀具磨耗與 Taylor 刀具壽命方程式、刀具材料、各類工具機、磨削。</p>
-          <div class="links"><a href="ch04.html">講義</a></div>
-        </article>
-        <article class="ch">
+        </a>
+        <a href="ch07.html" class="ch">
           <div class="num">07<small>CH</small></div>
-          <h3>非傳統加工 <span class="pill on">已上線</span></h3>
+          <h3>非傳統加工</h3>
           <p>USM、AJM、WJM、AFM、ECM、EDM、EBM、LBM、PAM 與快速原型 RP。</p>
-          <div class="links"><a href="ch07.html">講義</a></div>
-        </article>
+        </a>
       </div>
     </div>
 
     <div class="family">
       <div class="fam-label">接合 <span class="mono">JOINING</span></div>
       <div class="cards">
-        <article class="ch">
+        <a href="ch06.html" class="ch">
           <div class="num">06<small>CH</small></div>
-          <h3>接合銲接 <span class="pill on">已上線</span></h3>
+          <h3>接合銲接</h3>
           <p>電阻銲、氣銲、電子束銲 EBW、雷射銲 LBW、鋁熱銲，以及各式電弧銲與銲條規格。</p>
-          <div class="links"><a href="ch06.html">講義</a></div>
-        </article>
+        </a>
       </div>
     </div>
 
     <div class="family">
       <div class="fam-label">材料與熱處理 <span class="mono">MATERIALS</span></div>
       <div class="cards">
-        <article class="ch">
+        <a href="ch08.html" class="ch">
           <div class="num">08<small>CH</small></div>
-          <h3>機械材料 <span class="pill on">已上線</span></h3>
+          <h3>機械材料</h3>
           <p>材料性質、晶體結構與米勒指數、強化機制、鐵碳平衡圖、CCT 與 TTT 曲線。</p>
-          <div class="links"><a href="ch08.html">講義</a></div>
-        </article>
-        <article class="ch">
+        </a>
+        <a href="ch09.html" class="ch">
           <div class="num">09<small>CH</small></div>
-          <h3>材料處理 <span class="pill on">已上線</span></h3>
+          <h3>材料處理</h3>
           <p>退火、正常化、淬火、回火、表面硬化，以及 PVD 與 CVD 鍍膜。</p>
-          <div class="links"><a href="ch09.html">講義</a></div>
-        </article>
+        </a>
       </div>
     </div>
   </section>
