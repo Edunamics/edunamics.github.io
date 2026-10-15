@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="120pt" height="216pt" viewBox="0 0 120 216" version="1.1" role="img">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 216  L 120 216  L 120 0  L 0 0  L 0 216  z " style="fill: none"/>
+  </g>
+  <g id="text_1">
+   <!-- $v_r=\dot{r}$ -->
+   <g style="fill: #152231" transform="translate(8 32) scale(0.17 -0.17)">
+    <defs>
+     <path id="STIXGeneral-Italic-59" d="M 1325 448  L 1523 653  Q 1869 1005 2134 1456  Q 2400 1907 2400 2131  Q 2400 2208 2285 2317  Q 2125 2458 2125 2605  Q 2125 2701 2195 2761  Q 2266 2822 2368 2822  Q 2522 2822 2624 2704  Q 2726 2586 2726 2445  Q 2726 2074 2323 1453  Q 1971 909 1562 474  Q 1504 416 1421 326  Q 1338 237 1299 192  Q 1261 147 1200 86  Q 1139 26 1110 -3  Q 1082 -32 1043 -64  Q 1005 -96 979 -105  Q 954 -115 928 -115  Q 870 -115 870 58  L 870 211  Q 870 1094 717 1990  Q 653 2355 579 2470  Q 506 2586 326 2586  Q 198 2586 128 2579  L 128 2662  Q 480 2720 845 2797  Q 915 2822 973 2822  Q 1011 2822 1033 2739  Q 1056 2656 1165 2093  Q 1280 1510 1325 448  z " transform="scale(0.015625)"/>
+     <path id="STIXGeneral-Italic-55" d="M 1126 1427  L 1229 1651  Q 1446 2131 1830 2534  Q 2106 2822 2336 2822  Q 2470 2822 2553 2732  Q 2637 2643 2637 2496  Q 2637 2349 2557 2249  Q 2477 2150 2336 2150  Q 2214 2150 2112 2317  Q 2061 2406 2010 2406  Q 1837 2406 1485 1805  Q 1267 1434 1136 1104  Q 1005 774 774 0  L 288 0  L 806 1869  Q 909 2246 909 2394  Q 909 2560 666 2560  Q 614 2560 467 2541  L 467 2650  L 1459 2822  L 1478 2810  L 1126 1427  z " transform="scale(0.015625)"/>
+     <path id="STIXGeneral-Regular-20" d="M 4077 2048  L 307 2048  L 307 2470  L 4077 2470  L 4077 2048  z M 4077 768  L 307 768  L 307 1190  L 4077 1190  L 4077 768  z " transform="scale(0.015625)"/>
+     <path id="STIXGeneral-Regular-205" d="M -1158 3661  Q -1158 3526 -1251 3436  Q -1344 3347 -1478 3347  Q -1606 3347 -1699 3440  Q -1792 3533 -1792 3661  Q -1792 3795 -1705 3888  Q -1619 3981 -1478 3981  Q -1331 3981 -1244 3891  Q -1158 3802 -1158 3661  z " transform="scale(0.015625)"/>
+    </defs>
+    <use xlink:href="#STIXGeneral-Italic-59" transform="translate(0 0.5)"/>
+    <use xlink:href="#STIXGeneral-Italic-55" transform="translate(44.399963 -14.5) scale(0.7)"/>
+    <use xlink:href="#STIXGeneral-Regular-20" transform="translate(96.129938 0.5)"/>
+    <use xlink:href="#STIXGeneral-Regular-205" transform="translate(232.354868 4.796875)"/>
+    <use xlink:href="#STIXGeneral-Italic-55" transform="translate(184.629877 0.5)"/>
+   </g>
+  </g>
+  <g id="text_2">
+   <!-- 徑向速度 -->
+   <g style="fill: #566677" transform="translate(8 48) scale(0.1 -0.1)">
+    <defs>
+     <path id="ArialUnicodeMS-3220" d="M 2094 5094  Q 1506 3938 788 3488  L 384 3828  Q 1178 4219 1716 5363  L 2094 5094  z M 5900 4556  L 2303 4556  L 2303 5025  L 5900 5025  L 5900 4556  z M 5697 2156  L 5275 1906  Q 5009 2756 4384 3244  Q 5003 3866 5178 4538  L 5613 4263  Q 5409 3691 5031 3263  Q 5466 2800 5697 2156  z M 3431 4250  Q 3188 3713 2706 3188  Q 3138 2697 3341 2106  L 2906 1881  Q 2631 2741 2069 3138  Q 2794 3909 3003 4538  L 3431 4250  z M 4488 4288  Q 4194 3491 3872 3181  Q 4216 2791 4453 2169  L 4031 1894  Q 3784 2719 3256 3150  Q 3891 3822 4044 4531  L 4488 4288  z M 2259 3725  Q 2022 3238 1728 2841  L 1728 -475  L 1241 -475  L 1241 2303  Q 909 2019 697 1906  L 319 2234  Q 1284 2788 1900 4038  L 2259 3725  z M 6119 -122  L 1966 -122  L 1966 347  L 3763 347  L 3763 1319  L 2303 1319  L 2303 1784  L 5722 1784  L 5722 1319  L 4250 1319  L 4250 347  L 6119 347  L 6119 -122  z " transform="scale(0.015625)"/>
+     <path id="ArialUnicodeMS-26a0" d="M 5550 191  Q 5550 -347 5056 -347  L 4397 -347  L 4250 172  Q 4653 134 4709 134  Q 5063 134 5063 359  L 5063 3897  L 1344 3897  L 1344 -481  L 850 -481  L 850 4366  L 2497 4366  Q 2694 4688 2834 5319  L 3372 5153  Q 3225 4681 3053 4366  L 5550 4366  L 5550 191  z M 4325 891  L 2053 891  L 2053 3138  L 4325 3138  L 4325 891  z M 3847 1356  L 3847 2669  L 2541 2669  L 2541 1356  L 3847 1356  z " transform="scale(0.015625)"/>
+     <path id="ArialUnicodeMS-62ae" d="M 5931 1153  L 5606 794  Q 4913 1566 4225 1819  L 4225 434  L 3738 434  L 3738 2144  Q 3459 1503 2272 716  L 1978 1094  Q 2934 1688 3284 2316  L 2431 2316  L 2431 3828  L 3738 3828  L 3738 4219  L 2088 4219  L 2088 4684  L 3738 4684  L 3738 5350  L 4225 5350  L 4225 4684  L 5850 4684  L 5850 4219  L 4225 4219  L 4225 3828  L 5544 3828  L 5544 2316  L 4225 2316  L 4225 1888  L 4469 2181  Q 5200 1931 5931 1153  z M 5056 2784  L 5056 3359  L 4225 3359  L 4225 2784  L 5056 2784  z M 3738 2784  L 3738 3359  L 2894 3359  L 2894 2784  L 3738 2784  z M 1759 4097  L 1344 3822  Q 1000 4541 500 4966  L 856 5228  Q 1384 4797 1759 4097  z M 6094 347  L 5900 -178  L 3297 -178  Q 2784 -178 2393 -29  Q 2003 119 1528 488  Q 1309 325 563 -341  L 197 44  Q 559 313 1275 903  L 1275 2888  L 422 2888  L 422 3328  L 1759 3328  L 1759 909  Q 2347 275 3144 275  Q 4456 275 6094 347  z " transform="scale(0.015625)"/>
+     <path id="ArialUnicodeMS-3135" d="M 5913 4269  L 1363 4269  L 1363 2278  Q 1363 1144 1180 528  Q 997 -88 684 -434  L 294 -147  Q 669 378 773 940  Q 878 1503 878 2350  L 878 4738  L 3200 4738  L 3200 5288  L 3706 5288  L 3706 4738  L 5913 4738  L 5913 4269  z M 5778 3194  L 4728 3194  L 4728 2303  L 2350 2303  L 2350 3194  L 1472 3194  L 1472 3659  L 2350 3659  L 2350 4147  L 2828 4147  L 2828 3659  L 4244 3659  L 4244 4147  L 4728 4147  L 4728 3659  L 5778 3659  L 5778 3194  z M 4244 2747  L 4244 3194  L 2834 3194  L 2834 2747  L 4244 2747  z M 6081 72  L 5819 -397  Q 4484 -216 3531 263  Q 2494 -234 1388 -397  L 1088 44  Q 2078 134 3034 550  Q 2509 934 2113 1528  L 1625 1528  L 1625 1972  L 5159 1972  L 5159 1544  Q 4819 1025 4044 538  Q 4963 166 6081 72  z M 4544 1528  L 2700 1528  Q 3125 1038 3531 781  Q 4194 1159 4544 1528  z " transform="scale(0.015625)"/>
+    </defs>
+    <use xlink:href="#ArialUnicodeMS-3220"/>
+    <use xlink:href="#ArialUnicodeMS-26a0" transform="translate(100 0)"/>
+    <use xlink:href="#ArialUnicodeMS-62ae" transform="translate(200 0)"/>
+    <use xlink:href="#ArialUnicodeMS-3135" transform="translate(300 0)"/>
+   </g>
+  </g>
+  <g id="text_3">
+   <!-- $v_{\theta}=r\dot{\theta}$ -->
+   <g style="fill: #152231" transform="translate(8 83) scale(0.17 -0.17)">
+    <defs>
+     <path id="STIXGeneral-Italic-207" d="M 3162 3270  Q 3162 2534 2925 1862  Q 2688 1190 2304 678  Q 1741 -70 992 -70  Q 608 -70 390 224  Q 173 518 173 1030  Q 173 1997 592 2813  Q 1011 3629 1594 4070  Q 1952 4339 2374 4339  Q 2733 4339 2947 4076  Q 3162 3814 3162 3270  z M 941 2221  L 2432 2221  Q 2624 2874 2624 3533  Q 2624 4205 2285 4205  Q 2029 4205 1728 3814  Q 1427 3424 1232 2992  Q 1037 2560 941 2221  z M 2387 2016  L 896 2016  Q 710 1530 710 960  Q 710 64 1069 64  Q 1286 64 1510 275  Q 1734 486 1904 806  Q 2074 1126 2198 1440  Q 2323 1754 2387 2016  z " transform="scale(0.015625)"/>
+    </defs>
+    <use xlink:href="#STIXGeneral-Italic-59" transform="translate(0 0.796875)"/>
+    <use xlink:href="#STIXGeneral-Italic-207" transform="translate(44.399963 -14.203125) scale(0.7)"/>
+    <use xlink:href="#STIXGeneral-Regular-20" transform="translate(102.499931 0.796875)"/>
+    <use xlink:href="#STIXGeneral-Italic-55" transform="translate(190.99987 0.796875)"/>
+    <use xlink:href="#STIXGeneral-Regular-205" transform="translate(282.899822 28.796875)"/>
+    <use xlink:href="#STIXGeneral-Italic-207" transform="translate(229.899834 0.796875)"/>
+   </g>
+  </g>
+  <g id="text_4">
+   <!-- 橫向速度 -->
+   <g style="fill: #566677" transform="translate(8 99) scale(0.1 -0.1)">
+    <defs>
+     <path id="ArialUnicodeMS-3cfa" d="M 5913 4366  L 5131 4366  L 5131 3591  L 3059 3591  L 3059 4366  L 2303 4366  L 2303 4831  L 3059 4831  L 3059 5294  L 3547 5294  L 3547 4831  L 4647 4831  L 4647 5294  L 5131 5294  L 5131 4831  L 5913 4831  L 5913 4366  z M 4647 4056  L 4647 4366  L 3547 4366  L 3547 4056  L 4647 4056  z M 6119 -44  L 5875 -434  Q 4844 119 4184 128  L 4447 513  L 3675 513  L 3897 206  Q 3309 -250 2297 -422  L 2059 19  Q 3075 134 3616 506  L 3603 513  L 2606 513  L 2606 2131  L 2259 1844  Q 2050 2300 1850 2484  L 1850 -447  L 1363 -447  L 1363 2175  L 1350 2175  Q 1181 1741 697 1113  L 300 1363  Q 1150 2491 1344 3572  L 603 3572  L 603 4038  L 1363 4038  L 1363 5281  L 1850 5281  L 1850 4038  L 2528 4038  L 2528 3572  L 1850 3572  L 1850 2950  L 1900 3003  Q 2288 2741 2591 2228  L 2606 2228  L 2606 2644  L 3859 2644  L 3859 2919  L 2175 2919  L 2175 3384  L 6041 3384  L 6041 2919  L 4347 2919  L 4347 2644  L 5619 2644  L 5619 513  L 4616 513  L 4603 506  Q 5353 381 6119 -44  z M 5131 1813  L 5131 2175  L 4347 2175  L 4347 1813  L 5131 1813  z M 3859 1813  L 3859 2175  L 3091 2175  L 3091 1813  L 3859 1813  z M 5131 978  L 5131 1344  L 4347 1344  L 4347 978  L 5131 978  z M 3859 978  L 3859 1344  L 3091 1344  L 3091 978  L 3859 978  z " transform="scale(0.015625)"/>
+    </defs>
+    <use xlink:href="#ArialUnicodeMS-3cfa"/>
+    <use xlink:href="#ArialUnicodeMS-26a0" transform="translate(100 0)"/>
+    <use xlink:href="#ArialUnicodeMS-62ae" transform="translate(200 0)"/>
+    <use xlink:href="#ArialUnicodeMS-3135" transform="translate(300 0)"/>
+   </g>
+  </g>
+  <g id="text_5">
+   <!-- $a_r=\ddot{r}-r\dot{\theta}^{2}$ -->
+   <g style="fill: #152231" transform="translate(8 134) scale(0.17 -0.17)">
+    <defs>
+     <path id="STIXGeneral-Italic-44" d="M 2963 710  L 3046 640  Q 2688 205 2518 70  Q 2349 -64 2157 -64  Q 1901 -64 1901 198  Q 1901 358 2048 934  Q 1690 397 1389 163  Q 1088 -70 749 -70  Q 467 -70 288 125  Q 109 320 109 672  Q 109 1158 387 1664  Q 666 2170 1094 2496  Q 1523 2822 1939 2822  Q 2368 2822 2451 2451  L 2522 2758  L 2541 2778  L 2931 2822  L 2976 2803  Q 2970 2778 2938 2669  Q 2368 595 2368 346  Q 2368 262 2458 262  Q 2554 262 2790 525  L 2963 710  z M 2336 2310  Q 2336 2477 2240 2579  Q 2144 2682 1978 2682  Q 1542 2682 1139 2093  Q 928 1779 787 1395  Q 646 1011 646 717  Q 646 243 1030 243  Q 1408 243 1843 870  Q 2336 1581 2336 2310  z " transform="scale(0.015625)"/>
+     <path id="STIXGeneral-Regular-206" d="M -614 3885  Q -518 3789 -518 3661  Q -518 3533 -614 3440  Q -710 3347 -845 3347  Q -973 3347 -1062 3440  Q -1152 3533 -1152 3667  Q -1152 3795 -1059 3888  Q -966 3981 -838 3981  Q -710 3981 -614 3885  z M -1888 3885  Q -1792 3789 -1792 3661  Q -1792 3533 -1888 3440  Q -1984 3347 -2118 3347  Q -2246 3347 -2336 3440  Q -2426 3533 -2426 3667  Q -2426 3795 -2333 3888  Q -2240 3981 -2112 3981  Q -1984 3981 -1888 3885  z " transform="scale(0.015625)"/>
+     <path id="STIXGeneral-Regular-425" d="M 3974 1408  L 410 1408  L 410 1830  L 3974 1830  L 3974 1408  z " transform="scale(0.015625)"/>
+     <path id="STIXGeneral-Regular-15" d="M 3034 877  L 2688 0  L 186 0  L 186 77  L 1325 1286  Q 1773 1754 1965 2144  Q 2157 2534 2157 2950  Q 2157 3379 1920 3616  Q 1683 3853 1267 3853  Q 922 3853 720 3673  Q 518 3494 326 3021  L 192 3053  Q 301 3648 630 3987  Q 960 4326 1523 4326  Q 2054 4326 2380 4006  Q 2707 3686 2707 3200  Q 2707 2477 1888 1613  L 832 486  L 2330 486  Q 2541 486 2665 569  Q 2790 653 2944 915  L 3034 877  z " transform="scale(0.015625)"/>
+    </defs>
+    <use xlink:href="#STIXGeneral-Italic-44" transform="translate(0 0.50125)"/>
+    <use xlink:href="#STIXGeneral-Italic-55" transform="translate(50.099945 -14.49875) scale(0.7)"/>
+    <use xlink:href="#STIXGeneral-Regular-20" transform="translate(101.829919 0.50125)"/>
+    <use xlink:href="#STIXGeneral-Regular-206" transform="translate(237.961099 4.798125)"/>
+    <use xlink:href="#STIXGeneral-Italic-55" transform="translate(190.329858 0.50125)"/>
+    <use xlink:href="#STIXGeneral-Regular-425" transform="translate(249.229822 0.50125)"/>
+    <use xlink:href="#STIXGeneral-Italic-55" transform="translate(337.729761 0.50125)"/>
+    <use xlink:href="#STIXGeneral-Regular-205" transform="translate(429.629713 28.50125)"/>
+    <use xlink:href="#STIXGeneral-Italic-207" transform="translate(376.629724 0.50125)"/>
+    <use xlink:href="#STIXGeneral-Regular-15" transform="translate(426.204678 63.684375) scale(0.7)"/>
+   </g>
+  </g>
+  <g id="text_6">
+   <!-- 徑向加速度 -->
+   <g style="fill: #566677" transform="translate(8 150) scale(0.1 -0.1)">
+    <defs>
+     <path id="ArialUnicodeMS-252f" d="M 3463 3975  L 3431 2456  Q 3416 1684 3337 1089  Q 3259 494 3153 256  Q 3047 19 2889 -82  Q 2731 -184 2509 -184  Q 2338 -184 1722 -72  L 1638 488  Q 2313 281 2463 281  Q 2559 281 2645 411  Q 2731 541 2822 1244  Q 2913 1947 2963 3506  L 2181 3506  Q 2109 1928 1761 1011  Q 1413 94 763 -488  L 372 -147  Q 1016 544 1225 1008  Q 1434 1472 1546 2256  Q 1659 3041 1678 3506  L 628 3506  L 628 3975  L 1678 3975  Q 1713 4247 1741 5319  L 2259 5281  L 2203 3975  L 3463 3975  z M 5844 -159  L 5338 -159  L 5338 325  L 4325 325  L 4325 -159  L 3841 -159  L 3841 4359  L 5844 4359  L 5844 -159  z M 5338 794  L 5338 3891  L 4325 3891  L 4325 794  L 5338 794  z " transform="scale(0.015625)"/>
+    </defs>
+    <use xlink:href="#ArialUnicodeMS-3220"/>
+    <use xlink:href="#ArialUnicodeMS-26a0" transform="translate(100 0)"/>
+    <use xlink:href="#ArialUnicodeMS-252f" transform="translate(200 0)"/>
+    <use xlink:href="#ArialUnicodeMS-62ae" transform="translate(300 0)"/>
+    <use xlink:href="#ArialUnicodeMS-3135" transform="translate(400 0)"/>
+   </g>
+  </g>
+  <g id="text_7">
+   <!-- $a_{\theta}=r\ddot{\theta}+2\dot{r}\dot{\theta}$ -->
+   <g style="fill: #152231" transform="translate(8 185) scale(0.17 -0.17)">
+    <defs>
+     <path id="STIXGeneral-Regular-e" d="M 4070 1408  L 2400 1408  L 2400 -262  L 1978 -262  L 1978 1408  L 307 1408  L 307 1830  L 1978 1830  L 1978 3501  L 2400 3501  L 2400 1830  L 4070 1830  L 4070 1408  z " transform="scale(0.015625)"/>
+    </defs>
+    <use xlink:href="#STIXGeneral-Italic-44" transform="translate(0 0.796875)"/>
+    <use xlink:href="#STIXGeneral-Italic-207" transform="translate(50.099945 -14.203125) scale(0.7)"/>
+    <use xlink:href="#STIXGeneral-Regular-20" transform="translate(108.199913 0.796875)"/>
+    <use xlink:href="#STIXGeneral-Italic-55" transform="translate(196.699852 0.796875)"/>
+    <use xlink:href="#STIXGeneral-Regular-206" transform="translate(288.506054 28.796875)"/>
+    <use xlink:href="#STIXGeneral-Italic-207" transform="translate(235.599815 0.796875)"/>
+    <use xlink:href="#STIXGeneral-Regular-e" transform="translate(303.59977 0.796875)"/>
+    <use xlink:href="#STIXGeneral-Regular-15" transform="translate(392.099709 0.796875)"/>
+    <use xlink:href="#STIXGeneral-Regular-205" transform="translate(489.824654 5.09375)"/>
+    <use xlink:href="#STIXGeneral-Italic-55" transform="translate(442.099663 0.796875)"/>
+    <use xlink:href="#STIXGeneral-Regular-205" transform="translate(533.999615 28.796875)"/>
+    <use xlink:href="#STIXGeneral-Italic-207" transform="translate(480.999626 0.796875)"/>
+   </g>
+  </g>
+  <g id="text_8">
+   <!-- 橫向加速度 -->
+   <g style="fill: #566677" transform="translate(8 201) scale(0.1 -0.1)">
+    <use xlink:href="#ArialUnicodeMS-3cfa"/>
+    <use xlink:href="#ArialUnicodeMS-26a0" transform="translate(100 0)"/>
+    <use xlink:href="#ArialUnicodeMS-252f" transform="translate(200 0)"/>
+    <use xlink:href="#ArialUnicodeMS-62ae" transform="translate(300 0)"/>
+    <use xlink:href="#ArialUnicodeMS-3135" transform="translate(400 0)"/>
+   </g>
+  </g>
+ </g>
+</svg>

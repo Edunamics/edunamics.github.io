@@ -180,3 +180,13 @@ details .ans{padding:8px 0 12px 2.8em;font-size:15px}
 .hero-art{color:var(--accent)}.hero-art svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .hero-art .motion{stroke:var(--force)}
 @media(max-width:820px){.example{padding:14px}.hero-art{display:none}h2{font-size:1.4rem;gap:10px}h2 .no{flex-shrink:0}}
+
+/* 公式以字形輪廓 SVG 圖檔呈現，不依賴網頁字型。 */
+.math-display,.math-inline{height:auto;max-width:100%;object-fit:contain;filter:none}
+.math-display{display:block}
+.formula-image-link{display:block;max-width:100%;border-radius:3px;width:fit-content}
+.formula-image-link:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.math-inline{display:inline-block;vertical-align:middle;margin:1px 1px 3px}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .math-display,:root:not([data-theme="light"]) .math-inline{filter:invert(1) hue-rotate(180deg)}}
+:root[data-theme="dark"] .math-display,:root[data-theme="dark"] .math-inline{filter:invert(1) hue-rotate(180deg)}
+@media print{.math-display,.math-inline{filter:none!important}}
