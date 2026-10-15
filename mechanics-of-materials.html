@@ -111,13 +111,13 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-</head>
+<link rel="stylesheet" href="assets/materials-course.css"></head>
 <body>
 
 <div class="wrap">
   <header class="top">
     <a class="brand" href="index.html" aria-label="回知識動力場首頁">
-      <svg viewBox="0 0 120 120" width="32" height="32" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 18V102M38 18V102M22 18L38 42L22 66L38 90M38 18H98V34H38M38 52H86V68H38M38 86H98V102H38M22 18H38M22 102H38"/></svg>
+      <svg viewbox="0 0 120 120" width="32" height="32" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 18V102M38 18V102M22 18L38 42L22 66L38 90M38 18H98V34H38M38 52H86V68H38M38 86H98V102H38M22 18H38M22 102H38"></path></svg>
       知識動力場
     </a>
     <nav class="subjects" aria-label="科目">
@@ -132,12 +132,12 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
     <div>
       <div class="eyebrow">Mechanics of Materials</div>
       <h1>材料力學</h1>
-      <p class="lede">靜力學算出外力與反力，材料力學接著問：構件裡面受多大的力、會變形多少、會不會壞。本科目共十五章：先複習內力，建立應力、應變與材料組成律，再依序分析軸向、扭轉、彎曲與組合負載，最後以能量法、非線性分析與柱的挫曲收尾。每章附範例、計算題與國考選擇題。</p>
+      <p class="lede">靜力學算出外力與反力，材料力學接著問：構件裡面受多大的力、會變形多少、會不會壞。依完整十五章研所講義編排，從應力與應變，逐步分析軸向、扭轉、彎曲及組合負載，最後進入能量法、塑性與柱的挫曲。各章提供公式圖檔、重繪示意圖與教學例題，並保留完整原講義。</p>
     </div>
     <div class="facts" aria-label="科目概況">
       <div><b>15</b><span>章</span></div>
-      <div><b>58</b><span>節</span></div>
-      <div><b>237</b><span>道範例</span></div>
+      <div><b>53</b><span>節</span></div>
+      <div><b>30</b><span>道教學例題</span></div>
     </div>
   </section>
 
@@ -147,14 +147,14 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
       <p>先打基礎，再逐一分析四種負載，最後深入能量與穩定</p>
     </div>
     <div class="map">
-      <svg viewBox="0 0 960 350" role="img" aria-label="解題地圖：第一到四章建立內力、應力、應變與材料組成律；第七章斷面性質提供慣性矩；接著分析軸向負載與薄壁容器、扭轉、樑的剪力彎矩與應力、組合應力、樑的變形，目標是求出應力與變形；最後以第十三章能量法、第十四章非線性分析、第十五章柱的挫曲深入">
+      <svg viewbox="0 0 960 350" role="img" aria-label="解題地圖：第一到四章建立內力、應力、應變與材料組成律；第七章斷面性質提供慣性矩；接著分析軸向負載與薄壁容器、扭轉、樑的剪力彎矩與應力、組合應力、樑的變形，目標是求出應力與變形；最後以第十三章能量法、第十四章非線性分析、第十五章柱的挫曲深入">
         <defs>
-          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--accent)"/></marker>
+          <marker id="ar" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--accent)"></path></marker>
         </defs>
-        <rect x="10" y="10" width="940" height="330" fill="none" stroke="var(--line)" stroke-dasharray="6 5"/>
+        <rect x="10" y="10" width="940" height="330" fill="none" stroke="var(--line)" stroke-dasharray="6 5"></rect>
         <text x="24" y="34" font-size="14" fill="var(--accent)" font-weight="700">材料力學：構件內部的力與變形</text>
         <!-- CH1–4 -->
-        <rect x="30" y="52" width="200" height="200" fill="var(--accent-soft)" stroke="var(--accent)"/>
+        <rect x="30" y="52" width="200" height="200" fill="var(--accent-soft)" stroke="var(--accent)"></rect>
         <text x="130" y="80" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">基礎觀念</text>
         <text x="130" y="110" text-anchor="middle" font-size="14" fill="var(--ink)">CH 1 內力複習</text>
         <text x="130" y="134" text-anchor="middle" font-size="14" fill="var(--ink)">CH 2 應力</text>
@@ -163,54 +163,54 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
         <text x="130" y="212" text-anchor="middle" font-size="12" fill="var(--muted)">力 → 應力，變形 → 應變</text>
         <text x="130" y="234" text-anchor="middle" font-size="12" fill="var(--muted)">σ = Eε、τ = Gγ</text>
         <!-- CH7 -->
-        <rect x="30" y="272" width="200" height="50" fill="var(--paper)" stroke="var(--accent)"/>
+        <rect x="30" y="272" width="200" height="50" fill="var(--paper)" stroke="var(--accent)"></rect>
         <text x="46" y="302" font-size="15" font-weight="700" fill="var(--accent)">斷面</text>
         <text x="90" y="302" font-size="14" fill="var(--ink)">CH 7 形心與慣性矩</text>
-        <path d="M230 297 L280 297 L280 266" stroke="var(--accent)" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#ar)"/>
+        <path d="M230 297 L280 297 L280 266" stroke="var(--accent)" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#ar)"></path>
         <text x="255" y="289" text-anchor="middle" font-size="12" fill="var(--muted)">I、J</text>
         <!-- 分支 -->
-        <path d="M230 152 L280 152" stroke="var(--accent)" stroke-width="2" fill="none"/>
-        <path d="M280 76 L280 260" stroke="var(--accent)" stroke-width="2" fill="none"/>
+        <path d="M230 152 L280 152" stroke="var(--accent)" stroke-width="2" fill="none"></path>
+        <path d="M280 76 L280 260" stroke="var(--accent)" stroke-width="2" fill="none"></path>
         <text x="255" y="143" text-anchor="middle" font-size="12" fill="var(--muted)">加負載</text>
-        <rect x="316" y="58" width="340" height="36" fill="var(--accent)"/>
+        <rect x="316" y="58" width="340" height="36" fill="var(--accent)"></rect>
         <text x="330" y="82" font-size="15" font-weight="700" fill="var(--bg)">軸</text>
         <text x="366" y="82" font-size="14" fill="var(--bg)">CH 5–6 軸向、薄壁容器</text>
         <text x="642" y="82" text-anchor="end" font-size="12" fill="var(--bg)">δ = PL / AE</text>
-        <path d="M280 76 L312 76" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
-        <path d="M656 76 L690 76" stroke="var(--accent)" stroke-width="2" fill="none"/>
-        <rect x="316" y="104" width="340" height="36" fill="var(--accent)"/>
+        <path d="M280 76 L312 76" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"></path>
+        <path d="M656 76 L690 76" stroke="var(--accent)" stroke-width="2" fill="none"></path>
+        <rect x="316" y="104" width="340" height="36" fill="var(--accent)"></rect>
         <text x="330" y="128" font-size="15" font-weight="700" fill="var(--bg)">扭</text>
         <text x="366" y="128" font-size="14" fill="var(--bg)">CH 8 扭轉</text>
         <text x="642" y="128" text-anchor="end" font-size="12" fill="var(--bg)">τ = Tρ / J</text>
-        <path d="M280 122 L312 122" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
-        <path d="M656 122 L690 122" stroke="var(--accent)" stroke-width="2" fill="none"/>
-        <rect x="316" y="150" width="340" height="36" fill="var(--accent)"/>
+        <path d="M280 122 L312 122" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"></path>
+        <path d="M656 122 L690 122" stroke="var(--accent)" stroke-width="2" fill="none"></path>
+        <rect x="316" y="150" width="340" height="36" fill="var(--accent)"></rect>
         <text x="330" y="174" font-size="15" font-weight="700" fill="var(--bg)">彎</text>
         <text x="366" y="174" font-size="14" fill="var(--bg)">CH 9–10 剪力彎矩與樑應力</text>
         <text x="642" y="174" text-anchor="end" font-size="12" fill="var(--bg)">σ = My / I</text>
-        <path d="M280 168 L312 168" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
-        <path d="M656 168 L690 168" stroke="var(--accent)" stroke-width="2" fill="none"/>
-        <rect x="316" y="196" width="340" height="36" fill="var(--accent)"/>
+        <path d="M280 168 L312 168" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"></path>
+        <path d="M656 168 L690 168" stroke="var(--accent)" stroke-width="2" fill="none"></path>
+        <rect x="316" y="196" width="340" height="36" fill="var(--accent)"></rect>
         <text x="330" y="220" font-size="15" font-weight="700" fill="var(--bg)">合</text>
         <text x="366" y="220" font-size="14" fill="var(--bg)">CH 11 組合應力</text>
         <text x="642" y="220" text-anchor="end" font-size="12" fill="var(--bg)">破壞理論</text>
-        <path d="M280 214 L312 214" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
-        <path d="M656 214 L690 214" stroke="var(--accent)" stroke-width="2" fill="none"/>
-        <rect x="316" y="242" width="340" height="36" fill="var(--accent)"/>
+        <path d="M280 214 L312 214" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"></path>
+        <path d="M656 214 L690 214" stroke="var(--accent)" stroke-width="2" fill="none"></path>
+        <rect x="316" y="242" width="340" height="36" fill="var(--accent)"></rect>
         <text x="330" y="266" font-size="15" font-weight="700" fill="var(--bg)">撓</text>
         <text x="366" y="266" font-size="14" fill="var(--bg)">CH 12 樑的彎曲變形</text>
         <text x="642" y="266" text-anchor="end" font-size="12" fill="var(--bg)">EI·y″ = M</text>
-        <path d="M280 260 L312 260" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
-        <path d="M656 260 L690 260" stroke="var(--accent)" stroke-width="2" fill="none"/>
-        <path d="M690 76 L690 260" stroke="var(--accent)" stroke-width="2" fill="none"/>
-        <path d="M690 168 L712 168" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
-        <rect x="716" y="133" width="220" height="70" fill="var(--paper)" stroke="var(--accent)"/>
+        <path d="M280 260 L312 260" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"></path>
+        <path d="M656 260 L690 260" stroke="var(--accent)" stroke-width="2" fill="none"></path>
+        <path d="M690 76 L690 260" stroke="var(--accent)" stroke-width="2" fill="none"></path>
+        <path d="M690 168 L712 168" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"></path>
+        <rect x="716" y="133" width="220" height="70" fill="var(--paper)" stroke="var(--accent)"></rect>
         <text x="826" y="163" text-anchor="middle" font-size="15" font-weight="700" fill="var(--accent)">求出應力與變形</text>
         <text x="826" y="187" text-anchor="middle" font-size="12" fill="var(--muted)">檢核強度與勁度</text>
         <!-- 進階 -->
-        <path d="M826 203 L826 226" stroke="var(--accent)" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#ar)"/>
+        <path d="M826 203 L826 226" stroke="var(--accent)" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#ar)"></path>
         <text x="840" y="220" font-size="12" fill="var(--muted)">再深入</text>
-        <rect x="716" y="230" width="220" height="92" fill="var(--accent-soft)" stroke="var(--accent)"/>
+        <rect x="716" y="230" width="220" height="92" fill="var(--accent-soft)" stroke="var(--accent)"></rect>
         <text x="732" y="256" font-size="14" fill="var(--ink)">CH 13 能量法</text>
         <text x="920" y="256" text-anchor="end" font-size="12" fill="var(--muted)">卡氏定理</text>
         <text x="732" y="282" font-size="14" fill="var(--ink)">CH 14 非線性</text>
@@ -224,126 +224,96 @@ a.ch:hover{border-color:var(--accent);transform:translateY(-2px)}
   <section aria-labelledby="ch-h">
     <div class="sec-head">
       <h2 id="ch-h">章節</h2>
-      <p>依主題分組，講義陸續上線</p>
+      <p>十五章完整上線，點選章節進入閱讀</p>
     </div>
 
     <div class="family">
       <div class="fam-label">應力應變基礎 <span class="mono">FUNDAMENTALS</span></div>
       <div class="cards">
-        <article class="ch soon">
+        <a class="ch" href="materials-ch01.html">
           <div class="num">01<small>CH</small></div>
-          <h3>力的基本觀念 <span class="pill">建置中</span></h3>
-          <p>力學分類與 SI 單位、力矩與力偶、自由體圖與支承反力、平面力系的平衡，以及用截面法求桿件的軸力、剪力與彎矩。</p>
-          <div class="meta"><span>4 節</span><span>11 道範例</span><span class="exam">12 題演練</span></div>
-        </article>
-        <article class="ch soon">
+          <h3>力的基本觀念</h3><p>力學分類與 SI 單位、力矩與力偶、自由體圖與支承反力、平面力系的平衡，以及用截面法求桿件的軸力、剪力與彎矩。</p>
+          <div class="meta"><span>5 節</span><span>2 道教學例題</span><span>原講義 43 頁</span></div></a>
+        <a class="ch" href="materials-ch02.html">
           <div class="num">02<small>CH</small></div>
-          <h3>應力 <span class="pill">建置中</span></h3>
-          <p>正向應力、剪應力與安全係數，平面應力轉換、主應力與莫爾圓，三維應力張量、柯西公式與應力場。</p>
-          <div class="meta"><span>4 節</span><span>23 道範例</span><span class="exam">56 題演練</span></div>
-        </article>
-        <article class="ch soon">
+          <h3>應力</h3><p>正向應力、剪應力與安全係數，平面應力轉換、主應力與莫爾圓，三維應力張量、柯西公式與應力場。</p>
+          <div class="meta"><span>4 節</span><span>2 道教學例題</span><span>原講義 131 頁</span></div></a>
+        <a class="ch" href="materials-ch03.html">
           <div class="num">03<small>CH</small></div>
-          <h3>應變分析 <span class="pill">建置中</span></h3>
-          <p>正向與剪應變、平面應變轉換、主應變與應變莫爾圓、應變規菊花座，以及應變張量與諧和方程式。</p>
-          <div class="meta"><span>4 節</span><span>11 道範例</span><span class="exam">11 題演練</span></div>
-        </article>
-        <article class="ch soon">
+          <h3>應變分析</h3><p>正向與剪應變、平面應變轉換、主應變與應變莫爾圓、應變規菊花座，以及應變張量與諧和方程式。</p>
+          <div class="meta"><span>3 節</span><span>2 道教學例題</span><span>原講義 49 頁</span></div></a>
+        <a class="ch" href="materials-ch04.html">
           <div class="num">04<small>CH</small></div>
-          <h3>材料組成律 <span class="pill">建置中</span></h3>
-          <p>拉伸試驗與應力應變圖、延性與脆性、廣義虎克定律、體積變化與應變能密度，以及彈塑性材料與殘留應力。</p>
-          <div class="meta"><span>4 節</span><span>15 道範例</span><span class="exam">38 題演練</span></div>
-        </article>
+          <h3>材料組成律</h3><p>拉伸試驗與應力應變圖、延性與脆性、廣義虎克定律、體積變化與應變能密度，以及彈塑性材料與殘留應力。</p>
+          <div class="meta"><span>3 節</span><span>2 道教學例題</span><span>原講義 86 頁</span></div></a>
       </div>
     </div>
 
     <div class="family">
-      <div class="fam-label">軸向負載與壓力容器 <span class="mono">AXIAL & PRESSURE</span></div>
+      <div class="fam-label">軸向負載與壓力容器 <span class="mono">AXIAL &amp; PRESSURE</span></div>
       <div class="cards">
-        <article class="ch soon">
+        <a class="ch" href="materials-ch05.html">
           <div class="num">05<small>CH</small></div>
-          <h3>薄壁容器 <span class="pill">建置中</span></h3>
-          <p>內壓薄壁圓筒的環向與軸向應力、球形容器，再搭配應力轉換求焊道上的正向應力與剪應力。</p>
-          <div class="meta"><span>2 節</span><span>10 道範例</span><span class="exam">20 題演練</span></div>
-        </article>
-        <article class="ch soon">
+          <h3>薄壁容器</h3><p>內壓薄壁圓筒的環向與軸向應力、球形容器，再搭配應力轉換求焊道上的正向應力與剪應力。</p>
+          <div class="meta"><span>1 節</span><span>2 道教學例題</span><span>原講義 43 頁</span></div></a>
+        <a class="ch" href="materials-ch06.html">
           <div class="num">06<small>CH</small></div>
-          <h3>桿構件之軸向負載 <span class="pill">建置中</span></h3>
-          <p>聖維南原理、變斷面與階梯桿的伸長量、靜不定桿件、熱應力、軸向應變能，以及用維氏圖求節點位移。</p>
-          <div class="meta"><span>5 節</span><span>22 道範例</span><span class="exam">56 題演練</span></div>
-        </article>
+          <h3>桿構件之軸向負載</h3><p>聖維南原理、變斷面與階梯桿的伸長量、靜不定桿件、熱應力、軸向應變能，以及用維氏圖求節點位移。</p>
+          <div class="meta"><span>4 節</span><span>2 道教學例題</span><span>原講義 132 頁</span></div></a>
       </div>
     </div>
 
     <div class="family">
-      <div class="fam-label">斷面性質與扭轉 <span class="mono">SECTIONS & TORSION</span></div>
+      <div class="fam-label">斷面性質與扭轉 <span class="mono">SECTIONS &amp; TORSION</span></div>
       <div class="cards">
-        <article class="ch soon">
+        <a class="ch" href="materials-ch07.html">
           <div class="num">07<small>CH</small></div>
-          <h3>質心、形心及慣性矩 <span class="pill">建置中</span></h3>
-          <p>重心、形心與質心、組合圖形的形心、面積慣性矩與平行軸定理、極慣性矩，以及慣性積與主軸。</p>
-          <div class="meta"><span>4 節</span><span>7 道範例</span><span class="exam">56 題演練</span></div>
-        </article>
-        <article class="ch soon">
+          <h3>質心、形心及慣性矩</h3><p>重心、形心與質心、組合圖形的形心、面積慣性矩與平行軸定理、極慣性矩，以及慣性積與主軸。</p>
+          <div class="meta"><span>5 節</span><span>2 道教學例題</span><span>原講義 98 頁</span></div></a>
+        <a class="ch" href="materials-ch08.html">
           <div class="num">08<small>CH</small></div>
-          <h3>扭轉 <span class="pill">建置中</span></h3>
-          <p>圓軸的扭轉剪應力與扭轉角、靜不定軸、功率傳遞、扭轉應變能，以及薄壁管的剪力流與非圓斷面。</p>
-          <div class="meta"><span>5 節</span><span>19 道範例</span><span class="exam">41 題演練</span></div>
-        </article>
+          <h3>扭轉負載</h3><p>圓軸的扭轉剪應力與扭轉角、靜不定軸、功率傳遞、扭轉應變能，以及薄壁管的剪力流與非圓斷面。</p>
+          <div class="meta"><span>4 節</span><span>2 道教學例題</span><span>原講義 104 頁</span></div></a>
       </div>
     </div>
 
     <div class="family">
-      <div class="fam-label">樑與組合負載 <span class="mono">BEAMS & COMBINED LOADING</span></div>
+      <div class="fam-label">樑與組合負載 <span class="mono">BEAMS &amp; COMBINED LOADING</span></div>
       <div class="cards">
-        <article class="ch soon">
+        <a class="ch" href="materials-ch09.html">
           <div class="num">09<small>CH</small></div>
-          <h3>剪力圖與彎矩圖 <span class="pill">建置中</span></h3>
-          <p>樑的支承與分類、支承反力、剪力與彎矩方程式，以及負載、剪力、彎矩三者的微積分關係與危險斷面。</p>
-          <div class="meta"><span>3 節</span><span>20 道範例</span><span class="exam">39 題演練</span></div>
-        </article>
-        <article class="ch soon">
+          <h3>剪力圖與彎矩圖</h3><p>樑的支承與分類、支承反力、剪力與彎矩方程式，以及負載、剪力、彎矩三者的微積分關係與危險斷面。</p>
+          <div class="meta"><span>2 節</span><span>2 道教學例題</span><span>原講義 96 頁</span></div></a>
+        <a class="ch" href="materials-ch10.html">
           <div class="num">10<small>CH</small></div>
-          <h3>樑的應力 <span class="pill">建置中</span></h3>
-          <p>彎曲應力公式與斷面模數、以轉換斷面法分析複合樑、樑的剪應力，以及剪力流與剪力中心。</p>
-          <div class="meta"><span>4 節</span><span>25 道範例</span><span class="exam">45 題演練</span></div>
-        </article>
-        <article class="ch soon">
+          <h3>樑的應力</h3><p>彎曲應力公式與斷面模數、以轉換斷面法分析複合樑、樑的剪應力，以及剪力流與剪力中心。</p>
+          <div class="meta"><span>4 節</span><span>2 道教學例題</span><span>原講義 129 頁</span></div></a>
+        <a class="ch" href="materials-ch11.html">
           <div class="num">11<small>CH</small></div>
-          <h3>組合應力及破壞理論 <span class="pill">建置中</span></h3>
-          <p>軸力、扭矩與彎矩的組合應力，延性與脆性材料的破壞理論，以及不對稱彎曲與中性軸位置。</p>
-          <div class="meta"><span>3 節</span><span>15 道範例</span><span class="exam">54 題演練</span></div>
-        </article>
-        <article class="ch soon">
+          <h3>組合應力及破壞理論</h3><p>軸力、扭矩與彎矩的組合應力，延性與脆性材料的破壞理論，以及不對稱彎曲與中性軸位置。</p>
+          <div class="meta"><span>3 節</span><span>2 道教學例題</span><span>原講義 118 頁</span></div></a>
+        <a class="ch" href="materials-ch12.html">
           <div class="num">12<small>CH</small></div>
-          <h3>樑的彎曲變形 <span class="pill">建置中</span></h3>
-          <p>撓曲線微分方程式、奇異函數法、力矩面積法、重疊原理與溫度彎曲，以及靜不定樑的反力。</p>
-          <div class="meta"><span>5 節</span><span>25 道範例</span><span class="exam">50 題演練</span></div>
-        </article>
+          <h3>樑的彎曲變形</h3><p>撓曲線微分方程式、奇異函數法、力矩面積法、重疊原理與溫度彎曲，以及靜不定樑的反力。</p>
+          <div class="meta"><span>5 節</span><span>2 道教學例題</span><span>原講義 147 頁</span></div></a>
       </div>
     </div>
 
     <div class="family">
       <div class="fam-label">能量、塑性與穩定 <span class="mono">ENERGY · PLASTICITY · STABILITY</span></div>
       <div class="cards">
-        <article class="ch soon">
+        <a class="ch" href="materials-ch13.html">
           <div class="num">13<small>CH</small></div>
-          <h3>能量法 <span class="pill">建置中</span></h3>
-          <p>各種負載下的應變能、卡氏定理、虛功原理與單位力法，並延伸到溫度效應與衝擊負載。</p>
-          <div class="meta"><span>6 節</span><span>14 道範例</span><span class="exam">34 題演練</span></div>
-        </article>
-        <article class="ch soon">
+          <h3>能量法</h3><p>各種負載下的應變能、卡氏定理、虛功原理與單位力法，並延伸到溫度效應與衝擊負載。</p>
+          <div class="meta"><span>5 節</span><span>2 道教學例題</span><span>原講義 82 頁</span></div></a>
+        <a class="ch" href="materials-ch14.html">
           <div class="num">14<small>CH</small></div>
-          <h3>非線性分析 <span class="pill">建置中</span></h3>
-          <p>彈性—完全塑性材料在軸向、扭轉與彎曲下的分析：塑性扭矩、塑性彎矩、形狀因數與殘留應力。</p>
-          <div class="meta"><span>3 節</span><span>8 道範例</span><span class="exam">13 題演練</span></div>
-        </article>
-        <article class="ch soon">
+          <h3>非線（彈）性分析</h3><p>彈性—完全塑性材料在軸向、扭轉與彎曲下的分析：塑性扭矩、塑性彎矩、形狀因數與殘留應力。</p>
+          <div class="meta"><span>3 節</span><span>2 道教學例題</span><span>原講義 47 頁</span></div></a>
+        <a class="ch" href="materials-ch15.html">
           <div class="num">15<small>CH</small></div>
-          <h3>柱 <span class="pill">建置中</span></h3>
-          <p>結構穩定性與臨界負載、剛性桿彈簧模型、尤拉公式與各種端點條件的有效長度，以及偏心受壓柱。</p>
-          <div class="meta"><span>2 節</span><span>12 道範例</span><span class="exam">17 題演練</span></div>
-        </article>
+          <h3>柱</h3><p>結構穩定性與臨界負載、剛性桿彈簧模型、尤拉公式與各種端點條件的有效長度，以及偏心受壓柱。</p>
+          <div class="meta"><span>2 節</span><span>2 道教學例題</span><span>原講義 48 頁</span></div></a>
       </div>
     </div>
   </section>
