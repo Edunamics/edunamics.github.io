@@ -40,3 +40,6 @@
 .zoom-close{display:block;position:sticky;top:0;margin:0 0 8px auto;padding:8px 16px;border:1px solid var(--accent);border-radius:6px;background:var(--paper);color:var(--accent);font:inherit;cursor:pointer;z-index:1}
 a.ch{display:block;color:inherit;text-decoration:none;cursor:pointer}a.ch:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
 @media(max-width:480px){.formula{padding:10px}.lecture-figure{padding:6px}.worked-solution .solution{padding:10px}h2{overflow-wrap:anywhere}#figure-dialog{padding:10px}.chapter-nav{gap:14px}.pdf-reader iframe{min-height:360px}}
+.table-scroll{max-width:100%;overflow-x:auto;margin:16px 0}.table-scroll table{margin:0;min-width:440px}.table-scroll td{vertical-align:top}
+.problem-index{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 28px}.problem-index a{display:grid;place-items:center;min-width:40px;min-height:40px;border:1px solid var(--line);border-radius:6px;background:var(--paper);text-decoration:none}.problem-index a:hover{border-color:var(--accent)}
+.full-example{scroll-margin-top:20px;padding-bottom:28px;border-bottom:1px solid var(--line);margin-bottom:32px}.full-example h3{line-height:1.6}.full-example .lecture-figure{margin:18px 0}

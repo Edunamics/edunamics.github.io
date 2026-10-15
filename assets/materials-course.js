@@ -1,4 +1,4 @@
-/* Lazy source PDF and accessible figure enlargement. */
+/* Accessible figure enlargement; legacy PDF reader is used only by Statics. */
 (function(){
   var dialog=document.getElementById('figure-dialog'),last;
   document.querySelectorAll('[data-zoom]').forEach(function(button){button.addEventListener('click',function(){
@@ -11,5 +11,5 @@
   dialog.addEventListener('close',function(){if(last)last.focus();});
   var source=document.getElementById('source'),reader=document.querySelector('[data-pdf]');
   function load(){if(source.hidden||reader.dataset.loaded)return;var frame=document.createElement('iframe');frame.title='本章完整原講義 PDF';frame.src=reader.dataset.pdf+'#view=FitH';reader.replaceChildren(frame);reader.dataset.loaded='true';}
-  new MutationObserver(load).observe(source,{attributes:true,attributeFilter:['hidden']});load();
+  if(source&&reader){new MutationObserver(load).observe(source,{attributes:true,attributeFilter:['hidden']});load();}
 })();
