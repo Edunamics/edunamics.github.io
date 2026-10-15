@@ -109,13 +109,13 @@ a.ch:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-</head>
+<link rel="stylesheet" href="assets/materials-course.css"></head>
 <body>
 
 <div class="wrap">
   <header class="top">
     <a class="brand" href="index.html" aria-label="回知識動力場首頁">
-      <svg viewBox="0 0 120 120" width="32" height="32" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 18V102M38 18V102M22 18L38 42L22 66L38 90M38 18H98V34H38M38 52H86V68H38M38 86H98V102H38M22 18H38M22 102H38"/></svg>
+      <svg viewbox="0 0 120 120" width="32" height="32" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 18V102M38 18V102M22 18L38 42L22 66L38 90M38 18H98V34H38M38 52H86V68H38M38 86H98V102H38M22 18H38M22 102H38"></path></svg>
       知識動力場
     </a>
     <nav class="subjects" aria-label="科目">
@@ -130,12 +130,12 @@ a.ch:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
     <div>
       <div class="eyebrow">Statics</div>
       <h1>靜力學</h1>
-      <p class="lede">物體不動，不代表沒有受力，而是所有的力剛好互相抵銷。本科目共五章：先學會描述與合成力，再用自由體圖與平衡方程式求出反力，應用到桁架、構架與摩擦，最後計算形心與慣性矩，為材料力學打底。每章附範例、計算題與國考選擇題。</p>
+      <p class="lede">物體不動，不代表沒有受力，而是所有的力剛好互相抵銷。本科目共六章：先描述力與平衡，再分析桁架、構架及摩擦，接著計算形心與慣性矩，最後以虛功與最小位能討論平衡及穩定。各章提供網頁講解與例題；第三至六章並附完整原講義，公式以圖檔呈現，圖面重新繪製。</p>
     </div>
     <div class="facts" aria-label="科目概況">
-      <div><b>5</b><span>章</span></div>
-      <div><b>2</b><span>章已上線</span></div>
-      <div><b>56</b><span>道範例</span></div>
+      <div><b>6</b><span>章</span></div>
+      <div><b>6</b><span>章已上線</span></div>
+      <div><b>43</b><span>道範例</span></div>
     </div>
   </section>
 
@@ -145,53 +145,53 @@ a.ch:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
       <p>先備工具、再學平衡，最後應用與銜接</p>
     </div>
     <div class="map">
-      <svg viewBox="0 0 960 300" role="img" aria-label="解題地圖：第一章力的基本觀念提供工具，第二章平面力系與平衡是核心，延伸到第三章結構分析與第四章摩擦，求出支承反力與構件內力；第五章質心、形心及慣性矩銜接材料力學">
+      <svg viewbox="0 0 960 364" role="img" aria-label="解題地圖：第一章力的工具，第二章平衡，第三章結構與第四章摩擦求反力及內力；第五章斷面性質銜接材料力學，第六章虛功與最小位能提供平衡及穩定的另一種分析方法">
         <defs>
-          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--accent)"/></marker>
+          <marker id="ar" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--accent)"></path></marker>
         </defs>
-        <rect x="10" y="10" width="940" height="280" fill="none" stroke="var(--line)" stroke-dasharray="6 5"/>
+        <rect x="10" y="10" width="940" height="344" fill="none" stroke="var(--line)" stroke-dasharray="6 5"></rect>
         <text x="24" y="34" font-size="14" fill="var(--accent)" font-weight="700">靜力學：剛體在力的作用下保持平衡</text>
         <!-- CH1 -->
-        <rect x="30" y="62" width="180" height="140" fill="var(--accent-soft)" stroke="var(--accent)"/>
+        <rect x="30" y="62" width="180" height="140" fill="var(--accent-soft)" stroke="var(--accent)"></rect>
         <text x="120" y="90" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">工具</text>
         <text x="120" y="126" text-anchor="middle" font-size="14" fill="var(--ink)">CH 1 力的基本觀念</text>
         <text x="120" y="152" text-anchor="middle" font-size="12" fill="var(--muted)">向量、合成與分解</text>
         <text x="120" y="174" text-anchor="middle" font-size="12" fill="var(--muted)">力矩、力偶、等效負載</text>
-        <path d="M210 132 L262 132" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+        <path d="M210 132 L262 132" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"></path>
         <!-- CH2 -->
-        <rect x="266" y="62" width="220" height="140" fill="var(--accent)"/>
+        <rect x="266" y="62" width="220" height="140" fill="var(--accent)"></rect>
         <text x="376" y="90" text-anchor="middle" font-size="15" font-weight="700" fill="var(--bg)">核心</text>
         <text x="376" y="126" text-anchor="middle" font-size="14" fill="var(--bg)">CH 2 平面力系與平衡</text>
         <text x="376" y="152" text-anchor="middle" font-size="12" fill="var(--bg)">自由體圖</text>
         <text x="376" y="174" text-anchor="middle" font-size="12" fill="var(--bg)">ΣFx = 0　ΣFy = 0　ΣM = 0</text>
-        <path d="M486 132 L530 132" stroke="var(--accent)" stroke-width="2" fill="none"/>
-        <path d="M530 132 L530 92 L572 92" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
-        <path d="M530 132 L530 172 L572 172" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+        <path d="M486 132 L530 132" stroke="var(--accent)" stroke-width="2" fill="none"></path>
+        <path d="M530 132 L530 92 L572 92" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"></path>
+        <path d="M530 132 L530 172 L572 172" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"></path>
         <!-- 應用 -->
-        <rect x="576" y="64" width="210" height="56" fill="var(--paper)" stroke="var(--accent)"/>
+        <rect x="576" y="64" width="210" height="56" fill="var(--paper)" stroke="var(--accent)"></rect>
         <text x="592" y="88" font-size="15" font-weight="700" fill="var(--accent)">結構</text>
         <text x="640" y="88" font-size="14" fill="var(--ink)">CH 3 結構分析</text>
         <text x="640" y="108" font-size="12" fill="var(--muted)">桁架、構架與機具</text>
-        <rect x="576" y="144" width="210" height="56" fill="var(--paper)" stroke="var(--accent)"/>
+        <rect x="576" y="144" width="210" height="56" fill="var(--paper)" stroke="var(--accent)"></rect>
         <text x="592" y="168" font-size="15" font-weight="700" fill="var(--accent)">接觸</text>
         <text x="640" y="168" font-size="14" fill="var(--ink)">CH 4 摩擦</text>
         <text x="640" y="188" font-size="12" fill="var(--muted)">摩擦角、斜面、滑動判斷</text>
-        <path d="M786 92 L820 92 L820 132" stroke="var(--accent)" stroke-width="2" fill="none"/>
-        <path d="M786 172 L820 172 L820 132" stroke="var(--accent)" stroke-width="2" fill="none"/>
-        <path d="M820 132 L842 132" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"/>
-        <rect x="846" y="96" width="90" height="72" fill="var(--accent)"/>
+        <path d="M786 92 L820 92 L820 132" stroke="var(--accent)" stroke-width="2" fill="none"></path>
+        <path d="M786 172 L820 172 L820 132" stroke="var(--accent)" stroke-width="2" fill="none"></path>
+        <path d="M820 132 L842 132" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#ar)"></path>
+        <rect x="846" y="96" width="90" height="72" fill="var(--accent)"></rect>
         <text x="891" y="128" text-anchor="middle" font-size="15" font-weight="700" fill="var(--bg)">反力</text>
         <text x="891" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="var(--bg)">內力</text>
         <!-- CH5 -->
-        <rect x="30" y="224" width="456" height="50" fill="var(--paper)" stroke="var(--accent)"/>
-        <text x="46" y="254" font-size="15" font-weight="700" fill="var(--accent)">斷面</text>
-        <text x="98" y="254" font-size="14" fill="var(--ink)">CH 5 質心、形心及慣性矩</text>
-        <text x="282" y="254" font-size="12" fill="var(--muted)">重心、慣性矩、截面係數</text>
-        <path d="M486 249 L842 249" stroke="var(--accent)" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#ar)"/>
+        <rect x="30" y="224" width="456" height="50" fill="var(--paper)" stroke="var(--accent)"></rect>
+        <text x="46" y="246" font-size="15" font-weight="700" fill="var(--accent)">斷面</text>
+        <text x="98" y="246" font-size="14" fill="var(--ink)">CH 5 質心、形心及慣性矩</text>
+        <text x="98" y="265" font-size="11" fill="var(--muted)">重心、慣性矩、截面係數</text>
+        <path d="M486 249 L842 249" stroke="var(--accent)" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#ar)"></path>
         <text x="664" y="241" text-anchor="middle" font-size="12" fill="var(--muted)">彎曲應力、撓度要用到</text>
-        <rect x="846" y="224" width="90" height="50" fill="var(--accent-soft)" stroke="var(--accent)"/>
+        <rect x="846" y="224" width="90" height="50" fill="var(--accent-soft)" stroke="var(--accent)"></rect>
         <text x="891" y="254" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">材料力學</text>
-      </svg>
+      <g id="statics-virtual-map"><rect x="30" y="298" width="456" height="50" fill="var(--accent-soft)" stroke="var(--accent)"></rect><text x="46" y="328" fill="var(--ink)" font-size="14">CH 6 虛功與最小位能原理</text><path d="M486 323L564 323" stroke="var(--accent)" fill="none" stroke-width="2" marker-end="url(#ar)"></path><text x="580" y="328" fill="var(--muted)" font-size="13">另一種方法：由位移與位能判斷平衡、穩定</text></g></svg>
     </div>
   </section>
 
@@ -222,33 +222,27 @@ a.ch:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
           <p>自由體圖、支承反力、各類力系、平衡方程式、三力平衡、拉密定理，以及空間力系的平衡。</p>
           <div class="meta"><span>3 節</span><span>16 道範例</span><span class="exam">36 題演練</span></div>
         </a>
-        <article class="ch soon">
+        <a class="ch" href="statics-ch03.html">
           <div class="num">03<small>CH</small></div>
-          <h3>結構分析 <span class="pill">建置中</span></h3>
-          <p>簡單桁架的基本假設、節點法、截面法、零力構件，以及構架與機具的分析。</p>
-          <div class="meta"><span>3 節</span><span>10 道範例</span><span class="exam">33 題演練</span></div>
-        </article>
-        <article class="ch soon">
+          <h3>結構分析</h3><p>簡單桁架的基本假設、節點法、截面法、零力構件，以及構架與機具的分析。</p>
+          <div class="meta"><span>3 節</span><span>5 道教學例題</span><span>4 題自測</span><span>原講義 27 頁</span></div></a>
+        <a class="ch" href="statics-ch04.html">
           <div class="num">04<small>CH</small></div>
-          <h3>摩擦 <span class="pill">建置中</span></h3>
-          <p>乾摩擦與摩擦定律、靜摩擦與動摩擦、摩擦角與靜止角，斜面上的平衡與滑動判斷。</p>
-          <div class="meta"><span>3 節</span><span>9 道範例</span><span class="exam">55 題演練</span></div>
-        </article>
+          <h3>摩擦</h3><p>乾摩擦與摩擦定律、靜摩擦與動摩擦、摩擦角與靜止角，斜面上的平衡與滑動判斷。</p>
+          <div class="meta"><span>3 節</span><span>5 道教學例題</span><span>4 題自測</span><span>原講義 36 頁</span></div></a>
       </div>
     </div>
 
     <div class="family">
       <div class="fam-label">斷面性質 <span class="mono">SECTION PROPERTIES</span></div>
       <div class="cards">
-        <article class="ch soon">
+        <a class="ch" href="statics-ch05.html">
           <div class="num">05<small>CH</small></div>
-          <h3>質心、形心及慣性矩 <span class="pill">建置中</span></h3>
-          <p>重心、形心與質量中心、組合圖形的形心、面積慣性矩與平行軸定理、截面係數與迴轉半徑。</p>
-          <div class="meta"><span>4 節</span><span>14 道範例</span><span class="exam">57 題演練</span></div>
-        </article>
+          <h3>質心、形心及慣性矩</h3><p>重心、形心與質量中心、組合圖形的形心、面積慣性矩與平行軸定理、截面係數與迴轉半徑。</p>
+          <div class="meta"><span>4 節</span><span>6 道教學例題</span><span>4 題自測</span><span>原講義 42 頁</span></div></a>
       </div>
     </div>
-  </section>
+  <div class="family"><div class="fam-label">虛功與穩定　VIRTUAL WORK &amp; STABILITY</div><div class="cards"><a class="ch" href="statics-ch06.html"><div class="num">06<small>CH</small></div><h3>虛功與最小位能原理</h3><p>符合約束的虛位移、總虛功為零、重力與彈簧位能、平衡駐值及穩定性判斷。</p><div class="meta"><span>2 節</span><span>4 道教學例題</span><span>4 題自測</span><span>原講義 8 頁</span></div></a></div></div></section>
 
   <section aria-labelledby="tip-h">
     <div class="sec-head"><h2 id="tip-h">怎麼讀這一科</h2></div>
@@ -262,7 +256,7 @@ a.ch:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   <footer class="titleblock" aria-label="圖面標題欄">
     <div class="wide">知識動力場 · 靜力學</div>
     <div><span class="k">圖號</span><br><span class="v">STA-000</span></div>
-    <div><span class="k">比例</span><br><span class="v">1 : 5 章</span></div>
+    <div><span class="k">比例</span><br><span class="v">1 : 6 章</span></div>
     <div><span class="k">單位</span><br><span class="v">N · m</span></div>
     <div><span class="k">版次</span><br><span class="v">A · 2026.10</span></div>
   </footer>
