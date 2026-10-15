@@ -1,3 +1,20 @@
+/* Match Materials chapter pages to the purple subject overview.
+   The breadcrumb scopes this shared stylesheet away from Statics. */
+:root:has(.crumb a[href="mechanics-of-materials.html"]){
+  --bg:#F8F6FB; --paper:#FFFFFF; --ink:#1E1830; --muted:#625A76;
+  --accent:#4B2A9A; --accent-soft:#EEE8F8; --line:#DDD5EC; --grid:rgba(75,42,154,.07);
+  --res:#4B2A9A; --beam:#E5DCF3; --blk:#F0ECF5;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]):has(.crumb a[href="mechanics-of-materials.html"]){
+  --bg:#120E1C; --paper:#1B1529; --ink:#ECE6F7; --muted:#ABA0C4;
+  --accent:#B79CF0; --accent-soft:#2A2040; --line:#352A4D; --grid:rgba(183,156,240,.07);
+  --res:#B79CF0; --beam:#302344; --blk:#231B33; --ok-soft:#18301F;
+}}
+:root[data-theme="dark"]:has(.crumb a[href="mechanics-of-materials.html"]){
+  --bg:#120E1C; --paper:#1B1529; --ink:#ECE6F7; --muted:#ABA0C4;
+  --accent:#B79CF0; --accent-soft:#2A2040; --line:#352A4D; --grid:rgba(183,156,240,.07);
+  --res:#B79CF0; --beam:#302344; --blk:#231B33; --ok-soft:#18301F;
+}
 /* Materials uses the same chapter shell and icon tabs as Dynamics. */
 .source-ref{font-size:13px;color:var(--muted)}
 .hero-art{max-width:160px;justify-self:center}.hero-art svg{stroke-width:1.1}
@@ -20,6 +37,6 @@
 #figure-dialog::backdrop{background:rgba(0,0,0,.65)}
 #figure-dialog img{display:block;width:100%;height:auto;min-width:650px}
 #figure-dialog p{font-family:Arial,sans-serif;font-size:14px}
-.zoom-close{display:block;position:sticky;top:0;margin:0 0 8px auto;padding:8px 16px;border:1px solid #0f6b3a;border-radius:6px;background:#fff;color:#0f6b3a;font:inherit;cursor:pointer;z-index:1}
+.zoom-close{display:block;position:sticky;top:0;margin:0 0 8px auto;padding:8px 16px;border:1px solid var(--accent);border-radius:6px;background:var(--paper);color:var(--accent);font:inherit;cursor:pointer;z-index:1}
 a.ch{display:block;color:inherit;text-decoration:none;cursor:pointer}a.ch:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
 @media(max-width:480px){.formula{padding:10px}.lecture-figure{padding:6px}.worked-solution .solution{padding:10px}h2{overflow-wrap:anywhere}#figure-dialog{padding:10px}.chapter-nav{gap:14px}.pdf-reader iframe{min-height:360px}}
