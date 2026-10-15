@@ -256,7 +256,7 @@ if __name__=='__main__':
   nxt=f'<a href="materials-ch{n+1:02}.html">下一章 →</a>' if n<15 else '<span></span>'
   nav=f'<nav class="chapter-nav" aria-label="章節導覽">{prev}<a href="mechanics-of-materials.html#ch-h">材料力學章節總覽</a>{nxt}</nav>'
   result=f'''<!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>材料力學 第{n}章 {c['title']}｜知識動力場</title><meta name="description" content="{html.escape(c['lede'],quote=True)}"><link rel="stylesheet" href="assets/chapter.css"><link rel="stylesheet" href="assets/dynamics-chapter.css"><link rel="stylesheet" href="assets/materials-course.css"></head><body>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>材料力學 第{n}章 {c['title']}｜知識動力場</title><meta name="description" content="{html.escape(c['lede'],quote=True)}"><link rel="stylesheet" href="assets/chapter.css"><link rel="stylesheet" href="assets/dynamics-chapter.css"><link rel="stylesheet" href="assets/materials-course.css?v=purple-20261015"></head><body>
 <header class="hero"><div><div class="crumb"><a href="mechanics-of-materials.html">材料力學</a> / CH {n:02}</div><h1>{c['title']}<small>{c['en']}</small></h1><p class="lede">{c['lede']}</p><div class="meta"><span>{len(c['sections'])} 節</span><span>{len(c['examples'])} 道教學例題</span><span>完整原講義 {count} 頁</span></div></div><div class="hero-art" aria-hidden="true">{icon(n)}</div></header>
 <div class="wrap"><nav class="tabs" role="tablist" aria-label="本章各節" aria-orientation="vertical"><p class="tabs-label">SECTIONS</p>{tabs}</nav><main>{''.join(body)}{nav}</main></div><dialog id="figure-dialog" aria-label="放大示意圖"><button class="zoom-close" autofocus>關閉 ×</button><img alt=""><p></p></dialog><script src="assets/chapter.js"></script><script src="assets/materials-course.js"></script></body></html>'''
   (ROOT/name).write_text(result)
@@ -277,7 +277,7 @@ if __name__=='__main__':
  for e in doc.xpath('//p'):
   if e.text=='依主題分組，講義陸續上線':e.text='十五章完整上線，點選章節進入閱讀'
  head=doc.find('head')
- if not head.xpath('./link[@href="assets/materials-course.css"]'):LH.etree.SubElement(head,'link',rel='stylesheet',href='assets/materials-course.css')
+ if not head.xpath('./link[@href="assets/materials-course.css?v=purple-20261015"]'):LH.etree.SubElement(head,'link',rel='stylesheet',href='assets/materials-course.css?v=purple-20261015')
  page.write_text('<!doctype html>\n'+LH.tostring(doc,encoding='unicode')+'\n')
  (ROOT.parent/'output').mkdir(parents=True,exist_ok=True)
  (ROOT.parent/'output/materials-course-manifest.json').write_text(json.dumps({'chapters':manifest,'totals':{'chapters':15,'sections':sum(m['sections'] for m in manifest),'examples':30,'source_pages':sum(m['source_pages'] for m in manifest),'formulas':sum(m['formulas'] for m in manifest),'figures':sum(m['figures'] for m in manifest)}},ensure_ascii=False,indent=2))
