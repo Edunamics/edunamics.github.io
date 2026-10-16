@@ -234,3 +234,4 @@ if not head.xpath('./link[@href="assets/materials-course.css"]'):etree.SubElemen
 p.write_text('<!doctype html>\n'+LH.tostring(doc,encoding='unicode')+'\n')
 report={'chapters':manifest,'figures':list(figures.values()),'totals':{'new_chapters':4,'sections':sum(c['sections'] for c in manifest),'teaching_examples':sum(c['examples'] for c in manifest),'quiz':sum(c['quiz'] for c in manifest),'source_pages':sum(c['source_pages'] for c in manifest),'formulas':sum(c['formulas'] for c in manifest),'unique_figures':len(figures),'figure_placements':sum(c['figure_placements'] for c in manifest)}}
 (ROOT.parent/'output').mkdir(exist_ok=True);(ROOT.parent/'output/statics-completion-manifest.json').write_text(json.dumps(report,ensure_ascii=False,indent=2));print(report['totals'])
+m.mod('statics_fixed_headers','add-fixed-headers.py').apply()

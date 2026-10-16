@@ -285,3 +285,4 @@ if __name__=='__main__':
  # Preserve the complete chapter and the user's no-download publication policy.
  module_full=mod('materials_ch01_full','build-materials-ch01-full.py');module_full.build()
  mod('materials_pdf_withdrawal','withdraw-materials-pdfs.py').withdraw()
+ mod('course_fixed_headers','add-fixed-headers.py').apply()
