@@ -1,0 +1,15 @@
+/* Keep the subject navigation or chapter breadcrumb visible while reading. */
+html{scroll-padding-top:calc(var(--fixed-header-height,0px) + 16px)}
+body>.fixed-chapter-header,.wrap>header.top{
+  position:sticky;top:0;z-index:50;background:var(--bg);isolation:isolate;
+  padding-block:calc(12px + env(safe-area-inset-top,0px)) 12px;
+  border-bottom:1px solid var(--line);
+}
+body>.fixed-chapter-header{max-width:1120px;margin-inline:auto;width:100%;line-height:1.6}
+body>.fixed-chapter-header .crumb{margin:0;overflow-wrap:anywhere}
+.wrap>header.top{margin-top:-12px}
+@media(min-width:821px){
+  .wrap>.tabs{top:calc(var(--fixed-header-height,0px) + 16px);max-height:calc(100vh - var(--fixed-header-height,0px) - 32px);max-height:calc(100dvh - var(--fixed-header-height,0px) - 32px);overflow-y:auto;scrollbar-width:thin}
+}
+@media(max-width:480px){body>.fixed-chapter-header{padding-block:calc(10px + env(safe-area-inset-top,0px)) 10px}.wrap>header.top{gap:8px}}
+@media print{body>.fixed-chapter-header,.wrap>header.top{position:static}.wrap>.tabs{max-height:none;overflow:visible}}

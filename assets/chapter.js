@@ -3,6 +3,7 @@
   var tabs=[].slice.call(document.querySelectorAll('.tabs .tab'));
   var secs=tabs.map(function(t){return document.getElementById(t.getAttribute('aria-controls'));});
   var wrap=document.querySelector('.wrap');
+  function headerInset(){return (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--fixed-header-height'))||0)+16;}
 
   /* 分類樹放不下時改為縮排清單（只量測目前顯示的分頁） */
   function fit(){
@@ -41,7 +42,7 @@
       if(secs[i])secs[i].hidden=!on;
     });
     fit();
-    if(scroll&&wrap){var top=wrap.getBoundingClientRect().top;if(top<0)window.scrollTo({top:window.scrollY+top-12});}
+    if(scroll&&wrap){var top=wrap.getBoundingClientRect().top;if(top<headerInset())window.scrollTo({top:window.scrollY+top-headerInset()});}
   }
   function fromHash(scroll){
     var h=decodeURIComponent(location.hash.slice(1));
@@ -49,7 +50,7 @@
     var el=document.getElementById(h);
     if(!el)return;
     var sec=el.closest('main>section');
-    if(sec){show(sec.id,false);if(el!==sec)el.scrollIntoView();else if(scroll&&wrap){var top=wrap.getBoundingClientRect().top;if(top<0)window.scrollTo({top:window.scrollY+top-12});}}
+    if(sec){show(sec.id,false);if(el!==sec)el.scrollIntoView();else if(scroll&&wrap){var top=wrap.getBoundingClientRect().top;if(top<headerInset())window.scrollTo({top:window.scrollY+top-headerInset()});}}
   }
   if(tabs.length){
     document.addEventListener('click',function(e){
