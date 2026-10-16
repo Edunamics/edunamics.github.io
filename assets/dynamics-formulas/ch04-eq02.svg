@@ -22,7 +22,7 @@
   </g>
   <g id="text_1">
    <!-- $T=\frac{1}{2}mv^2$ -->
-   <g style="fill: #152231" transform="translate(8 32) scale(0.17 -0.17)">
+   <g style="fill: #16261C" transform="translate(8 32) scale(0.17 -0.17)">
     <defs>
      <path id="STIXGeneral-Italic-37" d="M 4051 4179  L 3770 3130  L 3661 3142  Q 3680 3302 3680 3437  Q 3680 3955 3034 3955  L 2662 3955  L 1786 819  Q 1696 506 1696 397  Q 1696 250 1766 195  Q 1837 141 2035 122  L 2259 102  L 2259 0  L 416 0  L 416 102  Q 749 134 889 230  Q 1030 326 1101 582  L 2016 3955  Q 1254 3955 988 3817  Q 723 3680 493 3162  L 378 3187  L 646 4179  L 4051 4179  z " transform="scale(0.015625)"/>
      <path id="STIXGeneral-Regular-20" d="M 4077 2048  L 307 2048  L 307 2470  L 4077 2470  L 4077 2048  z M 4077 768  L 307 768  L 307 1190  L 4077 1190  L 4077 768  z " transform="scale(0.015625)"/>
