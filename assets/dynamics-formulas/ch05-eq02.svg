@@ -22,7 +22,7 @@
   </g>
   <g id="text_1">
    <!-- $\mathbf{I}=\mathbf{F}\Delta t=\int\mathbf{F}\,\mathrm{d}t$ -->
-   <g style="fill: #152231" transform="translate(8 32) scale(0.17 -0.17)">
+   <g style="fill: #16261C" transform="translate(8 32) scale(0.17 -0.17)">
     <defs>
      <path id="STIXGeneral-Bold-2c" d="M 2368 0  L 128 0  L 128 160  Q 493 192 608 288  Q 723 384 723 678  L 723 3686  Q 723 3949 601 4045  Q 480 4141 128 4166  L 128 4326  L 2368 4326  L 2368 4166  Q 2010 4154 1885 4054  Q 1760 3955 1760 3686  L 1760 678  Q 1760 371 1878 278  Q 1997 186 2368 160  L 2368 0  z " transform="scale(0.015625)"/>
      <path id="STIXGeneral-Regular-20" d="M 4077 2048  L 307 2048  L 307 2470  L 4077 2470  L 4077 2048  z M 4077 768  L 307 768  L 307 1190  L 4077 1190  L 4077 768  z " transform="scale(0.015625)"/>
