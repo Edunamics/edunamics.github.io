@@ -177,4 +177,5 @@ def build():
  for key,v in figures.items():(qa/(key+'.svg')).write_bytes(v['svg'])
  report={'sections':5,'examples':11,'practice':12,'source_pages':43,'figures':len(figures),'formula_placements':len(equations),'unique_formulas':len(set(equations)),'coverage':[{'id':c['id'],'source_page':c['page'],'title':c['title']} for c in d.CASES]}
  (qa/'manifest.json').write_text(json.dumps(report,ensure_ascii=False,indent=2));print(json.dumps(report,ensure_ascii=False))
+ m.mod('full_chapter_fixed_headers','add-fixed-headers.py').apply()
 if __name__=='__main__':build()
