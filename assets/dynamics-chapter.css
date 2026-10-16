@@ -190,3 +190,22 @@ details .ans{padding:8px 0 12px 2.8em;font-size:15px}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .math-display,:root:not([data-theme="light"]) .math-inline{filter:invert(1) hue-rotate(180deg)}}
 :root[data-theme="dark"] .math-display,:root[data-theme="dark"] .math-inline{filter:invert(1) hue-rotate(180deg)}
 @media print{.math-display,.math-inline{filter:none!important}}
+
+/* Dynamics text and surfaces match the green subject overview.
+   Other subjects reuse the layout, so restrict this palette to Dynamics breadcrumbs. */
+:root:has(.crumb a[href="dynamics.html"]){
+  --bg:#F6F9F7; --paper:#FFFFFF; --ink:#16261C; --muted:#56685C;
+  --accent:#0F6B3A; --accent-soft:#E4F2E9; --line:#D3E3D8; --grid:rgba(15,107,58,.07);
+  --res:#0F6B3A; --steel:#879B8E; --beam:#DCE9E0; --blk:#ECF1EE;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]):has(.crumb a[href="dynamics.html"]){
+  --bg:#0C1611; --paper:#13221A; --ink:#E4F1E8; --muted:#9DB8A6;
+  --accent:#6FCF97; --accent-soft:#17321F; --line:#26402F; --grid:rgba(111,207,151,.07);
+  --res:#6FCF97; --steel:#627B6B; --beam:#1C3425; --blk:#182A20; --ok-soft:#18301F;
+}}
+:root[data-theme="dark"]:has(.crumb a[href="dynamics.html"]){
+  --bg:#0C1611; --paper:#13221A; --ink:#E4F1E8; --muted:#9DB8A6;
+  --accent:#6FCF97; --accent-soft:#17321F; --line:#26402F; --grid:rgba(111,207,151,.07);
+  --res:#6FCF97; --steel:#627B6B; --beam:#1C3425; --blk:#182A20; --ok-soft:#18301F;
+}
+:root:has(.crumb a[href="dynamics.html"]) main a{color:var(--accent);text-underline-offset:3px}
