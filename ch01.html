@@ -71,8 +71,14 @@ td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:n
 .right{flex:0 0 34px;align-self:center;height:2px;background:var(--fix);position:relative}
 .right::after{content:"";position:absolute;right:-2px;top:-6px;border:7px solid transparent;border-left:10px solid var(--fix);border-right:0}
 /* 設計流程 */
-.phases{display:grid;gap:0}
-.phase{border:1.5px dashed var(--steel);border-radius:10px;padding:26px 16px 14px;position:relative;display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:0 14px;align-items:center}
+.phases{display:grid;gap:0;max-width:680px;margin:0 auto}
+.phases .node{display:grid;grid-template-columns:24px minmax(0,1fr);column-gap:8px;padding:7px 10px}
+.phases .node .n{grid-column:1;grid-row:1 / span 2;align-self:center}
+.phases .node b,.phases .node small{grid-column:2}
+.phases .node.dark b{grid-column:1 / -1;text-align:center}
+.phases .down{height:18px}
+.phases>.down{margin-left:calc((100% - 134px)/2)}
+.phase{border:1.5px dashed var(--steel);border-radius:10px;padding:18px 12px 10px;position:relative;display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:0 14px;align-items:center}
 .phase>.lab{position:absolute;top:-11px;left:14px;background:var(--paper);padding:0 8px;font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.08em}
 .phase .down{grid-column:1}
 .tool{font-family:var(--f-mono);font-size:12px;color:var(--accent);border:1.5px solid var(--accent);border-radius:999px;text-align:center;padding:3px 8px;position:relative;background:var(--paper)}
@@ -141,6 +147,8 @@ svg text{font-family:var(--f-body)}
   .ipo .right,.life .right{flex-basis:26px;width:2px;height:26px;align-self:center}
   .ipo .right::after,.life .right::after{right:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid var(--fix);border-bottom:0}
   .phase{grid-template-columns:minmax(0,1fr) 92px}
+  .phases>.down{margin-left:calc((100% - 106px)/2)!important}
+  .phases .node{grid-template-columns:20px minmax(0,1fr);column-gap:5px;padding:6px 8px}
   .procs,.procs.c4{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
