@@ -22,7 +22,7 @@
   </g>
   <g id="text_1">
    <!-- $\sum F=ma$ -->
-   <g style="fill: #152231" transform="translate(8 32) scale(0.17 -0.17)">
+   <g style="fill: #16261C" transform="translate(8 32) scale(0.17 -0.17)">
     <defs>
      <path id="STIXGeneral-Regular-424" d="M 5478 256  L 5139 -1658  L 371 -1658  L 2880 1606  L 531 4883  L 5312 4883  L 5312 3277  L 5120 3277  Q 5018 3949 4765 4205  Q 4512 4461 3891 4461  L 1843 4461  L 3699 1958  L 1549 -819  L 4198 -819  Q 4698 -819 4934 -550  Q 5171 -282 5286 256  L 5478 256  z " transform="scale(0.015625)"/>
      <path id="STIXGeneral-Italic-29" d="M 4128 4179  L 3923 3194  L 3789 3206  Q 3808 3347 3808 3418  Q 3808 3667 3718 3772  Q 3629 3878 3373 3923  Q 3117 3968 2534 3968  Q 2310 3968 2220 3926  Q 2131 3885 2099 3763  L 1690 2310  Q 2003 2317 2147 2317  Q 2291 2317 2457 2345  Q 2624 2374 2678 2396  Q 2733 2419 2822 2505  Q 2912 2592 2950 2665  Q 2989 2739 3072 2912  L 3187 2880  L 2701 1376  L 2592 1408  Q 2643 1670 2643 1798  Q 2643 1978 2531 2029  Q 2419 2080 2163 2080  Q 1984 2080 1632 2099  L 1254 736  Q 1165 416 1165 352  Q 1165 237 1273 179  Q 1382 122 1658 102  L 1658 0  L 51 0  L 51 102  Q 314 122 410 224  Q 506 326 582 602  L 1370 3430  Q 1434 3661 1434 3821  Q 1434 3955 1347 4003  Q 1261 4051 947 4077  L 947 4179  L 4128 4179  z " transform="scale(0.015625)"/>
@@ -39,7 +39,7 @@
   </g>
   <g id="text_2">
    <!-- $a=\frac{\sum F}{m}$ -->
-   <g style="fill: #152231" transform="translate(8 64) scale(0.17 -0.17)">
+   <g style="fill: #16261C" transform="translate(8 64) scale(0.17 -0.17)">
     <use xlink:href="#STIXGeneral-Italic-44" transform="translate(0 0.082812)"/>
     <use xlink:href="#STIXGeneral-Regular-20" transform="translate(70.099945 0.082812)"/>
     <use xlink:href="#STIXGeneral-Regular-424" transform="translate(164.849884 52.592188) scale(0.7)"/>
